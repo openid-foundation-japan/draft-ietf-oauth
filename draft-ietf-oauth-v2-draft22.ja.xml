@@ -41,108 +41,175 @@
 
     <abstract>
       <t>
+        OAuth 2.0 は、サードパーティーアプリケーションがHTTPで提供されるサービスとリソースオーナー間に同意の調整を行うか、
+        もしくはサードパーティアプリケーション自身のためにアクセスすることを自ら許可することによって、サービスへの限定された
+        アクセス権を得ることを可能にする認可プロトコルである。本仕様書はRFC 5849に記載されているOAuth 1.0 プロトコルを廃止し、
+        その代替となるものである。
+      </t>
+      <!--
         The OAuth 2.0 authorization protocol enables a third-party application to obtain limited
         access to an HTTP service, either on behalf of a resource owner by orchestrating an approval
         interaction between the resource owner and the HTTP service, or by allowing the third-party
         application to obtain access on its own behalf. This specification replaces and obsoletes
         the OAuth 1.0 protocol described in RFC 5849.
-      </t>
+      -->
     </abstract>
   </front>
 
   <middle>
 
-    <section title='Introduction'>
+    <section title='はじめに'>
+<!--     <section title='Introduction'> -->
       <t>
+        従来のクライアントサーバー型の認証モデルでは, クライアントはリソースオーナーのクレデンシャルを使って
+        サーバーに対して認証を行いサーバー上の保護リソースにアクセスする. つまり, サードパーティーアプリケーションに
+        保護リソースへのアクセス権を与えるには, リソースオーナーは自身のクレデンシャルをサードパーティーと共有する
+        必要がある. これはいくつかの問題と制限をもたらす.
+      </t>
+      <!--
         In the traditional client-server authentication model, the client requests an access
         restricted resource (protected resource) on the server by authenticating with the server
         using the resource owner's credentials. In order to provide third-party applications access
         to restricted resources, the resource owner shares its credentials with the third-party.
         This creates several problems and limitations:
-      </t>
+      -->
       <t>
         <list style='symbols'>
           <t>
+          　サードパーティーアプリケーションは, 後の利用のためにリソースオーナーのクレデンシャルを保存しておかなければならない.
+            通常はパスワードが平文で保存されることになる. 
+          </t>
+          <!--
             Third-party applications are required to store the resource owner's credentials
             for future use, typically a password in clear-text.
-          </t>
+          -->
           <t>
+            パスワードを利用することでセキュリティが低下したとしても、サーバーはパスワードベースの認証方式をサポートしなければならない. 
+          </t>
+          <!--
             Servers are required to support password authentication, despite the security
             weaknesses created by passwords.
-          </t>
+          -->
           <t>
+            サードパーティーアプリケーションはリソースオーナーの保護リソースに対して過度に広範囲のアクセス権を得ることになり、
+            リソースオーナーは, アクセスをリソースのサブセットに限定したり, アクセス可能な期間を制限したりできない状態のままである. 
+          </t>
+          <!--
             Third-party applications gain overly broad access to the resource owner's protected
             resources, leaving resource owners without any ability to restrict duration or access
             to a limited subset of resources.
-          </t>
+          -->
           <t>
+            リソースオーナーは各サードパーティーごとにアクセス権を無効化することはできず, アクセス権を無効化する際には全ての
+            サードパーティーが持つアクセス権を無効化しなければならない. つまりそれはパスワード変更を意味する.
+          </t>
+          <!--
             Resource owners cannot revoke access to an individual third-party without revoking
             access to all third-parties, and must do so by changing their password.
-          </t>
+          -->
           <t>
+            サードパーティアプリケーションの情報漏えいはエンドユーザーのパスワードおよびパスワードによって保護されている全ての情報の漏洩につながる。
+          </t>
+          <!--
             Compromise of any third-party application results in compromise of the end-user’s
             password and all of the data protected by that password.
-          </t>
+          -->
         </list>
       </t>
       <t>
+        OAuthは, クライアントとリソースオーナーの役割を分けることで, これらの問題の解決に取り組む. OAuthでは, クライアントは, リソースオーナーのコントロール下にありリソースサーバーにホストされているリソースへのアクセス権を要求する. そしてリソースオーナーのクレデンシャルそのものとは別のクレデンシャルを取得する. 
+      </t>
+      <!--
         OAuth addresses these issues by introducing an authorization layer and separating the role
         of the client from that of the resource owner. In OAuth, the client requests access to
         resources controlled by the resource owner and hosted by the resource server, and is issued
         a different set of credentials than those of the resource owner.
-      </t>
+      -->
       <t>
+        クライアントは, 保護リソースにアクセスする為にリソースオーナーのクレデンシャルを使う代わりに, アクセストークンを取得する. (アクセストークンとは, ある特定のスコープ, 期間およびその他の属性と紐付けられた文字列である) アクセストークンはリソースオーナーの同意をもって認可サーバーからサードパーティークライアントへ発行される。クライアントはアクセストークンを用いてリソースサーバーがホストしている保護リソースにアクセスする。
+      </t>
+      <!--
         Instead of using the resource owner's credentials to access protected resources, the client
         obtains an access token - a string denoting a specific scope, lifetime, and other access
         attributes. Access tokens are issued to third-party clients by an authorization server with
         the approval of the resource owner. The client uses the access token to access the
         protected resources hosted by the resource server.
-      </t>
+      -->
       <t>
+        例えば, あるユーザー (リソースオーナー) が, 印刷サービス (クライアント) に対して, 写真共有サービス上 (リソースサーバー) に保管されている彼女の保護された写真へのアクセス権を与えることを考える. OAuthでは, その際彼女のユーザー名とパスワードを印刷サービスに与える必要はない. そのかわり, 彼女は写真共有サービスの信任を得た認証サービス (認証サーバー) に対して認証を行い, 認証サービスが印刷サービスに移譲用のクレデンシャル (アクセストークン) を発行する. 
+      </t>
+      <!--
         For example, an end-user (resource owner) can grant a printing service (client) access
         to her protected photos stored at a photo sharing service (resource server), without
         sharing her username and password with the printing service. Instead, she authenticates
         directly with a server trusted by the photo sharing service (authorization server) which
         issues the printing service delegation-specific credentials (access token).
-      </t>
+      -->
       <t>
+        本仕様書はHTTP<xref target='RFC2616' />での利用を想定して設計されている。HTTP以外の通信プロトコルでのOAuth利用については未定義である。
+      </t>
+      <!--
         This specification is designed for use with HTTP <xref target='RFC2616' />. The use of
         OAuth with any transport protocol other than HTTP is undefined.
-      </t>
+      -->
 
-      <section title='Roles'>
+      <section title='ロール'>
+<!--       <section title='Roles'> -->
         <t>
-          OAuth defines four roles:
+          OAuthは以下４つのロールを定義する
         </t>
+        <!--
+          OAuth defines four roles:
+        -->
         <t>
           <list style='hanging'>
-            <t hangText='resource owner'>
+            <t hangText='リソースオーナー'>
+<!--             <t hangText='resource owner'> -->
               <vspace />
+              保護リソースへのアクセスを許可するエンティティー. （例：エンドユーザー）
+              <!--
               An entity capable of granting access to a protected resource (e.g. end-user).
+              -->
             </t>
-            <t hangText='resource server'>
+            <t hangText='リソースサーバー'>
+<!--             <t hangText='resource server'> -->
               <vspace />
+              保護リソースをホストし、アクセストークンを使っての保護リソースへのリクエストを受理してレスポンスを返すことのできるサーバー。
+              <!--
               The server hosting the protected resources, capable of accepting and responding to
               protected resource requests using access tokens.
+              -->
             </t>
-            <t hangText='client'>
+            <t hangText='クライアント'>
+<!--             <t hangText='client'> -->
               <vspace />
+              リソースオーナーの認可を得て, 代わりに保護リソースに対するリクエストを行うアプリケーション. 
+              <!--
               An application making protected resource requests on behalf of the resource owner and
               with its authorization.
+              -->
             </t>
-            <t hangText='authorization server'>
+            <t hangText='認可サーバー'>
+<!--             <t hangText='authorization server'> -->
               <vspace />
+              リソースオーナーの認証とリソースオーナーからの認可取得が成功した後, アクセストークンをクライアントに発行するサーバー.  
+              <!--
               The server issuing access tokens to the client after successfully authenticating the
               resource owner and obtaining authorization.
+              -->
             </t>
           </list>
         </t>
         <t>
+          認可サーバーとリソースサーバー間のやりとりについては本仕様書の範囲外です。認可サーバーはリソースサーバーと同一のサーバーでも異なるサーバーでもよい。
+          単一の認可サーバーが複数のリソースサーバーにアクセス可能なアクセストークンを発行してもよい。
+        </t>
+        <!--
           The interaction between the authorization server and resource server is beyond the scope
           of this specification. The authorization server may be the same server as the resource
           server or a separate entity. A single authorization server may issue access tokens
           accepted by multiple resource servers.
-        </t>
+        -->
       </section>
 
       <section title='Protocol Flow'>
@@ -3539,14 +3606,14 @@
       </t>
       <t>
         Michael Adams, Amanda Anganes, Andrew Arnott, Dirk Balfanz, Aiden Bell, Scott Cantor, Marcos Caceres, Blaine Cook, Brian Campbell,
-        Brian Eaton, Leah Culver, Bill de hÓra, André DeMarre, Brian Eaton, Brian Ellin, Igor Faynberg,
+        Brian Eaton, Leah Culver, Bill de hOra, Andre DeMarre, Brian Eaton, Brian Ellin, Igor Faynberg,
         George Fletcher, Tim Freeman, Evan Gilbert, Yaron Goland, Brent Goldman,
         Kristoffer Gronowski, Justin Hart, Dick Hardt, Craig Heath, Phil Hunt, Michael B. Jones,
         John Kemp, Mark Kent, Raffi Krikorian, Chasen Le Hara, Rasmus Lerdorf, Torsten Lodderstedt,
         Hui-Lan Lu, Casey Lucas, Paul Madsen, Alastair Mair, Eve Maler, James Manger, Mark McGloin,
         Laurence Miao, Chuck Mortimore, Anthony Nadalin, Justin Richer, Peter Saint-Andre,
         Nat Sakimura, Rob Sayre, Marius Scurtescu, Naitik Shah, Luke Shepard, Vlad Skvortsov,
-        Justin Smith, Niv Steingarten, Christian Stübner, Jeremy Suriel, Paul Tarjan, Allen Tom, Franklin Tse,
+        Justin Smith, Niv Steingarten, Christian Stubner, Jeremy Suriel, Paul Tarjan, Allen Tom, Franklin Tse,
         Nick Walker, Shane Weeden, and Skylar Woodward.
       </t>
     </section>
