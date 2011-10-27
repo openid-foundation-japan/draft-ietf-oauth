@@ -282,9 +282,9 @@ Access Token Response<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor36">4.5.</a>&nbsp;
 Extensions<br />
 <a href="#token-issue">5.</a>&nbsp;
-Issuing an Access Token<br />
+アクセストークンの発行<!-- Issuing an Access Token --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-response">5.1.</a>&nbsp;
-Successful Response<br />
+成功レスポンス<!-- Successful Response --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-errors">5.2.</a>&nbsp;
 Error Response<br />
 <a href="#token-refresh">6.</a>&nbsp;
@@ -1958,7 +1958,7 @@ Access Token Response</h3>
 
 <p>
             If the access token request is valid and authorized, the authorization server issues an
-            access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>Successful Response</span><span>)</span></a>.
+            access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
             If the request client authentication failed or is invalid, the authorization server returns
             an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
           
@@ -2562,7 +2562,7 @@ Access Token Response</h3>
 
 <p>
             If the access token request is valid and authorized, the authorization server issues an
-            access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>Successful Response</span><span>)</span></a>.
+            access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
             If the request failed client authentication or is invalid, the authorization server returns
             an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
           
@@ -2707,7 +2707,7 @@ Access Token Response</h3>
 
 <p>
             If the access token request is valid and authorized, the authorization server issues an
-            access token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>Successful Response</span><span>)</span></a>. A refresh token SHOULD
+            access token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>. A refresh token SHOULD
             NOT be included. If the request failed client authentication or is invalid, the
             authorization server returns an error response as described in
             <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
@@ -2762,7 +2762,7 @@ Extensions</h3>
 </pre></div>
 <p>
           If the access token request is valid and authorized, the authorization server issues an
-          access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>Successful Response</span><span>)</span></a>.
+          access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
           If the request failed client authentication or is invalid, the authorization server returns
           an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
         
@@ -2770,24 +2770,23 @@ Extensions</h3>
 <a name="token-issue"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5"></a><h3>5.&nbsp;
-Issuing an Access Token</h3>
+アクセストークンの発行<!-- Issuing an Access Token --></h3>
 
 <p>
-        If the access token request is valid and authorized, the authorization server issues an
-        access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>Successful Response</span><span>)</span></a>.
-        If the request failed client authentication or is invalid, the authorization server returns
-        an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
+        アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に述べる形式でアクセストークン (と任意でリフレッシュトークン) を発行する.
+        クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a> に述べる形式でエラーレスポンスを返す.
+        
       
 </p>
 <a name="token-response"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.1"></a><h3>5.1.&nbsp;
-Successful Response</h3>
+成功レスポンス<!-- Successful Response --></h3>
 
 <p>
-          The authorization server issues an access token and optional refresh token, and
-          constructs the response by adding the following parameters to the entity body of the HTTP
-          response with a 200 (OK) status code:
+          認可サーバーはアクセストークン (と任意でリフレッシュトークン) を発行する.
+          このレスポンスはエンティティーボディーに以下のパラメーターを含み, 200 HTTP ステータスコード (OK) で返される.
+          
         
 </p>
 <p>
@@ -2796,60 +2795,68 @@ Successful Response</h3>
 <dt>access_token</dt>
 <dd>
               
-              REQUIRED. The access token issued by the authorization server.
+              必須 (REQUIRED).
+              認可サーバーが発行するアクセストークン.
+              
             
 </dd>
 <dt>token_type</dt>
 <dd>
               
-              REQUIRED. The type of the token issued as described in <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>Access Token Types</span><span>)</span></a>.
-              Value is case insensitive.
+              必須 (REQUIRED).
+              トークンのタイプ.
+              値は大文字・小文字を区別しない.
+              詳細は <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>Access Token Types</span><span>)</span></a> で述べる.
+              
             
 </dd>
 <dt>expires_in</dt>
 <dd>
               
-              OPTIONAL. The lifetime in seconds of the access token. For example, the value
-              <tt>3600</tt> denotes that the access token will expire in one
-              hour from the time the response was generated.
+              任意 (OPTIONAL).
+              アクセストークンの有効期間を表す秒数.
+              例えばこの値が <tt>3600</tt> であれば, そのアクセストークンは発行から1時間後に期限切れとなる.
+              
             
 </dd>
 <dt>refresh_token</dt>
 <dd>
               
-              OPTIONAL. The refresh token which can be used to obtain new access tokens using the
-              same authorization grant as described in <a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>Refreshing an Access Token</span><span>)</span></a>.
+              任意 (OPTIONAL).
+              リフレッシュトークン.
+              同じアクセス許可を使って新しいアクセストークンを取得するのに利用される.
+              詳細は <a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>Refreshing an Access Token</span><span>)</span></a> で述べる.
+              
             
 </dd>
 <dt>scope</dt>
 <dd>
               
-              OPTIONAL. The scope of the access token as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>.
+              任意 (OPTIONAL).
+              アクセストークンのスコープ.
+              詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a> で述べる.
+              
             
 </dd>
 </dl></blockquote><p>
         
 </p>
 <p>
-          The parameters are included in the entity body of the HTTP response using the
-          <tt>application/json</tt> media type as defined by
-          <a class='info' href='#RFC4627'>[RFC4627]<span> (</span><span class='info'>Crockford, D., &ldquo;The application/json Media Type for JavaScript Object Notation (JSON),&rdquo; July&nbsp;2006.</span><span>)</span></a>. The parameters are serialized into a JSON structure by
-          adding each parameter at the highest structure level. Parameter names and string values
-          are included as JSON strings. Numerical values are included as JSON numbers. The order of
-          parameters does not matter and can vary.
+          これらのパラメーターは, <a class='info' href='#RFC4627'>[RFC4627]<span> (</span><span class='info'>Crockford, D., &ldquo;The application/json Media Type for JavaScript Object Notation (JSON),&rdquo; July&nbsp;2006.</span><span>)</span></a> で定義されているメディアタイプ <tt>application/json</tt> 形式で, HTTPレスポンスボディーに含まれる.
+          JSONへのシリアライゼーションは, 各パラメーターをJSONオブジェクトの最上位要素とする形式で行う.
+          パラメーター名と文字列値はJSON文字列, 数値はJSON数値となる.
+          パラメーターの順序は問わず, 多様であり得る.
+          
         
 </p>
 <p>
-          The authorization server MUST include the HTTP
-          <tt>Cache-Control</tt> response header field <a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a>
-          with a value of <tt>no-store</tt> in any response containing tokens,
-          credentials, or other sensitive information, as well as the
-          <tt>Pragma</tt> response header field <a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a> with a
-          value of <tt>no-cache</tt>.
+          認可サーバーは, トークン, クレデンシャル, その他センシティブな情報を含むいかなる HTTP レスポンスにおいても, <tt>Cache-Control</tt> (<a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a>) ヘッダーに <tt>no-store</tt> を, <tt>Pragma</tt> (<a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a>) ヘッダーに <tt>no-cache</tt> を指定しなければならない (MUST).
+          
         
 </p>
 <p>
-            For example:
+            例:
+            
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2868,10 +2875,11 @@ Successful Response</h3>
 
 </pre></div>
 <p>
-          The client SHOULD ignore unrecognized response parameters. The sizes of tokens and other
-          values received from the authorization server are left undefined. The client should
-          avoid making assumptions about value sizes. The authorization server should document the
-          size of any value it issues.
+          クライアントは認識できないレスポンスパラメーターを無視するべきである (SHOULD).
+          トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
+          クライアントは値のサイズについてなんらかの仮定をすべきではない.
+          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+          
         
 </p>
 <a name="token-errors"></a><br /><hr />
@@ -3075,7 +3083,7 @@ Refreshing an Access Token</h3>
 </p>
 <p>
         If valid and authorized, the authorization server issues an access token as described in
-        <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>Successful Response</span><span>)</span></a>. If the request failed verification or is invalid, the
+        <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>. If the request failed verification or is invalid, the
         authorization server returns an error response as described in
         <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
       

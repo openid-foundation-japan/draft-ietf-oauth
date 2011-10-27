@@ -1997,67 +1997,113 @@
 
     </section>
 
-    <section title='Issuing an Access Token' anchor='token-issue'>
+    <section title='アクセストークンの発行<!-- Issuing an Access Token -->' anchor='token-issue'>
       <t>
+        アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <xref target='token-response' /> に述べる形式でアクセストークン (と任意でリフレッシュトークン) を発行する.
+        クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <xref target='token-errors' /> に述べる形式でエラーレスポンスを返す.
+        <!--
         If the access token request is valid and authorized, the authorization server issues an
         access token and optional refresh token as described in <xref target='token-response' />.
         If the request failed client authentication or is invalid, the authorization server returns
         an error response as described in <xref target='token-errors' />.
+        -->
       </t>
 
-      <section title='Successful Response' anchor='token-response'>
+      <section title='成功レスポンス<!-- Successful Response -->' anchor='token-response'>
         <t>
+          認可サーバーはアクセストークン (と任意でリフレッシュトークン) を発行する.
+          このレスポンスはエンティティーボディーに以下のパラメーターを含み, 200 HTTP ステータスコード (OK) で返される.
+          <!--
           The authorization server issues an access token and optional refresh token, and
           constructs the response by adding the following parameters to the entity body of the HTTP
           response with a 200 (OK) status code:
+          -->
         </t>
         <t>
           <list style='hanging' hangIndent='6'>
             <t hangText='access_token'>
               <vspace />
+              必須 (REQUIRED).
+              認可サーバーが発行するアクセストークン.
+              <!--
               REQUIRED. The access token issued by the authorization server.
+              -->
             </t>
             <t hangText='token_type'>
               <vspace />
+              必須 (REQUIRED).
+              トークンのタイプ.
+              値は大文字・小文字を区別しない.
+              詳細は <xref target='token-types' /> で述べる.
+              <!--
               REQUIRED. The type of the token issued as described in <xref target='token-types' />.
               Value is case insensitive.
+              -->
             </t>
             <t hangText='expires_in'>
               <vspace />
+              任意 (OPTIONAL).
+              アクセストークンの有効期間を表す秒数.
+              例えばこの値が <spanx style='verb'>3600</spanx> であれば, そのアクセストークンは発行から1時間後に期限切れとなる.
+              <!--
               OPTIONAL. The lifetime in seconds of the access token. For example, the value
               <spanx style='verb'>3600</spanx> denotes that the access token will expire in one
               hour from the time the response was generated.
+              -->
             </t>
             <t hangText='refresh_token'>
               <vspace />
+              任意 (OPTIONAL).
+              リフレッシュトークン.
+              同じアクセス許可を使って新しいアクセストークンを取得するのに利用される.
+              詳細は <xref target='token-refresh' /> で述べる.
+              <!--
               OPTIONAL. The refresh token which can be used to obtain new access tokens using the
               same authorization grant as described in <xref target='token-refresh' />.
+              -->
             </t>
             <t hangText='scope'>
               <vspace />
+              任意 (OPTIONAL).
+              アクセストークンのスコープ.
+              詳細は <xref target='scope' /> で述べる.
+              <!--
               OPTIONAL. The scope of the access token as described by <xref target='scope' />.
+              -->
             </t>
           </list>
         </t>
         <t>
+          これらのパラメーターは, <xref target='RFC4627' /> で定義されているメディアタイプ <spanx style='verb'>application/json</spanx> 形式で, HTTPレスポンスボディーに含まれる.
+          JSONへのシリアライゼーションは, 各パラメーターをJSONオブジェクトの最上位要素とする形式で行う.
+          パラメーター名と文字列値はJSON文字列, 数値はJSON数値となる.
+          パラメーターの順序は問わず, 多様であり得る.
+          <!--
           The parameters are included in the entity body of the HTTP response using the
           <spanx style='verb'>application/json</spanx> media type as defined by
           <xref target='RFC4627' />. The parameters are serialized into a JSON structure by
           adding each parameter at the highest structure level. Parameter names and string values
           are included as JSON strings. Numerical values are included as JSON numbers. The order of
           parameters does not matter and can vary.
+          -->
         </t>
         <t>
+          認可サーバーは, トークン, クレデンシャル, その他センシティブな情報を含むいかなる HTTP レスポンスにおいても, <spanx style='verb'>Cache-Control</spanx> (<xref target='RFC2616' />) ヘッダーに <spanx style='verb'>no-store</spanx> を, <spanx style='verb'>Pragma</spanx> (<xref target='RFC2616' />) ヘッダーに <spanx style='verb'>no-cache</spanx> を指定しなければならない (MUST).
+          <!--
           The authorization server MUST include the HTTP
           <spanx style='verb'>Cache-Control</spanx> response header field <xref target='RFC2616' />
           with a value of <spanx style='verb'>no-store</spanx> in any response containing tokens,
           credentials, or other sensitive information, as well as the
           <spanx style='verb'>Pragma</spanx> response header field <xref target='RFC2616' /> with a
           value of <spanx style='verb'>no-cache</spanx>.
+          -->
         </t>
         <figure>
           <preamble>
+            例:
+            <!--
             For example:
+            -->
           </preamble>
           <artwork>
             <![CDATA[
@@ -2077,10 +2123,16 @@
           </artwork>
         </figure>
         <t>
+          クライアントは認識できないレスポンスパラメーターを無視するべきである (SHOULD).
+          トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
+          クライアントは値のサイズについてなんらかの仮定をすべきではない.
+          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+          <!--
           The client SHOULD ignore unrecognized response parameters. The sizes of tokens and other
           values received from the authorization server are left undefined. The client should
           avoid making assumptions about value sizes. The authorization server should document the
           size of any value it issues.
+          -->
         </t>
       </section>
 
