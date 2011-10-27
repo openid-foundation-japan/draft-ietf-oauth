@@ -11,7 +11,7 @@ namespace GoogleAppsProvisioningTest
 
     public partial class Form1 : Form
     {
-
+//
         const string HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:apps=\"http://schemas.google.com/apps/2006\"><atom:category scheme=\"http://schemas.google.com/g/2005#kind\" term=\"http://schemas.google.com/apps/2006#user\"/>";
         const string USR_NAME = "<apps:login userName=\"$$loginuser$$\"/>";
         const string USR_CREATE = "<apps:login userName=\"$$loginuser$$\" password=\"$$password$$\" hashFunctionName=\"SHA-1\"/>";
