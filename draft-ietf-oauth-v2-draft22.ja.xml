@@ -41,10 +41,7 @@
 
     <abstract>
       <t>
-        OAuth 2.0 は、サードパーティーアプリケーションがHTTPで提供されるサービスとリソースオーナー間に同意の調整を行うか、
-        もしくはサードパーティアプリケーション自身のためにアクセスすることを自ら許可することによって、サービスへの限定された
-        アクセス権を得ることを可能にする認可プロトコルである。本仕様書はRFC 5849に記載されているOAuth 1.0 プロトコルを廃止し、
-        その代替となるものである。
+        OAuth 2.0 は, サードパーティーアプリケーションがHTTPで提供されるサービスとリソースオーナー間に同意の調整を行うか, もしくはサードパーティアプリケーション自身のためにアクセスすることを自ら許可することによって, サービスへの限定されたアクセス権を得ることを可能にする認可プロトコルである. 本仕様書はRFC 5849に記載されているOAuth 1.0 プロトコルを廃止し, その代替となるものである. 
       </t>
       <!--
         The OAuth 2.0 authorization protocol enables a third-party application to obtain limited
@@ -61,10 +58,7 @@
     <section title='はじめに'>
 <!--     <section title='Introduction'> -->
       <t>
-        従来のクライアントサーバー型の認証モデルでは, クライアントはリソースオーナーのクレデンシャルを使って
-        サーバーに対して認証を行いサーバー上の保護リソースにアクセスする. つまり, サードパーティーアプリケーションに
-        保護リソースへのアクセス権を与えるには, リソースオーナーは自身のクレデンシャルをサードパーティーと共有する
-        必要がある. これはいくつかの問題と制限をもたらす.
+        従来のクライアントサーバー型の認証モデルでは, クライアントはリソースオーナーのクレデンシャルを使ってサーバーに対して認証を行いサーバー上の保護リソースにアクセスする. つまり, サードパーティーアプリケーションに保護リソースへのアクセス権を与えるには, リソースオーナーは自身のクレデンシャルをサードパーティーと共有する必要がある. これはいくつかの問題と制限をもたらす.
       </t>
       <!--
         In the traditional client-server authentication model, the client requests an access
@@ -76,23 +70,21 @@
       <t>
         <list style='symbols'>
           <t>
-          　サードパーティーアプリケーションは, 後の利用のためにリソースオーナーのクレデンシャルを保存しておかなければならない.
-            通常はパスワードが平文で保存されることになる. 
+            サードパーティーアプリケーションは, 後の利用のためにリソースオーナーのクレデンシャルを保存しておかなければならない. 通常はパスワードが平文で保存されることになる. 
           </t>
           <!--
             Third-party applications are required to store the resource owner's credentials
             for future use, typically a password in clear-text.
           -->
           <t>
-            パスワードを利用することでセキュリティが低下したとしても、サーバーはパスワードベースの認証方式をサポートしなければならない. 
+            パスワードを利用することでセキュリティが低下したとしても, サーバーはパスワードベースの認証方式をサポートしなければならない. 
           </t>
           <!--
             Servers are required to support password authentication, despite the security
             weaknesses created by passwords.
           -->
           <t>
-            サードパーティーアプリケーションはリソースオーナーの保護リソースに対して過度に広範囲のアクセス権を得ることになり、
-            リソースオーナーは, アクセスをリソースのサブセットに限定したり, アクセス可能な期間を制限したりできない状態のままである. 
+            サードパーティーアプリケーションはリソースオーナーの保護リソースに対して過度に広範囲のアクセス権を得ることになり, リソースオーナーは, アクセスをリソースのサブセットに限定したり, アクセス可能な期間を制限したりできない状態のままである. 
           </t>
           <!--
             Third-party applications gain overly broad access to the resource owner's protected
@@ -100,15 +92,14 @@
             to a limited subset of resources.
           -->
           <t>
-            リソースオーナーは各サードパーティーごとにアクセス権を無効化することはできず, アクセス権を無効化する際には全ての
-            サードパーティーが持つアクセス権を無効化しなければならない. つまりそれはパスワード変更を意味する.
+            リソースオーナーは各サードパーティーごとにアクセス権を無効化することはできず, アクセス権を無効化する際には全てのサードパーティーが持つアクセス権を無効化しなければならない. つまりそれはパスワード変更を意味する.
           </t>
           <!--
             Resource owners cannot revoke access to an individual third-party without revoking
             access to all third-parties, and must do so by changing their password.
           -->
           <t>
-            サードパーティアプリケーションの情報漏えいはエンドユーザーのパスワードおよびパスワードによって保護されている全ての情報の漏洩につながる。
+            サードパーティアプリケーションの情報漏えいはエンドユーザーのパスワードおよびパスワードによって保護されている全ての情報の漏洩につながる. 
           </t>
           <!--
             Compromise of any third-party application results in compromise of the end-user’s
@@ -126,7 +117,7 @@
         a different set of credentials than those of the resource owner.
       -->
       <t>
-        クライアントは, 保護リソースにアクセスする為にリソースオーナーのクレデンシャルを使う代わりに, アクセストークンを取得する. (アクセストークンとは, ある特定のスコープ, 期間およびその他の属性と紐付けられた文字列である) アクセストークンはリソースオーナーの同意をもって認可サーバーからサードパーティークライアントへ発行される。クライアントはアクセストークンを用いてリソースサーバーがホストしている保護リソースにアクセスする。
+        クライアントは, 保護リソースにアクセスする為にリソースオーナーのクレデンシャルを使う代わりに, アクセストークンを取得する. (アクセストークンとは, ある特定のスコープ, 期間およびその他の属性と紐付けられた文字列である) アクセストークンはリソースオーナーの同意をもって認可サーバーからサードパーティークライアントへ発行される. クライアントはアクセストークンを用いてリソースサーバーがホストしている保護リソースにアクセスする. 
       </t>
       <!--
         Instead of using the resource owner's credentials to access protected resources, the client
@@ -146,7 +137,7 @@
         issues the printing service delegation-specific credentials (access token).
       -->
       <t>
-        本仕様書はHTTP<xref target='RFC2616' />での利用を想定して設計されている。HTTP以外の通信プロトコルでのOAuth利用については未定義である。
+        本仕様書はHTTP<xref target='RFC2616' />での利用を想定して設計されている. HTTP以外の通信プロトコルでのOAuth利用については未定義である. 
       </t>
       <!--
         This specification is designed for use with HTTP <xref target='RFC2616' />. The use of
@@ -174,7 +165,7 @@
             <t hangText='リソースサーバー'>
 <!--             <t hangText='resource server'> -->
               <vspace />
-              保護リソースをホストし、アクセストークンを使っての保護リソースへのリクエストを受理してレスポンスを返すことのできるサーバー。
+              保護リソースをホストし, アクセストークンを使っての保護リソースへのリクエストを受理してレスポンスを返すことのできるサーバー. 
               <!--
               The server hosting the protected resources, capable of accepting and responding to
               protected resource requests using access tokens.
@@ -201,8 +192,7 @@
           </list>
         </t>
         <t>
-          認可サーバーとリソースサーバー間のやりとりについては本仕様書の範囲外です。認可サーバーはリソースサーバーと同一のサーバーでも異なるサーバーでもよい。
-          単一の認可サーバーが複数のリソースサーバーにアクセス可能なアクセストークンを発行してもよい。
+          認可サーバーとリソースサーバー間のやりとりについては本仕様書の範囲外です. 認可サーバーはリソースサーバーと同一のサーバーでも異なるサーバーでもよい. 単一の認可サーバーが複数のリソースサーバーにアクセス可能なアクセストークンを発行してもよい. 
         </t>
         <!--
           The interaction between the authorization server and resource server is beyond the scope
