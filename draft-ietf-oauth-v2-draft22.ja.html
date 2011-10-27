@@ -154,11 +154,7 @@
 <h3>Abstract</h3>
 
 <p>
-        The OAuth 2.0 authorization protocol enables a third-party application to obtain limited
-        access to an HTTP service, either on behalf of a resource owner by orchestrating an approval
-        interaction between the resource owner and the HTTP service, or by allowing the third-party
-        application to obtain access on its own behalf. This specification replaces and obsoletes
-        the OAuth 1.0 protocol described in RFC 5849.
+        OAuth 2.0 は, サードパーティーアプリケーションがHTTPで提供されるサービスとリソースオーナー間に同意の調整を行うか, もしくはサードパーティアプリケーション自身のためにアクセスすることを自ら許可することによって, サービスへの限定されたアクセス権を得ることを可能にする認可プロトコルである. 本仕様書はRFC 5849に記載されているOAuth 1.0 プロトコルを廃止し, その代替となるものである. 
       
 </p>
 <h3>Status of this Memo</h3>
@@ -196,9 +192,9 @@ described in the Simplified BSD License.</p>
 <h3>Table of Contents</h3>
 <p class="toc">
 <a href="#anchor1">1.</a>&nbsp;
-Introduction<br />
+はじめに<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor2">1.1.</a>&nbsp;
-Roles<br />
+ロール<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor3">1.2.</a>&nbsp;
 Protocol Flow<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor4">1.3.</a>&nbsp;
@@ -379,123 +375,103 @@ Authors' Addresses<br />
 <a name="anchor1"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.1"></a><h3>1.&nbsp;
-Introduction</h3>
+はじめに</h3>
 
 <p>
-        In the traditional client-server authentication model, the client requests an access
-        restricted resource (protected resource) on the server by authenticating with the server
-        using the resource owner's credentials. In order to provide third-party applications access
-        to restricted resources, the resource owner shares its credentials with the third-party.
-        This creates several problems and limitations:
+        従来のクライアントサーバー型の認証モデルでは, クライアントはリソースオーナーのクレデンシャルを使ってサーバーに対して認証を行いサーバー上の保護リソースにアクセスする. つまり, サードパーティーアプリケーションに保護リソースへのアクセス権を与えるには, リソースオーナーは自身のクレデンシャルをサードパーティーと共有する必要がある. これはいくつかの問題と制限をもたらす.
       
 </p>
 <p>
         </p>
 <ul class="text">
 <li>
-            Third-party applications are required to store the resource owner's credentials
-            for future use, typically a password in clear-text.
+            サードパーティーアプリケーションは, 後の利用のためにリソースオーナーのクレデンシャルを保存しておかなければならない. 通常はパスワードが平文で保存されることになる. 
           
 </li>
 <li>
-            Servers are required to support password authentication, despite the security
-            weaknesses created by passwords.
+            パスワードを利用することでセキュリティが低下したとしても, サーバーはパスワードベースの認証方式をサポートしなければならない. 
           
 </li>
 <li>
-            Third-party applications gain overly broad access to the resource owner's protected
-            resources, leaving resource owners without any ability to restrict duration or access
-            to a limited subset of resources.
+            サードパーティーアプリケーションはリソースオーナーの保護リソースに対して過度に広範囲のアクセス権を得ることになり, リソースオーナーは, アクセスをリソースのサブセットに限定したり, アクセス可能な期間を制限したりできない状態のままである. 
           
 </li>
 <li>
-            Resource owners cannot revoke access to an individual third-party without revoking
-            access to all third-parties, and must do so by changing their password.
+            リソースオーナーは各サードパーティーごとにアクセス権を無効化することはできず, アクセス権を無効化する際には全てのサードパーティーが持つアクセス権を無効化しなければならない. つまりそれはパスワード変更を意味する.
           
 </li>
 <li>
-            Compromise of any third-party application results in compromise of the end-user’s
-            password and all of the data protected by that password.
+            サードパーティアプリケーションの情報漏えいはエンドユーザーのパスワードおよびパスワードによって保護されている全ての情報の漏洩につながる. 
           
 </li>
 </ul><p>
       
 </p>
 <p>
-        OAuth addresses these issues by introducing an authorization layer and separating the role
-        of the client from that of the resource owner. In OAuth, the client requests access to
-        resources controlled by the resource owner and hosted by the resource server, and is issued
-        a different set of credentials than those of the resource owner.
+        OAuthは, クライアントとリソースオーナーの役割を分けることで, これらの問題の解決に取り組む. OAuthでは, クライアントは, リソースオーナーのコントロール下にありリソースサーバーにホストされているリソースへのアクセス権を要求する. そしてリソースオーナーのクレデンシャルそのものとは別のクレデンシャルを取得する. 
       
 </p>
 <p>
-        Instead of using the resource owner's credentials to access protected resources, the client
-        obtains an access token - a string denoting a specific scope, lifetime, and other access
-        attributes. Access tokens are issued to third-party clients by an authorization server with
-        the approval of the resource owner. The client uses the access token to access the
-        protected resources hosted by the resource server.
+        クライアントは, 保護リソースにアクセスする為にリソースオーナーのクレデンシャルを使う代わりに, アクセストークンを取得する. (アクセストークンとは, ある特定のスコープ, 期間およびその他の属性と紐付けられた文字列である) アクセストークンはリソースオーナーの同意をもって認可サーバーからサードパーティークライアントへ発行される. クライアントはアクセストークンを用いてリソースサーバーがホストしている保護リソースにアクセスする. 
       
 </p>
 <p>
-        For example, an end-user (resource owner) can grant a printing service (client) access
-        to her protected photos stored at a photo sharing service (resource server), without
-        sharing her username and password with the printing service. Instead, she authenticates
-        directly with a server trusted by the photo sharing service (authorization server) which
-        issues the printing service delegation-specific credentials (access token).
+        例えば, あるユーザー (リソースオーナー) が, 印刷サービス (クライアント) に対して, 写真共有サービス上 (リソースサーバー) に保管されている彼女の保護された写真へのアクセス権を与えることを考える. OAuthでは, その際彼女のユーザー名とパスワードを印刷サービスに与える必要はない. そのかわり, 彼女は写真共有サービスの信任を得た認証サービス (認証サーバー) に対して認証を行い, 認証サービスが印刷サービスに移譲用のクレデンシャル (アクセストークン) を発行する. 
       
 </p>
 <p>
-        This specification is designed for use with HTTP <a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a>. The use of
-        OAuth with any transport protocol other than HTTP is undefined.
+        本仕様書はHTTP<a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a>での利用を想定して設計されている. HTTP以外の通信プロトコルでのOAuth利用については未定義である. 
       
 </p>
 <a name="anchor2"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.1.1"></a><h3>1.1.&nbsp;
-Roles</h3>
+ロール</h3>
 
 <p>
-          OAuth defines four roles:
+          OAuthは以下４つのロールを定義する
         
 </p>
 <p>
           </p>
 <blockquote class="text"><dl>
-<dt>resource owner</dt>
+<dt>リソースオーナー</dt>
 <dd>
+
               
-              An entity capable of granting access to a protected resource (e.g. end-user).
+              保護リソースへのアクセスを許可するエンティティー. （例：エンドユーザー）
+              
             
 </dd>
-<dt>resource server</dt>
+<dt>リソースサーバー</dt>
 <dd>
+
               
-              The server hosting the protected resources, capable of accepting and responding to
-              protected resource requests using access tokens.
+              保護リソースをホストし, アクセストークンを使っての保護リソースへのリクエストを受理してレスポンスを返すことのできるサーバー. 
+              
             
 </dd>
-<dt>client</dt>
+<dt>クライアント</dt>
 <dd>
+
               
-              An application making protected resource requests on behalf of the resource owner and
-              with its authorization.
+              リソースオーナーの認可を得て, 代わりに保護リソースに対するリクエストを行うアプリケーション. 
+              
             
 </dd>
-<dt>authorization server</dt>
+<dt>認可サーバー</dt>
 <dd>
+
               
-              The server issuing access tokens to the client after successfully authenticating the
-              resource owner and obtaining authorization.
+              リソースオーナーの認証とリソースオーナーからの認可取得が成功した後, アクセストークンをクライアントに発行するサーバー.  
+              
             
 </dd>
 </dl></blockquote><p>
         
 </p>
 <p>
-          The interaction between the authorization server and resource server is beyond the scope
-          of this specification. The authorization server may be the same server as the resource
-          server or a separate entity. A single authorization server may issue access tokens
-          accepted by multiple resource servers.
+          認可サーバーとリソースサーバー間のやりとりについては本仕様書の範囲外です. 認可サーバーはリソースサーバーと同一のサーバーでも異なるサーバーでもよい. 単一の認可サーバーが複数のリソースサーバーにアクセス可能なアクセストークンを発行してもよい. 
         
 </p>
 <a name="anchor3"></a><br /><hr />
@@ -1171,7 +1147,7 @@ Authorization Endpoint</h3>
 <p>
           The endpoint URI MAY include an
           <tt>application/x-www-form-urlencoded</tt> formatted
-          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
+          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
           section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
         
@@ -1251,7 +1227,7 @@ Redirection Endpoint</h3>
             The redirection endpoint URI MUST be an absolute URI as defined by
             <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 4.3. The endpoint URI MAY include an
             <tt>application/x-www-form-urlencoded</tt> formatted
-            (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
+            (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
             section 3.4), which MUST be retained when adding additional query parameters. The
             endpoint URI MUST NOT include a fragment component.
           
@@ -1404,7 +1380,7 @@ Token Endpoint</h3>
 <p>
           The endpoint URI MAY include an
           <tt>application/x-www-form-urlencoded</tt> formatted
-          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
+          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
           section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
         
@@ -1621,7 +1597,7 @@ Authorization Request</h3>
             The client constructs the request URI by adding the following parameters to the
             query component of the authorization endpoint URI using the
             <tt>application/x-www-form-urlencoded</tt> format as defined by
-            <a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>:
+            <a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>:
           
 </p>
 <p>
@@ -4639,14 +4615,14 @@ Acknowledgements</h3>
 </p>
 <p>
         Michael Adams, Amanda Anganes, Andrew Arnott, Dirk Balfanz, Aiden Bell, Scott Cantor, Marcos Caceres, Blaine Cook, Brian Campbell,
-        Brian Eaton, Leah Culver, Bill de hÓra, André DeMarre, Brian Eaton, Brian Ellin, Igor Faynberg,
+        Brian Eaton, Leah Culver, Bill de hOra, Andre DeMarre, Brian Eaton, Brian Ellin, Igor Faynberg,
         George Fletcher, Tim Freeman, Evan Gilbert, Yaron Goland, Brent Goldman,
         Kristoffer Gronowski, Justin Hart, Dick Hardt, Craig Heath, Phil Hunt, Michael B. Jones,
         John Kemp, Mark Kent, Raffi Krikorian, Chasen Le Hara, Rasmus Lerdorf, Torsten Lodderstedt,
         Hui-Lan Lu, Casey Lucas, Paul Madsen, Alastair Mair, Eve Maler, James Manger, Mark McGloin,
         Laurence Miao, Chuck Mortimore, Anthony Nadalin, Justin Richer, Peter Saint-Andre,
         Nat Sakimura, Rob Sayre, Marius Scurtescu, Naitik Shah, Luke Shepard, Vlad Skvortsov,
-        Justin Smith, Niv Steingarten, Christian Stübner, Jeremy Suriel, Paul Tarjan, Allen Tom, Franklin Tse,
+        Justin Smith, Niv Steingarten, Christian Stubner, Jeremy Suriel, Paul Tarjan, Allen Tom, Franklin Tse,
         Nick Walker, Shane Weeden, and Skylar Woodward.
       
 </p>
@@ -4717,7 +4693,7 @@ References</h3>
 <tr><td class="author-text" valign="top"><a name="RFC5246">[RFC5246]</a></td>
 <td class="author-text">Dierks, T. and E. Rescorla, &ldquo;<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>,&rdquo; RFC&nbsp;5246, August&nbsp;2008 (<a href="http://www.rfc-editor.org/rfc/rfc5246.txt">TXT</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="W3C.REC-html401-19991224">[W3C.REC-html401-19991224]</a></td>
-<td class="author-text">Raggett, D., Hors, A., and I. Jacobs, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
+<td class="author-text">Raggett, D., Jacobs, I., and A. Hors, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
 </table>
 
 <a name="rfc.references2"></a><br /><hr />
