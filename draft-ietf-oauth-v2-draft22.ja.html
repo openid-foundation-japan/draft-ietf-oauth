@@ -282,7 +282,7 @@ Extensions<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-response">5.1.</a>&nbsp;
 成功レスポンス<!-- Successful Response --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-errors">5.2.</a>&nbsp;
-Error Response<br />
+エラーレスポンス<!-- Error Response --><br />
 <a href="#token-refresh">6.</a>&nbsp;
 Refreshing an Access Token<br />
 <a href="#access-resource">7.</a>&nbsp;
@@ -1936,7 +1936,7 @@ Access Token Response</h3>
             If the access token request is valid and authorized, the authorization server issues an
             access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
             If the request client authentication failed or is invalid, the authorization server returns
-            an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
+            an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
           
 </p>
 <p>
@@ -2540,7 +2540,7 @@ Access Token Response</h3>
             If the access token request is valid and authorized, the authorization server issues an
             access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
             If the request failed client authentication or is invalid, the authorization server returns
-            an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
+            an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
           
 </p>
 <p>
@@ -2686,7 +2686,7 @@ Access Token Response</h3>
             access token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>. A refresh token SHOULD
             NOT be included. If the request failed client authentication or is invalid, the
             authorization server returns an error response as described in
-            <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
+            <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
           
 </p>
 <p>
@@ -2740,7 +2740,7 @@ Extensions</h3>
           If the access token request is valid and authorized, the authorization server issues an
           access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
           If the request failed client authentication or is invalid, the authorization server returns
-          an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
+          an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
         
 </p>
 <a name="token-issue"></a><br /><hr />
@@ -2750,7 +2750,7 @@ Extensions</h3>
 
 <p>
         アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に述べる形式でアクセストークン (および任意でリフレッシュトークン) を発行する.
-        クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a> に述べる形式でエラーレスポンスを返す.
+        クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> に述べる形式でエラーレスポンスを返す.
         
       
 </p>
@@ -2861,11 +2861,12 @@ Extensions</h3>
 <a name="token-errors"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.2"></a><h3>5.2.&nbsp;
-Error Response</h3>
+エラーレスポンス<!-- Error Response --></h3>
 
 <p>
-          The authorization server responds with an HTTP 400 (Bad Request) status code and includes
-          the following parameters with the response:
+          認可サーバーはHTTP ステータスコード 400 (Bad Request) を返す.
+          このレスポンスには以下のパラメーターが含まれる.
+          
         
 </p>
 <p>
@@ -2874,57 +2875,54 @@ Error Response</h3>
 <dt>error</dt>
 <dd>
               
-              REQUIRED. A single error code from the following:
-
+              必須 (REQUIRED).
+              以下のエラーコードより1つを設定する.
+              
               
 <blockquote class="text"><dl>
 <dt>invalid_request</dt>
 <dd>
                   
-                  The request is missing a required parameter, includes an unsupported
-                  parameter value, repeats a parameter, includes multiple
-                  credentials, utilizes more than one mechanism for authenticating the client,
-                  or is otherwise malformed.
+                  リクエストに必要なパラメーターが含まれていない.
+                  これには, サポートされないパラメーター値が含まれている, パラメータが重複している, クライアント認証のために複数のメカニズムを利用するための複数のクレデンシャルが設定されている, その他異常値が設定されている, というケースを含んでいる.
+                  
                 
 </dd>
 <dt>invalid_client</dt>
 <dd>
                   
-                  Client authentication failed (e.g. unknown client, no client authentication
-                  included, or unsupported authentication method). The authorization server MAY
-                  return an HTTP 401 (Unauthorized) status code to indicate which HTTP
-                  authentication schemes are supported. If the client attempted to authenticate via
-                  the <tt>Authorization</tt> request header field,
-                  the authorization server MUST respond with an HTTP 401 (Unauthorized) status
-                  code, and include the <tt>WWW-Authenticate</tt> response
-                  header field matching the authentication scheme used by the client.
+                  クライアント認証に失敗した (例えば未知のクライアントやクライアント認証がされていない, もしくはサポートされない認証方式).
+                  認可サーバーはHTTP認証スキームがサポートされていないことを示すためにHTTP ステータスコード 401 (Unauthorized) を返してもよい (MAY).
+                  もしクライアントが <tt>Authorization</tt> リクエストヘッダー経由で認証を試みた場合, 認可サーバーはHTTP ステータスコード 401 (Unauthorized) と共に, <tt>WWW-Authenticate</tt> レスポンスヘッダーにクライアントが利用すべき認証スキームを含めなければならない (MUST).
+                  
                 
 </dd>
 <dt>invalid_grant</dt>
 <dd>
                   
-                  The provided authorization grant (e.g. authorization code, resource owner
-                  credentials, client credentials) is invalid, expired, revoked, does not match the
-                  redirection URI used in the authorization request, or was issued to another client.
+                  提供されたアクセス許可 (例えば認可コード, リソースオーナークレデンシャル, クライアントクレデンシャル) が不正, 有効期限切れ, 失効している, 認可要求の中のリダイレクト先URIとマッチしていない, 他のクライアントから発行されている.
+                  
                 
 </dd>
 <dt>unauthorized_client</dt>
 <dd>
                   
-                  The authenticated client is not authorized to use this authorization grant type.
+                  認証されたクライアントが当該の grant_type を利用する様に認可されていない.
+                  
                 
 </dd>
 <dt>unsupported_grant_type</dt>
 <dd>
                   
-                  The authorization grant type is not supported by the authorization server.
+                  grant_type が認可サーバーによってサポートされていない.
+                  
                 
 </dd>
 <dt>invalid_scope</dt>
 <dd>
                   
-                  The requested scope is invalid, unknown, malformed, or exceeds the scope granted
-                  by the resource owner.
+                  要求された scope が不正, 未知, 異常, リソースオーナーによって与えられた範囲を超えている.
+                  
                 
 </dd>
 </dl></blockquote>
@@ -2933,32 +2931,33 @@ Error Response</h3>
 <dt>error_description</dt>
 <dd>
               
-              OPTIONAL. A human-readable UTF-8 encoded text providing additional information,
-              used to assist the client developer in understanding the error that occurred.
+              任意 (OPTIONAL).
+              クライアント開発者が発生したエラーを理解しやすくするためのUTF-8でエンコードされた可読性のある追加情報.
+              
             
 </dd>
 <dt>error_uri</dt>
 <dd>
               
-              OPTIONAL. A URI identifying a human-readable web page with information about the
-              error, used to provide the client developer with additional information about the
-              error.
+              任意 (OPTIONAL).
+              クライアント開発者に発生したエラーに関する追加情報を提供する可読性のある情報が記載されているウェブページのURI.
+              
             
 </dd>
 </dl></blockquote><p>
         
 </p>
 <p>
-          The parameters are included in the entity body of the HTTP response using the
-          <tt>application/json</tt> media type as defined by
-          <a class='info' href='#RFC4627'>[RFC4627]<span> (</span><span class='info'>Crockford, D., &ldquo;The application/json Media Type for JavaScript Object Notation (JSON),&rdquo; July&nbsp;2006.</span><span>)</span></a>. The parameters are serialized into a JSON structure by
-          adding each parameter at the highest structure level. Parameter names and string values
-          are included as JSON strings. Numerical values are included as JSON numbers. The order of
-          parameters does not matter and can vary.
+          これらのパラメーターは, <a class='info' href='#RFC4627'>[RFC4627]<span> (</span><span class='info'>Crockford, D., &ldquo;The application/json Media Type for JavaScript Object Notation (JSON),&rdquo; July&nbsp;2006.</span><span>)</span></a> で定義されているメディアタイプ <tt>application/json</tt> 形式で, HTTPレスポンスボディーに含まれる.
+          JSONへのシリアライゼーションは, 各パラメーターをJSONオブジェクトの最上位要素とする形式で行う.
+          パラメーター名と文字列値はJSON文字列, 数値はJSON数値となる.
+          パラメーターの順序は問わず, 多様であり得る.
+          
         
 </p>
 <p>
-            For example:
+            例:
+            
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -3061,7 +3060,7 @@ Refreshing an Access Token</h3>
         If valid and authorized, the authorization server issues an access token as described in
         <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>. If the request failed verification or is invalid, the
         authorization server returns an error response as described in
-        <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
+        <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
       
 </p>
 <p>
@@ -3263,7 +3262,7 @@ Defining Additional Error Codes</h3>
           extension grant types) require additional error codes to be used with the authorization
           code grant error response (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), the implicit grant error
           response (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), or the token error response
-          (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>), such error codes MAY be defined.
+          (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>), such error codes MAY be defined.
         
 </p>
 <p>
@@ -4552,7 +4551,7 @@ Registration Template</h3>
                 The location(s) where the error can be used. The possible locations are:
                 authorization code grant error response (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>),
                 implicit grant error response (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), or token
-                error response (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a>).
+                error response (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>).
               
 </dd>
 <dt>Related protocol extension:</dt>
