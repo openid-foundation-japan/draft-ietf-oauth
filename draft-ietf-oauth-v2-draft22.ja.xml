@@ -2056,7 +2056,7 @@
 
     <section title='アクセストークンの発行<!-- Issuing an Access Token -->' anchor='token-issue'>
       <t>
-        アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <xref target='token-response' /> に述べる形式でアクセストークン (と任意でリフレッシュトークン) を発行する.
+        アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <xref target='token-response' /> に述べる形式でアクセストークン (および任意でリフレッシュトークン) を発行する.
         クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <xref target='token-errors' /> に述べる形式でエラーレスポンスを返す.
         <!--
         If the access token request is valid and authorized, the authorization server issues an
@@ -2068,8 +2068,8 @@
 
       <section title='成功レスポンス<!-- Successful Response -->' anchor='token-response'>
         <t>
-          認可サーバーはアクセストークン (と任意でリフレッシュトークン) を発行する.
-          このレスポンスはエンティティーボディーに以下のパラメーターを含み, 200 HTTP ステータスコード (OK) で返される.
+          認可サーバーはアクセストークン (および任意でリフレッシュトークン) を発行する.
+          このレスポンスはエンティティーボディーに以下のパラメーターを含み, HTTP ステータスコード 200 (OK) で返される.
           <!--
           The authorization server issues an access token and optional refresh token, and
           constructs the response by adding the following parameters to the entity body of the HTTP
@@ -2112,7 +2112,7 @@
               <vspace />
               任意 (OPTIONAL).
               リフレッシュトークン.
-              同じアクセス許可を使って新しいアクセストークンを取得するのに利用される.
+              同じアクセス許可を用いて新しいアクセストークンを取得するのに利用される.
               詳細は <xref target='token-refresh' /> で述べる.
               <!--
               OPTIONAL. The refresh token which can be used to obtain new access tokens using the
@@ -2183,7 +2183,7 @@
           クライアントは認識できないレスポンスパラメーターを無視するべきである (SHOULD).
           トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
           クライアントは値のサイズについてなんらかの仮定をすべきではない.
-          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+          認可サーバーは自身が発行するあらゆる値のサイズについて明記すべきである.
           <!--
           The client SHOULD ignore unrecognized response parameters. The sizes of tokens and other
           values received from the authorization server are left undefined. The client should

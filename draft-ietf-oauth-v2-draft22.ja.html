@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: April 29, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: April 30, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">October 27, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">October 28, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on April 29, 2012.</p>
+This Internet-Draft will expire on April 30, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -2749,7 +2749,7 @@ Extensions</h3>
 アクセストークンの発行<!-- Issuing an Access Token --></h3>
 
 <p>
-        アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に述べる形式でアクセストークン (と任意でリフレッシュトークン) を発行する.
+        アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に述べる形式でアクセストークン (および任意でリフレッシュトークン) を発行する.
         クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>Error Response</span><span>)</span></a> に述べる形式でエラーレスポンスを返す.
         
       
@@ -2760,8 +2760,8 @@ Extensions</h3>
 成功レスポンス<!-- Successful Response --></h3>
 
 <p>
-          認可サーバーはアクセストークン (と任意でリフレッシュトークン) を発行する.
-          このレスポンスはエンティティーボディーに以下のパラメーターを含み, 200 HTTP ステータスコード (OK) で返される.
+          認可サーバーはアクセストークン (および任意でリフレッシュトークン) を発行する.
+          このレスポンスはエンティティーボディーに以下のパラメーターを含み, HTTP ステータスコード 200 (OK) で返される.
           
         
 </p>
@@ -2800,7 +2800,7 @@ Extensions</h3>
               
               任意 (OPTIONAL).
               リフレッシュトークン.
-              同じアクセス許可を使って新しいアクセストークンを取得するのに利用される.
+              同じアクセス許可を用いて新しいアクセストークンを取得するのに利用される.
               詳細は <a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>Refreshing an Access Token</span><span>)</span></a> で述べる.
               
             
@@ -2854,7 +2854,7 @@ Extensions</h3>
           クライアントは認識できないレスポンスパラメーターを無視するべきである (SHOULD).
           トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
           クライアントは値のサイズについてなんらかの仮定をすべきではない.
-          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+          認可サーバーは自身が発行するあらゆる値のサイズについて明記すべきである.
           
         
 </p>
