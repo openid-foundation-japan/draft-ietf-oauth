@@ -2214,8 +2214,7 @@
               <list style='hanging' hangIndent='6'>
                 <t hangText='invalid_request'>
                   <vspace />
-                  リクエストに必要なパラメーターが含まれていない.
-                  これには, サポートされないパラメーター値が含まれている, パラメータが重複している, クライアント認証のために複数のメカニズムを利用するための複数のクレデンシャルが設定されている, その他異常値が設定されている, というケースを含んでいる.
+                  リクエストに必要なパラメーターが含まれていない, サポートされないパラメーター値が含まれている, パラメーターが重複している, 複数のクレデンシャルが含まれている, クライアント認証のための複数のメカニズムが利用されている, もしくは異常値が設定されている.
                   <!--
                   The request is missing a required parameter, includes an unsupported
                   parameter value, repeats a parameter, includes multiple
@@ -2241,7 +2240,7 @@
                 </t>
                 <t hangText='invalid_grant'>
                   <vspace />
-                  提供されたアクセス許可 (例えば認可コード, リソースオーナークレデンシャル, クライアントクレデンシャル) が不正, 有効期限切れ, 失効している, 認可要求の中のリダイレクト先URIとマッチしていない, 他のクライアントから発行されている.
+                  提供されたアクセス許可 (例えば認可コード, リソースオーナークレデンシャル, クライアントクレデンシャル) が不正, 有効期限切れ, 失効している, 認可要求の中のリダイレクト先URIとマッチしていない, 他のクライアントに対して発行されたものである.
                   <!--
                   The provided authorization grant (e.g. authorization code, resource owner
                   credentials, client credentials) is invalid, expired, revoked, does not match the
