@@ -284,7 +284,7 @@ Extensions<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-errors">5.2.</a>&nbsp;
 エラーレスポンス<!-- Error Response --><br />
 <a href="#token-refresh">6.</a>&nbsp;
-Refreshing an Access Token<br />
+アクセストークンの更新<!--Refreshing an Access Token--><br />
 <a href="#access-resource">7.</a>&nbsp;
 Accessing Protected Resources<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-types">7.1.</a>&nbsp;
@@ -1048,7 +1048,7 @@ Client Password</h3>
           
 </p>
 <p>
-              For example, requesting to refresh an access token (<a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>Refreshing an Access Token</span><span>)</span></a>)
+              For example, requesting to refresh an access token (<a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>アクセストークンの更新<!--Refreshing an Access Token--></span><span>)</span></a>)
               using the body parameters (extra line breaks are for display purposes only):
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
@@ -2801,7 +2801,7 @@ Extensions</h3>
               任意 (OPTIONAL).
               リフレッシュトークン.
               同じアクセス許可を用いて新しいアクセストークンを取得するのに利用される.
-              詳細は <a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>Refreshing an Access Token</span><span>)</span></a> で述べる.
+              詳細は <a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>アクセストークンの更新<!--Refreshing an Access Token--></span><span>)</span></a> で述べる.
               
             
 </dd>
@@ -2973,13 +2973,12 @@ Extensions</h3>
 <a name="token-refresh"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.6"></a><h3>6.&nbsp;
-Refreshing an Access Token</h3>
+アクセストークンの更新<!--Refreshing an Access Token--></h3>
 
 <p>
-        If the authorization server issued a refresh token to the client, the client makes a
-        refresh request to the token endpoint by adding the following parameters using the
-        <tt>application/x-www-form-urlencoded</tt> format in the HTTP request
-        entity-body:
+	  認可サーバーがクライアントにリフレッシュトークンを発行したとき, クライアントは更新リクエストをトークンエンドポイントに送る.
+	  以下のパラメータが<tt>application/x-www-form-urlencoded</tt>形式でHTTPリクエストエンティティーボディーに加えられる.
+	  
       
 </p>
 <p>
@@ -2988,38 +2987,43 @@ Refreshing an Access Token</h3>
 <dt>grant_type</dt>
 <dd>
             
-            REQUIRED. Value MUST be set to <tt>refresh_token</tt>.
+			必須 (REQUIRED).
+			値は<tt>refresh_token</tt>がセットされなければならない (MUST).
+			
           
 </dd>
 <dt>refresh_token</dt>
 <dd>
             
-            REQUIRED. The refresh token issued to the client.
+			必須 (REQUIRED).
+			クライアントに発行されたリフレッシュトークン.
+			
           
 </dd>
 <dt>scope</dt>
 <dd>
             
-            OPTIONAL. The scope of the access request as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>.
-            The requested scope MUST NOT include any scope not originally granted by the resource
-            owner, and if omitted is treated as equal to the scope originally granted by the
-            resource owner.
+			任意 (OPTIONAL).
+			アクセス要求のスコープ.
+			詳細は<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>で述べる.
+			要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
+			もし指定されなかった場合は, もともと許可された値として扱われる.
+			
           
 </dd>
 </dl></blockquote><p>
       
 </p>
 <p>
-        Because refresh tokens are typically long-lasting credentials used to request additional
-        access tokens, the refresh token is bound to the client it was issued. If the client type
-        is confidential or the client was issued client credentials (or assigned other
-        authentication requirements), the client MUST authenticate with the authorization server as
-        described in <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>Client Authentication</span><span>)</span></a>.
+	  リフレッシュトークンは一般的にアクセストークンの要求に用いる永続的なクレデンシャルであるため, 発行されたクライアントと紐づく.
+	  クライアントタイプがconfidential, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントは, 認可サーバーにより認証されなければならない (MUST).
+	  クライアント認証は<a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>Client Authentication</span><span>)</span></a>で述べる.
+	  
       
 </p>
 <p>
-          For example, the client makes the following HTTP request using transport-layer
-          security (extra line breaks are for display purposes only):
+		例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
+		
         
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -3032,42 +3036,45 @@ Refreshing an Access Token</h3>
 
 </pre></div>
 <p>
-        The authorization server MUST:
+	  認可サーバーは次のことを実施しなければならない (MUST):
+	  
       
 </p>
 <p>
         </p>
 <ul class="text">
 <li>
-            require client authentication for confidential clients or for any client that was
-            issued client credentials (or with other authentication requirements),
+		  confidentialなクライアント, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントにクライアント認証を要求し, 
+		  
           
 </li>
 <li>
-            authenticate the client if client authentication is included and ensure the
-            refresh token was issued to the authenticated client, and
+		  クライアント認証が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し, 
+		  
           
 </li>
 <li>
-            validate the refresh token.
+		  リフレッシュトークンを検証する.
+		  
           
 </li>
 </ul><p>
       
 </p>
 <p>
-        If valid and authorized, the authorization server issues an access token as described in
-        <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>. If the request failed verification or is invalid, the
-        authorization server returns an error response as described in
-        <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
+	  リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
+	  レスポンスの詳細は<a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>で述べる.
+	  リクエストの確認に失敗もしくは無効な場合, 認可サーバーはエラーレスポンスを返す.
+	  エラーレスポンスの詳細は<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>で述べる.
+	  
       
 </p>
 <p>
-        The authorization server MAY issue a new refresh token, in which case the client MUST
-        discard the old refresh token and replace it with the new refresh token. The authorization
-        server MAY revoke the old refresh token after issuing a new refresh token to the client. If
-        a new refresh token is issued, the refresh token scope MUST be identical to that of the
-        refresh token included by the client in the request.
+	  認可サーバーは新しいリフレッシュトークンを返してもよい (MAY).
+	  その時, クライアントは古いリフレッシュトークンを破棄し, 新しいリフレッシュトークンに取り替える.
+	  認可サーバーは新しいリフレッシュトークンを発行した後, 古いリフレッシュトークンを無効化してもよい (MAY).
+	  新しいリフレッシュトークンが発行された時, リフレッシュトークンのスコープはクライアントによってリクエストに含まれたリフレッシュトークンのスコープと同一でなければならない(MUST).
+	  
       
 </p>
 <a name="access-resource"></a><br /><hr />

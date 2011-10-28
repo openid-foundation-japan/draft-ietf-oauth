@@ -2330,43 +2330,70 @@
 
     </section>
 
-    <section title='Refreshing an Access Token' anchor='token-refresh'>
+    <section title='アクセストークンの更新<!--Refreshing an Access Token-->' anchor='token-refresh'>
       <t>
+	  認可サーバーがクライアントにリフレッシュトークンを発行したとき, クライアントは更新リクエストをトークンエンドポイントに送る.
+	  以下のパラメータが<spanx style='verb'>application/x-www-form-urlencoded</spanx>形式でHTTPリクエストエンティティーボディーに加えられる.
+	  <!--
         If the authorization server issued a refresh token to the client, the client makes a
         refresh request to the token endpoint by adding the following parameters using the
         <spanx style='verb'>application/x-www-form-urlencoded</spanx> format in the HTTP request
         entity-body:
+		-->
       </t>
       <t>
         <list style='hanging' hangIndent='6'>
           <t hangText='grant_type'>
             <vspace />
+			必須 (REQUIRED).
+			値は<spanx style='verb'>refresh_token</spanx>がセットされなければならない (MUST).
+			<!--
             REQUIRED. Value MUST be set to <spanx style='verb'>refresh_token</spanx>.
+			-->
           </t>
           <t hangText='refresh_token'>
             <vspace />
+			必須 (REQUIRED).
+			クライアントに発行されたリフレッシュトークン.
+			<!--
             REQUIRED. The refresh token issued to the client.
+			-->
           </t>
           <t hangText='scope'>
             <vspace />
+			任意 (OPTIONAL).
+			アクセス要求のスコープ.
+			詳細は<xref target='scope' />で述べる.
+			要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
+			もし指定されなかった場合は, もともと許可された値として扱われる.
+			<!--
             OPTIONAL. The scope of the access request as described by <xref target='scope' />.
             The requested scope MUST NOT include any scope not originally granted by the resource
             owner, and if omitted is treated as equal to the scope originally granted by the
             resource owner.
+			-->
           </t>
         </list>
       </t>
       <t>
+	  リフレッシュトークンは一般的にアクセストークンの要求に用いる永続的なクレデンシャルであるため, 発行されたクライアントと紐づく.
+	  クライアントタイプがconfidential, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントは, 認可サーバーにより認証されなければならない (MUST).
+	  クライアント認証は<xref target='token-endpoint-auth' />で述べる.
+	  <!--
         Because refresh tokens are typically long-lasting credentials used to request additional
         access tokens, the refresh token is bound to the client it was issued. If the client type
         is confidential or the client was issued client credentials (or assigned other
         authentication requirements), the client MUST authenticate with the authorization server as
         described in <xref target='token-endpoint-auth' />.
+		-->
       </t>
       <figure>
         <preamble>
+		例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
+		<!--
           For example, the client makes the following HTTP request using transport-layer
           security (extra line breaks are for display purposes only):
+		  -->
         </preamble>
         <artwork>
           <![CDATA[
@@ -2380,35 +2407,59 @@
         </artwork>
       </figure>
       <t>
+	  認可サーバーは次のことを実施しなければならない (MUST):
+	  <!--
         The authorization server MUST:
+		-->
       </t>
       <t>
         <list style='symbols'>
           <t>
+		  confidentialなクライアント, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントにクライアント認証を要求し, 
+		  <!--
             require client authentication for confidential clients or for any client that was
             issued client credentials (or with other authentication requirements),
+			-->
           </t>
           <t>
+		  クライアント認証が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し, 
+		  <!--
             authenticate the client if client authentication is included and ensure the
             refresh token was issued to the authenticated client, and
+			-->
           </t>
           <t>
+		  リフレッシュトークンを検証する.
+		  <!--
             validate the refresh token.
+			-->
           </t>
         </list>
       </t>
       <t>
+	  リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
+	  レスポンスの詳細は<xref target='token-response' />で述べる.
+	  リクエストの確認に失敗もしくは無効な場合, 認可サーバーはエラーレスポンスを返す.
+	  エラーレスポンスの詳細は<xref target='token-errors' />で述べる.
+	  <!--
         If valid and authorized, the authorization server issues an access token as described in
         <xref target='token-response' />. If the request failed verification or is invalid, the
         authorization server returns an error response as described in
         <xref target='token-errors' />.
+		-->
       </t>
       <t>
+	  認可サーバーは新しいリフレッシュトークンを返してもよい (MAY).
+	  その時, クライアントは古いリフレッシュトークンを破棄し, 新しいリフレッシュトークンに取り替える.
+	  認可サーバーは新しいリフレッシュトークンを発行した後, 古いリフレッシュトークンを無効化してもよい (MAY).
+	  新しいリフレッシュトークンが発行された時, リフレッシュトークンのスコープはクライアントによってリクエストに含まれたリフレッシュトークンのスコープと同一でなければならない(MUST).
+	  <!--
         The authorization server MAY issue a new refresh token, in which case the client MUST
         discard the old refresh token and replace it with the new refresh token. The authorization
         server MAY revoke the old refresh token after issuing a new refresh token to the client. If
         a new refresh token is issued, the refresh token scope MUST be identical to that of the
         refresh token included by the client in the request.
+		-->
       </t>
     </section>
 
