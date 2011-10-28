@@ -2112,7 +2112,7 @@
               <vspace />
               任意 (OPTIONAL).
               リフレッシュトークン.
-              同じアクセス許可を使って新しいアクセストークンを取得するのに利用される.
+              同じアクセス許可を用いて新しいアクセストークンを取得するのに利用される.
               詳細は <xref target='token-refresh' /> で述べる.
               <!--
               OPTIONAL. The refresh token which can be used to obtain new access tokens using the
