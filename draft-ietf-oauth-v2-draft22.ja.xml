@@ -2463,35 +2463,47 @@
       </t>
     </section>
 
-    <section title='Accessing Protected Resources' anchor='access-resource'>
+    <section title='保護対象リソースへのアクセス<!-- Accessing Protected Resources -->' anchor='access-resource'>
       <t>
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.リソースサーバーはアクセストークンの検証を行い,有効期間が切れていないこと,要求されているリソースがスコープの範囲内であることを確認しなければならない(MUST).アクセストークンを検証する具体的な方法は本仕様の対象外だが、一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+      <!--
         The client accesses protected resources by presenting the access token to the resource
         server. The resource server MUST validate the access token and ensure it has not expired
         and that its scope covers the requested resource. The methods used by the resource server
         to validate the access token (as well as any error responses) are beyond the scope of this
         specification, but generally involve an interaction or coordination between the resource
         server and the authorization server.
+      -->
       </t>
       <t>
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは,リソースサーバーから払い出されたアクセストークンタイプに依存する.一般的には,アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される.
+      <!--
         The method in which the client utilized the access token to authenticate with the resource
         server depends on the type of access token issued by the authorization server. Typically,
         it involves using the HTTP <spanx style='verb'>Authorization</spanx> request header field
         <xref target='RFC2617' /> with an authentication scheme defined by the access token type
         specification.
+      -->
       </t>
 
-      <section title='Access Token Types' anchor='token-types'>
+      <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
         <t>
+          アクセストークンタイプにより,クライアントは保護対象リソースへの（型指定属性込みの）リクエスト時にアクセストークンを利用するために必要な情報を特定することができる.クライアントはトークンタイプが想定外のものであるとき、または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
+        <!--
           The access token type provides the client with the information required to successfully
           utilize the access token to make a protected resource request (along with type-specific
           attributes). The client MUST NOT use an access token if it does not understand or does
           not trust the token type.
+        -->
         </t>
         <figure>
           <preamble>
+            例えば,<xref target='I-D.ietf-oauth-v2-bearer' />に定義される<spanx style='verb'>bearer</spanx>トークンタイプは,単にリクエストにアクセストークンを含めることで利用できる。
+        <!--
             For example, the <spanx style='verb'>bearer</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-bearer' /> is utilized by simply including the access
             token string in the request:
+        -->
           </preamble>
           <artwork>
             <![CDATA[
@@ -2503,10 +2515,13 @@
         </figure>
         <figure>
           <preamble>
+            一方,<xref target='I-D.ietf-oauth-v2-http-mac' />に定義される<spanx style='verb'>mac</spanx>トークンタイプは,アクセストークンと共にMacキーをリクエストに含めて利用できる.このMackキーはHTTPリクエストの一部分を署名するのに利用される.
+        <!-- 
             while the <spanx style='verb'>mac</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-http-mac' /> is utilized by issuing a MAC key
             together with the access token which is used to sign certain components of the HTTP
             requests:
+        -->
           </preamble>
           <artwork>
             <![CDATA[
@@ -2519,15 +2534,21 @@
           </artwork>
         </figure>
         <t>
+          尚,上記はあくまで参考例であり,開発者は利用前に<xref target='I-D.ietf-oauth-v2-bearer' />や<xref target='I-D.ietf-oauth-v2-http-mac' />を参照することが推奨される.
+        <!--
           The above examples are provided for illustration purposes only. Developers are advised to
           consult the <xref target='I-D.ietf-oauth-v2-bearer' /> and
           <xref target='I-D.ietf-oauth-v2-http-mac' /> specifications before use.
+        -->
         </t>
         <t>
+          アクセストークンタイプでは,必要な場合には<spanx style='verb'>access_token</spanx>レスポンス属性と共にクライアントに送り返す追加属性を定義することができる.また,保護対象リソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義される.
+        <!--
           Each access token type definition specifies the additional attributes (if any) sent to
           the client together with the <spanx style='verb'>access_token</spanx> response parameter.
           It also defines the HTTP authentication method used to include the access token when
           making a protected resource request.
+        -->
         </t>
       </section>
 
