@@ -2332,7 +2332,7 @@
 
     <section title='アクセストークンの更新<!--Refreshing an Access Token-->' anchor='token-refresh'>
       <t>
-	  認可サーバーがクライアントにリフレッシュトークンを発行したとき, クライアントは更新リクエストをトークンエンドポイントに送る.
+	  認可サーバーがクライアントにリフレッシュトークンを発行していれば, クライアントはトークンエンドポイントに更新リクエストを送ることができる.
 	  以下のパラメータが<spanx style='verb'>application/x-www-form-urlencoded</spanx>形式でHTTPリクエストエンティティーボディーに加えられる.
 	  <!--
         If the authorization server issued a refresh token to the client, the client makes a
@@ -2346,7 +2346,7 @@
           <t hangText='grant_type'>
             <vspace />
 			必須 (REQUIRED).
-			値は<spanx style='verb'>refresh_token</spanx>がセットされなければならない (MUST).
+			値には<spanx style='verb'>refresh_token</spanx>がセットされなければならない (MUST).
 			<!--
             REQUIRED. Value MUST be set to <spanx style='verb'>refresh_token</spanx>.
 			-->
@@ -2422,7 +2422,7 @@
 			-->
           </t>
           <t>
-		  クライアント認証が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し, 
+		  クライアント認証に必要な情報が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し, 
 		  <!--
             authenticate the client if client authentication is included and ensure the
             refresh token was issued to the authenticated client, and
@@ -2439,7 +2439,7 @@
       <t>
 	  リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
 	  レスポンスの詳細は<xref target='token-response' />で述べる.
-	  リクエストの確認に失敗もしくは無効な場合, 認可サーバーはエラーレスポンスを返す.
+	  リクエストの確認に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
 	  エラーレスポンスの詳細は<xref target='token-errors' />で述べる.
 	  <!--
         If valid and authorized, the authorization server issues an access token as described in

@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: April 30, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 2, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">October 28, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">October 30, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on April 30, 2012.</p>
+This Internet-Draft will expire on May 2, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -286,9 +286,9 @@ Extensions<br />
 <a href="#token-refresh">6.</a>&nbsp;
 アクセストークンの更新<!--Refreshing an Access Token--><br />
 <a href="#access-resource">7.</a>&nbsp;
-Accessing Protected Resources<br />
+保護対象リソースへのアクセス<!-- Accessing Protected Resources --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-types">7.1.</a>&nbsp;
-Access Token Types<br />
+アクセストークンタイプ<!-- Access Token Types --><br />
 <a href="#extensions">8.</a>&nbsp;
 Extensibility<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#new-types">8.1.</a>&nbsp;
@@ -2190,7 +2190,7 @@ Access Token Response</h3>
 <dd>
                 
                 REQUIRED. The type of the token issued as described in
-                <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>Access Token Types</span><span>)</span></a>. Value is case insensitive.
+                <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>アクセストークンタイプ<!-- Access Token Types --></span><span>)</span></a>. Value is case insensitive.
               
 </dd>
 <dt>expires_in</dt>
@@ -2782,7 +2782,7 @@ Extensions</h3>
               必須 (REQUIRED).
               トークンのタイプ.
               値は大文字・小文字を区別しない.
-              詳細は <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>Access Token Types</span><span>)</span></a> で述べる.
+              詳細は <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>アクセストークンタイプ<!-- Access Token Types --></span><span>)</span></a> で述べる.
               
             
 </dd>
@@ -2976,7 +2976,7 @@ Extensions</h3>
 アクセストークンの更新<!--Refreshing an Access Token--></h3>
 
 <p>
-	  認可サーバーがクライアントにリフレッシュトークンを発行したとき, クライアントは更新リクエストをトークンエンドポイントに送る.
+	  認可サーバーがクライアントにリフレッシュトークンを発行していれば, クライアントはトークンエンドポイントに更新リクエストを送ることができる.
 	  以下のパラメータが<tt>application/x-www-form-urlencoded</tt>形式でHTTPリクエストエンティティーボディーに加えられる.
 	  
       
@@ -2988,7 +2988,7 @@ Extensions</h3>
 <dd>
             
 			必須 (REQUIRED).
-			値は<tt>refresh_token</tt>がセットされなければならない (MUST).
+			値には<tt>refresh_token</tt>がセットされなければならない (MUST).
 			
           
 </dd>
@@ -3049,7 +3049,7 @@ Extensions</h3>
           
 </li>
 <li>
-		  クライアント認証が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し, 
+		  クライアント認証に必要な情報が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し, 
 		  
           
 </li>
@@ -3064,7 +3064,7 @@ Extensions</h3>
 <p>
 	  リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
 	  レスポンスの詳細は<a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>で述べる.
-	  リクエストの確認に失敗もしくは無効な場合, 認可サーバーはエラーレスポンスを返す.
+	  リクエストの確認に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
 	  エラーレスポンスの詳細は<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>で述べる.
 	  
       
@@ -3080,41 +3080,31 @@ Extensions</h3>
 <a name="access-resource"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.7"></a><h3>7.&nbsp;
-Accessing Protected Resources</h3>
+保護対象リソースへのアクセス<!-- Accessing Protected Resources --></h3>
 
 <p>
-        The client accesses protected resources by presenting the access token to the resource
-        server. The resource server MUST validate the access token and ensure it has not expired
-        and that its scope covers the requested resource. The methods used by the resource server
-        to validate the access token (as well as any error responses) are beyond the scope of this
-        specification, but generally involve an interaction or coordination between the resource
-        server and the authorization server.
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.リソースサーバーはアクセストークンの検証を行い,有効期間が切れていないこと,要求されているリソースがスコープの範囲内であることを確認しなければならない(MUST).アクセストークンを検証する具体的な方法は本仕様の対象外だが、一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+      
       
 </p>
 <p>
-        The method in which the client utilized the access token to authenticate with the resource
-        server depends on the type of access token issued by the authorization server. Typically,
-        it involves using the HTTP <tt>Authorization</tt> request header field
-        <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> with an authentication scheme defined by the access token type
-        specification.
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは,リソースサーバーから払い出されたアクセストークンタイプに依存する.一般的には,アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <tt>Authorization</tt> ヘッダフィールド <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> が利用される.
+      
       
 </p>
 <a name="token-types"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.7.1"></a><h3>7.1.&nbsp;
-Access Token Types</h3>
+アクセストークンタイプ<!-- Access Token Types --></h3>
 
 <p>
-          The access token type provides the client with the information required to successfully
-          utilize the access token to make a protected resource request (along with type-specific
-          attributes). The client MUST NOT use an access token if it does not understand or does
-          not trust the token type.
+          アクセストークンタイプにより,クライアントは保護対象リソースへの（型指定属性込みの）リクエスト時にアクセストークンを利用するために必要な情報を特定することができる.クライアントはトークンタイプが想定外のものであるとき、または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
+        
         
 </p>
 <p>
-            For example, the <tt>bearer</tt> token type defined in
-            <a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a> is utilized by simply including the access
-            token string in the request:
+            例えば,<a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>に定義される<tt>bearer</tt>トークンタイプは,単にリクエストにアクセストークンを含めることで利用できる。
+        
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -3124,10 +3114,8 @@ Access Token Types</h3>
 
 </pre></div>
 <p>
-            while the <tt>mac</tt> token type defined in
-            <a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a> is utilized by issuing a MAC key
-            together with the access token which is used to sign certain components of the HTTP
-            requests:
+            一方,<a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>に定義される<tt>mac</tt>トークンタイプは,アクセストークンと共にMacキーをリクエストに含めて利用できる.このMackキーはHTTPリクエストの一部分を署名するのに利用される.
+        
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -3139,16 +3127,13 @@ Access Token Types</h3>
 
 </pre></div>
 <p>
-          The above examples are provided for illustration purposes only. Developers are advised to
-          consult the <a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a> and
-          <a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a> specifications before use.
+          尚,上記はあくまで参考例であり,開発者は利用前に<a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>や<a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>を参照することが推奨される.
+        
         
 </p>
 <p>
-          Each access token type definition specifies the additional attributes (if any) sent to
-          the client together with the <tt>access_token</tt> response parameter.
-          It also defines the HTTP authentication method used to include the access token when
-          making a protected resource request.
+          アクセストークンタイプでは,必要な場合には<tt>access_token</tt>レスポンス属性と共にクライアントに送り返す追加属性を定義することができる.また,保護対象リソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義される.
+        
         
 </p>
 <a name="extensions"></a><br /><hr />
