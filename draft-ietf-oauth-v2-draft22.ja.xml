@@ -2706,12 +2706,15 @@
         </t>
       </section>
 
-      <section title='Defining New Authorization Endpoint Response Types' anchor='response-type-ext'>
+      <section title='新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types -->' anchor='response-type-ext'>
         <t>
+          認可エンドポイントで利用される新しいレスポンスタイプは認可エンドポイントレスポンスタイプレジストリーに <xref target='response-type-registry' /> の手順で定義され登録される. レスポンスタイプ名は response-type ABNF に従って定義する必要がある (MUST).
+          <!--
           New response types for use with the authorization endpoint are defined and registered in
           the authorization endpoint response type registry following the procedure in
           <xref target='response-type-registry' />. Response type names MUST conform to the
           response-type ABNF.
+          -->
         </t>
         <figure>
           <artwork>
@@ -2723,39 +2726,54 @@
           </artwork>
         </figure>
         <t>
+          レスポンスタイプが空白文字 (%x20) のうち一つを含む場合, それは空白で区切られた順不同の値のリストとして扱われる. 値の順番は一通りだけ登録でき, 同じ値の組の順番を変えた他のすべての組み合わせを網羅する.
+          <!--
           If a response type contains one of more space characters (%x20), it is compared as a
           space-delimited list of values in which the order of values does not matter. Only one
           order of values can be registered, which covers all other arrangements of the same set of
           values.
+          -->
         </t>
         <t>
+          例えば, 本仕様ではレスポンスタイプ <spanx style='verb'>token code</spanx> を定義しないが, 拡張仕様として <spanx style='verb'>token code</spanx> レスポンスタイプを定義し登録することは可能である. 一旦登録されると同じ組み合わせは <spanx style='verb'>code token</spanx> としては登録することはできないが, 両方の値は同じレスポンスタイプを示すために使うことが出来る.
+          <!--
           For example, the response type <spanx style='verb'>token code</spanx> is left undefined
           by this specification. However, an extension can define and register the
           <spanx style='verb'>token code</spanx> response type. Once registered, the same
           combination cannot be registered as <spanx style='verb'>code token</spanx>, but both
           values can be used to denote the same response type.
+          -->
         </t>
       </section>
 
-      <section title='Defining Additional Error Codes' anchor='new-errors'>
+      <section title='追加のエラーコードの定義<!-- Defining Additional Error Codes -->' anchor='new-errors'>
         <t>
+          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コード付与エラーレスポンス (<xref target='code-authz-error' />), implicit grant エラーレスポンス (<xref target='implicit-authz-error' />), トークンエラーレスポンス (<xref target='token-errors' />) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
+          <!--
           In cases where protocol extensions (i.e. access token types, extension parameters, or
           extension grant types) require additional error codes to be used with the authorization
           code grant error response (<xref target='code-authz-error' />), the implicit grant error
           response (<xref target='implicit-authz-error' />), or the token error response
           (<xref target='token-errors' />), such error codes MAY be defined.
+          -->
         </t>
         <t>
+          拡張エラーコードは登録されたアクセストークンタイプ, エンドポイントパラメータ, 拡張グラントタイプと共に利用する場合は (<xref target='error-registry' /> の手順に従って) 登録されなければならない (MUST). 登録されていない拡張と共に利用するエラーコードは登録してもよい (MAY).
+          <!--
           Extension error codes MUST be registered (following the procedures in
           <xref target='error-registry' />) if the extension they are used in conjunction with is
           a registered access token type, a registered endpoint parameter, or an extension grant
           type. Error codes used with unregistered extensions MAY be registered.
+          -->
         </t>
         <t>
+          エラーコードは error-code ABNF に従う必要があり (MUST), 可能な場合は識別名をプレフィックスとして付与するべきである (SHOULD). 例えば, 不正な値が拡張パラメーター  <spanx style='verb'>example</spanx> に設定されたことを示すエラーは <spanx style='verb'>example_invalid</spanx> と命名されるべきである.
+          <!--
           Error codes MUST conform to the error-code ABNF, and SHOULD be prefixed by an identifying
           name when possible. For example, an error identifying an invalid value set to the
           extension parameter <spanx style='verb'>example</spanx> should be named
           <spanx style='verb'>example_invalid</spanx>.
+          -->
         </t>
         <figure>
           <artwork>
