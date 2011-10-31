@@ -349,37 +349,54 @@
 
       </section>
 
-      <section title='Access Token'>
+      <section title='アクセストークン'>
+<!--    <section title='Access Token'>  -->
         <t>
+          アクセストークンは保護されたリソースにアクセスするために使用されるクレデンシャルである. アクセストークンはクライアントに対して発行される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. トークンは特定の範囲とアクセス期間を表し, それらはリソースのオーナーによって与えられ, リソースサーバーと認可サーバーによって強制される.
+        </t>
+        <!--
           Access tokens are credentials used to access protected resources. An access token is a
           string representing an authorization issued to the client. The string is usually opaque
           to the client. Tokens represent specific scopes and durations of access, granted by the
           resource owner, and enforced by the resource server and authorization server.
-        </t>
+        -->
         <t>
+          トークンは認可情報を取り出すための識別子を意味してもよく, また検証可能な方法でそれ自身に認可情報を含んでもよい(データと署名を含むトークン文字列など). 本仕様で定めていない追加の認証クレデンシャルは, クライアントがトークンを使用するために要求されてもよい.
+        </t>
+        <!--
           The token may denote an identifier used to retrieve the authorization information, or
           self-contain the authorization information in a verifiable manner (i.e. a token string
           consisting of some data and a signature). Additional authentication credentials, which
           are beyond the scope of this specification, may be required in order for the client to
           use a token.
-        </t>
+        -->
         <t>
+          いろいろな認証要素(ユーザ名やパスワード)は認証サーバーによって処理されたひとつのアクセストークンに置き換えられ, 抽象化レイヤーを提供する. この抽象化はアクセストークンを取得するための認可の付与よりも限定的なトークンの発行を可能とするだけでなく, リソースサーバーの認証方式の広範囲を処理する必要性を取り除く.
+        </t>
+        <!--
           The access token provides an abstraction layer, replacing different authorization
           constructs (e.g. username and password) with a single token understood by the resource
           server. This abstraction enables issuing access tokens more restrictive than the
           authorization grant used to obtain them, as well as removing the resource server's need to
           understand a wide range of authentication methods.
-        </t>
+        -->
         <t>
+          アクセストークンはリソースサーバーのセキュリティ要件に基づいて異なるフォーマット, 構成, および利用方法を持つことができる(暗号の特性). アクセストークンの属性と保護されたリソースにアクセスするための方法は本仕様に定めるところではなく, 付録の仕様書によって定義されている.
+        </t>
+        <!--
           Access tokens can have different formats, structures, and methods of utilization (e.g.
           cryptographic properties) based on the resource server security requirements. Access token
           attributes and the methods used to access protected resources are beyond the scope of this
           specification and are defined by companion specifications.
-        </t>
+        -->
       </section>
 
-      <section title='Refresh Token'>
+      <section title='リフレッシュトークン'>
+<!--      <section title='Refresh Token'>  -->
         <t>
+          リフレッシュトークンはアクセストークンを取得するために使用されるクレデンシャルである. リフレッシュトークンは認可サーバーによってクライアントに対して発行され, 現在のアクセストークンが仕様に一致しないあるいは期限切れの際に新しいアクセストークンを取得するため, または同一あるいは狭い範囲で追加のアクセストークンを取得するために利用される(アクセストークンはリソースオーナーによって認可されるよりも有効期限は短く, 権限が少なくてもよい). リフレッシュトークンの発行はオプションである. 認可サーバーがリフレッシュトークンを発行する場合, アクセストークン発行の際にリフレッシュトークンも含まれる.
+        </t>
+        <!--
           Refresh tokens are credentials used to obtain access tokens. Refresh tokens are issued to
           the client by the authorization server and are used to obtain a new access token when the
           current access token becomes invalid or expires, or to obtain additional access tokens
@@ -387,15 +404,19 @@
           permissions than authorized by the resource owner). Issuing a refresh token is optional.
           If the authorization server issues a refresh token, it is included when issuing an access
           token.
-        </t>
+        -->
         <t>
+          リフレッシュトークンはリソースオーナーによってクライアントに付与される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. そのトークンは認可情報を取り出すための識別子を意味してもよい. アクセストークンとは異なり, リフレッシュトークンは認可サーバーでのみ使用されるものであり, リソースサーバーに送信されることはない.
+        </t>
+        <!--
           A refresh token is a string representing the authorization granted to the client by the
           resource owner. The string is usually opaque to the client. The token denotes an
           identifier used to retrieve the authorization information. Unlike access tokens, refresh
           tokens are intended for use only with authorization servers and are never sent to
           resource servers.
-        </t>
-        <figure title='Refreshing an Expired Access Token' anchor='Figure-2'>
+        -->
+        <figure title='期限切れのアクセストークンのリフレッシュ' anchor='Figure-2'>
+<!--        <figure title='Refreshing an Expired Access Token' anchor='Figure-2'>  -->
           <artwork>
             <![CDATA[
   +--------+                                           +---------------+
@@ -422,66 +443,106 @@
           </artwork>
         </figure>
         <t>
-          The flow illustrated in <xref target='Figure-2' /> includes the following steps:
+          <xref target='Figure-2' /> で示されたフローは以下のステップを含む.
         </t>
+        <!--
+          The flow illustrated in <xref target='Figure-2' /> includes the following steps:
+        -->
         <t>
           <list style='format (%C)'>
             <t>
+              クライアントは認可サーバーを使用した認証によってアクセストークンを要求し認可の付与を示す.
+            </t>
+            <!--
               The client requests an access token by authenticating with the authorization server,
               and presenting an authorization grant.
-            </t>
+            -->
             <t>
+              認可サーバーはクライアントを認証するとともに認可の付与の正当性を確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
+            </t>
+            <!--
               The authorization server authenticates the client and validates the authorization
               grant, and if valid issues an access token and a refresh token.
-            </t>
+            -->
             <t>
+              クライアントはアクセストークンを示すことによってリソースサーバーへの保護されたリソースの要求をする.
+            </t>
+            <!--
               The client makes a protected resource request to the resource server by presenting
               the access token.
-            </t>
+            -->
             <t>
+              リソースサーバーはアクセストークンの正当性を確認し, 有効な場合はリクエストを処理する.
+            </t>
+            <!--
               The resource server validates the access token, and if valid, serves the request.
-            </t>
+            -->
             <t>
+              ステップ (C) と (D) はアクセストークン有効期限が切れるまで繰り返される. クライアントがアクセストークンの期限切れを知っている場合, ステップ (G) にスキップし, そうでなければ別の保護されたリソースの要求をする.
+            </t>
+            <!--
               Steps (C) and (D) repeat until the access token expires. If the client knows the
               access token expired, it skips to step (G), otherwise it makes another protected
               resource request.
-            </t>
+            -->
             <t>
+              アクセストークンが有効でないとき, リソースサーバーは無効なトークンエラーを返す.
+            </t>
+            <!--
               Since the access token is invalid, the resource server returns an invalid token
               error.
-            </t>
+            -->
             <t>
+              クライアントは認可サーバーを使用した認証によって新しいアクセストークンを要求し認可の付与を示す. クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーに基づいている.
+            </t>
+            <!--
               The client requests a new access token by authenticating with the authorization
               server and presenting the refresh token. The client authentication requirements are
               based on the client type and on the authorization server policies.
-            </t>
+            -->
             <t>
+              認可サーバーはクライアントを認証しリフレッシュトークンの正当性を確認し, 有効な場合は新しいアクセストークン(と必要に応じてリフレッシュトークン)を発行する.
+            </t>
+            <!--
               The authorization server authenticates the client and validates the refresh token,
               and if valid issues a new access token (and optionally, a new refresh token).
-            </t>
+            -->
           </list>
         </t>
       </section>
 
       <section title='Notational Conventions'>
         <t>
+          本仕様書で用いられる各キーワード「MUST (しなければならない)」, 「MUST NOT (してはならない)」, 「REQUIRED (必須である)」, 「SHALL (するものとする)」, 「SHALL NOT (しないものとする)」, 「SHOULD (すべきである)」, 「SHOULD NOT (すべきではない)」, 「RECOMMENDED (推奨される)」, 「MAY (してもよい)」, 「OPTIONAL (任意である)」は <xref target='RFC2119' /> で述べられている通りに解釈されるべきものである.
+        </t>
+        <!--
           The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD
           NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this specification are to be interpreted as
           described in <xref target='RFC2119' />.
-        </t>
+        -->
         <t>
-          This specification uses the Augmented Backus-Naur Form (ABNF) notation of
+          本仕様書は <xref target='RFC5234' /> における Augmented Backus-Naur Form (ABNF) 表記法を使用している.
           <xref target='RFC5234' />.
         </t>
+        <!--
+          This specification uses the Augmented Backus-Naur Form (ABNF) notation of
+          <xref target='RFC5234' />.
+        -->
         <t>
+          特定のセキュリティ関連の用語は <xref target='RFC4949' /> で定義された意味で理解されるべきである. これらの用語は, 「攻撃 (attack)」, 「認証 (authentication)」, 「認可 (authorization)」, 「証明書 (certificate)」, 「機密性 (confidentiality)」, 「クレデンシャル (credential)」, 「暗号化 (encryption)」, 「アイデンティティ (identity)」, 「記号 (sign)」, 「署名 (signature)」, 「信頼 (trust)」, 「正当性の確認 (validate)」, 「検証 (verify)」に限定されない.
+        </t>
+        <!--
           Certain security-related terms are to be understood in the sense defined in
           <xref target='RFC4949' />. These terms include, but are not limited to, 'attack',
           'authentication', 'authorization', 'certificate', 'confidentiality', 'credential',
           'encryption', 'identity', 'sign', 'signature', 'trust', 'validate', and 'verify'.
-        </t>
+        -->
         <t>
-          Unless otherwise noted, all the protocol parameter names and values are case sensitive.
+          特に記載が無い限り, 全てのプロトコルパラメーター名と値は, 大文字・小文字を区別する.
         </t>
+        <!--
+          Unless otherwise noted, all the protocol parameter names and values are case sensitive.
+        -->
       </section>
 
     </section>
