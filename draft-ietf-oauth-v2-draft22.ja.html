@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 2, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 3, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">October 30, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">October 31, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 2, 2012.</p>
+This Internet-Draft will expire on May 3, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -290,13 +290,13 @@ Extensions<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-types">7.1.</a>&nbsp;
 アクセストークンタイプ<!-- Access Token Types --><br />
 <a href="#extensions">8.</a>&nbsp;
-Extensibility<br />
+仕様の拡張性<!-- Extensibility --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#new-types">8.1.</a>&nbsp;
-Defining Access Token Types<br />
+アクセストークンタイプの定義<!-- Defining Access Token Types --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor37">8.2.</a>&nbsp;
-Defining New Endpoint Parameters<br />
+新たなエンドポイントパラメーターの定義<!-- Defining New Endpoint Parameters --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor38">8.3.</a>&nbsp;
-Defining New Authorization Grant Types<br />
+新たな認可グラントタイプの定義<!-- Defining New Authorization Grant Types --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#response-type-ext">8.4.</a>&nbsp;
 Defining New Authorization Endpoint Response Types<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#new-errors">8.5.</a>&nbsp;
@@ -3139,30 +3139,30 @@ Extensions</h3>
 <a name="extensions"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.8"></a><h3>8.&nbsp;
-Extensibility</h3>
+仕様の拡張性<!-- Extensibility --></h3>
 
 <a name="new-types"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.8.1"></a><h3>8.1.&nbsp;
-Defining Access Token Types</h3>
+アクセストークンタイプの定義<!-- Defining Access Token Types --></h3>
 
 <p>
-          Access token types can be defined in one of two ways: registered in the access token type
-          registry (following the procedures in <a class='info' href='#type-registry'>Section&nbsp;11.1<span> (</span><span class='info'>The OAuth Access Token Type Registry</span><span>)</span></a>), or by using a
-          unique absolute URI as its name.
+          アクセストークンタイプを定義する方法は, <a class='info' href='#type-registry'>Section&nbsp;11.1<span> (</span><span class='info'>The OAuth Access Token Type Registry</span><span>)</span></a> に示す手順でアクセストークンタイプレジストリーへの登録を行う方法と, 重複しない絶対 URI をタイプ名として用いる方法の2通りが存在する.
+          
         
 </p>
 <p>
-          Types utilizing a URI name SHOULD be limited to vendor-specific implementations that are
-          not commonly applicable, and are specific to the implementation details of the resource
-          server where they are used.
+          URI をタイプ名として用いるトークンタイプは, ベンダー固有の実装に限定されるべきであり (SHOULD), 広く一般に適用されるものではない.
+          またこれらのトークンタイプは, それが用いられるリソースサーバーの実装詳細に固有のものである.
+          
         
 </p>
 <p>
-          All other types MUST be registered. Type names MUST conform to the type-name ABNF. If the
-          type definition includes a new HTTP authentication scheme, the type name SHOULD be
-          identical to the HTTP authentication scheme name (as defined by <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a>).
-          The token type <tt>example</tt> is reserved for use in examples.
+          上記以外のすべてのトークンタイプは, レジストリへの登録が必須である (MUST).
+          タイプ名は type-name ABNF に従わなければならない (MUST).
+          またトークンタイプが新しい HTTP 認証スキームを定義する場合, そのタイプ名には (<a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> に定義されるように) HTTP 認証スキームと同一のものを用いるべきである (SHOULD).
+          なおトークンタイプ <tt>example</tt> は, 例示のために予約済である.
+          
         
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -3173,17 +3173,16 @@ Defining Access Token Types</h3>
 <a name="anchor37"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.8.2"></a><h3>8.2.&nbsp;
-Defining New Endpoint Parameters</h3>
+新たなエンドポイントパラメーターの定義<!-- Defining New Endpoint Parameters --></h3>
 
 <p>
-          New request or response parameters for use with the authorization endpoint or the token
-          endpoint are defined and registered in the parameters registry following the procedure in
-          <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>The OAuth Parameters Registry</span><span>)</span></a>.
+          認可エンドポイントおよびトークンエンドポイントで用いられる新たなリクエストないしレスポンスパラメーターは, <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>The OAuth Parameters Registry</span><span>)</span></a> に示す手順に従って定義され, パラメーターレジストリーに登録される.
+          
         
 </p>
 <p>
-          Parameter names MUST conform to the param-name ABNF and parameter values syntax MUST be
-          well-defined (e.g., using ABNF, or a reference to the syntax of an existing parameter).
+          パラメーター名は param-name ABNF に従わなければならず (MUST), パラメーター値は (ABNF や既存パラメーターのシンタックスを参照するなどの方法で) 明確に定義する必要がある (MUST).
+          
         
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -3192,22 +3191,20 @@ Defining New Endpoint Parameters</h3>
 
 </pre></div>
 <p>
-          Unregistered vendor-specific parameter extensions that are not commonly applicable, and
-          are specific to the implementation details of the authorization server where they are
-          used SHOULD utilize a vendor-specific prefix that is not likely to conflict with other
-          registered values (e.g. begin with 'companyname_').
+          ベンダー固有の未登録拡張パラメーターは, 広く一般には適用されず, それが用いられる認可サーバーの実装詳細に固有のものである.
+          これらの拡張パラメーターには, その他の登録済みの値と衝突しないようなベンダー固有のプレフィックスを用いるべきである. (例: パラメーター名を 'companyname_' で始める)
+          
         
 </p>
 <a name="anchor38"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.8.3"></a><h3>8.3.&nbsp;
-Defining New Authorization Grant Types</h3>
+新たな認可グラントタイプの定義<!-- Defining New Authorization Grant Types --></h3>
 
 <p>
-          New authorization grant types can be defined by assigning them a unique absolute URI for
-          use with the <tt>grant_type</tt> parameter. If the extension grant
-          type requires additional token endpoint parameters, they MUST be registered in the OAuth
-          parameters registry as described by <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>The OAuth Parameters Registry</span><span>)</span></a>.
+          新たな認可グラントタイプは <tt>grant_type</tt> パラメーター値として用いる重複の無い絶対 URI を用いることで定義される.
+          拡張グラントタイプを用いるために新たなトークンエンドポイントパラメーターが必要な場合は, それらのパラメーターを <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>The OAuth Parameters Registry</span><span>)</span></a> に述べるように OAuth パラメーターレジストリーに登録する必要がある (MUST).
+          
         
 </p>
 <a name="response-type-ext"></a><br /><hr />
