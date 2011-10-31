@@ -2615,24 +2615,37 @@
 
     </section>
 
-    <section title='Extensibility' anchor='extensions'>
+    <section title='仕様の拡張性<!-- Extensibility -->' anchor='extensions'>
 
-      <section title='Defining Access Token Types' anchor='new-types'>
+      <section title='アクセストークンタイプの定義<!-- Defining Access Token Types -->' anchor='new-types'>
         <t>
+          アクセストークンタイプを定義する方法は, <xref target='type-registry' /> に示す手順でアクセストークンタイプレジストリーへの登録を行う方法と, 重複しない絶対 URI をタイプ名として用いる方法の2通りが存在する.
+          <!--
           Access token types can be defined in one of two ways: registered in the access token type
           registry (following the procedures in <xref target='type-registry' />), or by using a
           unique absolute URI as its name.
+          -->
         </t>
         <t>
+          URI をタイプ名として用いるトークンタイプは, ベンダー固有の実装に限定されるべきであり (SHOULD), 広く一般に適用されるものではない.
+          またこれらのトークンタイプは, それが用いられるリソースサーバーの実装詳細に固有のものである.
+          <!--
           Types utilizing a URI name SHOULD be limited to vendor-specific implementations that are
           not commonly applicable, and are specific to the implementation details of the resource
           server where they are used.
+          -->
         </t>
         <t>
+          上記以外のすべてのトークンタイプは, レジストリへの登録が必須である (MUST).
+          タイプ名は type-name ABNF に従わなければならない (MUST).
+          またトークンタイプが新しい HTTP 認証スキームを定義する場合, そのタイプ名には (<xref target='RFC2617' /> に定義されるように) HTTP 認証スキームと同一のものを用いるべきである (SHOULD).
+          なおトークンタイプ <spanx style='verb'>example</spanx> は, 例示のために予約済である.
+          <!--
           All other types MUST be registered. Type names MUST conform to the type-name ABNF. If the
           type definition includes a new HTTP authentication scheme, the type name SHOULD be
           identical to the HTTP authentication scheme name (as defined by <xref target='RFC2617' />).
           The token type <spanx style='verb'>example</spanx> is reserved for use in examples.
+          -->
         </t>
         <figure>
           <artwork>
@@ -2644,15 +2657,21 @@
         </figure>
       </section>
 
-      <section title='Defining New Endpoint Parameters'>
+      <section title='新たなエンドポイントパラメーターの定義<!-- Defining New Endpoint Parameters -->'>
         <t>
+          認可エンドポイントおよびトークンエンドポイントで用いられる新たなリクエストないしレスポンスパラメーターは, <xref target='parameters-registry' /> に示す手順に従って定義され, パラメーターレジストリーに登録される.
+          <!--
           New request or response parameters for use with the authorization endpoint or the token
           endpoint are defined and registered in the parameters registry following the procedure in
           <xref target='parameters-registry' />.
+          -->
         </t>
         <t>
+          パラメーター名は param-name ABNF に従わなければならず (MUST), パラメーター値は (ABNF や既存パラメーターのシンタックスを参照するなどの方法で) 明確に定義する必要がある (MUST).
+          <!--
           Parameter names MUST conform to the param-name ABNF and parameter values syntax MUST be
           well-defined (e.g., using ABNF, or a reference to the syntax of an existing parameter).
+          -->
         </t>
         <figure>
           <artwork>
@@ -2663,19 +2682,27 @@
           </artwork>
         </figure>
         <t>
+          ベンダー固有の未登録拡張パラメーターは, 広く一般には適用されず, それが用いられる認可サーバーの実装詳細に固有のものである.
+          これらの拡張パラメーターには, その他の登録済みの値と衝突しないようなベンダー固有のプレフィックスを用いるべきである. (例: パラメーター名を 'companyname_' で始める)
+          <!--
           Unregistered vendor-specific parameter extensions that are not commonly applicable, and
           are specific to the implementation details of the authorization server where they are
           used SHOULD utilize a vendor-specific prefix that is not likely to conflict with other
           registered values (e.g. begin with 'companyname_').
+          -->
         </t>
       </section>
 
-      <section title='Defining New Authorization Grant Types'>
+      <section title='新たな認可グラントタイプの定義<!-- Defining New Authorization Grant Types -->'>
         <t>
+          新たな認可グラントタイプは <spanx style='verb'>grant_type</spanx> パラメーター値として用いる重複の無い絶対 URI を用いることで定義される.
+          拡張グラントタイプを用いるために新たなトークンエンドポイントパラメーターが必要な場合は, それらのパラメーターを <xref target='parameters-registry' /> に述べるように OAuth パラメーターレジストリーに登録する必要がある (MUST).
+          <!--
           New authorization grant types can be defined by assigning them a unique absolute URI for
           use with the <spanx style='verb'>grant_type</spanx> parameter. If the extension grant
           type requires additional token endpoint parameters, they MUST be registered in the OAuth
           parameters registry as described by <xref target='parameters-registry' />.
+          -->
         </t>
       </section>
 
