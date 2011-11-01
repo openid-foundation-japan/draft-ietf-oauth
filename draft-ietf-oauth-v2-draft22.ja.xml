@@ -202,96 +202,135 @@
         -->
       </section>
 
-      <section title='Protocol Flow'>
-        <figure title='Abstract Protocol Flow' anchor='Figure-1'>
+      <section title='プロトコルフロー'>
+<!--       <section title='Protocol Flow'> -->
+        <figure title='プロトコルフローの概要' anchor='Figure-1'>
+<!--         <figure title='Abstract Protocol Flow' anchor='Figure-1'> -->
           <artwork>
             <![CDATA[
+
   +--------+                               +---------------+
-  |        |--(A)- Authorization Request ->|   Resource    |
-  |        |                               |     Owner     |
-  |        |<-(B)-- Authorization Grant ---|               |
+  |        |--(A)----- 認可リクエスト ---->|   リソース    |
+  |        |                               |   オーナー    |
+  |   ク   |<-(B)------- 認可取得 ---------|               |
+  |   ラ   |                               +---------------+
+  |   イ   |
+  |   ア   |                               +---------------+
+  |   ン   |--(C)------- 認可取得 -------->|               |
+  |   ト   |                               | 認可サーバ―  |
+  |        |<-(D)---- アクセストークン ----|               |
   |        |                               +---------------+
   |        |
   |        |                               +---------------+
-  |        |--(C)-- Authorization Grant -->| Authorization |
-  | Client |                               |     Server    |
-  |        |<-(D)----- Access Token -------|               |
-  |        |                               +---------------+
-  |        |
-  |        |                               +---------------+
-  |        |--(E)----- Access Token ------>|    Resource   |
-  |        |                               |     Server    |
-  |        |<-(F)--- Protected Resource ---|               |
+  |        |--(E)---- アクセストークン --->|   リソース    |
+  |        |                               |   サーバー    |
+  |        |<-(F)------ 保護リソース ------|               |
   +--------+                               +---------------+
 ]]>
           </artwork>
         </figure>
         <t>
+                <xref target='Figure-1' />で示されたフロー概要は, ４つのロール間での相互作用と以下のステップについて記載している.
+        </t>
+        <!--
           The abstract flow illustrated in <xref target='Figure-1' /> describes the interaction
           between the four roles and includes the following steps:
-        </t>
+        -->
         <t>
           <list style='format (%C)'>
             <t>
+              クライアントはリソースオーナーからの認可を要求する. その際の認可リクエストはリソースオーナーへ直接送ることができ（図のように）, または間接的に認可サーバを経由して送信することがのぞましい.
+            </t>
+            <!--
               The client requests authorization from the resource owner. The authorization request
               can be made directly to the resource owner (as shown), or preferably indirectly via
               the authorization server as an intermediary.
-            </t>
+            -->
             <t>
+              クライアントは, リソースオーナーの認可許諾を表すクレデンシャルを受け取り, その際は仕様上定義された４つのタイプの１つの許諾タイプか、または拡張された認可形式で発行される. その認可タイプはクライアントの利用する認可リクエストの方式と認可サーバーがサポートする認可タイプ次第である. 
+            </t>
+            <!--
               The client receives an authorization grant which is a credential representing
               the resource owner's authorization, expressed using one of four grant types defined
               in this specification or using an extension grant type. The authorization grant type
               depends on the method used by the client to request authorization and the types
               supported by the authorization server.
-            </t>
+            -->
             <t>
+              クライアントは認可サーバーに対して自身を認証し, アクセス許可を提示することで、アクセストークンを要求する.
+            </t>
+            <!--
               The client requests an access token by authenticating with the authorization server
               and presenting the authorization grant.
-            </t>
+            -->
             <t>
+              認可サーバーはクライアント認証とアクセス許可の正当性を確認し, それが正しい場合にアクセストークンを発行する.
+            </t>
+            <!--
               The authorization server authenticates the client and validates the authorization
               grant, and if valid issues an access token.
-            </t>
+            -->
             <t>
+              クライアントはリソースサーバの保護リソースへリクエストを要求し, 発行されたアクセストークンにより認証を行う. 
+            </t>
+            <!--
               The client requests the protected resource from the resource server and authenticates
               by presenting the access token.
-            </t>
+            -->
             <t>
-              The resource server validates the access token, and if valid, serves the request.
+              リソースサーバはアクセストークンの正当性を確認し, それが正しい場合のみリソースを提供する. 
             </t>
+            <!--
+              The resource server validates the access token, and if valid, serves the request.
+            -->
           </list>
         </t>
       </section>
 
-      <section title='Authorization Grant'>
+      <section title='認可許諾タイプ'>
+<!--       <section title='Authorization Grant'> -->
         <t>
+          リソースオーナーの認可許諾を示すクレデンシャルは, クライアントが利用する取得済みのアクセストークンによって示される. 
+          この仕様では４つの許諾方式を定義している：認可コード, インプリクト, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルに加え, 拡張仕様で追加定義されたタイプも利用できる
+        </t>
+        <!--
           An authorization grant is a credential representing the resource owner's authorization
           (to access its protected resources) used by the client to obtain an access token. This
           specification defines four grant types: authorization code, implicit, resource owner
           password credentials, and client credentials, as well as an extensibility mechanism for
           defining additional types.
-        </t>
+        -->
 
-        <section title='Authorization Code'>
+        <section title='認可コード'>
+<!--         <section title='Authorization Code'> -->
           <t>
+            認可コードは, クライアントとリソースオーナーの仲介者である認可サーバで利用するために取得する. リソースオーナーへ認可リクエストを直接行う代わりに, クライアントをリソースオーナーから認可サーバーへリダイレクトし（<xref target='RFC2616' />に定期されたユーザーエージェントを経由して）, クライアントをリソースオーナーへリダイレクト際に一緒に認可コードを返します. 
+          </t>
+          <!--
             The authorization code is obtained by using an authorization server as an intermediary
             between the client and resource owner. Instead of requesting authorization directly
             from the resource owner, the client directs the resource owner to an authorization
             server (via its user-agent as defined in <xref target='RFC2616' />), which in turn
             directs the resource owner back to the client with the authorization code.
-          </t>
+          -->
           <t>
+            クライアントをリソースオーナーにリダイレクトする前に一緒に認可コードを付与し, リソースオーナーとその認可を得たことを認可サーバが認証する. これによりリソースオーナーは認可サーバによってのみ認証され, リソースオーナーのクレデンシャルはクライアントへ共有されない. 
+          </t>
+          <!--
             Before directing the resource owner back to the client with the authorization code, the
             authorization server authenticates the resource owner and obtains authorization.
             Because the resource owner only authenticates with the authorization server, the
             resource owner's credentials are never shared with the client.
-          </t>
+          -->
           <t>
+            認可コードは, クライアントを認証する効果や,  リソースオーナーのユーザーエージェントを経由せずリソースオーナーを含む第三者に露出することなしにアクセストークンをクライアントに直接伝搬できるなど, いくつかの点で重要なセキュリティ的なメリットを提供する.
+          </t>
+          <!--
             The authorization code provides a few important security benefits such as the ability
             to authenticate the client, and the transmission of the access token directly to
             the client without passing it through the resource owner's user-agent, potentially
             exposing it to others, including the resource owner.
-          </t>
+          -->
         </section>
 
         <section title='Implicit'>
