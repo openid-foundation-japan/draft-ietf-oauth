@@ -298,9 +298,9 @@ Extensions<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor38">8.3.</a>&nbsp;
 新たな認可グラントタイプの定義<!-- Defining New Authorization Grant Types --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#response-type-ext">8.4.</a>&nbsp;
-Defining New Authorization Endpoint Response Types<br />
+新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#new-errors">8.5.</a>&nbsp;
-Defining Additional Error Codes<br />
+追加のエラーコードの定義<!-- Defining Additional Error Codes --><br />
 <a href="#anchor39">9.</a>&nbsp;
 Native Applications<br />
 <a href="#anchor40">10.</a>&nbsp;
@@ -1157,7 +1157,7 @@ Response Type</h3>
                 an authorization code as described by <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a>,
                 <tt>token</tt> for requesting an access token (implicit grant)
                 as described by <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a>, or a registered extension
-                value as described by <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>Defining New Authorization Endpoint Response Types</span><span>)</span></a>. If the response type
+                value as described by <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a>. If the response type
                 contains one or more space characters (%x20), it is interpreted as a
                 space-delimited list of values, where the order of values does not matter (e.g.
                 <tt>a b</tt> is the same as <tt>b a</tt>).
@@ -3172,13 +3172,11 @@ Extensions</h3>
 <a name="response-type-ext"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.8.4"></a><h3>8.4.&nbsp;
-Defining New Authorization Endpoint Response Types</h3>
+新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></h3>
 
 <p>
-          New response types for use with the authorization endpoint are defined and registered in
-          the authorization endpoint response type registry following the procedure in
-          <a class='info' href='#response-type-registry'>Section&nbsp;11.3<span> (</span><span class='info'>The OAuth Authorization Endpoint Response Type Registry</span><span>)</span></a>. Response type names MUST conform to the
-          response-type ABNF.
+          認可エンドポイントで利用される新しいレスポンスタイプは認可エンドポイントレスポンスタイプレジストリーに <a class='info' href='#response-type-registry'>Section&nbsp;11.3<span> (</span><span class='info'>The OAuth Authorization Endpoint Response Type Registry</span><span>)</span></a> の手順で定義され登録される. レスポンスタイプ名は response-type ABNF に従って定義する必要がある (MUST).
+          
         
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -3188,45 +3186,33 @@ Defining New Authorization Endpoint Response Types</h3>
 
 </pre></div>
 <p>
-          If a response type contains one of more space characters (%x20), it is compared as a
-          space-delimited list of values in which the order of values does not matter. Only one
-          order of values can be registered, which covers all other arrangements of the same set of
-          values.
+          レスポンスタイプが空白文字 (%x20) のうち一つを含む場合, それは空白で区切られた順不同の値のリストとして扱われる. 値の順番は一通りだけ登録でき, 同じ値の組の順番を変えた他のすべての組み合わせを網羅する.
+          
         
 </p>
 <p>
-          For example, the response type <tt>token code</tt> is left undefined
-          by this specification. However, an extension can define and register the
-          <tt>token code</tt> response type. Once registered, the same
-          combination cannot be registered as <tt>code token</tt>, but both
-          values can be used to denote the same response type.
+          例えば, 本仕様ではレスポンスタイプ <tt>token code</tt> を定義しないが, 拡張仕様として <tt>token code</tt> レスポンスタイプを定義し登録することは可能である. 一旦登録されると同じ組み合わせは <tt>code token</tt> としては登録することはできないが, 両方の値は同じレスポンスタイプを示すために使うことが出来る.
+          
         
 </p>
 <a name="new-errors"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.8.5"></a><h3>8.5.&nbsp;
-Defining Additional Error Codes</h3>
+追加のエラーコードの定義<!-- Defining Additional Error Codes --></h3>
 
 <p>
-          In cases where protocol extensions (i.e. access token types, extension parameters, or
-          extension grant types) require additional error codes to be used with the authorization
-          code grant error response (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), the implicit grant error
-          response (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), or the token error response
-          (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>), such error codes MAY be defined.
+          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コード付与エラーレスポンス (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), implicit grant エラーレスポンス (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), トークンエラーレスポンス (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
+          
         
 </p>
 <p>
-          Extension error codes MUST be registered (following the procedures in
-          <a class='info' href='#error-registry'>Section&nbsp;11.4<span> (</span><span class='info'>The OAuth Extensions Error Registry</span><span>)</span></a>) if the extension they are used in conjunction with is
-          a registered access token type, a registered endpoint parameter, or an extension grant
-          type. Error codes used with unregistered extensions MAY be registered.
+          拡張エラーコードは登録されたアクセストークンタイプ, エンドポイントパラメータ, 拡張グラントタイプと共に利用する場合は (<a class='info' href='#error-registry'>Section&nbsp;11.4<span> (</span><span class='info'>The OAuth Extensions Error Registry</span><span>)</span></a> の手順に従って) 登録されなければならない (MUST). 登録されていない拡張と共に利用するエラーコードは登録してもよい (MAY).
+          
         
 </p>
 <p>
-          Error codes MUST conform to the error-code ABNF, and SHOULD be prefixed by an identifying
-          name when possible. For example, an error identifying an invalid value set to the
-          extension parameter <tt>example</tt> should be named
-          <tt>example_invalid</tt>.
+          エラーコードは error-code ABNF に従う必要があり (MUST), 可能な場合は識別名をプレフィックスとして付与するべきである (SHOULD). 例えば, 不正な値が拡張パラメーター  <tt>example</tt> に設定されたことを示すエラーは <tt>example_invalid</tt> と命名されるべきである.
+          
         
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
