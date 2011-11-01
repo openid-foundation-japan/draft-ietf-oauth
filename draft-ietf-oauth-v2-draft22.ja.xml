@@ -296,47 +296,65 @@
 
         <section title='Implicit'>
           <t>
+            implicit許可はJavaScriptの様なスクリプト言語を使用して、ブラウザで実行されるクライアントに最適化され、authorization codeを単純化したものです。Implicitフローにおいて、認可コードを発行する代わりにクライアントは（リソースオーナー認可の結果）直接アクセストークンを発行される。(認可コードのような)仲介のクレデンシャルが発行されない（そして後にアクセストークンを得られる）許可タイプがImplicitです。
+          </t>
+          <!--
             The implicit grant is a simplified authorization code flow optimized for clients
             implemented in a browser using a scripting language such as JavaScript. In the implicit
             flow, instead of issuing the client an authorization code, the client is issued an
             access token directly (as the result of the resource owner authorization). The grant
             type is implicit as no intermediate credentials (such as an authorization code) are
             issued (and later used to obtain an access token).
-          </t>
+          -->
           <t>
+            Implicit許可を発行する時、認可サーバはクライアントが本物であることを確認しません。ある場合にはクライアントにアクセストークンを渡すのに使用されたリダイレクトURIを通すことでクライアント識別子が検証されることができます。アクセストークンはリソースオーナー、もしくはリソースオーナーのユーザエージェントにアクセスすることで他のアプリケーションに晒されるかもしれない。
+          </t>
+          <!--
             When issuing an implicit grant, the authorization server does not authenticate the
             client. In some cases, the client identity can be verified via the redirection URI
             used to deliver the access token to the client. The access token may be exposed to the
             resource owner or other applications with access to the resource owner's user-agent.
-          </t>
+          -->
           <t>
+            アクセストークンを得るのに必要な往復の回数を減らせるため、Implicit許可は（ブラウザにおけるアプリケーションとして実行されたクライアントなど）いくつかのクライアントで反応性と効率性を高めます。しかしながら、この利便性はimplicit許可を使った安全保障の影響でauthorization code許可を利用できる場合は特に一方的に不利になります。
+          </t>
+          <!--
             Implicit grants improve the responsiveness and efficiency of some clients (such as a
             client implemented as an in-browser application) since it reduces the number of round
             trips required to obtain an access token. However, this convenience should be weighed
             against the security implications of using implicit grants, especially when the
             authorization code grant type is available.
-          </t>
+          -->
         </section>
 
         <section title="Resource Owner Password Credentials">
           <t>
+            リソースオーナーパスワードクレデンシャル（例えばユーザ名とパスワード）はアクセストークンを得るのに認可許可に直接使用される。リソースオーナーとクライアント（例えばデバイスOSや非常に特権のあるアプリケーション）の間で高い信頼があり、（認可コードのように）他の認可許可タイプが利用できない場合、クレデンシャルが使用されるべきである。
+          </t>
+          <!--
             The resource owner password credentials (i.e. username and password) can be used
             directly as an authorization grant to obtain an access token. The credentials should
             only be used when there is a high degree of trust between the resource owner and the
             client (e.g. its device operating system or a highly privileged application), and
             when other authorization grant types are not available (such as an authorization code).
-          </t>
+          -->
           <t>
+            例えこの許可タイプがリソースオーナークレデンシャルに直接アクセスすることが必要であるとしても、リソースオーナークレデンシャルは一度のリクエストに使用され、アクセストークンと交換される。この許可タイプは寿命の長いアクセストークンやリフレッシュトークンでクレデンシャルを交換することにより、クライアントが将来使用するためリソースオーナークレデンシャルを格納する必要性をなくすことができます。
+          </t>
+          <!--
             Even though this grant type requires direct client access to the resource owner
             credentials, the resource owner credentials are used for a single request and are
             exchanged for an access token. This grant type can eliminate the need for the client
             to store the resource owner credentials for future use, by exchanging the credentials
             with a long-lived access token or refresh token.
-          </t>
+          -->
         </section>
 
         <section title='Client Credentials'>
           <t>
+            認可範囲がクライアントの管理下の保護リソース、もしくは以前認可サーバでアレンジされた保護リソースに制限された場合、認可許可としてクライアントクレデンシャル（もしくは他のクライアント認証形式）が使用できる。クライアントがクライアント自身のために行動している（またはクライアントがリソースオーナー）か、クライアントが以前に認可サーバでアレンジされた認可をベースにした保護リソースアクセスを求めている場合、クライアントクレデンシャルは通常の認可許可として使用される。
+          </t>
+          <!--
             The client credentials (or other forms of client authentication) can be used as an
             authorization grant when the authorization scope is limited to the protected resources
             under the control of the client, or to protected resources previously arranged with the
@@ -344,7 +362,7 @@
             when the client is acting on its own behalf (the client is also the resource owner), or
             is requesting access to protected resources based on an authorization previously
             arranged with the authorization server.
-          </t>
+          -->
         </section>
 
       </section>
@@ -549,89 +567,131 @@
 
     <section title='Client Registration'>
       <t>
+        プロトコル開始する前にクライアントは認可サーバに登録します。クライアントが認可サーバに登録する方法はこの仕様での範囲外であるが、通常エンドユーザとの対話を伴うHTML登録フォームを持つ。
+      </t>
+      <!--
         Before initiating the protocol, the client registers with the authorization server. The
         means through which the client registers with the authorization server are beyond the
         scope of this specification, but typically involve end-user interaction with an HTML
         registration form.
-      </t>
+      -->
       <t>
+        クライアントの登録はクライアントと認可サーバ間の直截な相互作用を必須としない。認可サーバでサポートされている場合、登録は、必要なクライアントのプロパティーを取得し、信頼を確立する他の方法（例えばリダイレクトURIやクライアントタイプ）に頼ることができる。例えば、登録は自身で発行、もしくはサードパーティに発行されたアサーションを使用する、または信頼できるチャンネルを使用することでクライアントの発見を行う認可サーバによって行うことができる。
+      </t>
+      <!--
         Client registration does not require a direct interaction between the client and the
         authorization server. When supported by the authorization server, registration can rely
         on other means for establishing trust and obtaining the required client properties (e.g.
         redirection URI, client type). For example, registration can be accomplished using a
         self-issued or third-party-issued assertion, or by the authorization server performing
         client discovery using a trusted channel.
-      </t>
+      -->
       <t>
-        When registering a client, the client developer:
+        クライアント（クライアント開発者）を登録する場合、
       </t>
+      <!--
+        When registering a client, the client developer:
+      -->
       <t>
         <list style='symbols'>
           <t>
-            specifies the client type as described in <xref target='client-types' />,
+            <xref target='client-types' />で説明されているようなクライアントタイプを指定します。
           </t>
+          <!--
+            specifies the client type as described in <xref target='client-types' />,
+          -->
           <t>
+            <xref target='redirect-uri' />で説明されているようなリダイレクトURIを提供します。そして、
+          </t>
+          <!--
             provides its client redirection URIs as described in
             <xref target='redirect-uri' />, and
-          </t>
+          -->
           <t>
+            認可サーバによって他の必須情報を含みます。（例えばアプリケーション名、ウェブサイト、説明、ロゴイメージ、利用規則）
+          </t>
+          <!--
             includes any other information required by the authorization server (e.g. application
             name, website, description, logo image, the acceptance of legal terms).
-          </t>
+          -->
         </list>
       </t>
 
       <section title='Client Types' anchor='client-types'>
         <t>
+          認可サーバと安全に認証する能力に基づいて（つまりクライアントクレデンシャルの機密性を維持できる能力）、OAuthは二つのクライアントタイプを定義している。
+        </t>
+        <!--
           OAuth defines two client types, based on their ability to authenticate securely with the
           authorization server (i.e. ability to maintain the confidentiality of their client
           credentials):
-        </t>
+        -->
         <t>
           <list style='hanging'>
             <t hangText='confidential'>
               <vspace />
+              クレデンシャルの機密性を維持することができるクライアント（例えば、クライアントクレデンシャルへのアクセスが制限されたセキュアサーバ上に実装されたクライアント）、または他の手段を使用したセキュアなクライアント認証ができるクライアント。
+            <!--
               Clients capable of maintaining the confidentiality of their credentials (e.g.
               client implemented on a secure server with restricted access to the client
               credentials), or capable of secure client authentication using other means.
+            -->
             </t>
             <t hangText='public'>
               <vspace />
+	      クレデンシャルの機密性を維持することができないクライアント（例えばインストールされたネイティブアプリケーションやブラウザベースのウェブアプリケーションのようにリソースオーナーのデバイス上で実行するクライアント）、および他の手段を通してセキュアなクライアント認証ができないクライアント。
+	      <!--
               Clients incapable of maintaining the confidentiality of their credentials (e.g.
               clients executing on the resource owner's device such as an installed native
               application or a web browser-based application), and incapable of secure client
               authentication via any other means.
+	      -->
             </t>
           </list>
         </t>
         <t>
+          クライアントタイプの指定はセキュア認証の認可サーバの定義とクライアントクレデンシャルの許容公開レベルに基づいている。
+        </t>
+        <!--
           The client type designation is based on the authorization server's definition of secure
           authentication and its acceptable exposure levels of client credentials.
-        </t>
+        -->
         <t>
-          This specification has been designed around the following client profiles:
+          この仕様は次のクライアントプロファイルに基づいて設計されている、
         </t>
+        <!--
+          This specification has been designed around the following client profiles:
+        -->
         <t>
           <list style='hanging'>
             <t hangText='web application'>
               <vspace />
+              ウェブアプリケーションはウェブサーバ上で実行されているconfidentialクライアントです。リソースオーナーがリソースオーナーのデバイス上でユーザエージェントにレンダリングされたHTMLユーザインターフェイスを通してクライアントにアクセスします。クライアントクレデンシャルだけでなく、クライアントに発行されたアクセストークンもWebサーバ上に保存され、リソースオーナーによって後悔やアクセスはされません。
+            </t>
+            <!--
               A web application is a confidential client running on a web server. Resource owners access
               the client via an HTML user interface rendered in a user-agent on the resource
               owner's device. The client credentials as well as any access token issued to the
               client are stored on the web server and are not exposed to or accessible by the
               resource owner.
-            </t>
+            -->
             <t hangText='user-agent-based application'>
               <vspace />
+              ユーザエージェントベースアプリケーションはクライアントコードがWebサーバからダウンロードされ、リソースオーナーのデバイス上でユーザエージェント（例えばWebブラウザ）内で実行されるパブリッククライアントです。プロトコルのデータとクレデンシャルはリソースオーナーに簡単にアクセス（かつ多くの場合は見ること）できる。このようなアプリケーションはユーザエージェント内にあるので、認可を要求する時ユーザエージェントの能力をシームレスに使用することができる。
+            </t>
+            <!--
               A user-agent-based application is a public client in which the client code is
               downloaded from a web server and executes within a user-agent (e.g. web browser) on
               the resource owner's device. Protocol data and credentials are easily accessible (and
               often visible) to the resource owner. Since such applications reside within the
               user-agent, they can make seamless use of the user-agent capabilities when requesting
               authorization.
-            </t>
+            -->
             <t hangText='native application'>
               <vspace />
+              ネイティブアプリケーションはリソースオーナーのデバイス上にインストールし、実行できるpublicクライアントです。プロトコルのデータとクレデンシャルはリソースオーナーにアクセスできる。それはアプリケーションに含まれるクライアント認証のクレデンシャルを抽出できることを想定させる。一方、保護の許容レベルを受けることができるアクセストークンやリフレッシュトークンのようなクレデンシャルを動的に発行する。最低でも、これらのクレデンシャルはアプリケーションと対話できる悪意のあるサーバから保護されている。いくつかのプラットフォーム上でこれらのクレデンシャルは同じデバイス上に存在する他のアプリケーションから保護されることがある。
+            </t>
+            <!--
               A native application is a public client installed and executed on the resource
               owner's device. Protocol data and credentials are accessible to the resource owner.
               It is assumed that any client authentication credentials included in the application
@@ -640,7 +700,7 @@
               minimum, these credentials are protected from hostile servers which the application
               may interact with. On some platform these credentials might be protected from other
               applications residing on the same device.
-            </t>
+            -->
           </list>
         </t>
       </section>
