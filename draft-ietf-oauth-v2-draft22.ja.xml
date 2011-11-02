@@ -2964,9 +2964,11 @@
           </t>
           <t>
 		  埋め込まれたユーザーエージェント - ネイティブアプリケーションはリソースを読み込んでいる間に発生した状態変更の監視やユーザーエージェントのクッキーストレージへのアクセスなどの埋め込まれたユーザーエージェントとの直接通信によりレスポンスを受け取ることができる. 
+		    <!--
             Embedded user-agent - the native application obtains the response by directly
             communicating with the embedded user-agent by monitoring state changes emitted during
             the resource load, or accessing the user-agent's cookies storage.
+			-->
           </t>
         </list>
       </t>
