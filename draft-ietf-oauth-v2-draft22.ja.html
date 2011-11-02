@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 4, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 5, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 1, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 2, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 4, 2012.</p>
+This Internet-Draft will expire on May 5, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -218,11 +218,11 @@ Client Registration<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#client-types">2.1.</a>&nbsp;
 Client Types<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#client-identifier">2.2.</a>&nbsp;
-Client Identifier<br />
+クライアント識別子<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#client-authentication">2.3.</a>&nbsp;
-Client Authentication<br />
+クライアント識別子<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor13">2.3.1.</a>&nbsp;
-Client Password<br />
+クライアントパスワード<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor14">2.3.2.</a>&nbsp;
 Other Authentication Methods<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor15">2.4.</a>&nbsp;
@@ -471,7 +471,7 @@ Authors' Addresses<br />
         
 </p>
 <p>
-          認可サーバーとリソースサーバー間のやりとりについては本仕様書の範囲外です. 認可サーバーはリソースサーバーと同一のサーバーでも異なるサーバーでもよい. 単一の認可サーバーが複数のリソースサーバーにアクセス可能なアクセストークンを発行してもよい. 
+          認可サーバーとリソースサーバー間のやりとりについては本仕様書の範囲外である. 認可サーバーはリソースサーバーと同一のサーバーでも異なるサーバーでもよい. 単一の認可サーバーが複数のリソースサーバーにアクセス可能なアクセストークンを発行してもよい. 
         
 </p>
 <a name="anchor3"></a><br /><hr />
@@ -517,12 +517,12 @@ Authors' Addresses<br />
 </dd>
 <dt>(B)</dt>
 <dd>
-              クライアントは, リソースオーナーの認可許諾を表すクレデンシャルを受け取り, その際は仕様上定義された４つのタイプの１つの許諾タイプか、または拡張された認可形式で発行される. その認可タイプはクライアントの利用する認可リクエストの方式と認可サーバーがサポートする認可タイプ次第である. 
+              クライアントは, リソースオーナーの認可許諾を表すクレデンシャルを受け取り, その際は仕様上定義された４つのタイプの１つの許諾タイプか, または拡張された認可形式で発行される. その認可タイプはクライアントの利用する認可リクエストの方式と認可サーバーがサポートする認可タイプ次第である. 
             
 </dd>
 <dt>(C)</dt>
 <dd>
-              クライアントは認可サーバーに対して自身を認証し, アクセス許可を提示することで、アクセストークンを要求する.
+              クライアントは認可サーバーに対して自身を認証し, アクセス許可を提示することで, アクセストークンを要求する.
             
 </dd>
 <dt>(D)</dt>
@@ -576,15 +576,15 @@ Authors' Addresses<br />
 Implicit</h3>
 
 <p>
-            implicit許可はJavaScriptの様なスクリプト言語を使用して、ブラウザで実行されるクライアントに最適化され、authorization codeを単純化したものです。Implicitフローにおいて、認可コードを発行する代わりにクライアントは（リソースオーナー認可の結果）直接アクセストークンを発行される。(認可コードのような)仲介のクレデンシャルが発行されない（そして後にアクセストークンを得られる）許可タイプがImplicitです。
+            implicit許可はJavaScriptの様なスクリプト言語を使用して, ブラウザで実行されるクライアントに最適化され, authorization codeを単純化したものです. Implicitフローにおいて, 認可コードを発行する代わりにクライアントは（リソースオーナー認可の結果）直接アクセストークンを発行される. (認可コードのような)仲介のクレデンシャルが発行されない（そして後にアクセストークンを得られる）許可タイプがImplicitです. 
           
 </p>
 <p>
-            Implicit許可を発行する時、認可サーバはクライアントが本物であることを確認しません。ある場合にはクライアントにアクセストークンを渡すのに使用されたリダイレクトURIを通すことでクライアント識別子が検証されることができます。アクセストークンはリソースオーナー、もしくはリソースオーナーのユーザエージェントにアクセスすることで他のアプリケーションに晒されるかもしれない。
+            Implicit許可を発行する時, 認可サーバはクライアントが本物であることを確認しません. ある場合にはクライアントにアクセストークンを渡すのに使用されたリダイレクトURIを通すことでクライアント識別子が検証されることができます. アクセストークンはリソースオーナー, もしくはリソースオーナーのユーザエージェントにアクセスすることで他のアプリケーションに晒されるかもしれない. 
           
 </p>
 <p>
-            アクセストークンを得るのに必要な往復の回数を減らせるため、Implicit許可は（ブラウザにおけるアプリケーションとして実行されたクライアントなど）いくつかのクライアントで反応性と効率性を高めます。しかしながら、この利便性はimplicit許可を使った安全保障の影響でauthorization code許可を利用できる場合は特に一方的に不利になります。
+            アクセストークンを得るのに必要な往復の回数を減らせるため, Implicit許可は（ブラウザにおけるアプリケーションとして実行されたクライアントなど）いくつかのクライアントで反応性と効率性を高めます. しかしながら, この利便性はimplicit許可を使った安全保障の影響でauthorization code許可を利用できる場合は特に一方的に不利になります. 
           
 </p>
 <a name="anchor7"></a><br /><hr />
@@ -593,11 +593,11 @@ Implicit</h3>
 Resource Owner Password Credentials</h3>
 
 <p>
-            リソースオーナーパスワードクレデンシャル（例えばユーザ名とパスワード）はアクセストークンを得るのに認可許可に直接使用される。リソースオーナーとクライアント（例えばデバイスOSや非常に特権のあるアプリケーション）の間で高い信頼があり、（認可コードのように）他の認可許可タイプが利用できない場合、クレデンシャルが使用されるべきである。
+            リソースオーナーパスワードクレデンシャル（例えばユーザ名とパスワード）はアクセストークンを得るのに認可許可に直接使用される. リソースオーナーとクライアント（例えばデバイスOSや非常に特権のあるアプリケーション）の間で高い信頼があり, （認可コードのように）他の認可許可タイプが利用できない場合, クレデンシャルが使用されるべきである. 
           
 </p>
 <p>
-            例えこの許可タイプがリソースオーナークレデンシャルに直接アクセスすることが必要であるとしても、リソースオーナークレデンシャルは一度のリクエストに使用され、アクセストークンと交換される。この許可タイプは寿命の長いアクセストークンやリフレッシュトークンでクレデンシャルを交換することにより、クライアントが将来使用するためリソースオーナークレデンシャルを格納する必要性をなくすことができます。
+            例えこの許可タイプがリソースオーナークレデンシャルに直接アクセスすることが必要であるとしても, リソースオーナークレデンシャルは一度のリクエストに使用され, アクセストークンと交換される. この許可タイプは寿命の長いアクセストークンやリフレッシュトークンでクレデンシャルを交換することにより, クライアントが将来使用するためリソースオーナークレデンシャルを格納する必要性をなくすことができます. 
           
 </p>
 <a name="anchor8"></a><br /><hr />
@@ -606,7 +606,7 @@ Resource Owner Password Credentials</h3>
 Client Credentials</h3>
 
 <p>
-            認可範囲がクライアントの管理下の保護リソース、もしくは以前認可サーバでアレンジされた保護リソースに制限された場合、認可許可としてクライアントクレデンシャル（もしくは他のクライアント認証形式）が使用できる。クライアントがクライアント自身のために行動している（またはクライアントがリソースオーナー）か、クライアントが以前に認可サーバでアレンジされた認可をベースにした保護リソースアクセスを求めている場合、クライアントクレデンシャルは通常の認可許可として使用される。
+            認可範囲がクライアントの管理下の保護リソース, もしくは以前認可サーバでアレンジされた保護リソースに制限された場合, 認可許可としてクライアントクレデンシャル（もしくは他のクライアント認証形式）が使用できる. クライアントがクライアント自身のために行動している（またはクライアントがリソースオーナー）か, クライアントが以前に認可サーバでアレンジされた認可をベースにした保護リソースアクセスを求めている場合, クライアントクレデンシャルは通常の認可許可として使用される. 
           
 </p>
 <a name="anchor9"></a><br /><hr />
@@ -747,30 +747,30 @@ Notational Conventions</h3>
 Client Registration</h3>
 
 <p>
-        プロトコル開始する前にクライアントは認可サーバに登録します。クライアントが認可サーバに登録する方法はこの仕様での範囲外であるが、通常エンドユーザとの対話を伴うHTML登録フォームを持つ。
+        プロトコル開始する前にクライアントは認可サーバに登録します. クライアントが認可サーバに登録する方法はこの仕様での範囲外であるが, 通常エンドユーザとの対話を伴うHTML登録フォームを持つ. 
       
 </p>
 <p>
-        クライアントの登録はクライアントと認可サーバ間の直截な相互作用を必須としない。認可サーバでサポートされている場合、登録は、必要なクライアントのプロパティーを取得し、信頼を確立する他の方法（例えばリダイレクトURIやクライアントタイプ）に頼ることができる。例えば、登録は自身で発行、もしくはサードパーティに発行されたアサーションを使用する、または信頼できるチャンネルを使用することでクライアントの発見を行う認可サーバによって行うことができる。
+        クライアントの登録はクライアントと認可サーバ間の直截な相互作用を必須としない. 認可サーバでサポートされている場合, 登録は, 必要なクライアントのプロパティーを取得し, 信頼を確立する他の方法（例えばリダイレクトURIやクライアントタイプ）に頼ることができる. 例えば, 登録は自身で発行, もしくはサードパーティに発行されたアサーションを使用する, または信頼できるチャンネルを使用することでクライアントの発見を行う認可サーバによって行うことができる. 
       
 </p>
 <p>
-        クライアント（クライアント開発者）を登録する場合、
+        クライアント（クライアント開発者）を登録する場合, 
       
 </p>
 <p>
         </p>
 <ul class="text">
 <li>
-            <a class='info' href='#client-types'>Section&nbsp;2.1<span> (</span><span class='info'>Client Types</span><span>)</span></a>で説明されているようなクライアントタイプを指定します。
+            <a class='info' href='#client-types'>Section&nbsp;2.1<span> (</span><span class='info'>Client Types</span><span>)</span></a>で説明されているようなクライアントタイプを指定します. 
           
 </li>
 <li>
-            <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>Redirection Endpoint</span><span>)</span></a>で説明されているようなリダイレクトURIを提供します。そして、
+            <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>Redirection Endpoint</span><span>)</span></a>で説明されているようなリダイレクトURIを提供します. そして, 
           
 </li>
 <li>
-            認可サーバによって他の必須情報を含みます。（例えばアプリケーション名、ウェブサイト、説明、ロゴイメージ、利用規則）
+            認可サーバによって他の必須情報を含みます. （例えばアプリケーション名, ウェブサイト, 説明, ロゴイメージ, 利用規則）
           
 </li>
 </ul><p>
@@ -782,7 +782,7 @@ Client Registration</h3>
 Client Types</h3>
 
 <p>
-          認可サーバと安全に認証する能力に基づいて（つまりクライアントクレデンシャルの機密性を維持できる能力）、OAuthは二つのクライアントタイプを定義している。
+          認可サーバと安全に認証する能力に基づいて（つまりクライアントクレデンシャルの機密性を維持できる能力）, OAuthは二つのクライアントタイプを定義している. 
         
 </p>
 <p>
@@ -791,14 +791,14 @@ Client Types</h3>
 <dt>confidential</dt>
 <dd>
               
-              クレデンシャルの機密性を維持することができるクライアント（例えば、クライアントクレデンシャルへのアクセスが制限されたセキュアサーバ上に実装されたクライアント）、または他の手段を使用したセキュアなクライアント認証ができるクライアント。
+              クレデンシャルの機密性を維持することができるクライアント（例えば, クライアントクレデンシャルへのアクセスが制限されたセキュアサーバ上に実装されたクライアント）, または他の手段を使用したセキュアなクライアント認証ができるクライアント. 
             
             
 </dd>
 <dt>public</dt>
 <dd>
               
-	      クレデンシャルの機密性を維持することができないクライアント（例えばインストールされたネイティブアプリケーションやブラウザベースのウェブアプリケーションのようにリソースオーナーのデバイス上で実行するクライアント）、および他の手段を通してセキュアなクライアント認証ができないクライアント。
+	      クレデンシャルの機密性を維持することができないクライアント（例えばインストールされたネイティブアプリケーションやブラウザベースのウェブアプリケーションのようにリソースオーナーのデバイス上で実行するクライアント）, および他の手段を通してセキュアなクライアント認証ができないクライアント. 
 	      
             
 </dd>
@@ -806,11 +806,11 @@ Client Types</h3>
         
 </p>
 <p>
-          クライアントタイプの指定はセキュア認証の認可サーバの定義とクライアントクレデンシャルの許容公開レベルに基づいている。
+          クライアントタイプの指定はセキュア認証の認可サーバの定義とクライアントクレデンシャルの許容公開レベルに基づいている. 
         
 </p>
 <p>
-          この仕様は次のクライアントプロファイルに基づいて設計されている、
+          この仕様は次のクライアントプロファイルに基づいて設計されている, 
         
 </p>
 <p>
@@ -819,19 +819,19 @@ Client Types</h3>
 <dt>web application</dt>
 <dd>
               
-              ウェブアプリケーションはウェブサーバ上で実行されているconfidentialクライアントです。リソースオーナーがリソースオーナーのデバイス上でユーザエージェントにレンダリングされたHTMLユーザインターフェイスを通してクライアントにアクセスします。クライアントクレデンシャルだけでなく、クライアントに発行されたアクセストークンもWebサーバ上に保存され、リソースオーナーによって後悔やアクセスはされません。
+              ウェブアプリケーションはウェブサーバ上で実行されているconfidentialクライアントです. リソースオーナーがリソースオーナーのデバイス上でユーザエージェントにレンダリングされたHTMLユーザインターフェイスを通してクライアントにアクセスします. クライアントクレデンシャルだけでなく, クライアントに発行されたアクセストークンもWebサーバ上に保存され, リソースオーナーによって後悔やアクセスはされません. 
             
 </dd>
 <dt>user-agent-based application</dt>
 <dd>
               
-              ユーザエージェントベースアプリケーションはクライアントコードがWebサーバからダウンロードされ、リソースオーナーのデバイス上でユーザエージェント（例えばWebブラウザ）内で実行されるパブリッククライアントです。プロトコルのデータとクレデンシャルはリソースオーナーに簡単にアクセス（かつ多くの場合は見ること）できる。このようなアプリケーションはユーザエージェント内にあるので、認可を要求する時ユーザエージェントの能力をシームレスに使用することができる。
+              ユーザエージェントベースアプリケーションはクライアントコードがWebサーバからダウンロードされ, リソースオーナーのデバイス上でユーザエージェント（例えばWebブラウザ）内で実行されるパブリッククライアントです. プロトコルのデータとクレデンシャルはリソースオーナーに簡単にアクセス（かつ多くの場合は見ること）できる. このようなアプリケーションはユーザエージェント内にあるので, 認可を要求する時ユーザエージェントの能力をシームレスに使用することができる. 
             
 </dd>
 <dt>native application</dt>
 <dd>
               
-              ネイティブアプリケーションはリソースオーナーのデバイス上にインストールし、実行できるpublicクライアントです。プロトコルのデータとクレデンシャルはリソースオーナーにアクセスできる。それはアプリケーションに含まれるクライアント認証のクレデンシャルを抽出できることを想定させる。一方、保護の許容レベルを受けることができるアクセストークンやリフレッシュトークンのようなクレデンシャルを動的に発行する。最低でも、これらのクレデンシャルはアプリケーションと対話できる悪意のあるサーバから保護されている。いくつかのプラットフォーム上でこれらのクレデンシャルは同じデバイス上に存在する他のアプリケーションから保護されることがある。
+              ネイティブアプリケーションはリソースオーナーのデバイス上にインストールし, 実行できるpublicクライアントです. プロトコルのデータとクレデンシャルはリソースオーナーにアクセスできる. それはアプリケーションに含まれるクライアント認証のクレデンシャルを抽出できることを想定させる. 一方, 保護の許容レベルを受けることができるアクセストークンやリフレッシュトークンのようなクレデンシャルを動的に発行する. 最低でも, これらのクレデンシャルはアプリケーションと対話できる悪意のあるサーバから保護されている. いくつかのプラットフォーム上でこれらのクレデンシャルは同じデバイス上に存在する他のアプリケーションから保護されることがある. 
             
 </dd>
 </dl></blockquote><p>
@@ -840,58 +840,45 @@ Client Types</h3>
 <a name="client-identifier"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
-Client Identifier</h3>
+クライアント識別子</h3>
 
 <p>
-          The authorization server issues the registered client a client identifier - a unique
-          string representing the registration information provided by the client. The client
-          identifier is not a secret, it is exposed to the resource owner, and MUST NOT be used
-          alone for client authentication.
+          認可サーバーは登録済みのクライアントにクライアント識別子（クライアントが提供した登録情報を表すユニーク文字列）を発行する. クライアント識別子はシークレットと異なり, リソースオーナーに露出されるため, クライアント認証に単独で利用されてはならない（MUST NOT）. 
         
 </p>
 <a name="client-authentication"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
-Client Authentication</h3>
+クライアント識別子</h3>
 
 <p>
-          If the client type is confidential, the client and authorization server establish a client
-          authentication method suitable for the security requirements of the authorization server.
-          The authorization server MAY accept any form of client authentication meeting its
-          security requirements.
+          クライアントタイプがコンフィデンシャルである場合, クライアントと認可サーバーは, 認可サーバーのセキュリティ要求を満たすクライアント認証方式を確立する. 認可サーバーは自身のセキュリティ要求を満たすあらゆる方式のクライアント認証に対応してもよい（MAY）
         
 </p>
 <p>
-          Confidential clients are typically issued (or establish) a set of client credentials used for
-          authenticating with the authorization server (e.g. password, public/private key pair).
+          コンフィデンシャルクライアントには、通常は認可サーバーでの認証に使われるクライアントクレデンシャルのセットが発行（もしくは確立）される. 例）パスワード, 公開鍵／秘密鍵のペア
         
 </p>
 <p>
-          The authorization server SHOULD NOT make assumptions about the client type or accept the
-          type information provided without establishing trust with the client or its developer.
-          The authorization server MAY establish a client authentication method with public
-          clients. However, the authorization server MUST NOT rely on public client authentication
-          for the purpose of identifying the client.
+          認可サーバーはクライアントタイプを仮定したり, クライアントとその開発者との信頼確立せずに提供されたタイプ情報に対応すべきではない（SHOULD NOT）. 認可サーバーはパブリッククライアントとクライアント認証によって信頼確立してもよい（MAY）. しかし, 認可サーバーはクライアントを識別する目的で、パブリッククライアントを信頼してはならない（MUST NOT）. 
         
 </p>
 <p>
-          The client MUST NOT use more than one authentication method in each request.
+          クライアントは各リクエストにおいて一つ以上の認証方式を利用してはならない（MUST NOT）. 
         
 </p>
 <a name="anchor13"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.2.3.1"></a><h3>2.3.1.&nbsp;
-Client Password</h3>
+クライアントパスワード</h3>
 
 <p>
-            Clients in possession of a client password MAY use the HTTP Basic authentication scheme
-            as defined in <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> to authenticate with the authorization server.
-            The client identifier is used as the username, and the client password is used as the
-            password.
+                  クライアントパスワードを保持しているクライアントは, 認可サーバー上での認証に<a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a>で定義されている HTTP Basic 認証スキームを使用してもよい（MAY）. クライアント識別子はユーザー名, クライアントパスワードはパスワードとして利用される. 
           
 </p>
 <p>
-              For example (extra line breaks are for display purposes only):
+              サンプル:
+	      
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -899,8 +886,7 @@ Client Password</h3>
 
 </pre></div>
 <p>
-            Alternatively, the authorization server MAY allow including the client credentials in the
-            request body using the following parameters:
+            認可サーバーは以下のパラメータをリクエストボディにクライアントクレデンシャルを含めてもよい（MAY）. 
           
 </p>
 <p>
@@ -909,29 +895,27 @@ Client Password</h3>
 <dt>client_id</dt>
 <dd>
                 
-                REQUIRED. The client identifier issued to the client during the registration process
-                described by <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>Client Identifier</span><span>)</span></a>.
+                必須（REQUIRED）. <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a>に示されるクライアント登録手順にて発行されたクライアント識別子. 
+		
               
 </dd>
 <dt>client_secret</dt>
 <dd>
                 
-                REQUIRED. The client secret. The client MAY omit the parameter if the client secret
-                is an empty string.
+                必須（REQUIRED）. クライアントのシークレット. 空の場合は省略してもよい（MAY）. 
+		
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            Including the client credentials in the request body using the two parameters is NOT
-            RECOMMENDED, and should be limited to clients unable to directly utilize the HTTP Basic
-            authentication scheme (or other password-based HTTP authentication schemes).
+            ２つのパラメータを使ってクライアントクレデンシャルをリクエストボディに含めることは推奨されていない（NOT RECOMMENDED）. また, それはHTTP Basic 認証スキーム（もしくは他のパスワードベースのHTTP認証スキーム）が直接利用できないクライアントに限定すべきある. 
           
 </p>
 <p>
-              For example, requesting to refresh an access token (<a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>アクセストークンの更新<!--Refreshing an Access Token--></span><span>)</span></a>)
-              using the body parameters (extra line breaks are for display purposes only):
+              例：ボディパラメータを使ってアクセストークンの更新 (<a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>アクセストークンの更新<!--Refreshing an Access Token--></span><span>)</span></a>）のリクエストを送信する場合（改行は見やすくするために付与している）
+	          
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -944,14 +928,11 @@ Client Password</h3>
 
 </pre></div>
 <p>
-            The authorization server MUST require the use of a transport-layer security mechanism
-            when sending requests to the token endpoint, as requests using this authentication
-            method result in the transmission of clear-text credentials.
+            トークンエンドポイントにリクエスト送信する際に, 平文のクレデンシャルを送信することになるので, 認可サーバーはTLSを使用することを要求しなければならない（MUST）. 
           
 </p>
 <p>
-            Since this client authentication method involves a password, the authorization server
-            MUST protect any endpoint utilizing it against brute force attacks.
+            クライアント認証方式にパスワードが含まれるので, 認可サーバーはブルートフォースアタック対策のために全てのエンドポイントを保護しなくてはならない（MUST）. 
           
 </p>
 <a name="anchor14"></a><br /><hr />
@@ -1295,7 +1276,7 @@ Client Authentication</h3>
 <p>
             Confidential clients, clients issued client credentials, or clients assigned other
             authentication requirements MUST authenticate with the authorization server as
-            described in <a class='info' href='#client-authentication'>Section&nbsp;2.3<span> (</span><span class='info'>Client Authentication</span><span>)</span></a> when making requests to the token
+            described in <a class='info' href='#client-authentication'>Section&nbsp;2.3<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a> when making requests to the token
             endpoint. Client authentication is used for:
           
 </p>
@@ -1495,7 +1476,7 @@ Authorization Request</h3>
 <dd>
                 
                 REQUIRED. The client identifier as described in
-                <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>Client Identifier</span><span>)</span></a>.
+                <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a>.
               
 </dd>
 <dt>redirect_uri</dt>
@@ -1985,7 +1966,7 @@ Authorization Request</h3>
 <dd>
                 
                 REQUIRED. The client identifier as described in
-                <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>Client Identifier</span><span>)</span></a>.
+                <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a>.
               
 </dd>
 <dt>redirect_uri</dt>
@@ -2965,12 +2946,12 @@ Extensions</h3>
 保護対象リソースへのアクセス<!-- Accessing Protected Resources --></h3>
 
 <p>
-        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.リソースサーバーはアクセストークンの検証を行い,有効期間が切れていないこと,要求されているリソースがスコープの範囲内であることを確認しなければならない(MUST).アクセストークンを検証する具体的な方法は本仕様の対象外だが、一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープの範囲内であることを確認しなければならない(MUST).アクセストークンを検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
       
       
 </p>
 <p>
-        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは,リソースサーバーから払い出されたアクセストークンタイプに依存する.一般的には,アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <tt>Authorization</tt> ヘッダフィールド <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> が利用される.
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンタイプに依存する.一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <tt>Authorization</tt> ヘッダフィールド <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> が利用される.
       
       
 </p>
@@ -2980,12 +2961,12 @@ Extensions</h3>
 アクセストークンタイプ<!-- Access Token Types --></h3>
 
 <p>
-          アクセストークンタイプにより,クライアントは保護対象リソースへの（型指定属性込みの）リクエスト時にアクセストークンを利用するために必要な情報を特定することができる.クライアントはトークンタイプが想定外のものであるとき、または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
+          アクセストークンタイプにより, クライアントは保護対象リソースへの（型指定属性込みの）リクエスト時にアクセストークンを利用するために必要な情報を特定することができる.クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
         
         
 </p>
 <p>
-            例えば,<a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>に定義される<tt>bearer</tt>トークンタイプは,単にリクエストにアクセストークンを含めることで利用できる。
+            例えば, <a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>に定義される<tt>bearer</tt>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる. 
         
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
@@ -2996,7 +2977,7 @@ Extensions</h3>
 
 </pre></div>
 <p>
-            一方,<a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>に定義される<tt>mac</tt>トークンタイプは,アクセストークンと共にMacキーをリクエストに含めて利用できる.このMackキーはHTTPリクエストの一部分を署名するのに利用される.
+            一方, <a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>に定義される<tt>mac</tt>トークンタイプは, アクセストークンと共にMacキーをリクエストに含めて利用できる.このMackキーはHTTPリクエストの一部分を署名するのに利用される.
         
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
@@ -3009,12 +2990,12 @@ Extensions</h3>
 
 </pre></div>
 <p>
-          尚,上記はあくまで参考例であり,開発者は利用前に<a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>や<a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>を参照することが推奨される.
+          尚, 上記はあくまで参考例であり, 開発者は利用前に<a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>や<a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>を参照することが推奨される.
         
         
 </p>
 <p>
-          アクセストークンタイプでは,必要な場合には<tt>access_token</tt>レスポンス属性と共にクライアントに送り返す追加属性を定義することができる.また,保護対象リソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義される.
+          アクセストークンタイプでは, 必要な場合には<tt>access_token</tt>レスポンス属性と共にクライアントに送り返す追加属性を定義することができる.また, 保護対象リソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義される.
         
         
 </p>
