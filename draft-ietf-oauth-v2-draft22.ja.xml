@@ -2929,29 +2929,41 @@
 
     </section>
 
-    <section title='Native Applications'>
+    <section title='ネイティブアプリケーション<!--Native Applications-->'>
       <t>
+	  ネイティブアプリケーションはリソースオーナーの端末にインストールされ, 実行されるクライアントである(例えば, デスクトップアプリケーション, ネィティブモバイルアプリケーション). 
+	  ネイティブアプリケーションではセキュリティ, プラットフォーム能力と全体的なエンドユーザー経験に関する特別な考慮を必要とするかもしれない(MAY). 
+	  <!--
         Native applications are clients installed and executed on the resource owner's device
         (i.e. desktop application, native mobile application). Native applications may require
         special consideration related to security, platform capabilities, and overall end-user
         experience.
+		-->
       </t>
       <t>
+	  認可エンドポイントはクライアントとリソースオーナーのユーザーエージェントによる相互作用を要求する. 
+	  ネイティブアプリケーションは外部のユーザーエージェントを起動もしくはアプリケーション内にユーザーエージェントを埋め込むことができる. 
+	  <!--
         The authorization endpoint requires interaction between the client and the resource
         owner's user-agent. Native applications can invoke an external user-agent or embed a
         user-agent within the application. For example:
+		-->
       </t>
       <t>
         <list style='symbols'>
           <t>
+		  外部のユーザーエージェント - ネイティブアプリケーションはクライアントを起動するためのハンドラとしてオペレーションシステムに登録したスキームをリダイレクションURIにして利用すること, クレデンシャルのコピーアンドペースト, ローカルのウェブサーバー, ユーザーエクステンションのインストール, クライアントの管理下でサーバにホストされリソースを識別するリダイレクションURIの提供など, ネィティブアプリケーションに利用可能な方法で認可サーバーからのレスポンスを受け取ることができる. 
+	  <!--
             External user-agent - the native application can capture the response from the
             authorization server using a redirection URI with a scheme registered with the
             operating system to invoke the client as the handler, manual copy-and-paste of the
             credentials, running a local web server, installing a user-agent extension, or by
             providing a redirection URI identifying a server-hosted resource under the client's
             control, which in turn makes the response available to the native application.
+		-->
           </t>
           <t>
+		  埋め込まれたユーザーエージェント - ネイティブアプリケーションはリソースを読み込んでいる間に発生した状態変更の監視やユーザーエージェントのクッキーストレージへのアクセスなどの埋め込まれたユーザーエージェントとの直接通信によりレスポンスを受け取ることができる. 
             Embedded user-agent - the native application obtains the response by directly
             communicating with the embedded user-agent by monitoring state changes emitted during
             the resource load, or accessing the user-agent's cookies storage.
@@ -2959,43 +2971,67 @@
         </list>
       </t>
       <t>
+	  外部のユーザーエージェントか埋め込みのユーザーエージェントかを選択するとき, 開発者は以下のことを考慮すべきである. 
+	  <!--
         When choosing between an external or embedded user-agent, developers should consider:
+		-->
       </t>
       <t>
         <list style='symbols'>
           <t>
+            リソースオーナーが既にアクティブなセッションを保持し認可サーバーによる再認証の必要性を削除することにより, 外部のユーザーエージェントは完了率をあげるかもしれない. 
+            それはおなじみのエンドユーザー体験と機能性を提供する. 
+            リソースオーナーはまた認証を手助けするユーザーエージェントの機能や拡張(パスワードマネージャ, 2要素のリーダー装置)に頼ることができる. 
+            <!--
             External user-agents may improve completion rate as the resource owner may already have
             an active session with the authorization server removing the need to re-authenticate. It
             provides a familiar end-user experience and functionality. The resource owner may also
             rely on user-agent features or extensions to assist with authentication (e.g. password
             manager, 2-factor device reader).
+            -->
           </t>
           <t>
+            埋め込みのユーザーエージェントはコンテキストの切り替えと新しいウィンドウオープンを取り除くことで, ユーザービリティを向上させることができるかもしれない. 
+            <!--
             Embedded user-agents may offer improved usability, as they remove the need to switch
             context and open new windows.
+            -->
           </t>
           <t>
+            リソースオーナーはほとんどの外部ユーザーエージェントで見られる視覚的な保護にアクセスすることなく未確認のウィンドウ内で認証するため, 埋め込みのユーザーエージェントはセキュリティ問題を引き起こす.
+            埋め込みのユーザーエージェントは (フィッシング攻撃が簡単に実行できる) 未確認の認証要求を信用するようエンドユーザーに教育する. 
+            <!--
             Embedded user-agents pose a security challenge because resource owners are
             authenticating in an unidentified window without access to the visual protections found
             in most external user-agents.  Embedded user-agents educate end-user to trust
             unidentified requests for authentication (making phishing attacks easier to execute).
+            -->
           </t>
         </list>
       </t>
       <t>
+        インプリクト許諾方式と認可コード許諾方式を選択するとき, 以下について考慮すべきである. 
+        <!--
         When choosing between the implicit grant type and the authorization code grant type, the
         following should be considered:
+        -->
       </t>
       <t>
         <list style='symbols'>
           <t>
+            クライアントクレデンシャルを機密に保持できないネイティブアプリケーションの能力により, 認可コード許諾方式を利用するネィティブアプリケーションはクライアントクレデンシャルを使うべきではない(SHOULD). 
+            <!--
             Native applications that use the authorization code grant type SHOULD do so without
             using client credentials, due to the native application’s inability to keep client
             credentials confidential.
+            -->
           </t>
           <t>
+            インプリクト許諾方式のフローを利用するとき, リフレッシュトークンは返されず, アクセストークンの期限が切れるとすぐに認可プロセスの繰り返しを要求する. 
+            <!--
             When using the implicit grant type flow a refresh token is not returned which requires
             repeating the authorization process once the access token expires.
+            -->
           </t>
         </list>
       </t>
