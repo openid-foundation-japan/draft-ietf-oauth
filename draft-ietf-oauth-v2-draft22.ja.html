@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 5, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 7, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 2, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 4, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 5, 2012.</p>
+This Internet-Draft will expire on May 7, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -306,7 +306,7 @@ Extensions<br />
 <a href="#anchor40">10.</a>&nbsp;
 Security Considerations<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor41">10.1.</a>&nbsp;
-Client Authentication<br />
+クライアント認証<!--Client Authentication--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor42">10.2.</a>&nbsp;
 Client Impersonation<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor43">10.3.</a>&nbsp;
@@ -3210,49 +3210,38 @@ Extensions</h3>
 Security Considerations</h3>
 
 <p>
-        As a flexible and extensible framework, OAuth's security considerations depend on many
-        factors. The following sections provide implementers with security guidelines focused on
-        the three client profiles described in <a class='info' href='#client-types'>Section&nbsp;2.1<span> (</span><span class='info'>Client Types</span><span>)</span></a>: web application,
-        user-agent-based application, and native application.
+        柔軟で拡張可能なフレームワークとして, OAuthでセキュリティに関して配慮すべき点は多くの因子によって決まる. 以下のセクションでは実装者に<a class='info' href='#client-types'>Section&nbsp;2.1<span> (</span><span class='info'>Client Types</span><span>)</span></a>にある, webアプリケーション, user-agentベースアプリケーション, ネイティブアプリケーションの３つのクライアントプロファイルにフォーカスを当てたセキュリティガイドラインを提供する。      
+      
       
 </p>
 <p>
-        A comprehensive OAuth security model and analysis, as well as background for the protocol
-        design is provided by <a class='info' href='#I-D.ietf-oauth-v2-threatmodel'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;threatmodel]<span> (</span><span class='info'>Lodderstedt, T., McGloin, M., and P. Hunt, &ldquo;OAuth 2.0 Threat Model and Security Considerations,&rdquo; July&nbsp;2011.</span><span>)</span></a>.
+        完全なOAuthのセキュリティモデルとその分析は, プロトコルデザインの背景と共に<a class='info' href='#I-D.ietf-oauth-v2-threatmodel'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;threatmodel]<span> (</span><span class='info'>Lodderstedt, T., McGloin, M., and P. Hunt, &ldquo;OAuth 2.0 Threat Model and Security Considerations,&rdquo; July&nbsp;2011.</span><span>)</span></a>で提供される. 
+      
       
 </p>
 <a name="anchor41"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.1"></a><h3>10.1.&nbsp;
-Client Authentication</h3>
+クライアント認証<!--Client Authentication--></h3>
 
 <p>
-          The authorization server establishes client credentials with web application clients for
-          the purpose of client authentication. The authorization server is encouraged to consider
-          stronger client authentication means than a client password. Web application clients MUST
-          ensure confidentiality of client passwords and other client credentials.
+          認可サーバーはクライアント認証の目的でwebアプリケーションとの間で認証情報を確立する. 認可サーバーはクライアントパスワードより強度の高い認証手段を検討することが推奨される. Webアプリケーションはクライアントパスワードやクレデンシャルの機密性を保持しなければならない(MUST).
+        
         
 </p>
 <p>
-          The authorization server MUST NOT issue client passwords or other client credentials to
-          native application or user-agent-based application clients for the purpose of client
-          authentication. The authorization server MAY issue a client password or other credentials
-          for a specific installation of a native application client on a specific device.
+          認可サーバーはクライアント認証の目的でネイティブアプリケーションやuser-agentを利用したアプリケーションにパスワードや他のクレデンシャルを発行するべきではありません(MUST NOT). 認証サーバーは特定デバイス上に特化してインストールされたネイティブアプリケーションに対しては, クライアントパスワード, もしくはその他のクレデンシャルを発行するかもしれません(MAY).
+        
         
 </p>
 <p>
-          When client authentication is not possible, the authorization server SHOULD employ other
-          means to validate the client's identity. For example, by requiring the registration of
-          the client redirection URI or enlisting the resource owner to confirm identity. A valid
-          redirection URI is not sufficient to verify the client's identity when asking for
-          end-user authorization, but can be used to prevent delivering credentials to a
-          counterfeit client after obtaining end-user authorization.
+          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティ認証のために他の手段を採用すべきです(SHOULD). 例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティ確認などです. エンドユーザーの認可時のクライアント認証ではリダイレクトURIの確認だけでは不十分ですが, エンドユーザの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる.
+        
         
 </p>
 <p>
-          The authorization server must consider the security implications of interacting with
-          unauthenticated clients and take measures to limit the potential exposure of other
-          credentials (e.g. refresh tokens) issued to such clients.
+          認可サーバーは認証されていないクライアントとの通信によるセキュリティ影響を考慮しなけれならない。そして, そのようなクライアントに対するフレッシュトークンなどの他のクレデンシャルの開示を制限するための措置をとらなければならない.
+        
         
 </p>
 <a name="anchor42"></a><br /><hr />
