@@ -3038,10 +3038,7 @@
         </list>
       </t>
     </section>
-    <!--
-    <section title='セキュリティへの配慮'>
-    -->
-    <section title='セキュリティへの配慮<!-- Security Considerations -->'>
+    <section title='Security Considerations'>
       <t>
         柔軟で拡張可能なフレームワークとして, OAuthでセキュリティに関して配慮すべき点は多くの因子によって決まる. 以下のセクションでは実装者に<xref target='client-types' />にある, webアプリケーション, user-agentベースアプリケーション, ネイティブアプリケーションの３つのクライアントプロファイルにフォーカスを当てたセキュリティガイドラインを提供する.
       <!--
