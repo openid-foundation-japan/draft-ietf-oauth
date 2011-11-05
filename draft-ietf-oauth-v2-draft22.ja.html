@@ -312,9 +312,9 @@ Security Considerations<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor43">10.3.</a>&nbsp;
 アクセストークン<!-- Access Tokens --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor44">10.4.</a>&nbsp;
-Refresh Tokens<br />
+リフレッシュトークン<!-- Refresh Tokens --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor45">10.5.</a>&nbsp;
-Authorization Codes<br />
+認可コード<!-- Authorization Codes --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor46">10.6.</a>&nbsp;
 Authorization Code Redirection URI Manipulation<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor47">10.7.</a>&nbsp;
@@ -3087,7 +3087,7 @@ Extensions</h3>
 
 </pre></div>
 <p>
-          レスポンスタイプが空白文字 (%x20) のうち一つを含む場合, それは空白で区切られた順不同の値のリストとして扱われる. 値の順番は一通りだけ登録でき, 同じ値の組の順番を変えた他のすべての組み合わせを網羅する.
+          レスポンスタイプが一つ以上の空白文字 (%x20) を含む場合, それは空白で区切られた順不同の値のリストとして扱われる. 値の順番は一通りだけ登録でき, 同じ値の組の順番を変えた他のすべての組み合わせを網羅する.
           
         
 </p>
@@ -3102,7 +3102,7 @@ Extensions</h3>
 追加のエラーコードの定義<!-- Defining Additional Error Codes --></h3>
 
 <p>
-          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コード付与エラーレスポンス (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), implicit grant エラーレスポンス (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), トークンエラーレスポンス (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
+          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コードグラントエラーレスポンス (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), implicit grant エラーレスポンス (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), トークンエラーレスポンス (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
           
         
 </p>
@@ -3302,72 +3302,56 @@ Security Considerations</h3>
 <a name="anchor44"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.4"></a><h3>10.4.&nbsp;
-Refresh Tokens</h3>
+リフレッシュトークン<!-- Refresh Tokens --></h3>
 
 <p>
-          Authorization servers MAY issue refresh tokens to web application clients and native
-          application clients.
+          認可サーバはWebアプリケーションクライアントおよびネイティブアプリケーションクライアントに対してリフレッシュトークンを発行してもよい (MAY).
+          
         
 </p>
 <p>
-          Refresh tokens MUST be kept confidential in transit and storage, and shared only among
-          the authorization server and the client to whom the refresh tokens were issued. The
-          authorization server MUST maintain the binding between a refresh token and the client to
-          whom it was issued.
+          リフレッシュトークンは通信経路上およびストレージ上において機密を保護され, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
+          
         
 </p>
 <p>
-          The authorization server MUST verify the binding between the refresh token and client
-          identity whenever the client identity can be authenticated. When client authentication is
-          not possible, the authorization server SHOULD deploy other means to detect refresh token
-          abuse.
+          認可サーバはクライアントのアイデンティティを認証出来る場合は常に, リフレッシュトークンとクライアントのアイデンティティとの間のバインディングを検証しなければならない (MUST). クライアント認証が不可能な場合は, 認可サーバはリフレッシュトークンの悪用を防ぐための他の手段を展開すべきである (SHOULD).
+          
         
 </p>
 <p>
-          For example, the authorization server could employ refresh token rotation in which a new
-          refresh token is issued with every access token refresh response. The previous refresh
-          token is invalidated but retained by the authorization server. If a refresh token is
-          compromised and subsequently used by both the attacker and the legitimate client, one of
-          them will present an invalidated refresh token which will inform the authorization server
-          of the breach.
+          例えば, 認可サーバはアクセストークンリフレッシュレスポンスの都度新しいリフレッシュトークンを発行するリフレッシュトークンローテーションを採用することができる. 前回のリフレッシュトークンは無効にされるが, 認可サーバには残される. もしリフレッシュトークンが漏洩しアタッカーと正当なクライアントの両方によって引き続き利用された場合, それらのうちの一つは無効なリフレッシュトークンを提示し, 認可サーバへ違反の発生を知らせることとなる.
+          
         
 </p>
 <p>
-          The authorization server MUST ensure that refresh tokens cannot be generated, modified,
-          or guessed to produce valid refresh tokens by unauthorized parties.
+          認可サーバはリフレッシュトークンが認可されていない相手によって正当なリフレッシュトークンを作成するために生成, 修正, もしくは推測できないことを保証しなければならない (MUST). 
+          
         
 </p>
 <a name="anchor45"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.5"></a><h3>10.5.&nbsp;
-Authorization Codes</h3>
+認可コード<!-- Authorization Codes --></h3>
 
 <p>
-          The transmission of authorization codes SHOULD be made over a secure channel, and the
-          client SHOULD implement TLS for use with its redirection URI if the URI identifies a
-          network resource. Effort should be made to keep authorization codes confidential. Since
-          authorization codes are transmitted via user-agent redirections, they could potentially
-          be disclosed through user-agent history and HTTP referrer headers.
+          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (MUST). 認可コードが機密にしておくために努力がなされるべきである. なぜなら認可コードは user-agent リダイレクトによって伝送されるため, user-agent の履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
+          
         
 </p>
 <p>
-          Authorization codes operate as plaintext bearer credentials, used to verify that the
-          resource owner who granted authorization at the authorization server is the same
-          resource owner returning to the client to complete the process. Therefore, if the client
-          relies on the authorization code for its own resource owner authentication, the client
-          redirection endpoint MUST require TLS.
+          認可コードはプロセスを完了するために, 認可サーバで権限を付与されたリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
+          
         
 </p>
 <p>
-          Authorization codes MUST be short lived and single use. If the authorization server
-          observes multiple attempts to exchange an authorization code for an access token, the
-          authorization server SHOULD attempt to revoke all access tokens already granted based on
-          the compromised authorization code.
+          認可コードの有効期間は短く, かつ一度限りしか利用されてはならない (MUST). もし認可サーバが単一の認可コードをアクセストークンへ交換しようとする複数の試行を検出したならば, 認可サーバはその認可コードに基づき既に付与されたすべてのアクセストークンを無効化することを試みるべきである (SHOULD).
+          
         
 </p>
 <p>
-          If the client can be authenticated, the authorization servers MUST authenticate the
-          client and ensure that the authorization code was issued to the same client.
+          もしクライアントが認証可能であれば, 認可サーバはその認可コードが同じクライアントに対して発行されたことを確認するためにそのクライアントを認証しなければならない (MUST).
+          
         
 </p>
 <a name="anchor46"></a><br /><hr />

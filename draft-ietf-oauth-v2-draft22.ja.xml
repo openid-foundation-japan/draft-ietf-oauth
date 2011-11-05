@@ -2868,7 +2868,7 @@
           </artwork>
         </figure>
         <t>
-          レスポンスタイプが空白文字 (%x20) のうち一つを含む場合, それは空白で区切られた順不同の値のリストとして扱われる. 値の順番は一通りだけ登録でき, 同じ値の組の順番を変えた他のすべての組み合わせを網羅する.
+          レスポンスタイプが一つ以上の空白文字 (%x20) を含む場合, それは空白で区切られた順不同の値のリストとして扱われる. 値の順番は一通りだけ登録でき, 同じ値の組の順番を変えた他のすべての組み合わせを網羅する.
           <!--
           If a response type contains one of more space characters (%x20), it is compared as a
           space-delimited list of values in which the order of values does not matter. Only one
@@ -2890,7 +2890,7 @@
 
       <section title='追加のエラーコードの定義<!-- Defining Additional Error Codes -->' anchor='new-errors'>
         <t>
-          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コード付与エラーレスポンス (<xref target='code-authz-error' />), implicit grant エラーレスポンス (<xref target='implicit-authz-error' />), トークンエラーレスポンス (<xref target='token-errors' />) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
+          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コードグラントエラーレスポンス (<xref target='code-authz-error' />), implicit grant エラーレスポンス (<xref target='implicit-authz-error' />), トークンエラーレスポンス (<xref target='token-errors' />) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
           <!--
           In cases where protocol extensions (i.e. access token types, extension parameters, or
           extension grant types) require additional error codes to be used with the authorization
@@ -3179,61 +3179,88 @@
         </t>
       </section>
 
-      <section title='Refresh Tokens'>
+      <section title='リフレッシュトークン<!-- Refresh Tokens -->'>
         <t>
+          認可サーバはWebアプリケーションクライアントおよびネイティブアプリケーションクライアントに対してリフレッシュトークンを発行してもよい (MAY).
+          <!--
           Authorization servers MAY issue refresh tokens to web application clients and native
           application clients.
+          -->
         </t>
         <t>
+          リフレッシュトークンは通信経路上およびストレージ上において機密を保護され, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
+          <!--
           Refresh tokens MUST be kept confidential in transit and storage, and shared only among
           the authorization server and the client to whom the refresh tokens were issued. The
           authorization server MUST maintain the binding between a refresh token and the client to
           whom it was issued.
+          -->
         </t>
         <t>
+          認可サーバはクライアントのアイデンティティを認証出来る場合は常に, リフレッシュトークンとクライアントのアイデンティティとの間のバインディングを検証しなければならない (MUST). クライアント認証が不可能な場合は, 認可サーバはリフレッシュトークンの悪用を防ぐための他の手段を展開すべきである (SHOULD).
+          <!--
           The authorization server MUST verify the binding between the refresh token and client
           identity whenever the client identity can be authenticated. When client authentication is
           not possible, the authorization server SHOULD deploy other means to detect refresh token
           abuse.
+          -->
         </t>
         <t>
+          例えば, 認可サーバはアクセストークンリフレッシュレスポンスの都度新しいリフレッシュトークンを発行するリフレッシュトークンローテーションを採用することができる. 前回のリフレッシュトークンは無効にされるが, 認可サーバには残される. もしリフレッシュトークンが漏洩しアタッカーと正当なクライアントの両方によって引き続き利用された場合, それらのうちの一つは無効なリフレッシュトークンを提示し, 認可サーバへ違反の発生を知らせることとなる.
+          <!--
           For example, the authorization server could employ refresh token rotation in which a new
           refresh token is issued with every access token refresh response. The previous refresh
           token is invalidated but retained by the authorization server. If a refresh token is
           compromised and subsequently used by both the attacker and the legitimate client, one of
           them will present an invalidated refresh token which will inform the authorization server
           of the breach.
+          -->
         </t>
         <t>
+          認可サーバはリフレッシュトークンが認可されていない相手によって正当なリフレッシュトークンを作成するために生成, 修正, もしくは推測できないことを保証しなければならない (MUST). 
+          <!--
           The authorization server MUST ensure that refresh tokens cannot be generated, modified,
           or guessed to produce valid refresh tokens by unauthorized parties.
+          -->
         </t>
       </section>
 
-      <section title='Authorization Codes'>
+      <section title='認可コード<!-- Authorization Codes -->'>
         <t>
+          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (MUST). 認可コードが機密にしておくために努力がなされるべきである. なぜなら認可コードは user-agent リダイレクトによって伝送されるため, user-agent の履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
+          <!--
           The transmission of authorization codes SHOULD be made over a secure channel, and the
           client SHOULD implement TLS for use with its redirection URI if the URI identifies a
           network resource. Effort should be made to keep authorization codes confidential. Since
           authorization codes are transmitted via user-agent redirections, they could potentially
           be disclosed through user-agent history and HTTP referrer headers.
+          -->
         </t>
         <t>
+          認可コードはプロセスを完了するために, 認可サーバで権限を付与されたリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
+          <!--
           Authorization codes operate as plaintext bearer credentials, used to verify that the
           resource owner who granted authorization at the authorization server is the same
           resource owner returning to the client to complete the process. Therefore, if the client
           relies on the authorization code for its own resource owner authentication, the client
           redirection endpoint MUST require TLS.
+          -->
         </t>
         <t>
+          認可コードの有効期間は短く, かつ一度限りしか利用されてはならない (MUST). もし認可サーバが単一の認可コードをアクセストークンへ交換しようとする複数の試行を検出したならば, 認可サーバはその認可コードに基づき既に付与されたすべてのアクセストークンを無効化することを試みるべきである (SHOULD).
+          <!--
           Authorization codes MUST be short lived and single use. If the authorization server
           observes multiple attempts to exchange an authorization code for an access token, the
           authorization server SHOULD attempt to revoke all access tokens already granted based on
           the compromised authorization code.
+          -->
         </t>
         <t>
+          もしクライアントが認証可能であれば, 認可サーバはその認可コードが同じクライアントに対して発行されたことを確認するためにそのクライアントを認証しなければならない (MUST).
+          <!--
           If the client can be authenticated, the authorization servers MUST authenticate the
           client and ensure that the authorization code was issued to the same client.
+          -->
         </t>
       </section>
 
