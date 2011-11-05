@@ -2931,8 +2931,8 @@
 
     <section title='ネイティブアプリケーション<!--Native Applications-->'>
       <t>
-	  ネイティブアプリケーションはリソースオーナーの端末にインストールされ, 実行されるクライアントである(例えば, デスクトップアプリケーション, ネィティブモバイルアプリケーション).
-	  ネイティブアプリケーションではセキュリティ, プラットフォーム能力と全体的なエンドユーザー経験に関する特別な考慮を必要とするかもしれない(MAY).
+	  ネイティブアプリケーションはリソースオーナーの端末にインストールされ, 実行されるクライアントである(例えば, デスクトップアプリケーション, ネイティブモバイルアプリケーション).
+	  ネイティブアプリケーションではセキュリティ, プラットフォーム性能と全体的なエンドユーザー経験に関する特別な考慮を必要とするかもしれない(MAY).
 	  <!--
         Native applications are clients installed and executed on the resource owner's device
         (i.e. desktop application, native mobile application). Native applications may require
@@ -2941,7 +2941,7 @@
 		-->
       </t>
       <t>
-	  認可エンドポイントはクライアントとリソースオーナーのユーザーエージェントによる相互作用を要求する.
+	  認可エンドポイントはクライアントとリソースオーナーのユーザーエージェントによるインタラクションを要求する.
 	  ネイティブアプリケーションは外部のユーザーエージェントを起動もしくはアプリケーション内にユーザーエージェントを埋め込むことができる.
 	  <!--
         The authorization endpoint requires interaction between the client and the resource
@@ -2952,7 +2952,7 @@
       <t>
         <list style='symbols'>
           <t>
-		  外部のユーザーエージェント - ネイティブアプリケーションはクライアントを起動するためのハンドラとしてオペレーションシステムに登録したスキームをリダイレクションURIにして利用すること, クレデンシャルのコピーアンドペースト, ローカルのウェブサーバー, ユーザーエクステンションのインストール, クライアントの管理下でサーバにホストされリソースを識別するリダイレクションURIの提供など, ネィティブアプリケーションに利用可能な方法で認可サーバーからのレスポンスを受け取ることができる.
+		  外部のユーザーエージェント - ネイティブアプリケーションは, クライアントを起動するためのハンドラとしてオペレーションシステムに登録したスキームをリダイレクトURIにして利用する, クレデンシャルをコピーアンドペーストする, ローカルのウェブサーバーを利用する, ユーザーエクステンションをインストールする, クライアントの管理下にあるサーバ上のリソースをリダイレクトURIとして利用するなど, ネイティブアプリケーションがレスポンスにアクセスすることを可能にする手段を用いて, 認可サーバーからのレスポンスを取得することができる.
 	  <!--
             External user-agent - the native application can capture the response from the
             authorization server using a redirection URI with a scheme registered with the
@@ -2963,7 +2963,7 @@
 		-->
           </t>
           <t>
-		  埋め込まれたユーザーエージェント - ネイティブアプリケーションはリソースを読み込んでいる間に発生した状態変更の監視やユーザーエージェントのクッキーストレージへのアクセスなどの埋め込まれたユーザーエージェントとの直接通信によりレスポンスを受け取ることができる.
+		  埋め込まれたユーザーエージェント - ネイティブアプリケーションは, リソースを読み込んでいる間に発生した状態変更の監視やユーザーエージェントのクッキーストレージへのアクセスなど, 埋め込まれたユーザーエージェントとの直接通信によりレスポンスを受け取ることができる.
 		    <!--
             Embedded user-agent - the native application obtains the response by directly
             communicating with the embedded user-agent by monitoring state changes emitted during
@@ -2981,7 +2981,7 @@
       <t>
         <list style='symbols'>
           <t>
-            リソースオーナーが既にアクティブなセッションを保持し認可サーバーによる再認証の必要性を削除することにより, 外部のユーザーエージェントは完了率をあげるかもしれない.
+            認可サーバーが再認証を要求しない仕様になっており, かつリソースオーナーがアクティブセッションを保有している場合, 外部のユーザーエージェントは完了率をあげるかもしれない.
             それはおなじみのエンドユーザー体験と機能性を提供する.
             リソースオーナーはまた認証を手助けするユーザーエージェントの機能や拡張(パスワードマネージャ, 2要素のリーダー装置)に頼ることができる.
             <!--
@@ -3000,8 +3000,8 @@
             -->
           </t>
           <t>
-            リソースオーナーはほとんどの外部ユーザーエージェントで見られる視覚的な保護にアクセスすることなく未確認のウィンドウ内で認証するため, 埋め込みのユーザーエージェントはセキュリティ問題を引き起こす.
-            埋め込みのユーザーエージェントは (フィッシング攻撃が簡単に実行できる) 未確認の認証要求を信用するようエンドユーザーに教育する.
+            リソースオーナーはほとんどの外部ユーザーエージェントで見られる視覚的な保護機能にアクセスすることなく未確認のウィンドウ内で認証するため, 埋め込みのユーザーエージェントはセキュリティ問題を引き起こす.
+            埋め込みのユーザーエージェントは (フィッシング攻撃が簡単に実行できる) 未確認の認証要求を信用するようエンドユーザーに教育してしまう.
             <!--
             Embedded user-agents pose a security challenge because resource owners are
             authenticating in an unidentified window without access to the visual protections found
@@ -3012,7 +3012,7 @@
         </list>
       </t>
       <t>
-        インプリクト許諾方式と認可コード許諾方式を選択するとき, 以下について考慮すべきである.
+        インプリシットグラントタイプと認可コードグラントタイプを選択するとき, 以下について考慮すべきである.
         <!--
         When choosing between the implicit grant type and the authorization code grant type, the
         following should be considered:
@@ -3021,7 +3021,7 @@
       <t>
         <list style='symbols'>
           <t>
-            クライアントクレデンシャルを機密に保持できないネイティブアプリケーションの能力により, 認可コード許諾方式を利用するネィティブアプリケーションはクライアントクレデンシャルを使うべきではない(SHOULD).
+            ネイティブアプリケーションはその性質上クライアントクレデンシャルを秘匿に保てないため, 認可コードグラントタイプを利用するネィティブアプリケーションはクライアントクレデンシャルを使うべきではない(SHOULD).
             <!--
             Native applications that use the authorization code grant type SHOULD do so without
             using client credentials, due to the native application’s inability to keep client
@@ -3029,7 +3029,7 @@
             -->
           </t>
           <t>
-            インプリクト許諾方式のフローを利用するとき, リフレッシュトークンは返されず, アクセストークンの期限が切れるとすぐに認可プロセスの繰り返しを要求する.
+            インプリシットグラントタイプのフローを利用すると, リフレッシュトークンは返されないため, アクセストークンの期限が切れるたびに認可プロセスを繰り返す必要がある.
             <!--
             When using the implicit grant type flow a refresh token is not returned which requires
             repeating the authorization process once the access token expires.
@@ -3261,23 +3261,37 @@
         </t>
       </section>
 
-      <section title='Authorization Code Redirection URI Manipulation'>
+      <section title='認可コードリダイレクトURIの操作<!--Authorization Code Redirection URI Manipulation-->'>
         <t>
+          認可要求に認可コードグラントタイプを用いるとき, クライアントは<spanx style='verb'>redirect_uri</spanx>パラメータによりリダイレクトURIを指定できる. 
+          攻撃者がリダイレクトURIの値を操作可能であるとき, 認可サーバーによってリソースオーナーのユーザーエージェントを認可コードを含んだ攻撃者の管理下にあるURIにリダイレクトさせることができる.
+          <!--
           When requesting authorization using the authorization code grant type, the client can
           specify a redirection URI via the <spanx style='verb'>redirect_uri</spanx> parameter.
           If an attacker can manipulate the value of the redirection URI, it can cause the
           authorization server to redirect the resource owner user-agent to a URI under the control
           of the attacker with the authorization code.
+          -->
         </t>
         <t>
+          攻撃者は, 正しいクライアントにおいてアカウントを作成し, 認可フローを開始することができる.
+          攻撃者がアクセス許可のために認可サーバーに送られたとき, 正当なクライアントにより提供された認可URIを取得し, クライアントのリダイレクトURIを攻撃者の管理下にあるURIに交換する.
+          攻撃者はその後, 正当なクライアントに向けた操作された認可アクセスリンクをたどるよう被害者を騙す.
+          <!--
           An attacker can create an account at a legitimate client and initiate the authorization
           flow. When the attacker is sent to the authorization server to grant access, the attacker
           grabs the authorization URI provided by the legitimate client, and replaces the client's
           redirection URI with a URI under the control of the attacker. The attacker then tricks
           the victim into following the manipulated link to authorize access to the legitimate
           client.
+          -->
         </t>
         <t>
+          認可サーバーにおいて, 被害者は正当で信頼できるクライアントによる正常で有効なリクエストを促され, そのリクエストを認可する.
+          被害者はその後, 認可コードとともに攻撃者の管理下にあるエンドポイントにリダイレクトされる.
+          攻撃者は, クライアントにより提供されたオリジナルのリダイレクトURIを用いて,　認可コードを送ることにより認可フローを完了する.
+          クライアントは認可コードとアクセストークンを交換し, それを攻撃者のクライアントのアカウントと紐づけることで, 被害者により(クライアント経由で)認可された保護リソースへのアクセス権を獲得できる.
+          <!--
           Once at the authorization server, the victim is prompted with a normal, valid request on
           behalf of a legitimate and trusted client, and authorizes the request. The victim is
           then redirected to an endpoint under the control of the attacker with the authorization
@@ -3286,14 +3300,20 @@
           exchanges the authorization code with an access token and links it to the attacker's
           client account which can now gain access to the protected resources authorized by the
           victim (via the client).
+          -->
         </t>
         <t>
+          このような攻撃を防ぐため, 認可サーバーは認可コードの取得に用いたリダイレクトURIと, 認可コードとアクセストークンの交換時に提供されたリダイレクトURIが同一であることを確認しなければならない(MUST).
+          認可サーバはpublicクライアントに対してリダイレクトURIの登録を要求しなければならず(MUST), confidencialクライアントに対してもリダイレクトURIの登録を要求すべきである(SHOULD).
+          リダイレクトURIがリクエストにより提供されたとき, 認可サーバーは登録された値を用いてそれを検証しければならない(MUST).
+          <!--
           In order to prevent such an attack, the authorization server MUST ensure that the
           redirection URI used to obtain the authorization code is identical to the redirection URI
           provided when exchanging the authorization code for an access token. The authorization
           server MUST require public clients and SHOULD require confidential clients to register
           their redirection URIs. If a redirection URI is provided in the request, the
           authorization server MUST validate it against the registered value.
+          -->
         </t>
       </section>
 
