@@ -3099,54 +3099,83 @@
         </t>
       </section>
 
-      <section title='Client Impersonation'>
+      <section title='クライアント偽装<!-- Client Impersonation -->'>
         <t>
+          もし正当なクライアントがクライアントクレデンシャルを秘匿に保てない場合, 悪意あるクライアントがそのクライアントになりすまし, 保護されたリソースへのアクセスを取得することができる.
+          <!--
           A malicious client can impersonate another client and obtain access to protected
           resources, if the impersonated client fails to, or is unable to, keep its client
           credentials confidential.
+          -->
         </t>
         <t>
+          認可サーバーはクライアントが認証可能である場合は, 常にクライアント認証を実行しなければならない (MUST).
+          クライアントが本質的に認証不可能な場合は, 認可サーバーは認可レスポンス時に用いられる全リダイレクト URI の登録を要求しなければならず (MUST), また上記のような悪意あるクライアントからリソースオーナーを保護する何らかの方策を取るべきである (SHOULD).
+          そのような方策の例としては, リソースオーナー自身がクライアントの身元を確認するように認可サーバーが促すことなどが考えられる.
+          <!--
           The authorization server MUST authenticate the client whenever possible. If the
           authorization server cannot authenticate the client due to the client's nature, the
           authorization server MUST require the registration of any redirection URI used for
           receiving authorization responses, and SHOULD utilize other means to protect resource
           owners from such malicious clients. For example, the authorization server can engage
           the resource owner to assist in identifying the client and its origin.
+          -->
         </t>
         <t>
+          認可サーバーは明示的にリソースオーナーに認証を要求し, クライアントと要求される認可スコープおよび有効期間についての情報を提供するべきである (SHOULD).
+          その時点でのクライアントのコンテキストにそってリクエストを評価し, リクエストの認可/拒否を行うことは, リソースオーナー自身の判断にゆだねられる.
+          <!--
           The authorization server SHOULD enforce explicit resource owner authentication and
           provide the resource owner with information about the client and the requested
           authorization scope and lifetime. It is up to the resource owner to review the
           information in the context of the current client, and authorize or deny the request.
+          -->
         </t>
         <t>
+          認可サーバーは, クライアント認証やその他の判断基準によって, リクエストが同一のクライアントから送られておりクライアント偽装が行われていないことを確認できない限り, 二度目以降の認可リクエストを (リソースオーナーの能動的なインタラクション無しに) 自動的に処理すべきではない (SHOULD NOT).
+          <!--
           The authorization server SHOULD NOT process repeated authorization requests
           automatically (without active resource owner interaction) without authenticating the
           client or relying on other measures to ensure the repeated request comes from the
           original client and not an impersonator.
+          -->
         </t>
       </section>
 
-      <section title='Access Tokens'>
+      <section title='アクセストークン<!-- Access Tokens -->'>
         <t>
+          アクセストーク (およびあらゆるトークンタイプ固有属性) は, 通信時・保存時ともに秘匿に保たなければならない (MUST).
+          またそれらの情報は, 認可サーバー, アクセストークンが通用するリソースサーバー, およびアクセストークンを発行されたクライアントの間でのみ共有される (MUST).
+          <!--
           Access token (as well as any access token type-specific attributes) MUST be kept
           confidential in transit and storage, and only shared among the authorization server, the
           resource servers the access token is valid for, and the client to whom the access token
           is issued.
+          -->
         </t>
         <t>
+          implicit grant を利用する場合, アクセストークンは URI フラグメント経由で送信されるため, 認可対象外の何者かに漏洩する可能性がある.
+          <!--
           When using the implicit grant type, the access token is transmitted in the URI fragment,
           which can expose it to unauthorized parties.
+          -->
         </t>
         <t>
+          認可サーバーは, 認可対象外の何者かアクセストークンを生成・変更されたり, 有効なアクセストークンの生成方法を推測されないことを保証しなければならない (MUST).
+          <!--
           The authorization server MUST ensure that access tokens cannot be generated, modified, or
           guessed to produce valid access tokens by unauthorized parties.
+          -->
         </t>
         <t>
+          クライアントは, 必要最小限のスコープおよび有効期間のアクセストークンを要求すべきである (SHOULD).
+          認可サーバーは, 要求されたスコープおよび有効期間をどのように受け入れるかを判断する際, クライアントのアイデンティティーを考慮すべきであり (SHOULD), 場合によっては要求よりも狭い権限しか持たないアクセストークンを発行することもある (MAY).
+          <!--
           The client SHOULD request access tokens with the minimal scope and lifetime necessary.
           The authorization server SHOULD take the client identity into account when choosing how
           to honor the requested scope and lifetime, and MAY issue an access token with a less
           rights than requested.
+          -->
         </t>
       </section>
 
