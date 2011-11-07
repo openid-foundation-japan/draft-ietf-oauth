@@ -224,7 +224,7 @@ Client Types<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor13">2.3.1.</a>&nbsp;
 クライアントパスワード<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor14">2.3.2.</a>&nbsp;
-Other Authentication Methods<br />
+その他の認証方式<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor15">2.4.</a>&nbsp;
 Unregistered Clients<br />
 <a href="#anchor16">3.</a>&nbsp;
@@ -408,7 +408,7 @@ Authors' Addresses<br />
       
 </p>
 <p>
-        OAuthは, クライアントとリソースオーナーの役割を分けることで, これらの問題の解決に取り組む. OAuthでは, クライアントは, リソースオーナーのコントロール下にありリソースサーバーにホストされているリソースへのアクセス権を要求する. そしてリソースオーナーのクレデンシャルそのものとは別のクレデンシャルを取得する.
+        OAuthは, クライアントとリソースオーナーの役割を分けることで, これらの問題の解決に取り組む. OAuthでは, クライアントは, リソースオーナーのコントロール下にありリソースサーバーによってホストされているリソースへのアクセス権を要求する. そしてリソースオーナーのクレデンシャルそのものとは別のクレデンシャルを取得する.
       
 </p>
 <p>
@@ -416,7 +416,7 @@ Authors' Addresses<br />
       
 </p>
 <p>
-        例えば, あるユーザー (リソースオーナー) が, 印刷サービス (クライアント) に対して, 写真共有サービス上 (リソースサーバー) に保管されている彼女の保護された写真へのアクセス権を与えることを考える. OAuthでは, その際彼女のユーザー名とパスワードを印刷サービスに与える必要はない. そのかわり, 彼女は写真共有サービスの信任を得た認証サービス (認証サーバー) に対して認証を行い, 認証サービスが印刷サービスに移譲用のクレデンシャル (アクセストークン) を発行する.
+        例えば, あるユーザー (リソースオーナー) が, 印刷サービス (クライアント) に対して, 写真共有サービス上 (リソースサーバー) に保管されている彼女の保護された写真へのアクセス権を与えることを考える. OAuthでは, その際彼女のユーザー名とパスワードを印刷サービスに与える必要はない. そのかわり, 彼女は写真共有サービスの信任を得た認証サービス (認証サーバー) に対して認証を行い, 認証サービスが印刷サービスに権限委譲用のクレデンシャル (アクセストークン) を発行する.
       
 </p>
 <p>
@@ -938,13 +938,10 @@ Client Types</h3>
 <a name="anchor14"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.2.3.2"></a><h3>2.3.2.&nbsp;
-Other Authentication Methods</h3>
+その他の認証方式</h3>
 
 <p>
-            The authorization server MAY support any suitable HTTP authentication scheme matching
-            its security requirements. When using other authentication methods, the authorization
-            server MUST define a mapping between the client identifier (registration record) and
-            authentication scheme.
+            認証サーバは, セキュリティ要件に適合する適切なHTTP認証スキームをサポートすべきである（MAY）. 他の認証方式を利用する際には, 認可サーバはClient Identifierと認証方式の双方をマッピングしておかねばならない（MUST）. 
           
 </p>
 <a name="anchor15"></a><br /><hr />
@@ -953,9 +950,7 @@ Other Authentication Methods</h3>
 Unregistered Clients</h3>
 
 <p>
-          This specification does not exclude the use of unregistered clients. However, the use
-          with such clients is beyond the scope of this specification, and requires additional
-          security analysis and review of its interoperability impact.
+          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合、このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
         
 </p>
 <a name="anchor16"></a><br /><hr />
