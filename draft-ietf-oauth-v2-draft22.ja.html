@@ -482,23 +482,22 @@ Authors' Addresses<br />
 <a name="Figure-1"></a>
 <div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
-
   +--------+                               +---------------+
-  |        |--(A)----- 認可リクエスト ----&gt;|   リソース    |
-  |        |                               |   オーナー    |
-  |   ク   |&lt;-(B)------- 認可取得 ---------|               |
-  |   ラ   |                               +---------------+
-  |   イ   |
-  |   ア   |                               +---------------+
-  |   ン   |--(C)------- 認可取得 --------&gt;|               |
-  |   ト   |                               | 認可サーバ―  |
-  |        |&lt;-(D)---- アクセストークン ----|               |
+  |        |--(A)- Authorization Request -&gt;|   Resource    |
+  |        |                               |     Owner     |
+  |        |&lt;-(B)-- Authorization Grant ---|               |
   |        |                               +---------------+
   |        |
   |        |                               +---------------+
-  |        |--(E)---- アクセストークン ---&gt;|   リソース    |
-  |        |                               |   サーバー    |
-  |        |&lt;-(F)------ 保護リソース ------|               |
+  |        |--(C)-- Authorization Grant --&gt;| Authorization |
+  | Client |                               |     Server    |
+  |        |&lt;-(D)----- Access Token -------|               |
+  |        |                               +---------------+
+  |        |
+  |        |                               +---------------+
+  |        |--(E)----- Access Token ------&gt;|    Resource   |
+  |        |                               |     Server    |
+  |        |&lt;-(F)--- Protected Resource ---|               |
   +--------+                               +---------------+
 
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;1: プロトコルフローの概要&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
