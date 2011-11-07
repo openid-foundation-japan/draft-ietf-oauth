@@ -228,11 +228,11 @@ Other Authentication Methods<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor15">2.4.</a>&nbsp;
 Unregistered Clients<br />
 <a href="#anchor16">3.</a>&nbsp;
-Protocol Endpoints<br />
+プロトコルエンドポイント<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor17">3.1.</a>&nbsp;
-Authorization Endpoint<br />
+認可エンドポイント<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor18">3.1.1.</a>&nbsp;
-Response Type<br />
+レスポンスタイプ<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#redirect-uri">3.1.2.</a>&nbsp;
 Redirection Endpoint<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor24">3.2.</a>&nbsp;
@@ -678,12 +678,12 @@ Client Credentials</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              クライアントは認可サーバーを使用した認証によってアクセストークンを要求し認可の付与を示す.
+              クライアントは認可サーバーを使用した認証によってアクセストークンを要求し認可許可を示す.
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              認可サーバーはクライアントを認証するとともに認可の付与の正当性を確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
+              認可サーバーはクライアントを認証するとともに認可許可の正当性を確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
             
 </dd>
 <dt>(C)</dt>
@@ -961,91 +961,66 @@ Unregistered Clients</h3>
 <a name="anchor16"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3"></a><h3>3.&nbsp;
-Protocol Endpoints</h3>
+プロトコルエンドポイント</h3>
 
 <p>
-        The authorization process utilizes two endpoints (HTTP resources):
+        認可プロセスは2つのエンドポイントを利用する (HTTP リソース):
       
 </p>
 <p>
         </p>
 <ul class="text">
 <li>
-            Authorization endpoint - used to obtain authorization from the resource owner via
-            user-agent redirection.
+            認可エンドポイント - ユーザーエージェントによってリソースオーナーから認可を得るために利用される.
           
 </li>
 <li>
-            Token endpoint - used to exchange an authorization grant for an access token, typically
-            with client authentication.
+            トークンエンドポイント - 認可許可をアクセストークンと交換するために利用される. 一般的にクライアント認証を用いる.
           
 </li>
 </ul><p>
       
 </p>
 <p>
-        Not every authorization grant type utilizes both endpoints. Extension grant types MAY
-        define additional endpoints as needed.
+        全ての認可タイプが両方のエンドポイントを使用するわけではない. 拡張された許可タイプは必要に応じて追加のエンドポイントを定義してもよい (MAY).
       
 </p>
 <a name="anchor17"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
-Authorization Endpoint</h3>
+認可エンドポイント</h3>
 
 <p>
-          The authorization endpoint is used to interact with the resource owner and obtain
-          an authorization grant. The authorization server MUST first verify the identity of the
-          resource owner. The way in which the authorization server authenticates the resource
-          owner (e.g. username and password login, session cookies) is beyond the scope of this
-          specification.
+          認可エンドポイントはリソースオーナーと通信するために使用され認可許可を得る. 認可サーバーはリソースオーナーのアイデンティティを確認しなければならない (MUST). 認可サーバーがリソースオーナーの認証方法 (ユーザー名やパスワードによるログイン, セッション・クッキー) は本仕様の定めるところではない.
         
 </p>
 <p>
-          The means through which the client obtains the location of the authorization endpoint are
-          beyond the scope of this specification, but the location is typically provided in the
-          service documentation.
+          クライアントの認可エンドポイントURLの取得は本仕様の定めるところではないが, そのURLは一般的にサービスドキュメントで提供される.
         
 </p>
 <p>
-          The endpoint URI MAY include an
-          <tt>application/x-www-form-urlencoded</tt> formatted
-          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
-          section 3.4), which MUST be retained when adding additional query parameters. The
-          endpoint URI MUST NOT include a fragment component.
+          エンドポイントのURIは (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) でフォーマットされたクエリー部に <tt>application/x-www-form-urlencoded</tt> を含んでもよい (MAY) (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
         
 </p>
 <p>
-          Since requests to the authorization endpoint result in user authentication and the
-          transmission of clear-text credentials (in the HTTP response), the authorization server
-          MUST require the use of a transport-layer security mechanism when sending requests to the
-          authorization endpoint. The authorization server MUST support TLS 1.0
-          (<a class='info' href='#RFC2246'>[RFC2246]<span> (</span><span class='info'>Dierks, T. and C. Allen, &ldquo;The TLS Protocol Version 1.0,&rdquo; January&nbsp;1999.</span><span>)</span></a>), SHOULD support TLS 1.2 (<a class='info' href='#RFC5246'>[RFC5246]<span> (</span><span class='info'>Dierks, T. and E. Rescorla, &ldquo;The Transport Layer Security (TLS) Protocol Version 1.2,&rdquo; August&nbsp;2008.</span><span>)</span></a>) and its
-          future replacements, and MAY support additional transport-layer mechanisms meeting its
-          security requirements.
+          認可エンドポイントへのリクエストはユーザー認証と(HTTPレスポンスによる)平文クレデンシャルの転送を伴うため, 認可エンドポイントにリクエストを送信する際, 認可サーバーはトランスポート層でのセキュリティ機構を用いらなければならない (MUST). 認可サーバーはTLS 1.0 (<a class='info' href='#RFC2246'>[RFC2246]<span> (</span><span class='info'>Dierks, T. and C. Allen, &ldquo;The TLS Protocol Version 1.0,&rdquo; January&nbsp;1999.</span><span>)</span></a>) をサポートしなければならず (MUST), TLS 1.2 (<a class='info' href='#RFC5246'>[RFC5246]<span> (</span><span class='info'>Dierks, T. and E. Rescorla, &ldquo;The Transport Layer Security (TLS) Protocol Version 1.2,&rdquo; August&nbsp;2008.</span><span>)</span></a>) とその将来的な切り替えをサポートすべきであり (SHOULD), セキュリティ要件に合わせた追加のトランスポート層メカニズムをサポートしてもよい (MAY).
         
 </p>
 <p>
-          The authorization server MUST support the use of the HTTP <tt>GET</tt>
-          method <a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a> for the authorization endpoint, and MAY support the use
-          of the <tt>POST</tt> method as well.
+          認可サーバーは認可エンドポイントでHTTP <tt>GET</tt> メソッドをサポートしなければならず (MUST), 同様に <tt>POST</tt> メソッドをサポートしてもよい (MAY).
         
 </p>
 <p>
-          Parameters sent without a value MUST be treated as if they were omitted from the request.
-          The authorization server SHOULD ignore unrecognized request parameters. Request and
-          response parameters MUST NOT be included more than once.
+          パラメーターの値がない場合は, パラメーター自体が省略されているものとして扱わなければならない (MUST). 認可サーバーは認められていないリクエストパラメーターは無視すべきである (SHOULD). リクエストおよびレスポンスパラメーターは2回以上含まれるべきではない (MUST NOT).
         
 </p>
 <a name="anchor18"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1.1"></a><h3>3.1.1.&nbsp;
-Response Type</h3>
+レスポンスタイプ</h3>
 
 <p>
-            The authorization endpoint is used by the authorization code grant type and implicit
-            grant type flows. The client informs the authorization server of the desired grant
-            type using the following parameter:
+            認可エンドポイントは認可コード許可タイプと implicit 許可タイプのフローで使用される. クライアントは以下に示すパラメーターを利用した希望するタイプの認可サーバーに情報を送る.
           
 </p>
 <p>
@@ -1054,23 +1029,15 @@ Response Type</h3>
 <dt>response_type</dt>
 <dd>
                 
-                REQUIRED. The value MUST be one of <tt>code</tt> for requesting
-                an authorization code as described by <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a>,
-                <tt>token</tt> for requesting an access token (implicit grant)
-                as described by <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a>, or a registered extension
-                value as described by <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a>. If the response type
-                contains one or more space characters (%x20), it is interpreted as a
-                space-delimited list of values, where the order of values does not matter (e.g.
-                <tt>a b</tt> is the same as <tt>b a</tt>).
+                必須 (REQUIRED).
+                レスポンスタイプの値は <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a> で述べる認可コードを要求するための <tt>code</tt> あるいは, <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a> で述べるアクセストークン(インプリシット許可)を要求する <tt>token</tt> あるいは, <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a> で述べる登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切り一覧(<tt>a b</tt> と <tt>b a</tt> は同じである)として無視する.
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            If an authorization request is missing the <tt>response_type</tt>
-            parameter, the authorization server SHOULD return an error response as described in
-            <a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>.
+            認可リクエストで <tt>response_type</tt> を見つけられない場合, 認可サーバーは <a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a> で述べるエラーレスポンスを返すべきである (SHOULD).
           
 </p>
 <a name="redirect-uri"></a><br /><hr />
