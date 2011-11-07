@@ -3158,7 +3158,7 @@
           -->
         </t>
         <t>
-          認可サーバーは, 認可対象外の何者かアクセストークンを生成・変更されたり, 有効なアクセストークンの生成方法を推測されないことを保証しなければならない (MUST).
+          認可サーバーは, 認可対象外の何者かにアクセストークンを生成・変更されたり, 有効なアクセストークンの生成方法を推測されないことを保証しなければならない (MUST).
           <!--
           The authorization server MUST ensure that access tokens cannot be generated, modified, or
           guessed to produce valid access tokens by unauthorized parties.
