@@ -3120,7 +3120,7 @@
         </t>
         <t>
           認可サーバーは明示的にリソースオーナーに認証を要求し, クライアントと要求される認可スコープおよび有効期間についての情報を提供するべきである (SHOULD).
-          その時点でのクライアントのコンテキストにそってリクエストを評価し, リクエストの認可/拒否を行うことは, リソースオーナー自身の判断にゆだねられる.
+          その時点でのクライアントのコンテキスト内の情報を評価し, リクエストの認可/拒否を行うことは, リソースオーナー自身の判断にゆだねられる.
           <!--
           The authorization server SHOULD enforce explicit resource owner authentication and
           provide the resource owner with information about the client and the requested
@@ -3141,7 +3141,7 @@
 
       <section title='アクセストークン<!-- Access Tokens -->'>
         <t>
-          アクセストーク (およびあらゆるトークンタイプ固有属性) は, 通信時・保存時ともに秘匿に保たなければならない (MUST).
+          アクセストークン (およびあらゆるトークンタイプ固有属性) は, 通信時・保存時ともに秘匿に保たなければならない (MUST).
           またそれらの情報は, 認可サーバー, アクセストークンが通用するリソースサーバー, およびアクセストークンを発行されたクライアントの間でのみ共有される (MUST).
           <!--
           Access token (as well as any access token type-specific attributes) MUST be kept
