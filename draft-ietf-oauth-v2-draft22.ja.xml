@@ -885,23 +885,31 @@
 	  -->
         </section>
 
-        <section title='Other Authentication Methods'>
+        <section title='その他の認証方式'>
+<!--         <section title='Other Authentication Methods'> -->
           <t>
+            認証サーバは, セキュリティ要件に適合する適切なHTTP認証スキームをサポートすべきである（MAY）. 他の認証方式を利用する際には, 認可サーバはClient Identifierと認証方式の双方をマッピングしておかねばならない（MUST）. 
+          </t>
+          <!--
             The authorization server MAY support any suitable HTTP authentication scheme matching
             its security requirements. When using other authentication methods, the authorization
             server MUST define a mapping between the client identifier (registration record) and
             authentication scheme.
-          </t>
+          -->
         </section>
 
       </section>
 
       <section title='Unregistered Clients'>
+<!--       <section title='Unregistered Clients'> -->
         <t>
+          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合、このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
+        </t>
+        <!--
           This specification does not exclude the use of unregistered clients. However, the use
           with such clients is beyond the scope of this specification, and requires additional
           security analysis and review of its interoperability impact.
-        </t>
+        -->
       </section>
       
     </section>
