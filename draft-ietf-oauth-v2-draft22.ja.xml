@@ -508,14 +508,14 @@
         <t>
           <list style='format (%C)'>
             <t>
-              クライアントは認可サーバーを使用した認証によってアクセストークンを要求し認可の付与を示す.
+              クライアントは認可サーバーを使用した認証によってアクセストークンを要求し認可許可を示す.
             </t>
             <!--
               The client requests an access token by authenticating with the authorization server,
               and presenting an authorization grant.
             -->
             <t>
-              認可サーバーはクライアントを認証するとともに認可の付与の正当性を確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
+              認可サーバーはクライアントを認証するとともに認可許可の正当性を確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
             </t>
             <!--
               The authorization server authenticates the client and validates the authorization
@@ -863,48 +863,74 @@
       
     </section>
 
-    <section title='Protocol Endpoints'>
+    <section title='プロトコルエンドポイント'>
+<!--    <section title='Protocol Endpoints'>  -->
       <t>
-        The authorization process utilizes two endpoints (HTTP resources):
+        認可プロセスは2つのエンドポイントを利用する (HTTP リソース):
       </t>
+      <!--
+        The authorization process utilizes two endpoints (HTTP resources):
+      -->
       <t>
         <list style='symbols'>
           <t>
+            認可エンドポイント - ユーザーエージェントによってリソースオーナーから認可を得るために利用される.
+          </t>
+          <!--
             Authorization endpoint - used to obtain authorization from the resource owner via
             user-agent redirection.
-          </t>
+          -->
           <t>
+            トークンエンドポイント - 認可許可をアクセストークンと交換するために利用される. 一般的にクライアント認証を用いる.
+          </t>
+          <!--
             Token endpoint - used to exchange an authorization grant for an access token, typically
             with client authentication.
-          </t>
+          -->
         </list>
       </t>
       <t>
+        全ての認可タイプが両方のエンドポイントを使用するわけではない. 拡張された許可タイプは必要に応じて追加のエンドポイントを定義してもよい (MAY).
+      </t>
+      <!--
         Not every authorization grant type utilizes both endpoints. Extension grant types MAY
         define additional endpoints as needed.
-      </t>
+      -->
 
-      <section title='Authorization Endpoint'>
+      <section title='認可エンドポイント'>
+<!--      <section title='Authorization Endpoint'>  -->
         <t>
+          認可エンドポイントはリソースオーナーと通信するために使用され認可許可を得る. 認可サーバーはリソースオーナーのアイデンティティを確認しなければならない (MUST). 認可サーバーがリソースオーナーの認証方法 (ユーザー名やパスワードによるログイン, セッション・クッキー) は本仕様の定めるところではない.
+        </t>
+        <!--
           The authorization endpoint is used to interact with the resource owner and obtain
           an authorization grant. The authorization server MUST first verify the identity of the
           resource owner. The way in which the authorization server authenticates the resource
           owner (e.g. username and password login, session cookies) is beyond the scope of this
           specification.
-        </t>
+        -->
         <t>
+          クライアントの認可エンドポイントURLの取得は本仕様の定めるところではないが, そのURLは一般的にサービスドキュメントで提供される.
+        </t>
+        <!--
           The means through which the client obtains the location of the authorization endpoint are
           beyond the scope of this specification, but the location is typically provided in the
           service documentation.
-        </t>
+        -->
         <t>
+          エンドポイントのURIは (<xref target='W3C.REC-html401-19991224' />) でフォーマットされたクエリー部に <spanx style='verb'>application/x-www-form-urlencoded</spanx> を含んでもよい (MAY) (<xref target='RFC3986' /> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
+        </t>
+        <!--
           The endpoint URI MAY include an
           <spanx style='verb'>application/x-www-form-urlencoded</spanx> formatted
           (<xref target='W3C.REC-html401-19991224' />) query component (<xref target='RFC3986' />
           section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
-        </t>
+        -->
         <t>
+          認可エンドポイントへのリクエストはユーザー認証と(HTTPレスポンスによる)平文クレデンシャルの転送を伴うため, 認可エンドポイントにリクエストを送信する際, 認可サーバーはトランスポート層でのセキュリティ機構を用いらなければならない (MUST). 認可サーバーはTLS 1.0 (<xref target='RFC2246' />) をサポートしなければならず (MUST), TLS 1.2 (<xref target='RFC5246' />) とその将来的な切り替えをサポートすべきであり (SHOULD), セキュリティ要件に合わせた追加のトランスポート層メカニズムをサポートしてもよい (MAY).
+        </t>
+        <!--
           Since requests to the authorization endpoint result in user authentication and the
           transmission of clear-text credentials (in the HTTP response), the authorization server
           MUST require the use of a transport-layer security mechanism when sending requests to the
@@ -912,28 +938,42 @@
           (<xref target='RFC2246' />), SHOULD support TLS 1.2 (<xref target='RFC5246' />) and its
           future replacements, and MAY support additional transport-layer mechanisms meeting its
           security requirements.
-        </t>
+        -->
         <t>
+          認可サーバーは認可エンドポイントでHTTP <spanx style='verb'>GET</spanx> メソッドをサポートしなければならず (MUST), 同様に <spanx style='verb'>POST</spanx> メソッドをサポートしてもよい (MAY).
+        </t>
+        <!--
           The authorization server MUST support the use of the HTTP <spanx style='verb'>GET</spanx>
           method <xref target='RFC2616' /> for the authorization endpoint, and MAY support the use
           of the <spanx style='verb'>POST</spanx> method as well.
-        </t>
+        -->
         <t>
+          パラメーターの値がない場合は, パラメーター自体が省略されているものとして扱わなければならない (MUST). 認可サーバーは認められていないリクエストパラメーターは無視すべきである (SHOULD). リクエストおよびレスポンスパラメーターは2回以上含まれるべきではない (MUST NOT).
+        </t>
+        <!--
           Parameters sent without a value MUST be treated as if they were omitted from the request.
           The authorization server SHOULD ignore unrecognized request parameters. Request and
           response parameters MUST NOT be included more than once.
-        </t>
+        -->
 
-        <section title='Response Type'>
+        <section title='レスポンスタイプ'>
+<!--        <section title='Response Type'>  -->
           <t>
+            認可エンドポイントは認可コード許可タイプと implicit 許可タイプのフローで使用される. クライアントは以下に示すパラメーターを利用した希望するタイプの認可サーバーに情報を送る.
+          </t>
+          <!--
             The authorization endpoint is used by the authorization code grant type and implicit
             grant type flows. The client informs the authorization server of the desired grant
             type using the following parameter:
-          </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
               <t hangText='response_type'>
                 <vspace />
+                必須 (REQUIRED).
+                レスポンスタイプの値は <xref target='code-authz-req' /> で述べる認可コードを要求するための <spanx style='verb'>code</spanx> あるいは, <xref target='implicit-authz-req' /> で述べるアクセストークン(インプリシット許可)を要求する <spanx style='verb'>token</spanx> あるいは, <xref target='response-type-ext' /> で述べる登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切り一覧(<spanx style='verb'>a b</spanx> と <spanx style='verb'>b a</spanx> は同じである)として無視する.
+              </t>
+              <!--
                 REQUIRED. The value MUST be one of <spanx style='verb'>code</spanx> for requesting
                 an authorization code as described by <xref target='code-authz-req' />,
                 <spanx style='verb'>token</spanx> for requesting an access token (implicit grant)
@@ -942,14 +982,17 @@
                 contains one or more space characters (%x20), it is interpreted as a
                 space-delimited list of values, where the order of values does not matter (e.g.
                 <spanx style='verb'>a b</spanx> is the same as <spanx style='verb'>b a</spanx>).
-              </t>
+              -->
             </list>
           </t>
           <t>
+            認可リクエストで <spanx style='verb'>response_type</spanx> を見つけられない場合, 認可サーバーは <xref target='code-authz-error' /> で述べるエラーレスポンスを返すべきである (SHOULD).
+          </t>
+          <!--
             If an authorization request is missing the <spanx style='verb'>response_type</spanx>
             parameter, the authorization server SHOULD return an error response as described in
             <xref target='code-authz-error' />.
-          </t>
+          -->
         </section>
 
         <section title='Redirection Endpoint' anchor='redirect-uri'>
