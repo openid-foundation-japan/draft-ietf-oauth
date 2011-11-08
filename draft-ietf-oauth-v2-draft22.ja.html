@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 10, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 11, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 7, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 8, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 10, 2012.</p>
+This Internet-Draft will expire on May 11, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -322,11 +322,11 @@ Resource Owner Password Credentials<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor48">10.8.</a>&nbsp;
 Request Confidentiality<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor49">10.9.</a>&nbsp;
-Endpoints Authenticity<br />
+エンドポイントの真正性<!-- Endpoints Authenticity --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor50">10.10.</a>&nbsp;
-Credentials Guessing Attacks<br />
+クレデンシャルゲッシングアタック<!-- Credentials Guessing Attacks --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor51">10.11.</a>&nbsp;
-Phishing Attacks<br />
+フィッシングアタック<!-- Phishing Attacks --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#CSRF">10.12.</a>&nbsp;
 Cross-Site Request Forgery<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor52">10.13.</a>&nbsp;
@@ -3392,57 +3392,50 @@ Request Confidentiality</h3>
 <a name="anchor49"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.9"></a><h3>10.9.&nbsp;
-Endpoints Authenticity</h3>
+エンドポイントの真正性<!-- Endpoints Authenticity --></h3>
 
 <p>
-          In order to prevent man-in-the-middle and phishing attacks, the authorization server
-          MUST implement and require TLS with server authentication as defined by
-          <a class='info' href='#RFC2818'>[RFC2818]<span> (</span><span class='info'>Rescorla, E., &ldquo;HTTP Over TLS,&rdquo; May&nbsp;2000.</span><span>)</span></a> for any request sent to the authorization and token endpoints.
-          The client MUST validate the authorization server's TLS certificate in accordance with
-          its requirements for server identity authentication.
+          man-in-the-middle アタックやフィッシングアタックを防ぐため, 認可サーバーは TLS を導入し, <a class='info' href='#RFC2818'>[RFC2818]<span> (</span><span class='info'>Rescorla, E., &ldquo;HTTP Over TLS,&rdquo; May&nbsp;2000.</span><span>)</span></a> に従って認可エンドポイントおよびトークンエンドポイントへのすべてのリクエストで TLS を利用したサーバー認証を必須としなければならない (MUST).
+          クライアントはサーバー身元認証の要件に従って認可サーバーの TLS 証明書を検証しなければならない (MUST).
+          
         
 </p>
 <a name="anchor50"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.10"></a><h3>10.10.&nbsp;
-Credentials Guessing Attacks</h3>
+クレデンシャルゲッシングアタック<!-- Credentials Guessing Attacks --></h3>
 
 <p>
-          The authorization server MUST prevent attackers from guessing access tokens,
-          authorization codes, refresh tokens, resource owner passwords, and client credentials.
+          認可サーバーは, アタッカーにアクセストークン, 認可コード, リフレッシュトークン, リソースオーナーパスワードおよびクライアントクレデンシャルを推測されないようにしなければならない (MUST).
+          
         
 </p>
 <p>
-          When generating tokens and other credentials not intended for handling by end-users, the
-          authorization server MUST use a reasonable level of entropy in order to mitigate the risk
-          of guessing attacks. The authorization server MUST utilize other means to protect
-          credentials intended for end-user usage.
+          トークンやその他のクレデンシャルなど, エンドユーザーが直接扱うことのないクレデンシャルを生成する場合, 認可サーバーはゲッシングアタックのリスクを低減するため適切のエントロピーを確保しなければならない (MUST).
+          エンドユーザーが扱うクレデンシャルについては, 認可サーバーはその他の保護対策を行わなければならない (MUST).
+          
         
 </p>
 <a name="anchor51"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.11"></a><h3>10.11.&nbsp;
-Phishing Attacks</h3>
+フィッシングアタック<!-- Phishing Attacks --></h3>
 
 <p>
-          Wide deployment of this and similar protocols may cause end-users to become inured
-          to the practice of being redirected to websites where they are asked to enter their
-          passwords. If end-users are not careful to verify the authenticity of these websites
-          before entering their credentials, it will be possible for attackers to exploit this
-          practice to steal resource owners' passwords.
+          本仕様や類似プロトコルを実際に広く運用するにつれ, エンドユーザーはパスワード入力を求める Web サイトにリダイレクトされるという慣習になじんでゆくであろう.
+          もしエンドユーザーがそういった Web サイトでパスワードを入力する際にそのサイトの真正性検証を怠った場合, この慣習がアタッカーに悪用され, リソースオーナーのパスワードを盗まれる可能性もある.
+          
         
 </p>
 <p>
-          Service providers should attempt to educate end-users about the risks phishing attacks
-          pose, and should provide mechanisms that make it easy for end-users to confirm the
-          authenticity of their sites. Client developers should consider the security implications
-          of how they interact with the user-agent (e.g., external, embedded), and the ability of
-          the end-user to verify the authenticity of the authorization server.
+          サービスプロバイダーはエンドユーザーに対してフィッシングアタックにより引き起こされるリスクに関して教育し, エンドユーザーが簡単にサイトの真正性を確認できるメカニズムを提供するべきである.
+          クライアントデベロッパーは, ユーザーエージェントとのインタラクション方式 (外部エージェント / 埋め込みエージェントのどちらを利用するかなど) とセキュリティーとの関係に加え, エンドユーザーによる認可サーバーの真正性検証能力についても熟考すべきである.
+          
         
 </p>
 <p>
-          To reduce the risk of phishing attacks, the authorization servers MUST utilize TLS on
-          every endpoint used for end-user interaction.
+          フィッシングアタックのリスクを低減するため, 認可サーバーはエンドユーザーとのインタラクションを行うすべてのエンドポイントで TLS を利用しなければならない (MUST).
+          
         
 </p>
 <a name="CSRF"></a><br /><hr />

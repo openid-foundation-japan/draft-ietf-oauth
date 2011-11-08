@@ -3399,47 +3399,69 @@
         </t>
       </section>
 
-      <section title='Endpoints Authenticity'>
+      <section title='エンドポイントの真正性<!-- Endpoints Authenticity -->'>
         <t>
+          man-in-the-middle アタックやフィッシングアタックを防ぐため, 認可サーバーは TLS を導入し, <xref target='RFC2818' /> に従って認可エンドポイントおよびトークンエンドポイントへのすべてのリクエストで TLS を利用したサーバー認証を必須としなければならない (MUST).
+          クライアントはサーバー身元認証の要件に従って認可サーバーの TLS 証明書を検証しなければならない (MUST).
+          <!--
           In order to prevent man-in-the-middle and phishing attacks, the authorization server
           MUST implement and require TLS with server authentication as defined by
           <xref target='RFC2818' /> for any request sent to the authorization and token endpoints.
           The client MUST validate the authorization server's TLS certificate in accordance with
           its requirements for server identity authentication.
+          -->
         </t>
       </section>
 
-      <section title='Credentials Guessing Attacks'>
+      <section title='クレデンシャルゲッシングアタック<!-- Credentials Guessing Attacks -->'>
         <t>
+          認可サーバーは, アタッカーにアクセストークン, 認可コード, リフレッシュトークン, リソースオーナーパスワードおよびクライアントクレデンシャルを推測されないようにしなければならない (MUST).
+          <!--
           The authorization server MUST prevent attackers from guessing access tokens,
           authorization codes, refresh tokens, resource owner passwords, and client credentials.
+          -->
         </t>
         <t>
+          トークンやその他のクレデンシャルなど, エンドユーザーが直接扱うことのないクレデンシャルを生成する場合, 認可サーバーはゲッシングアタックのリスクを低減するため適切のエントロピーを確保しなければならない (MUST).
+          エンドユーザーが扱うクレデンシャルについては, 認可サーバーはその他の保護対策を行わなければならない (MUST).
+          <!--
           When generating tokens and other credentials not intended for handling by end-users, the
           authorization server MUST use a reasonable level of entropy in order to mitigate the risk
           of guessing attacks. The authorization server MUST utilize other means to protect
           credentials intended for end-user usage.
+          -->
         </t>
       </section>
 
-      <section title='Phishing Attacks'>
+      <section title='フィッシングアタック<!-- Phishing Attacks -->'>
         <t>
+          本仕様や類似プロトコルを実際に広く運用するにつれ, エンドユーザーはパスワード入力を求める Web サイトにリダイレクトされるという慣習になじんでゆくであろう.
+          もしエンドユーザーがそういった Web サイトでパスワードを入力する際にそのサイトの真正性検証を怠った場合, この慣習がアタッカーに悪用され, リソースオーナーのパスワードを盗まれる可能性もある.
+          <!--
           Wide deployment of this and similar protocols may cause end-users to become inured
           to the practice of being redirected to websites where they are asked to enter their
           passwords. If end-users are not careful to verify the authenticity of these websites
           before entering their credentials, it will be possible for attackers to exploit this
           practice to steal resource owners' passwords.
+          -->
         </t>
         <t>
+          サービスプロバイダーはエンドユーザーに対してフィッシングアタックにより引き起こされるリスクに関して教育し, エンドユーザーが簡単にサイトの真正性を確認できるメカニズムを提供するべきである.
+          クライアントデベロッパーは, ユーザーエージェントとのインタラクション方式 (外部エージェント / 埋め込みエージェントのどちらを利用するかなど) とセキュリティーとの関係に加え, エンドユーザーによる認可サーバーの真正性検証能力についても熟考すべきである.
+          <!--
           Service providers should attempt to educate end-users about the risks phishing attacks
           pose, and should provide mechanisms that make it easy for end-users to confirm the
           authenticity of their sites. Client developers should consider the security implications
           of how they interact with the user-agent (e.g., external, embedded), and the ability of
           the end-user to verify the authenticity of the authorization server.
+          -->
         </t>
         <t>
+          フィッシングアタックのリスクを低減するため, 認可サーバーはエンドユーザーとのインタラクションを行うすべてのエンドポイントで TLS を利用しなければならない (MUST).
+          <!--
           To reduce the risk of phishing attacks, the authorization servers MUST utilize TLS on
           every endpoint used for end-user interaction.
+          -->
         </t>
       </section>
 
