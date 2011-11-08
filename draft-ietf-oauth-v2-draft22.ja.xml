@@ -3235,7 +3235,7 @@
           -->
         </t>
         <t>
-          リフレッシュトークンは通信経路上およびストレージ上において機密を保護され, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
+          リフレッシュトークンは通信経路・ストレージ上ともに機密に保たれ, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
           <!--
           Refresh tokens MUST be kept confidential in transit and storage, and shared only among
           the authorization server and the client to whom the refresh tokens were issued. The
@@ -3264,7 +3264,7 @@
           -->
         </t>
         <t>
-          認可サーバはリフレッシュトークンが認可されていない相手によって正当なリフレッシュトークンを作成するために生成, 修正, もしくは推測できないことを保証しなければならない (MUST).
+          認可サーバーは, 認可対象外の何者かがトークンの有効性を保持したままリフレッシュトークンを生成・変更したり, トークンの生成方法を推測したりできないことを保証しなければならない (MUST).
           <!--
           The authorization server MUST ensure that refresh tokens cannot be generated, modified,
           or guessed to produce valid refresh tokens by unauthorized parties.
@@ -3274,7 +3274,7 @@
 
       <section title='認可コード<!-- Authorization Codes -->'>
         <t>
-          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (MUST). 認可コードが機密にしておくために努力がなされるべきである. なぜなら認可コードは user-agent リダイレクトによって伝送されるため, user-agent の履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
+          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (SHOULD). 認可コードを機密にしておくために努力がなされるべきである. なぜなら認可コードはユーザーエージェントリダイレクトによって伝送されるため, ユーザーエージェントの履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
           <!--
           The transmission of authorization codes SHOULD be made over a secure channel, and the
           client SHOULD implement TLS for use with its redirection URI if the URI identifies a
@@ -3284,7 +3284,7 @@
           -->
         </t>
         <t>
-          認可コードはプロセスを完了するために, 認可サーバで権限を付与されたリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
+          認可コードはプロセスを完了するために, 認可サーバーで権限を付与したリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
           <!--
           Authorization codes operate as plaintext bearer credentials, used to verify that the
           resource owner who granted authorization at the authorization server is the same
@@ -3465,27 +3465,36 @@
         </t>
       </section>
 
-      <section title='Cross-Site Request Forgery' anchor='CSRF'>
+      <section title='クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery -->' anchor='CSRF'>
         <t>
+          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザのユーザエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッション・クッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法です。
+          <!--
           Cross-site request forgery (CSRF) is an exploit in which an attacker causes the
           user-agent of a victim end-user to follow a malicious URI (e.g. provided to the
           user-agent as a misleading link, image, or redirection) to a trusting server (usually
           established via the presence of a valid session cookie).
+          -->
         </t>
         <t>
+          クライアントの転送URIに対するCSRD攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
+          <!--
           A CSRF attack against the client's redirection URI allows an attacker to inject their own
           authorization code or access token, which can result in the client using an access token
           associated with the attacker's protected resources rather than the victim's (e.g. save
           the victim's bank account information to a protected resource controlled by the
           attacker).
+          -->
         </t>
         <t>
+          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現します (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <spanx style='verb'>state</spanx> リクエストパラメーターを利用すべきである (SHOULD).
+          <!--
           The client MUST implement CSRF protection for its redirection URI. This is typically
           accomplished by requiring any request sent to the redirection URI endpoint to include a
           value that binds the request to the user-agent's authenticated state (e.g. a hash of the
           session cookie used to authenticate the user-agent). The client SHOULD utilize the
           <spanx style='verb'>state</spanx> request parameter to deliver this value to the
           authorization server when making an authorization request.
+          -->
         </t>
         <t>
           Once authorization has been obtained from the end-user, the authorization server
