@@ -224,7 +224,7 @@ Notational Conventions<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor13">2.3.1.</a>&nbsp;
 クライアントパスワード<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor14">2.3.2.</a>&nbsp;
-Other Authentication Methods<br />
+その他の認証方式<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor15">2.4.</a>&nbsp;
 Unregistered Clients<br />
 <a href="#anchor16">3.</a>&nbsp;
@@ -482,23 +482,28 @@ Authors' Addresses<br />
 <a name="Figure-1"></a>
 <div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
-
   +--------+                               +---------------+
-  |        |--(A)----- 認可リクエスト ----&gt;|   リソース    |
-  |        |                               |   オーナー    |
-  |   ク   |&lt;-(B)------- 認可取得 ---------|               |
-  |   ラ   |                               +---------------+
-  |   イ   |
-  |   ア   |                               +---------------+
-  |   ン   |--(C)------- 認可取得 --------&gt;|               |
-  |   ト   |                               | 認可サーバ―  |
-  |        |&lt;-(D)---- アクセストークン ----|               |
+  |        |--(A)- Authorization Request -&gt;|   Resource    |
+  |        |                               |     Owner     |
+  |        |&lt;-(B)-- Authorization Grant ---|               |
   |        |                               +---------------+
   |        |
   |        |                               +---------------+
+  |        |--(C)-- Authorization Grant --&gt;| Authorization |
+  | Client |                               |     Server    |
+  |        |&lt;-(D)----- Access Token -------|               |
+  |        |                               +---------------+
+  |        |
+  |        |                               +---------------+
+<<<<<<< HEAD
   |        |--(E)---- アクセストークン ---&gt;|   リソース    |
   |        |                               |   サーバー    |
   |        |&lt;-(F)--- 保護されたリソース ---|               |
+=======
+  |        |--(E)----- Access Token ------&gt;|    Resource   |
+  |        |                               |     Server    |
+  |        |&lt;-(F)--- Protected Resource ---|               |
+>>>>>>> a3da8e6ff91f8e25f1e12dd31e38c13c91d755e9
   +--------+                               +---------------+
 
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;1: プロトコルフローの概要&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
@@ -938,13 +943,10 @@ Notational Conventions</h3>
 <a name="anchor14"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.2.3.2"></a><h3>2.3.2.&nbsp;
-Other Authentication Methods</h3>
+その他の認証方式</h3>
 
 <p>
-            The authorization server MAY support any suitable HTTP authentication scheme matching
-            its security requirements. When using other authentication methods, the authorization
-            server MUST define a mapping between the client identifier (registration record) and
-            authentication scheme.
+            認証サーバは, セキュリティ要件に適合する適切なHTTP認証スキームをサポートすべきである（MAY）. 他の認証方式を利用する際には, 認可サーバはClient Identifierと認証方式の双方をマッピングしておかねばならない（MUST）. 
           
 </p>
 <a name="anchor15"></a><br /><hr />
@@ -953,9 +955,7 @@ Other Authentication Methods</h3>
 Unregistered Clients</h3>
 
 <p>
-          This specification does not exclude the use of unregistered clients. However, the use
-          with such clients is beyond the scope of this specification, and requires additional
-          security analysis and review of its interoperability impact.
+          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合、このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
         
 </p>
 <a name="anchor16"></a><br /><hr />
