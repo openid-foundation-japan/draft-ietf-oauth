@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 10, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 11, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 7, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 8, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 10, 2012.</p>
+This Internet-Draft will expire on May 11, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -234,7 +234,7 @@ Unregistered Clients<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor18">3.1.1.</a>&nbsp;
 レスポンスタイプ<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#redirect-uri">3.1.2.</a>&nbsp;
-Redirection Endpoint<br />
+リダイレクションエンドポイント<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor24">3.2.</a>&nbsp;
 Token Endpoint<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-endpoint-auth">3.2.1.</a>&nbsp;
@@ -495,7 +495,7 @@ Authors' Addresses<br />
   |        |                               +---------------+
   |        |
   |        |                               +---------------+
-<<<<<<< HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
   |        |--(E)---- アクセストークン ---&gt;|   リソース    |
   |        |                               |   サーバー    |
   |        |&lt;-(F)--- 保護されたリソース ---|               |
@@ -503,7 +503,7 @@ Authors' Addresses<br />
   |        |--(E)----- Access Token ------&gt;|    Resource   |
   |        |                               |     Server    |
   |        |&lt;-(F)--- Protected Resource ---|               |
->>>>>>> a3da8e6ff91f8e25f1e12dd31e38c13c91d755e9
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; a3da8e6ff91f8e25f1e12dd31e38c13c91d755e9
   +--------+                               +---------------+
 
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;1: プロトコルフローの概要&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
@@ -771,7 +771,7 @@ Notational Conventions</h3>
           
 </li>
 <li>
-            <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>Redirection Endpoint</span><span>)</span></a>で説明されているようなリダイレクトURIを提供します. そして, 
+            <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>で説明されているようなリダイレクトURIを提供します. そして, 
           
 </li>
 <li>
@@ -955,7 +955,7 @@ Notational Conventions</h3>
 Unregistered Clients</h3>
 
 <p>
-          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合、このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
+          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合, このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
         
 </p>
 <a name="anchor16"></a><br /><hr />
@@ -1043,151 +1043,101 @@ Unregistered Clients</h3>
 <a name="redirect-uri"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1.2"></a><h3>3.1.2.&nbsp;
-Redirection Endpoint</h3>
+リダイレクションエンドポイント</h3>
 
 <p>
-            After completing its interaction with the resource owner, the authorization server
-            directs the resource owner's user-agent back to the client. The authorization server
-            redirects the user-agent to the client's redirection endpoint previously established
-            with the authorization server during the client registration process or when making
-            the authorization request.
+            リソースオーナーとのやりとりが完了した後, 認証サーバはリソースオーナーのユーザエージェントをクライアントへ誘導する. 認証サーバはユーザエージェントをクライアント登録プロセス中, もしくは認可リクエスト時に認可サーバに事前に確立されたクライアントのリダイレクションエンドポイントへリダイレクする.
           
 </p>
 <p>
-            The redirection endpoint URI MUST be an absolute URI as defined by
-            <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 4.3. The endpoint URI MAY include an
-            <tt>application/x-www-form-urlencoded</tt> formatted
-            (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
-            section 3.4), which MUST be retained when adding additional query parameters. The
-            endpoint URI MUST NOT include a fragment component.
+		  リダイレクションURIは<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>セクション4.3で定義されているように絶対URIでなければいけない(MUST). エンドポイントURIは"application/x-www-form-urlencoded"でフォーマットされたクエリコンポーネントを含んでもよい(MAY). 追加クエリパラメータを追加する場合, これは保持されなければいけない(MUST).エンドポイントURIはフラグメントコンポーネントを含んではいけない(MUST NOT).
           
 </p>
 <a name="anchor19"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1.2.1"></a><h3>3.1.2.1.&nbsp;
-Endpoint Request Confidentiality</h3>
+エンドポイントリクエストの機密性</h3>
 
 <p>
-              If a redirection request will result in the transmission of an authorization code or
-              access token over an open network (between the resource owner's user-agent and the
-              client), the client SHOULD require the use of a transport-layer security mechanism.
+              もしリダイレクションリクエストが（リソースオーナーのユーザエージェントとクライアントの間で）オープンなネットワークにわたって認可コードやアクセストークンの通信が生じるなら, クライアントはトランスポート層でのセキュリティメカニズムの使用を求めるべきである（SHOULD）.
             
 </p>
 <p>
-              Lack of transport-layer security can have a severe impact on the security of the
-              client and the protected resources it is authorized to access. The use of
-              transport-layer security is particularly critical when the authorization process is
-              used as a form of delegated end-user authentication by the client (e.g. third-party
-              sign-in service).
+              トランスポート層のセキュリティの欠如はクライアントとアクセス認証された保護リソース上で深刻な影響を及ぼす. トランスポート層のセキュリティを使用することは、認可プロセスがクライアントによってエンドユーザ認証の委譲された形式で使用される場合特に重要である（例えばサードパーティサインインサービス）.
             
 </p>
 <a name="anchor20"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1.2.2"></a><h3>3.1.2.2.&nbsp;
-Registration Requirements</h3>
+登録要件</h3>
 
 <p>
-              The authorization server SHOULD require all clients to register their redirection URI
-              prior to using the authorization endpoint, and MUST require the following clients to
-              register their redirection URI:
+              認可エンドポイントを使用する前に認可サーバはリダイレクションURIを登録することをクライアント全てに要求するべきです（SHOULD）. 以下のクライアントはリダイレクションURIの登録を要求しなければいけない（MUST）.
             
 </p>
 <p>
               </p>
 <ul class="text">
 <li>
-                  Public clients.
+                  パブリッククライアント.
                 
 </li>
 <li>
-                  Confidential clients utilizing the implicit grant type.
+                  インプリシット認可タイプを利用しているコンフィデンシャルクライアント.
                 
 </li>
 </ul><p>
             
 </p>
 <p>
-              The authorization server SHOULD require the client to provide the complete
-              redirection URI (the client MAY use the <tt>state</tt> request
-              parameter to achieve per-request customization). The authorization server MAY allow
-              the client to register multiple redirection URIs. If requiring the registration of
-              the complete redirection URI is not possible, the authorization server SHOULD require
-              the registration of the URI scheme, authority, and path (allowing the client to
-              dynamically change only the query component of the redirection URI when requesting
-              authorization).
+		    認可サーバは完全なリダイレクションURI（クライアントはリクエスト毎のカスタマイズを得るため<tt>state</tt>リクエストパラメータを使用してもよい（MAY））の提供をクライアントに要求するべきです（SHOULD）. 認可サーバはクライアントに複数のリダイレクトURIの登録を許可するべきである（MAY）. 完全なリダイレクションURIの登録を要求することが可能出ないなら, 認可サーバはURIスキーム, 権限, パス（認可要求の時, リダイレクションURIのクエリーコンポーネントのみ動的に変更を許可する）の登録を要求するべきである（SHOULD）.
             
 </p>
 <a name="anchor21"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1.2.3"></a><h3>3.1.2.3.&nbsp;
-Dynamic Configuration</h3>
+動的設定</h3>
 
 <p>
-              If multiple redirection URIs have been registered, if only part of the redirection
-              URI has been registered, or if no redirection URI has been registered, the client
-              MUST include a redirection URI with the authorization request using the
-              <tt>redirect_uri</tt> request parameter.
+              リダイレクションURIが複数登録されていた場合, リダイレクションURIの一部のみ登録されていた場合, もしくはリダイレクションURIが登録されていなかった場合, クライアントは<tt>redirect_uri</tt>リクエストパラメータを使用して認可リクエストでリダイレクションURIを含まなければいけない（MUST）.
             
 </p>
 <p>
-              When a redirection URI is included in an authorization request, the authorization
-              server MUST compare and match the value received against at least one of the
-              registered redirection URIs (or URI components) as defined in
-              <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 6, if any redirection URIs were registered.
-              If the client registration included the full redirection URI, the authorization
-              server MUST compare the two URIs using simple string comparison as defined
-              in <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 6.2.1.
+              リダイレクションURIが認可リクエストに含まれていた時, いくつかのリダイレクションURIが登録されていた場合<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>セクション6で説明されているように登録されているリダイレクションURI（もしくはURIコンポーネント）のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.もしクライアントの登録にフルのリダイレクションURIが含まれていた場合, 認可サーバは<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>セクション6.2.1.で定義されているように単純な文字列比較を使用し二つのURIを比較しなければいけない（MUST）.
             
 </p>
 <p>
-               If the authorization server allows the client to dynamically change the query
-               component of the redirection URI, the client MUST ensure that manipulation of the
-               query component by an attacker cannot lead to an abuse of the redirection endpoint
-               as described in <a class='info' href='#open-redirect'>Section&nbsp;10.15<span> (</span><span class='info'>Open Redirectors</span><span>)</span></a>.
+               認可サーバがリダイレクションURIのクエリコンポーネントの動的変更をクライアントに許可するなら, 攻撃者が<a class='info' href='#open-redirect'>Section&nbsp;10.15<span> (</span><span class='info'>Open Redirectors</span><span>)</span></a>で説明されているようにリダイレクションエンドポイントの乱用できないことによってクライアントはクエリコンポーネントの操作を保証しなければいけない.
              
 </p>
 <a name="anchor22"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1.2.4"></a><h3>3.1.2.4.&nbsp;
-Invalid Endpoint</h3>
+無効なエンドポイント</h3>
 
 <p>
-              If an authorization request fails validation due to a missing, invalid, or
-              mismatching redirection URI, the authorization server SHOULD inform the resource
-              owner of the error, and MUST NOT automatically redirect the user-agent to the invalid
-              redirection URI.
+              認可リクエストがリダイレクションURIの欠落, 無効, もしくは不一致のため検証失敗なら, 認可サーバはエラーをリソースオーナーに知らせるべきである（SHOULD）. そして無効なリダイレクションURIにユーザエージェントを自動でリダイレクトしてはいけない（MUST NOT）.
             
 </p>
 <p>
-              The authorization server SHOULD NOT redirect the user-agent to unregistered or
-              untrusted URIs to prevent the authorization endpoint from being used as an open
-              redirector.
+              認可サーバは認可エンドポイントをオープンリダイレクタとして使われることから防ぐために登録されていない, もしくは信頼できないURIにユーザエージェントをリダイレクトするべきでない（SHOULD NOT）.
             
 </p>
 <a name="anchor23"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.1.2.5"></a><h3>3.1.2.5.&nbsp;
-Endpoint Content</h3>
+エンドポイントコンテント</h3>
 
 <p>
-              The redirection request to the client's endpoint typically results in an HTML
-              document response, processed by the user-agent. If the HTML response is served
-              directly as the result of the redirection request, any script included in the HTML
-              document will execute with full access to the redirection URI and the credentials it
-              contains.
+              クライアントのエンドポイントへのリダイレクションリクエストは通常ユーザエージェントによって処理されたHTMLドキュメントを返される. HTMLレスポンスがリダイレクションリクエストの結果直接提供するなら, HTMLドキュメントに含まれるスクリプトがにリダイレクションURIとそれに含まれるクレデンシャルへのフルアクセスが実行する.
             
 </p>
 <p>
-              The client MUST NOT include any untrusted third-party scripts in the redirection
-              endpoint response (e.g. third-party analytics, social plug-ins, ad networks) without
-              first ensuring that its own scripts used to extract and remove the credentials from
-              the URI will execute first.
+              クライアントはURIからクレデンシャルを抽出し削除するのに使用される独自のスクリプトが最初に実行されることを確認せず, リダイレクションエンドポイントのレスポンスに信頼できないサードパーティのスクリプトを含んではいけない（MUST NOT）（例えばサードパーティの分析性, ソーシャルプラグイン, 広告ネットワーク）.
             
 </p>
 <p>
-              The client SHOULD NOT include any third-party scripts in the redirection endpoint
-              response. Instead, it should extract the credentials from the URI and redirect the
-              user-agent again to another endpoint without the credentials in the URI.
+              クライアントはリダイレクションエンドポイントのレスポンスにサードパーティスクリプトを含めるべきではない（SHOULD NOT）. 代わりにそのURIからクレデンシャルを抽出し, URIのクレデンシャルなしで別のエンドポイントへ再びユーザエージェントをリダイレクトするべきです.
             
 </p>
 <a name="anchor24"></a><br /><hr />
@@ -1449,7 +1399,7 @@ Authorization Request</h3>
 <dt>redirect_uri</dt>
 <dd>
                 
-                OPTIONAL, as described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>Redirection Endpoint</span><span>)</span></a>.
+                OPTIONAL, as described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>.
               
 </dd>
 <dt>scope</dt>
@@ -1939,7 +1889,7 @@ Authorization Request</h3>
 <dt>redirect_uri</dt>
 <dd>
                 
-                OPTIONAL, as described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>Redirection Endpoint</span><span>)</span></a>.
+                OPTIONAL, as described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>.
               
 </dd>
 <dt>scope</dt>
@@ -1980,7 +1930,7 @@ Authorization Request</h3>
             The authorization server validates the request to ensure all required parameters are
             present and valid. The authorization server MUST verify that the redirection URI to which
             it will redirect the access token matches a redirection URI registered by the client as
-            described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>Redirection Endpoint</span><span>)</span></a>.
+            described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>.
           
 </p>
 <p>

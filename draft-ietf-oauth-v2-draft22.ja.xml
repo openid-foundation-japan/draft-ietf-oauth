@@ -908,7 +908,7 @@
       <section title='Unregistered Clients'>
 <!--       <section title='Unregistered Clients'> -->
         <t>
-          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合、このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
+          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合, このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
         </t>
         <!--
           This specification does not exclude the use of unregistered clients. However, the use
@@ -1051,55 +1051,79 @@
           -->
         </section>
 
-        <section title='Redirection Endpoint' anchor='redirect-uri'>
+        <section title='リダイレクションエンドポイント' anchor='redirect-uri'>
           <t>
+            リソースオーナーとのやりとりが完了した後, 認証サーバはリソースオーナーのユーザエージェントをクライアントへ誘導する. 認証サーバはユーザエージェントをクライアント登録プロセス中, もしくは認可リクエスト時に認可サーバに事前に確立されたクライアントのリダイレクションエンドポイントへリダイレクする.
+          </t>
+          <!--
             After completing its interaction with the resource owner, the authorization server
             directs the resource owner's user-agent back to the client. The authorization server
             redirects the user-agent to the client's redirection endpoint previously established
             with the authorization server during the client registration process or when making
             the authorization request.
-          </t>
+          -->
           <t>
+		  リダイレクションURIは<xref target='RFC3986' />セクション4.3で定義されているように絶対URIでなければいけない(MUST). エンドポイントURIは"application/x-www-form-urlencoded"でフォーマットされたクエリコンポーネントを含んでもよい(MAY). 追加クエリパラメータを追加する場合, これは保持されなければいけない(MUST).エンドポイントURIはフラグメントコンポーネントを含んではいけない(MUST NOT).
+          </t>
+          <!--
             The redirection endpoint URI MUST be an absolute URI as defined by
             <xref target='RFC3986' /> section 4.3. The endpoint URI MAY include an
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> formatted
             (<xref target='W3C.REC-html401-19991224' />) query component (<xref target='RFC3986' />
             section 3.4), which MUST be retained when adding additional query parameters. The
             endpoint URI MUST NOT include a fragment component.
-          </t>
+          -->
 
-          <section title='Endpoint Request Confidentiality'>
+          <section title='エンドポイントリクエストの機密性'>
             <t>
+              もしリダイレクションリクエストが（リソースオーナーのユーザエージェントとクライアントの間で）オープンなネットワークにわたって認可コードやアクセストークンの通信が生じるなら, クライアントはトランスポート層でのセキュリティメカニズムの使用を求めるべきである（SHOULD）.
+            </t>
+            <!--
               If a redirection request will result in the transmission of an authorization code or
               access token over an open network (between the resource owner's user-agent and the
               client), the client SHOULD require the use of a transport-layer security mechanism.
-            </t>
+            -->
             <t>
+              トランスポート層のセキュリティの欠如はクライアントとアクセス認証された保護リソース上で深刻な影響を及ぼす. トランスポート層のセキュリティを使用することは、認可プロセスがクライアントによってエンドユーザ認証の委譲された形式で使用される場合特に重要である（例えばサードパーティサインインサービス）.
+            </t>
+            <!--
               Lack of transport-layer security can have a severe impact on the security of the
               client and the protected resources it is authorized to access. The use of
               transport-layer security is particularly critical when the authorization process is
               used as a form of delegated end-user authentication by the client (e.g. third-party
               sign-in service).
-            </t>
+            -->
           </section>
 
-          <section title='Registration Requirements'>
+          <section title='登録要件'>
             <t>
+              認可エンドポイントを使用する前に認可サーバはリダイレクションURIを登録することをクライアント全てに要求するべきです（SHOULD）. 以下のクライアントはリダイレクションURIの登録を要求しなければいけない（MUST）.
+            </t>
+            <!--
               The authorization server SHOULD require all clients to register their redirection URI
               prior to using the authorization endpoint, and MUST require the following clients to
               register their redirection URI:
-            </t>
+            -->
             <t>
               <list style='symbols'>
                 <t>
+                  パブリッククライアント.
+                </t>
+                <!--
                   Public clients.
-                </t>
+                -->
                 <t>
-                  Confidential clients utilizing the implicit grant type.
+                  インプリシット認可タイプを利用しているコンフィデンシャルクライアント.
                 </t>
+                <!--
+                  Confidential clients utilizing the implicit grant type.
+                -->
               </list>
             </t>
             <t>
+		    認可サーバは完全なリダイレクションURI（クライアントはリクエスト毎のカスタマイズを得るため<spanx style='verb'>state</spanx>リクエストパラメータを使用してもよい（MAY））の提供をクライアントに要求するべきです（SHOULD）. 認可サーバはクライアントに複数のリダイレクトURIの登録を許可するべきである（MAY）. 完全なリダイレクションURIの登録を要求することが可能出ないなら, 認可サーバはURIスキーム, 権限, パス（認可要求の時, リダイレクションURIのクエリーコンポーネントのみ動的に変更を許可する）の登録を要求するべきである（SHOULD）.
+            </t>
+            <!--
               The authorization server SHOULD require the client to provide the complete
               redirection URI (the client MAY use the <spanx style='verb'>state</spanx> request
               parameter to achieve per-request customization). The authorization server MAY allow
@@ -1108,17 +1132,23 @@
               the registration of the URI scheme, authority, and path (allowing the client to
               dynamically change only the query component of the redirection URI when requesting
               authorization).
-            </t>
+            -->
           </section>
 
-          <section title='Dynamic Configuration'>
+          <section title='動的設定'>
             <t>
+              リダイレクションURIが複数登録されていた場合, リダイレクションURIの一部のみ登録されていた場合, もしくはリダイレクションURIが登録されていなかった場合, クライアントは<spanx style='verb'>redirect_uri</spanx>リクエストパラメータを使用して認可リクエストでリダイレクションURIを含まなければいけない（MUST）.
+            </t>
+            <!--
               If multiple redirection URIs have been registered, if only part of the redirection
               URI has been registered, or if no redirection URI has been registered, the client
               MUST include a redirection URI with the authorization request using the
               <spanx style='verb'>redirect_uri</spanx> request parameter.
-            </t>
+            -->
             <t>
+              リダイレクションURIが認可リクエストに含まれていた時, いくつかのリダイレクションURIが登録されていた場合<xref target='RFC3986' />セクション6で説明されているように登録されているリダイレクションURI（もしくはURIコンポーネント）のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.もしクライアントの登録にフルのリダイレクションURIが含まれていた場合, 認可サーバは<xref target='RFC3986' />セクション6.2.1.で定義されているように単純な文字列比較を使用し二つのURIを比較しなければいけない（MUST）.
+            </t>
+            <!--
               When a redirection URI is included in an authorization request, the authorization
               server MUST compare and match the value received against at least one of the
               registered redirection URIs (or URI components) as defined in
@@ -1126,48 +1156,66 @@
               If the client registration included the full redirection URI, the authorization
               server MUST compare the two URIs using simple string comparison as defined
               in <xref target='RFC3986' /> section 6.2.1.
-            </t>
+            -->
              <t>
+               認可サーバがリダイレクションURIのクエリコンポーネントの動的変更をクライアントに許可するなら, 攻撃者が<xref target='open-redirect' />で説明されているようにリダイレクションエンドポイントの乱用できないことによってクライアントはクエリコンポーネントの操作を保証しなければいけない.
+             </t>
+             <!--
                If the authorization server allows the client to dynamically change the query
                component of the redirection URI, the client MUST ensure that manipulation of the
                query component by an attacker cannot lead to an abuse of the redirection endpoint
                as described in <xref target='open-redirect' />.
-             </t>
+             -->
          </section>
 
-          <section title='Invalid Endpoint'>
+          <section title='無効なエンドポイント'>
             <t>
+              認可リクエストがリダイレクションURIの欠落, 無効, もしくは不一致のため検証失敗なら, 認可サーバはエラーをリソースオーナーに知らせるべきである（SHOULD）. そして無効なリダイレクションURIにユーザエージェントを自動でリダイレクトしてはいけない（MUST NOT）.
+            </t>
+            <!--
               If an authorization request fails validation due to a missing, invalid, or
               mismatching redirection URI, the authorization server SHOULD inform the resource
               owner of the error, and MUST NOT automatically redirect the user-agent to the invalid
               redirection URI.
-            </t>
+            -->
             <t>
+              認可サーバは認可エンドポイントをオープンリダイレクタとして使われることから防ぐために登録されていない, もしくは信頼できないURIにユーザエージェントをリダイレクトするべきでない（SHOULD NOT）.
+            </t>
+            <!--
               The authorization server SHOULD NOT redirect the user-agent to unregistered or
               untrusted URIs to prevent the authorization endpoint from being used as an open
               redirector.
-            </t>
+            -->
           </section>
 
-          <section title='Endpoint Content'>
+          <section title='エンドポイントコンテント'>
             <t>
+              クライアントのエンドポイントへのリダイレクションリクエストは通常ユーザエージェントによって処理されたHTMLドキュメントを返される. HTMLレスポンスがリダイレクションリクエストの結果直接提供するなら, HTMLドキュメントに含まれるスクリプトがにリダイレクションURIとそれに含まれるクレデンシャルへのフルアクセスが実行する.
+            </t>
+            <!--
               The redirection request to the client's endpoint typically results in an HTML
               document response, processed by the user-agent. If the HTML response is served
               directly as the result of the redirection request, any script included in the HTML
               document will execute with full access to the redirection URI and the credentials it
               contains.
-            </t>
+            -->
             <t>
+              クライアントはURIからクレデンシャルを抽出し削除するのに使用される独自のスクリプトが最初に実行されることを確認せず, リダイレクションエンドポイントのレスポンスに信頼できないサードパーティのスクリプトを含んではいけない（MUST NOT）（例えばサードパーティの分析性, ソーシャルプラグイン, 広告ネットワーク）.
+            </t>
+            <!--
               The client MUST NOT include any untrusted third-party scripts in the redirection
               endpoint response (e.g. third-party analytics, social plug-ins, ad networks) without
               first ensuring that its own scripts used to extract and remove the credentials from
               the URI will execute first.
-            </t>
+            -->
             <t>
+              クライアントはリダイレクションエンドポイントのレスポンスにサードパーティスクリプトを含めるべきではない（SHOULD NOT）. 代わりにそのURIからクレデンシャルを抽出し, URIのクレデンシャルなしで別のエンドポイントへ再びユーザエージェントをリダイレクトするべきです.
+            </t>
+            <!--
               The client SHOULD NOT include any third-party scripts in the redirection endpoint
               response. Instead, it should extract the credentials from the URI and redirect the
               user-agent again to another endpoint without the credentials in the URI.
-            </t>
+            -->
           </section>
           
         </section>
