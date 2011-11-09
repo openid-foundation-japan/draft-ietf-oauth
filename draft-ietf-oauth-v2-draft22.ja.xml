@@ -414,7 +414,7 @@
       <section title='アクセストークン'>
 <!--    <section title='Access Token'>  -->
         <t>
-          アクセストークンは保護されたリソースにアクセスするために使用されるクレデンシャルである. アクセストークンはクライアントに対して発行される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. トークンは特定の範囲とアクセス期間を表し, それらはリソースのオーナーによって与えられ, リソースサーバーと認可サーバーによって強制される.
+          アクセストークンは保護されたリソースにアクセスするために使用されるクレデンシャルである. アクセストークンはクライアントに対して発行される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. トークンはアクセス範囲とアクセス期間を表し, それらはリソースのオーナーによって許可され, リソースサーバーと認可サーバーによって発行される.
         </t>
         <!--
           Access tokens are credentials used to access protected resources. An access token is a
@@ -423,7 +423,7 @@
           resource owner, and enforced by the resource server and authorization server.
         -->
         <t>
-          トークンは認可情報を取り出すための識別子を意味してもよく, また検証可能な方法でそれ自身に認可情報を含んでもよい(データと署名を含むトークン文字列など). 本仕様で定めていない追加の認証クレデンシャルは, クライアントがトークンを使用するために要求されてもよい.
+          トークンは認可情報を取り出すための識別子を表したり, 検証可能な方法でそれ自身に認可情報を含んでもよい(データと署名を含むトークン文字列など). 本仕様で定めていない追加の認証クレデンシャルは, クライアントがトークンを使用するために要求されてもよい.
         </t>
         <!--
           The token may denote an identifier used to retrieve the authorization information, or
@@ -433,7 +433,7 @@
           use a token.
         -->
         <t>
-          いろいろな認証要素(ユーザ名やパスワード)は認証サーバーによって処理されたひとつのアクセストークンに置き換えられ, 抽象化レイヤーを提供する. この抽象化はアクセストークンを取得するための認可の付与よりも限定的なトークンの発行を可能とするだけでなく, リソースサーバーの認証方式の広範囲を処理する必要性を取り除く.
+          アクセストークンによって, 様々な認証要素(例えばユーザ名やパスワード)をリソースサーバーが解釈できる単体のトークンに置き換えるような抽象化レイヤーが提供される. この抽象化はアクセストークンを取得するための認可の付与よりも限定的なトークンの発行を可能とするだけでなく, 広範囲の認証方式をリソースサーバーが解釈する必要性がなくなる.
         </t>
         <!--
           The access token provides an abstraction layer, replacing different authorization
@@ -468,7 +468,7 @@
           token.
         -->
         <t>
-          リフレッシュトークンはリソースオーナーによってクライアントに付与される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. そのトークンは認可情報を取り出すための識別子を意味してもよい. アクセストークンとは異なり, リフレッシュトークンは認可サーバーでのみ使用されるものであり, リソースサーバーに送信されることはない.
+          リフレッシュトークンはリソースオーナーによってクライアントに付与される認可を表す文字列である. この文字列は通常クライアントからみるとランダムな文字列になっている. そのトークンは認可情報を取り出すための識別子を意味してもよい. アクセストークンとは異なり, リフレッシュトークンは認可サーバーでのみ使用されるものであり, リソースサーバーに送信されることはない.
         </t>
         <!--
           A refresh token is a string representing the authorization granted to the client by the
@@ -513,14 +513,14 @@
         <t>
           <list style='format (%C)'>
             <t>
-              クライアントは認可サーバーを使用した認証によってアクセストークンを要求し認可許可を示す.
+              クライアントは認可サーバーで認証して認可が与えられたことを提示することによって, アクセストークンの要求をする.
             </t>
             <!--
               The client requests an access token by authenticating with the authorization server,
               and presenting an authorization grant.
             -->
             <t>
-              認可サーバーはクライアントを認証するとともに認可許可の正当性を確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
+              認可サーバーはクライアントを認証して認可が与えられたことを確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
             </t>
             <!--
               The authorization server authenticates the client and validates the authorization
@@ -540,7 +540,7 @@
               The resource server validates the access token, and if valid, serves the request.
             -->
             <t>
-              ステップ (C) と (D) はアクセストークン有効期限が切れるまで繰り返される. クライアントがアクセストークンの期限切れを知っている場合, ステップ (G) にスキップし, そうでなければ別の保護されたリソースの要求をする.
+              ステップ (C) と (D) はアクセストークン有効期限が切れるまで繰り返される. クライアントがアクセストークンの期限切れを検知した場合, ステップ (G) にスキップし, そうでなければ別の保護されたリソースの要求をする.
             </t>
             <!--
               Steps (C) and (D) repeat until the access token expires. If the client knows the
@@ -555,7 +555,11 @@
               error.
             -->
             <t>
+<<<<<<< HEAD
               クライアントは認可サーバーに対してリフレッシュトークンを渡して認証することで, 新しいアクセストークンを要求する. クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーに基づいている.
+=======
+              クライアントは, 認可サーバーで認証してリフレッシュトークンを提示することによって, 新しいアクセストークンを要求する. クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーに基づいている.
+>>>>>>> 4f19f2f6230c5ae9e7fc384100bf9a6c901ca6d8
             </t>
             <!--
               The client requests a new access token by authenticating with the authorization
@@ -937,7 +941,7 @@
             user-agent redirection.
           -->
           <t>
-            トークンエンドポイント - 認可許可をアクセストークンと交換するために利用される. 一般的にクライアント認証を用いる.
+            トークンエンドポイント - 認可の付与とアクセストークンと交換するために利用される. 一般的にクライアント認証を用いる.
           </t>
           <!--
             Token endpoint - used to exchange an authorization grant for an access token, typically
@@ -956,7 +960,7 @@
       <section title='認可エンドポイント'>
 <!--      <section title='Authorization Endpoint'>  -->
         <t>
-          認可エンドポイントはリソースオーナーと通信するために使用され認可許可を得る. 認可サーバーはリソースオーナーのアイデンティティを確認しなければならない (MUST). 認可サーバーがリソースオーナーの認証方法 (ユーザー名やパスワードによるログイン, セッション・クッキー) は本仕様の定めるところではない.
+          認可エンドポイントはリソースオーナーと通信するために使用され認可が与えられる. 認可サーバーはリソースオーナーのアイデンティティを確認しなければならない (MUST). 認可サーバーがリソースオーナーの認証方法 (ユーザー名やパスワードによるログイン, セッション・クッキー) は本仕様の定めるところではない.
         </t>
         <!--
           The authorization endpoint is used to interact with the resource owner and obtain
@@ -3289,7 +3293,7 @@
           -->
         </t>
         <t>
-          リフレッシュトークンは通信経路上およびストレージ上において機密を保護され, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
+          リフレッシュトークンは通信経路・ストレージ上ともに機密に保たれ, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
           <!--
           Refresh tokens MUST be kept confidential in transit and storage, and shared only among
           the authorization server and the client to whom the refresh tokens were issued. The
@@ -3318,7 +3322,7 @@
           -->
         </t>
         <t>
-          認可サーバはリフレッシュトークンが認可されていない相手によって正当なリフレッシュトークンを作成するために生成, 修正, もしくは推測できないことを保証しなければならない (MUST).
+          認可サーバーは, 認可対象外の何者かがトークンの有効性を保持したままリフレッシュトークンを生成・変更したり, トークンの生成方法を推測したりできないことを保証しなければならない (MUST).
           <!--
           The authorization server MUST ensure that refresh tokens cannot be generated, modified,
           or guessed to produce valid refresh tokens by unauthorized parties.
@@ -3328,7 +3332,7 @@
 
       <section title='認可コード<!-- Authorization Codes -->'>
         <t>
-          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (MUST). 認可コードが機密にしておくために努力がなされるべきである. なぜなら認可コードは user-agent リダイレクトによって伝送されるため, user-agent の履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
+          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (SHOULD). 認可コードを機密にしておくために努力がなされるべきである. なぜなら認可コードはユーザーエージェントリダイレクトによって伝送されるため, ユーザーエージェントの履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
           <!--
           The transmission of authorization codes SHOULD be made over a secure channel, and the
           client SHOULD implement TLS for use with its redirection URI if the URI identifies a
@@ -3338,7 +3342,7 @@
           -->
         </t>
         <t>
-          認可コードはプロセスを完了するために, 認可サーバで権限を付与されたリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
+          認可コードはプロセスを完了するために, 認可サーバーで権限を付与したリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
           <!--
           Authorization codes operate as plaintext bearer credentials, used to verify that the
           resource owner who granted authorization at the authorization server is the same
@@ -3453,71 +3457,102 @@
         </t>
       </section>
 
-      <section title='Endpoints Authenticity'>
+      <section title='エンドポイントの真正性<!-- Endpoints Authenticity -->'>
         <t>
+          man-in-the-middle アタックやフィッシングアタックを防ぐため, 認可サーバーは TLS を導入し, <xref target='RFC2818' /> に従って認可エンドポイントおよびトークンエンドポイントへのすべてのリクエストで TLS を利用したサーバー認証を必須としなければならない (MUST).
+          クライアントはサーバー身元認証の要件に従って認可サーバーの TLS 証明書を検証しなければならない (MUST).
+          <!--
           In order to prevent man-in-the-middle and phishing attacks, the authorization server
           MUST implement and require TLS with server authentication as defined by
           <xref target='RFC2818' /> for any request sent to the authorization and token endpoints.
           The client MUST validate the authorization server's TLS certificate in accordance with
           its requirements for server identity authentication.
+          -->
         </t>
       </section>
 
-      <section title='Credentials Guessing Attacks'>
+      <section title='クレデンシャルゲッシングアタック<!-- Credentials Guessing Attacks -->'>
         <t>
+          認可サーバーは, アタッカーにアクセストークン, 認可コード, リフレッシュトークン, リソースオーナーパスワードおよびクライアントクレデンシャルを推測されないようにしなければならない (MUST).
+          <!--
           The authorization server MUST prevent attackers from guessing access tokens,
           authorization codes, refresh tokens, resource owner passwords, and client credentials.
+          -->
         </t>
         <t>
+          トークンやその他のクレデンシャルなど, エンドユーザーが直接扱うことのないクレデンシャルを生成する場合, 認可サーバーはゲッシングアタックのリスクを低減するため適切のエントロピーを確保しなければならない (MUST).
+          エンドユーザーが扱うクレデンシャルについては, 認可サーバーはその他の保護対策を行わなければならない (MUST).
+          <!--
           When generating tokens and other credentials not intended for handling by end-users, the
           authorization server MUST use a reasonable level of entropy in order to mitigate the risk
           of guessing attacks. The authorization server MUST utilize other means to protect
           credentials intended for end-user usage.
+          -->
         </t>
       </section>
 
-      <section title='Phishing Attacks'>
+      <section title='フィッシングアタック<!-- Phishing Attacks -->'>
         <t>
+          本仕様や類似プロトコルを実際に広く運用するにつれ, エンドユーザーはパスワード入力を求める Web サイトにリダイレクトされるという慣習になじんでゆくであろう.
+          もしエンドユーザーがそういった Web サイトでパスワードを入力する際にそのサイトの真正性検証を怠った場合, この慣習がアタッカーに悪用され, リソースオーナーのパスワードを盗まれる可能性もある.
+          <!--
           Wide deployment of this and similar protocols may cause end-users to become inured
           to the practice of being redirected to websites where they are asked to enter their
           passwords. If end-users are not careful to verify the authenticity of these websites
           before entering their credentials, it will be possible for attackers to exploit this
           practice to steal resource owners' passwords.
+          -->
         </t>
         <t>
+          サービスプロバイダーはエンドユーザーに対してフィッシングアタックにより引き起こされるリスクに関して教育し, エンドユーザーが簡単にサイトの真正性を確認できるメカニズムを提供するべきである.
+          クライアントデベロッパーは, ユーザーエージェントとのインタラクション方式 (外部エージェント / 埋め込みエージェントのどちらを利用するかなど) とセキュリティーとの関係に加え, エンドユーザーによる認可サーバーの真正性検証能力についても熟考すべきである.
+          <!--
           Service providers should attempt to educate end-users about the risks phishing attacks
           pose, and should provide mechanisms that make it easy for end-users to confirm the
           authenticity of their sites. Client developers should consider the security implications
           of how they interact with the user-agent (e.g., external, embedded), and the ability of
           the end-user to verify the authenticity of the authorization server.
+          -->
         </t>
         <t>
+          フィッシングアタックのリスクを低減するため, 認可サーバーはエンドユーザーとのインタラクションを行うすべてのエンドポイントで TLS を利用しなければならない (MUST).
+          <!--
           To reduce the risk of phishing attacks, the authorization servers MUST utilize TLS on
           every endpoint used for end-user interaction.
+          -->
         </t>
       </section>
 
-      <section title='Cross-Site Request Forgery' anchor='CSRF'>
+      <section title='クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery -->' anchor='CSRF'>
         <t>
+          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザのユーザエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッション・クッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法です。
+          <!--
           Cross-site request forgery (CSRF) is an exploit in which an attacker causes the
           user-agent of a victim end-user to follow a malicious URI (e.g. provided to the
           user-agent as a misleading link, image, or redirection) to a trusting server (usually
           established via the presence of a valid session cookie).
+          -->
         </t>
         <t>
+          クライアントの転送URIに対するCSRD攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
+          <!--
           A CSRF attack against the client's redirection URI allows an attacker to inject their own
           authorization code or access token, which can result in the client using an access token
           associated with the attacker's protected resources rather than the victim's (e.g. save
           the victim's bank account information to a protected resource controlled by the
           attacker).
+          -->
         </t>
         <t>
+          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現します (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <spanx style='verb'>state</spanx> リクエストパラメーターを利用すべきである (SHOULD).
+          <!--
           The client MUST implement CSRF protection for its redirection URI. This is typically
           accomplished by requiring any request sent to the redirection URI endpoint to include a
           value that binds the request to the user-agent's authenticated state (e.g. a hash of the
           session cookie used to authenticate the user-agent). The client SHOULD utilize the
           <spanx style='verb'>state</spanx> request parameter to deliver this value to the
           authorization server when making an authorization request.
+          -->
         </t>
         <t>
           Once authorization has been obtained from the end-user, the authorization server

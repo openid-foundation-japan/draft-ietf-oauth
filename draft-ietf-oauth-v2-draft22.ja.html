@@ -145,9 +145,15 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
+<<<<<<< HEAD
 <tr><td class="header">Expires: May 11, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">November 8, 2011</td></tr>
+=======
+<tr><td class="header">Expires: May 12, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 9, 2011</td></tr>
+>>>>>>> 4f19f2f6230c5ae9e7fc384100bf9a6c901ca6d8
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +178,11 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
+<<<<<<< HEAD
 This Internet-Draft will expire on May 11, 2012.</p>
+=======
+This Internet-Draft will expire on May 12, 2012.</p>
+>>>>>>> 4f19f2f6230c5ae9e7fc384100bf9a6c901ca6d8
 
 <h3>Copyright Notice</h3>
 <p>
@@ -322,13 +332,13 @@ Resource Owner Password Credentials<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor48">10.8.</a>&nbsp;
 Request Confidentiality<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor49">10.9.</a>&nbsp;
-Endpoints Authenticity<br />
+エンドポイントの真正性<!-- Endpoints Authenticity --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor50">10.10.</a>&nbsp;
-Credentials Guessing Attacks<br />
+クレデンシャルゲッシングアタック<!-- Credentials Guessing Attacks --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor51">10.11.</a>&nbsp;
-Phishing Attacks<br />
+フィッシングアタック<!-- Phishing Attacks --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#CSRF">10.12.</a>&nbsp;
-Cross-Site Request Forgery<br />
+クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor52">10.13.</a>&nbsp;
 Clickjacking<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor53">10.14.</a>&nbsp;
@@ -620,15 +630,15 @@ Authors' Addresses<br />
 アクセストークン</h3>
 
 <p>
-          アクセストークンは保護されたリソースにアクセスするために使用されるクレデンシャルである. アクセストークンはクライアントに対して発行される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. トークンは特定の範囲とアクセス期間を表し, それらはリソースのオーナーによって与えられ, リソースサーバーと認可サーバーによって強制される.
+          アクセストークンは保護されたリソースにアクセスするために使用されるクレデンシャルである. アクセストークンはクライアントに対して発行される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. トークンはアクセス範囲とアクセス期間を表し, それらはリソースのオーナーによって許可され, リソースサーバーと認可サーバーによって発行される.
         
 </p>
 <p>
-          トークンは認可情報を取り出すための識別子を意味してもよく, また検証可能な方法でそれ自身に認可情報を含んでもよい(データと署名を含むトークン文字列など). 本仕様で定めていない追加の認証クレデンシャルは, クライアントがトークンを使用するために要求されてもよい.
+          トークンは認可情報を取り出すための識別子を表したり, 検証可能な方法でそれ自身に認可情報を含んでもよい(データと署名を含むトークン文字列など). 本仕様で定めていない追加の認証クレデンシャルは, クライアントがトークンを使用するために要求されてもよい.
         
 </p>
 <p>
-          いろいろな認証要素(ユーザ名やパスワード)は認証サーバーによって処理されたひとつのアクセストークンに置き換えられ, 抽象化レイヤーを提供する. この抽象化はアクセストークンを取得するための認可の付与よりも限定的なトークンの発行を可能とするだけでなく, リソースサーバーの認証方式の広範囲を処理する必要性を取り除く.
+          アクセストークンによって, 様々な認証要素(例えばユーザ名やパスワード)をリソースサーバーが解釈できる単体のトークンに置き換えるような抽象化レイヤーが提供される. この抽象化はアクセストークンを取得するための認可の付与よりも限定的なトークンの発行を可能とするだけでなく, 広範囲の認証方式をリソースサーバーが解釈する必要性がなくなる.
         
 </p>
 <p>
@@ -645,7 +655,7 @@ Authors' Addresses<br />
         
 </p>
 <p>
-          リフレッシュトークンはリソースオーナーによってクライアントに付与される認可を表す文字列である. この文字列は通常クライアントにとって意味が分かりにくい値になっている. そのトークンは認可情報を取り出すための識別子を意味してもよい. アクセストークンとは異なり, リフレッシュトークンは認可サーバーでのみ使用されるものであり, リソースサーバーに送信されることはない.
+          リフレッシュトークンはリソースオーナーによってクライアントに付与される認可を表す文字列である. この文字列は通常クライアントからみるとランダムな文字列になっている. そのトークンは認可情報を取り出すための識別子を意味してもよい. アクセストークンとは異なり, リフレッシュトークンは認可サーバーでのみ使用されるものであり, リソースサーバーに送信されることはない.
         
 </p><br /><hr class="insert" />
 <a name="Figure-2"></a>
@@ -683,12 +693,12 @@ Authors' Addresses<br />
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              クライアントは認可サーバーを使用した認証によってアクセストークンを要求し認可許可を示す.
+              クライアントは認可サーバーで認証して認可が与えられたことを提示することによって, アクセストークンの要求をする.
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              認可サーバーはクライアントを認証するとともに認可許可の正当性を確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
+              認可サーバーはクライアントを認証して認可が与えられたことを確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
             
 </dd>
 <dt>(C)</dt>
@@ -703,7 +713,7 @@ Authors' Addresses<br />
 </dd>
 <dt>(E)</dt>
 <dd>
-              ステップ (C) と (D) はアクセストークン有効期限が切れるまで繰り返される. クライアントがアクセストークンの期限切れを知っている場合, ステップ (G) にスキップし, そうでなければ別の保護されたリソースの要求をする.
+              ステップ (C) と (D) はアクセストークン有効期限が切れるまで繰り返される. クライアントがアクセストークンの期限切れを検知した場合, ステップ (G) にスキップし, そうでなければ別の保護されたリソースの要求をする.
             
 </dd>
 <dt>(F)</dt>
@@ -713,7 +723,11 @@ Authors' Addresses<br />
 </dd>
 <dt>(G)</dt>
 <dd>
+<<<<<<< HEAD
               クライアントは認可サーバーに対してリフレッシュトークンを渡して認証することで, 新しいアクセストークンを要求する. クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーに基づいている.
+=======
+              クライアントは, 認可サーバーで認証してリフレッシュトークンを提示することによって, 新しいアクセストークンを要求する. クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーに基づいている.
+>>>>>>> 4f19f2f6230c5ae9e7fc384100bf9a6c901ca6d8
             
 </dd>
 <dt>(H)</dt>
@@ -975,7 +989,7 @@ Unregistered Clients</h3>
           
 </li>
 <li>
-            トークンエンドポイント - 認可許可をアクセストークンと交換するために利用される. 一般的にクライアント認証を用いる.
+            トークンエンドポイント - 認可の付与とアクセストークンと交換するために利用される. 一般的にクライアント認証を用いる.
           
 </li>
 </ul><p>
@@ -991,7 +1005,7 @@ Unregistered Clients</h3>
 認可エンドポイント</h3>
 
 <p>
-          認可エンドポイントはリソースオーナーと通信するために使用され認可許可を得る. 認可サーバーはリソースオーナーのアイデンティティを確認しなければならない (MUST). 認可サーバーがリソースオーナーの認証方法 (ユーザー名やパスワードによるログイン, セッション・クッキー) は本仕様の定めるところではない.
+          認可エンドポイントはリソースオーナーと通信するために使用され認可が与えられる. 認可サーバーはリソースオーナーのアイデンティティを確認しなければならない (MUST). 認可サーバーがリソースオーナーの認証方法 (ユーザー名やパスワードによるログイン, セッション・クッキー) は本仕様の定めるところではない.
         
 </p>
 <p>
@@ -1414,7 +1428,7 @@ Authorization Request</h3>
                 RECOMMENDED. An opaque value used by the client to maintain state between the request
                 and callback. The authorization server includes this value when redirecting the
                 user-agent back to the client. The parameter SHOULD be used for preventing
-                cross-site request forgery as described in <a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>Cross-Site Request Forgery</span><span>)</span></a>.
+                cross-site request forgery as described in <a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></span><span>)</span></a>.
               
 </dd>
 </dl></blockquote><p>
@@ -1904,7 +1918,7 @@ Authorization Request</h3>
                 RECOMMENDED. An opaque value used by the client to maintain state between the request
                 and callback. The authorization server includes this value when redirecting the
                 user-agent back to the client. The parameter SHOULD be used for preventing
-                cross-site request forgery as described in <a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>Cross-Site Request Forgery</span><span>)</span></a>.
+                cross-site request forgery as described in <a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></span><span>)</span></a>.
               
 </dd>
 </dl></blockquote><p>
@@ -3227,7 +3241,7 @@ Security Considerations</h3>
         
 </p>
 <p>
-          リフレッシュトークンは通信経路上およびストレージ上において機密を保護され, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
+          リフレッシュトークンは通信経路・ストレージ上ともに機密に保たれ, 認可サーバとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
           
         
 </p>
@@ -3242,7 +3256,7 @@ Security Considerations</h3>
         
 </p>
 <p>
-          認可サーバはリフレッシュトークンが認可されていない相手によって正当なリフレッシュトークンを作成するために生成, 修正, もしくは推測できないことを保証しなければならない (MUST).
+          認可サーバーは, 認可対象外の何者かがトークンの有効性を保持したままリフレッシュトークンを生成・変更したり, トークンの生成方法を推測したりできないことを保証しなければならない (MUST).
           
         
 </p>
@@ -3252,12 +3266,12 @@ Security Considerations</h3>
 認可コード<!-- Authorization Codes --></h3>
 
 <p>
-          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (MUST). 認可コードが機密にしておくために努力がなされるべきである. なぜなら認可コードは user-agent リダイレクトによって伝送されるため, user-agent の履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
+          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (SHOULD). 認可コードを機密にしておくために努力がなされるべきである. なぜなら認可コードはユーザーエージェントリダイレクトによって伝送されるため, ユーザーエージェントの履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
           
         
 </p>
 <p>
-          認可コードはプロセスを完了するために, 認可サーバで権限を付与されたリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
+          認可コードはプロセスを完了するために, 認可サーバーで権限を付与したリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する. したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSを必要としなければならない (MUST).
           
         
 </p>
@@ -3348,86 +3362,70 @@ Request Confidentiality</h3>
 <a name="anchor49"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.9"></a><h3>10.9.&nbsp;
-Endpoints Authenticity</h3>
+エンドポイントの真正性<!-- Endpoints Authenticity --></h3>
 
 <p>
-          In order to prevent man-in-the-middle and phishing attacks, the authorization server
-          MUST implement and require TLS with server authentication as defined by
-          <a class='info' href='#RFC2818'>[RFC2818]<span> (</span><span class='info'>Rescorla, E., &ldquo;HTTP Over TLS,&rdquo; May&nbsp;2000.</span><span>)</span></a> for any request sent to the authorization and token endpoints.
-          The client MUST validate the authorization server's TLS certificate in accordance with
-          its requirements for server identity authentication.
+          man-in-the-middle アタックやフィッシングアタックを防ぐため, 認可サーバーは TLS を導入し, <a class='info' href='#RFC2818'>[RFC2818]<span> (</span><span class='info'>Rescorla, E., &ldquo;HTTP Over TLS,&rdquo; May&nbsp;2000.</span><span>)</span></a> に従って認可エンドポイントおよびトークンエンドポイントへのすべてのリクエストで TLS を利用したサーバー認証を必須としなければならない (MUST).
+          クライアントはサーバー身元認証の要件に従って認可サーバーの TLS 証明書を検証しなければならない (MUST).
+          
         
 </p>
 <a name="anchor50"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.10"></a><h3>10.10.&nbsp;
-Credentials Guessing Attacks</h3>
+クレデンシャルゲッシングアタック<!-- Credentials Guessing Attacks --></h3>
 
 <p>
-          The authorization server MUST prevent attackers from guessing access tokens,
-          authorization codes, refresh tokens, resource owner passwords, and client credentials.
+          認可サーバーは, アタッカーにアクセストークン, 認可コード, リフレッシュトークン, リソースオーナーパスワードおよびクライアントクレデンシャルを推測されないようにしなければならない (MUST).
+          
         
 </p>
 <p>
-          When generating tokens and other credentials not intended for handling by end-users, the
-          authorization server MUST use a reasonable level of entropy in order to mitigate the risk
-          of guessing attacks. The authorization server MUST utilize other means to protect
-          credentials intended for end-user usage.
+          トークンやその他のクレデンシャルなど, エンドユーザーが直接扱うことのないクレデンシャルを生成する場合, 認可サーバーはゲッシングアタックのリスクを低減するため適切のエントロピーを確保しなければならない (MUST).
+          エンドユーザーが扱うクレデンシャルについては, 認可サーバーはその他の保護対策を行わなければならない (MUST).
+          
         
 </p>
 <a name="anchor51"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.11"></a><h3>10.11.&nbsp;
-Phishing Attacks</h3>
+フィッシングアタック<!-- Phishing Attacks --></h3>
 
 <p>
-          Wide deployment of this and similar protocols may cause end-users to become inured
-          to the practice of being redirected to websites where they are asked to enter their
-          passwords. If end-users are not careful to verify the authenticity of these websites
-          before entering their credentials, it will be possible for attackers to exploit this
-          practice to steal resource owners' passwords.
+          本仕様や類似プロトコルを実際に広く運用するにつれ, エンドユーザーはパスワード入力を求める Web サイトにリダイレクトされるという慣習になじんでゆくであろう.
+          もしエンドユーザーがそういった Web サイトでパスワードを入力する際にそのサイトの真正性検証を怠った場合, この慣習がアタッカーに悪用され, リソースオーナーのパスワードを盗まれる可能性もある.
+          
         
 </p>
 <p>
-          Service providers should attempt to educate end-users about the risks phishing attacks
-          pose, and should provide mechanisms that make it easy for end-users to confirm the
-          authenticity of their sites. Client developers should consider the security implications
-          of how they interact with the user-agent (e.g., external, embedded), and the ability of
-          the end-user to verify the authenticity of the authorization server.
+          サービスプロバイダーはエンドユーザーに対してフィッシングアタックにより引き起こされるリスクに関して教育し, エンドユーザーが簡単にサイトの真正性を確認できるメカニズムを提供するべきである.
+          クライアントデベロッパーは, ユーザーエージェントとのインタラクション方式 (外部エージェント / 埋め込みエージェントのどちらを利用するかなど) とセキュリティーとの関係に加え, エンドユーザーによる認可サーバーの真正性検証能力についても熟考すべきである.
+          
         
 </p>
 <p>
-          To reduce the risk of phishing attacks, the authorization servers MUST utilize TLS on
-          every endpoint used for end-user interaction.
+          フィッシングアタックのリスクを低減するため, 認可サーバーはエンドユーザーとのインタラクションを行うすべてのエンドポイントで TLS を利用しなければならない (MUST).
+          
         
 </p>
 <a name="CSRF"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.12"></a><h3>10.12.&nbsp;
-Cross-Site Request Forgery</h3>
+クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></h3>
 
 <p>
-          Cross-site request forgery (CSRF) is an exploit in which an attacker causes the
-          user-agent of a victim end-user to follow a malicious URI (e.g. provided to the
-          user-agent as a misleading link, image, or redirection) to a trusting server (usually
-          established via the presence of a valid session cookie).
+          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザのユーザエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッション・クッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法です。
+          
         
 </p>
 <p>
-          A CSRF attack against the client's redirection URI allows an attacker to inject their own
-          authorization code or access token, which can result in the client using an access token
-          associated with the attacker's protected resources rather than the victim's (e.g. save
-          the victim's bank account information to a protected resource controlled by the
-          attacker).
+          クライアントの転送URIに対するCSRD攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
+          
         
 </p>
 <p>
-          The client MUST implement CSRF protection for its redirection URI. This is typically
-          accomplished by requiring any request sent to the redirection URI endpoint to include a
-          value that binds the request to the user-agent's authenticated state (e.g. a hash of the
-          session cookie used to authenticate the user-agent). The client SHOULD utilize the
-          <tt>state</tt> request parameter to deliver this value to the
-          authorization server when making an authorization request.
+          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現します (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <tt>state</tt> リクエストパラメーターを利用すべきである (SHOULD).
+          
         
 </p>
 <p>
