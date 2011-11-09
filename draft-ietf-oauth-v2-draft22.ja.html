@@ -330,9 +330,9 @@ Request Confidentiality<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#CSRF">10.12.</a>&nbsp;
 クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor52">10.13.</a>&nbsp;
-Clickjacking<br />
+クリックジャッキング<!--Clickjacking--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor53">10.14.</a>&nbsp;
-Code Injection and Input Validation<br />
+コードインジェクションとインプットバリデーション<!--Code Injection and Input Validation--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#open-redirect">10.15.</a>&nbsp;
 Open Redirectors<br />
 <a href="#anchor54">11.</a>&nbsp;
@@ -3243,7 +3243,7 @@ Security Considerations</h3>
 
 <p>
           認可要求に認可コードグラントタイプを用いるとき, クライアントは<tt>redirect_uri</tt>パラメータによりリダイレクトURIを指定できる. 
-          攻撃者がリダイレクトURIの値を操作可能であるとき, 認可サーバーによってリソースオーナーのユーザーエージェントを認可コードを含んだ攻撃者の管理下にあるURIにリダイレクトさせることができる.
+          攻撃者がリダイレクトURIの値を操作可能であるとき, 認可サーバーによってリソースオーナーのユーザーエージェントを攻撃者の管理下にあるURIに認可コードを含んだ状態でリダイレクトさせることができる.
           
         
 </p>
@@ -3397,46 +3397,39 @@ Request Confidentiality</h3>
 <a name="anchor52"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.13"></a><h3>10.13.&nbsp;
-Clickjacking</h3>
+クリックジャッキング<!--Clickjacking--></h3>
 
 <p>
-          In a clickjacking attack, an attacker registers a legitimate client and then constructs a
-          malicious site in which it loads the authorization server's authorization endpoint web
-          page in a transparent iframe overlaid on top of a set of dummy buttons which are
-          carefully constructed to be placed directly under important buttons on the authorization
-          page. When an end-user clicks a misleading visible button, the end-user is actually
-          clicking an invisible button on the authorization page (such as an "Authorize" button).
-          This allows an attacker to trick a resource owner into granting its client access without
-          their knowledge.
+          クリックジャッキング攻撃において, 攻撃者は正当なクライアントを登録し,その後悪意のあるサイトを構築する.
+          そのサイトは, 透明なiframe内に認可サーバの認可エンドポイントのWebページをロードし, その認可ページの重要なボタンの直下に置かれるように
+丁寧に配置されたダミーボタンの上に重ねられる.
+          エンドユーザーが誤解し目に見えるボタンをクリックするとき, 実際は認可ページ内の(認可ボタンのような)目に見えないボタンをクリックしている.
+          これは, 攻撃者にリソースオーナーを騙し, 知らないうちにそのクライアントアクセスを許可することを許す.
+          
         
 </p>
 <p>
-          To prevent this form of attack, native applications SHOULD use external browsers instead
-          of embedding browsers in an iframe when requesting end-user authorization. For most newer
-          browsers, avoidance of iframes can be enforced by the authorization server using the
-          (non-standard) <tt>x-frame-options</tt> header. This header can have
-          two values, <tt>deny</tt> and <tt>sameorigin</tt>,
-          which will block any framing, or framing by sites with a different origin, respectively.
-          For older browsers, javascript framebusting techniques can be used but may not be
-          effective in all browsers.
+          この攻撃形式を防ぐため, ネィティブアプリケーションはエンドユーザーの認可を要求するとき, iframe内に埋め込まれたブラウザの代わりに外部ブラウザを使用すべきである(SHOULD).
+          ほとんどの最新ブラウザは, 認可サーバーが非標準の<tt>x-frame-options</tt>ヘッダーを利用することにより強制的にiframeを回避することができる. 
+          このヘッダーは<tt>deny</tt>と<tt>sameorigin</tt>の2つの値を持つことができ, それぞれ全てのフレーミング, originが異なるサイトからのフレーミングを防ぐ.
+          古いブラウザはJavaScriptのフレームバースティング技術を利用できるが, 全てのブラウザに有効ではないかもしれない.
+          
         
 </p>
 <a name="anchor53"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.10.14"></a><h3>10.14.&nbsp;
-Code Injection and Input Validation</h3>
+コードインジェクションとインプットバリデーション<!--Code Injection and Input Validation--></h3>
 
 <p>
-          A code injection attack occurs when an input or otherwise external variable is used by an
-          application unsanitized and causes modification to the application logic. This may allow
-          an attacker to gain access to the application device or its data, cause denial of
-          service, or a wide range of malicious side-effects.
+          入力値もしくはそれ以外の外部変数がアプリケーションによってサニタイズされずに仕様されるとき, コードインジェクション攻撃が発生し, アプリケーションロジックの改ざんを引き起こす.
+          これは攻撃者にアプリケーションデバイスもしくはそのデータへのアクセスを許可し, サービス不能もしくは広範囲な悪意のある副作用を引き起こすかもしれない.
+          
         
 </p>
 <p>
-          The Authorization server and client MUST validate and sanitize any value received, and in
-          particular, the value of the <tt>state</tt> and
-          <tt>redirect_uri</tt> parameters.
+          認可サーバーとクライアントは受け取ったどの値も, 特に<tt>state</tt>,<tt>redirect_uri</tt>パラメータは検証し, サニタイズをしなければならない(MUST).
+          
         
 </p>
 <a name="open-redirect"></a><br /><hr />

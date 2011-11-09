@@ -3470,7 +3470,7 @@
       <section title='認可コードリダイレクトURIの操作<!--Authorization Code Redirection URI Manipulation-->'>
         <t>
           認可要求に認可コードグラントタイプを用いるとき, クライアントは<spanx style='verb'>redirect_uri</spanx>パラメータによりリダイレクトURIを指定できる. 
-          攻撃者がリダイレクトURIの値を操作可能であるとき, 認可サーバーによってリソースオーナーのユーザーエージェントを認可コードを含んだ攻撃者の管理下にあるURIにリダイレクトさせることができる.
+          攻撃者がリダイレクトURIの値を操作可能であるとき, 認可サーバーによってリソースオーナーのユーザーエージェントを攻撃者の管理下にあるURIに認可コードを含んだ状態でリダイレクトさせることができる.
           <!--
           When requesting authorization using the authorization code grant type, the client can
           specify a redirection URI via the <spanx style='verb'>redirect_uri</spanx> parameter.
@@ -3683,8 +3683,14 @@
         </t>
       </section>
 
-      <section title='Clickjacking'>
+      <section title='クリックジャッキング<!--Clickjacking-->'>
         <t>
+          クリックジャッキング攻撃において, 攻撃者は正当なクライアントを登録し,その後悪意のあるサイトを構築する.
+          そのサイトは, 透明なiframe内に認可サーバの認可エンドポイントのWebページをロードし, その認可ページの重要なボタンの直下に置かれるように
+丁寧に配置されたダミーボタンの上に重ねられる.
+          エンドユーザーが誤解し目に見えるボタンをクリックするとき, 実際は認可ページ内の(認可ボタンのような)目に見えないボタンをクリックしている.
+          これは, 攻撃者にリソースオーナーを騙し, 知らないうちにそのクライアントアクセスを許可することを許す.
+          <!--
           In a clickjacking attack, an attacker registers a legitimate client and then constructs a
           malicious site in which it loads the authorization server's authorization endpoint web
           page in a transparent iframe overlaid on top of a set of dummy buttons which are
@@ -3693,8 +3699,14 @@
           clicking an invisible button on the authorization page (such as an "Authorize" button).
           This allows an attacker to trick a resource owner into granting its client access without
           their knowledge.
+          -->
         </t>
         <t>
+          この攻撃形式を防ぐため, ネィティブアプリケーションはエンドユーザーの認可を要求するとき, iframe内に埋め込まれたブラウザの代わりに外部ブラウザを使用すべきである(SHOULD).
+          ほとんどの最新ブラウザは, 認可サーバーが非標準の<spanx style='verb'>x-frame-options</spanx>ヘッダーを利用することにより強制的にiframeを回避することができる. 
+          このヘッダーは<spanx style='verb'>deny</spanx>と<spanx style='verb'>sameorigin</spanx>の2つの値を持つことができ, それぞれ全てのフレーミング, originが異なるサイトからのフレーミングを防ぐ.
+          古いブラウザはJavaScriptのフレームバースティング技術を利用できるが, 全てのブラウザに有効ではないかもしれない.
+          <!--
           To prevent this form of attack, native applications SHOULD use external browsers instead
           of embedding browsers in an iframe when requesting end-user authorization. For most newer
           browsers, avoidance of iframes can be enforced by the authorization server using the
@@ -3703,20 +3715,28 @@
           which will block any framing, or framing by sites with a different origin, respectively.
           For older browsers, javascript framebusting techniques can be used but may not be
           effective in all browsers.
+          -->
         </t>
       </section>
 
-      <section title='Code Injection and Input Validation'>
+      <section title='コードインジェクションとインプットバリデーション<!--Code Injection and Input Validation-->'>
         <t>
+          入力値もしくはそれ以外の外部変数がアプリケーションによってサニタイズされずに仕様されるとき, コードインジェクション攻撃が発生し, アプリケーションロジックの改ざんを引き起こす.
+          これは攻撃者にアプリケーションデバイスもしくはそのデータへのアクセスを許可し, サービス不能もしくは広範囲な悪意のある副作用を引き起こすかもしれない.
+          <!--
           A code injection attack occurs when an input or otherwise external variable is used by an
           application unsanitized and causes modification to the application logic. This may allow
           an attacker to gain access to the application device or its data, cause denial of
           service, or a wide range of malicious side-effects.
+          -->
         </t>
         <t>
+          認可サーバーとクライアントは受け取ったどの値も, 特に<spanx style='verb'>state</spanx>,<spanx style='verb'>redirect_uri</spanx>パラメータは検証し, サニタイズをしなければならない(MUST).
+          <!--
           The Authorization server and client MUST validate and sanitize any value received, and in
           particular, the value of the <spanx style='verb'>state</spanx> and
           <spanx style='verb'>redirect_uri</spanx> parameters.
+          -->
         </t>
       </section>
 
