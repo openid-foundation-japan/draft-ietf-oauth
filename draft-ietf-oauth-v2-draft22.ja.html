@@ -145,15 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<<<<<<< HEAD
-<tr><td class="header">Expires: May 11, 2012</td><td class="header">D. Hardt</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 8, 2011</td></tr>
-=======
 <tr><td class="header">Expires: May 12, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">November 9, 2011</td></tr>
->>>>>>> 4f19f2f6230c5ae9e7fc384100bf9a6c901ca6d8
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -178,11 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-<<<<<<< HEAD
-This Internet-Draft will expire on May 11, 2012.</p>
-=======
 This Internet-Draft will expire on May 12, 2012.</p>
->>>>>>> 4f19f2f6230c5ae9e7fc384100bf9a6c901ca6d8
 
 <h3>Copyright Notice</h3>
 <p>
@@ -723,11 +713,7 @@ Authors' Addresses<br />
 </dd>
 <dt>(G)</dt>
 <dd>
-<<<<<<< HEAD
-              クライアントは認可サーバーに対してリフレッシュトークンを渡して認証することで, 新しいアクセストークンを要求する. クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーに基づいている.
-=======
               クライアントは, 認可サーバーで認証してリフレッシュトークンを提示することによって, 新しいアクセストークンを要求する. クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーに基づいている.
->>>>>>> 4f19f2f6230c5ae9e7fc384100bf9a6c901ca6d8
             
 </dd>
 <dt>(H)</dt>
@@ -766,7 +752,7 @@ Notational Conventions</h3>
 クライアント登録</h3>
 
 <p>
-        プロトコル開始する前にクライアントは認可サーバに登録します. クライアントが認可サーバに登録する方法はこの仕様での範囲外であるが, 通常エンドユーザとの対話を伴うHTML登録フォームを持つ.
+        データの送受信を開始する前にクライアントは認可サーバに登録する. クライアントが認可サーバに登録する方法はこの仕様での範囲外であるが, 通常エンドユーザとの対話を伴うHTML登録フォームを持つ.
       
 </p>
 <p>
@@ -838,7 +824,7 @@ Notational Conventions</h3>
 <dt>ウェブアプリケーション</dt>
 <dd>
               
-              ウェブアプリケーションはウェブサーバ上で実行されているconfidentialクライアントです. リソースオーナーがリソースオーナーのデバイス上でユーザエージェントにレンダリングされたHTMLユーザインターフェイスを通してクライアントにアクセスします. クライアントクレデンシャルだけでなく, クライアントに発行されたアクセストークンもWebサーバ上に保存され, リソースオーナーによって公開やアクセスはされません.
+              ウェブアプリケーションはウェブサーバ上で実行されているコンフィデンシャルクライアントである. リソースオーナーがリソースオーナーのデバイス上でユーザエージェントにレンダリングされたHTMLユーザインターフェイスを通してクライアントにアクセスする. クライアントクレデンシャルだけでなく, クライアントに発行されたアクセストークンもWebサーバ上に保存され, リソースオーナーによって公開されたりやアクセス可能な状態にならない.
             
 </dd>
 <dt>ユーザエージェントベースアプリケーション</dt>
@@ -850,7 +836,7 @@ Notational Conventions</h3>
 <dt>ネイティブアプリケーション</dt>
 <dd>
               
-              ネイティブアプリケーションはリソースオーナーのデバイス上にインストールし, 実行できるpublicクライアントです. プロトコルのデータとクレデンシャルはリソースオーナーにアクセスできる. それはアプリケーションに含まれるクライアント認証のクレデンシャルを抽出できることを想定させる. 一方, 保護の許容レベルを受けることができるアクセストークンやリフレッシュトークンのようなクレデンシャルを動的に発行する. 最低でも, これらのクレデンシャルはアプリケーションと対話できる悪意のあるサーバから保護されている. いくつかのプラットフォーム上でこれらのクレデンシャルは同じデバイス上に存在する他のアプリケーションから保護されることがある.
+              ネイティブアプリケーションはリソースオーナーのデバイス上にインストールし, 実行できるpublicクライアントです. プロトコルのデータとクレデンシャルはリソースオーナーに公開される. アプリケーションに含まれるいかなるクライアント認証用のクレデンシャルを抽出できることを想定している. 一方, アクセストークンやリフレッシュトークンといった動的に発行されたクレデンシャルは許容できるレベルの保護が得られる. 最低でも, これらのクレデンシャルはアプリケーションと対話できる悪意のあるサーバから保護されている. いくつかのプラットフォーム上でこれらのクレデンシャルは同じデバイス上に存在する他のアプリケーションから保護されることがある.
             
 </dd>
 </dl></blockquote><p>
