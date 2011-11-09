@@ -1325,7 +1325,12 @@
 
     </section>
 
-    <section title='Obtaining Authorization'>
+    <section title='認可の取得'>
+    <!-- <section title='Obtaining Authorization'> -->
+      <t>
+        アクセストークンを要求するには，まずクライアントはリソースオーナーから認可を取得する．認可は，クライアントがアクセストークンを要求するのに使用する認可許諾の形式で表現される．OAuthでは，4つの許諾方式（認可コード, インプリクト, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャル）を定義している．また，拡張仕様によって方式を追加することも可能である．
+      </t>
+      <!--
       <t>
         To request an access token, the client obtains authorization from the resource owner. The
         authorization is expressed in the form of an authorization grant which the client uses to
@@ -1333,8 +1338,14 @@
         resource owner password credentials, and client credentials. It also provides an extension
         mechanism for defining additional grant types.
       </t>
+      -->
 
-      <section title='Authorization Code' anchor='grant-code'>
+      <section title='認可コード' anchor='grant-code'>
+      <!-- <section title='Authorization Code' anchor='grant-code'> -->
+        <t>
+          認可コード許諾方式では，アクセストークンとリフレッシュトークの両方を取得し，クライアントの機密性を維持します．リダイレクションベースの処理フローによって，クライアントはリソースオーナーのユーザーエージェント（通常はウェブブラウザ）と対話し，認可サーバーによる（リダイレクションを通した）リクエストを受け付けることが出来なくてはいけない．
+        </t>
+      <!--
         <t>
           The authorization code grant type is used to obtain both access tokens and refresh
           tokens and is optimized for confidential clients. As a redirection-based flow, the client
@@ -1342,7 +1353,10 @@
           browser) and capable of receiving incoming requests (via redirection) from the
           authorization server.
         </t>
-        <figure title='Authorization Code Flow' anchor='Figure-3'>
+      -->
+
+        <figure title='認可コード処理フロー' anchor='Figure-3'>
+        <!-- <figure title='Authorization Code Flow' anchor='Figure-3'>-->
           <artwork>
             <![CDATA[
   +----------+
@@ -1374,67 +1388,132 @@
           </artwork>
         </figure>
         <t>
+          <xref target='Figure-3' />で示した図は、次のステップを含む:
+        </t>
+        <!--
+        <t>
           The flow illustrated in <xref target='Figure-3' /> includes the following steps:
         </t>
+        -->
         <t>
           <list style='format (%C)'>
+            <t>
+              クライアントはリソースオーナーのユーザーエージェントを認可エンドポイントに向かわせることで処理が開始される．クライアントには，クライアント識別子、リクエストスコープ，ローカルステート，および認可サーバーがユーザーエージェントに対して一度許諾された場合（もしくは拒否された場合）に処理を戻すためのリダイレクトURIを含む．
+            </t>
+            <!--
             <t>
               The client initiates the flow by directing the resource owner's user-agent to the
               authorization endpoint. The client includes its client identifier, requested
               scope, local state, and a redirection URI to which the authorization server will send
               the user-agent back once access is granted (or denied).
             </t>
+            -->
+            <t>
+              認可サーバーは（ユーザーエージェントを通して）リソースオーナーを認証し、リソースオーナーを許諾するか拒否するかを決定する。
+            </t>
+            <!--
             <t>
               The authorization server authenticates the resource owner (via the user-agent) and
               establishes whether the resource owner grants or denies the client's access request.
             </t>
+            -->
+            <t>
+              リソースオーナーが許諾された場合、認可サーバーは予め与えられていたリダイレクトURI(リクエストもしくはクライアント登録時に指定されている)を用いてリダイレクト処理を行ってクライアントのユーザーエージェントが向く方向を変える。リダイレクトURIには、認可コード、クライアントから事前に送られたローカルステートが含まれる。
+            </t>
+            <!--
             <t>
               Assuming the resource owner grants access, the authorization server redirects the
               user-agent back to the client using the redirection URI provided earlier (in the
               request or during client registration). The redirection URI includes an authorization
               code and any local state provided by the client earlier.
             </t>
+            -->
+            <t>
+              クライアントは前のステップで取得した認可コードを認可サーバーのトークンエンドポイントに送ることでアクセストークンを要求する。リクエストが処理されるとき、クライアントは認可サーバーによって認証される。クライアントには検証のため、認可コードを取得した際に使用したリダイレクトURIを含めておく。
+            </t>
+            <!--
             <t>
               The client requests an access token from the authorization server's token endpoint
               by including the authorization code received in the previous step. When making the
               request, the client authenticates with the authorization server. The client includes
               the redirection URI used to obtain the authorization code for verification.
             </t>
+            -->
+            <t>
+              認可サーバーはクライアントを認証し、認可コードを検証し、受け取ったリダイレクトURIがステップ(C)で使用したURIと同一であることを確かめる。その結果、正当である場合、認可サーバーはアクセストークンと任意でリフレッシュトークンを返却する。
+            </t>
+            <!--
             <t>
               The authorization server authenticates the client, validates the authorization code,
               and ensures the redirection URI received matches the URI used to redirect the client
               in step (C). If valid, the authorization server responds back with an access token
               and optional refresh token.
             </t>
+            -->
           </list>
         </t>
 
-        <section title='Authorization Request' anchor='code-authz-req'>
+        <section title='認可リクエスト' anchor='code-authz-req'>
+        <!-- <section title='Authorization Request' anchor='code-authz-req'> -->
+          <t>
+            クライアントは、<xref target='W3C.REC-html401-19991224' />で規定された<spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
+          </t>
+          <!--
           <t>
             The client constructs the request URI by adding the following parameters to the
             query component of the authorization endpoint URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format as defined by
             <xref target='W3C.REC-html401-19991224' />:
           </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
               <t hangText='response_type'>
                 <vspace />
+                必須(REQUIRED). 値は必ず<spanx style='verb'>code</spanx>にしなければならない(MUST).
+              </t>
+              <!--
+              <t hangText='response_type'>
+                <vspace />
                 REQUIRED. Value MUST be set to <spanx style='verb'>code</spanx>.
               </t>
+              -->
+              <t hangText='client_id'>
+                <vspace />
+                必須(REQUIRED). クライアント識別子は<xref target='client-identifier' />を参照のこと.
+              </t>
+              <!--
               <t hangText='client_id'>
                 <vspace />
                 REQUIRED. The client identifier as described in
                 <xref target='client-identifier' />.
               </t>
+              -->
+              <t hangText='redirect_uri'>
+                <vspace />
+                任意(OPTIONAL). 詳細は<xref target='redirect-uri' />を参照のこと.
+              </t>
+              <!--
               <t hangText='redirect_uri'>
                 <vspace />
                 OPTIONAL, as described in <xref target='redirect-uri' />.
               </t>
+              -->
+              <t hangText='scope'>
+                <vspace />
+                任意(OPTIONAL). リクエストスコープについては、<xref target='scope' />を参照のこと.
+              </t>
+              <!--
               <t hangText='scope'>
                 <vspace />
                 OPTIONAL. The scope of the access request as described by <xref target='scope' />.
               </t>
+              -->
+              <t hangText='state'>
+                <vspace />
+                推奨(RECOMMENDED). リクエストとコールバックの間で状態を維持するために使用する意味のない値．認可サーバーはリダイレクトによってクライアントに処理を戻す際にこの値を付与する．このパラメータは<xref target='CSRF' />に記載されているクロスサイトリクエストフォージェリを防ぐために用いられるべきである(SHOULD)．
+              </t>
+              <!--
               <t hangText='state'>
                 <vspace />
                 RECOMMENDED. An opaque value used by the client to maintain state between the request
@@ -1442,17 +1521,29 @@
                 user-agent back to the client. The parameter SHOULD be used for preventing
                 cross-site request forgery as described in <xref target='CSRF' />.
               </t>
+              -->
             </list>
           </t>
+            
+          <t>
+            クライアントはHTTPリダイレクトまたはユーザーエージェントを介する利用可能な手段によってリソースオーナーを構築されたURIに向ける．
+          </t>
+          <!-- 
           <t>
             The client directs the resource owner to the constructed URI using an HTTP redirection
             response, or by other means available to it via the user-agent.
           </t>
+          -->
           <figure>
+            <preamble>
+              例えば、クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
+            </preamble>
+            <!--
             <preamble>
               For example, the client directs the user-agent to make the following HTTP request
               using transport-layer security (extra line breaks are for display purposes only):
             </preamble>
+            -->
             <artwork>
               <![CDATA[
   GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
@@ -1461,17 +1552,28 @@
 ]]>
             </artwork>
           </figure>
+            
+          <t>
+            認可サーバーは必要なリクエストパラメータがすべて揃っていて、かつ正当であることを検証する．もしリクエストが正当なものであれば、認可サーバーはリソースオーナーを認証し、（リソースオーナーに確認することによって、または他の手段によって承認を確立することによって）認可の判定を得る．
+          </t>
+          <!--
           <t>
             The authorization server validates the request to ensure all required parameters are
             present and valid. If the request is valid, the authorization server authenticates the
             resource owner and obtains an authorization decision (by asking the resource owner or
             by establishing approval via other means).
           </t>
+          -->
+          <t>
+            判定が成立したとき、HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて、認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
+          </t>
+          <!--
           <t>
             When a decision is established, the authorization server directs the user-agent to the
             provided client redirection URI using an HTTP redirection response, or by other means
             available to it via the user-agent.
           </t>
+          -->
         </section>
 
         <section title='Authorization Response'>
