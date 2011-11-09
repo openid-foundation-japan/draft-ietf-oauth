@@ -242,11 +242,11 @@ Client Authentication<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#scope">3.3.</a>&nbsp;
 Access Token Scope<br />
 <a href="#anchor25">4.</a>&nbsp;
-Obtaining Authorization<br />
+認可の取得<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-code">4.1.</a>&nbsp;
-Authorization Code<br />
+認可コード<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#code-authz-req">4.1.1.</a>&nbsp;
-Authorization Request<br />
+認可リクエスト<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor26">4.1.2.</a>&nbsp;
 Authorization Response<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor27">4.1.3.</a>&nbsp;
@@ -1030,7 +1030,7 @@ Unregistered Clients</h3>
 <dd>
                 
                 必須 (REQUIRED).
-                レスポンスタイプの値は <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a> で述べる認可コードを要求するための <tt>code</tt> あるいは, <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a> で述べるアクセストークン(インプリシット許可)を要求する <tt>token</tt> あるいは, <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a> で述べる登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切り一覧(<tt>a b</tt> と <tt>b a</tt> は同じである)として無視する.
+                レスポンスタイプの値は <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で述べる認可コードを要求するための <tt>code</tt> あるいは, <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a> で述べるアクセストークン(インプリシット許可)を要求する <tt>token</tt> あるいは, <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a> で述べる登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切り一覧(<tt>a b</tt> と <tt>b a</tt> は同じである)として無視する.
               
 </dd>
 </dl></blockquote><p>
@@ -1266,27 +1266,19 @@ Access Token Scope</h3>
 <a name="anchor25"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4"></a><h3>4.&nbsp;
-Obtaining Authorization</h3>
+認可の取得</h3>
 
 <p>
-        To request an access token, the client obtains authorization from the resource owner. The
-        authorization is expressed in the form of an authorization grant which the client uses to
-        request the access token. OAuth defines four grant types: authorization code, implicit,
-        resource owner password credentials, and client credentials. It also provides an extension
-        mechanism for defining additional grant types.
+        アクセストークンを要求するには，まずクライアントはリソースオーナーから認可を取得する．認可は，クライアントがアクセストークンを要求するのに使用する認可許諾の形式で表現される．OAuthでは，4つの許諾方式（認可コード, インプリクト, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャル）を定義している．また，拡張仕様によって方式を追加することも可能である．
       
 </p>
 <a name="grant-code"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.1"></a><h3>4.1.&nbsp;
-Authorization Code</h3>
+認可コード</h3>
 
 <p>
-          The authorization code grant type is used to obtain both access tokens and refresh
-          tokens and is optimized for confidential clients. As a redirection-based flow, the client
-          must be capable of interacting with the resource owner's user-agent (typically a web
-          browser) and capable of receiving incoming requests (via redirection) from the
-          authorization server.
+          認可コード許諾方式では，アクセストークンとリフレッシュトークの両方を取得し，クライアントの機密性を維持します．リダイレクションベースの処理フローによって，クライアントはリソースオーナーのユーザーエージェント（通常はウェブブラウザ）と対話し，認可サーバーによる（リダイレクションを通した）リクエストを受け付けることが出来なくてはいけない．
         
 </p><br /><hr class="insert" />
 <a name="Figure-3"></a>
@@ -1318,10 +1310,10 @@ Authorization Code</h3>
   |         |&lt;---(E)----- Access Token -------------------'
   +---------+       (w/ Optional Refresh Token)
 
-</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;3: Authorization Code Flow&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
+</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;3: 認可コード処理フロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          The flow illustrated in <a class='info' href='#Figure-3'>Figure&nbsp;3<span> (</span><span class='info'>Authorization Code Flow</span><span>)</span></a> includes the following steps:
+          <a class='info' href='#Figure-3'>Figure&nbsp;3<span> (</span><span class='info'>認可コード処理フロー</span><span>)</span></a>で示した図は、次のステップを含む:
         
 </p>
 <p>
@@ -1329,40 +1321,27 @@ Authorization Code</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              The client initiates the flow by directing the resource owner's user-agent to the
-              authorization endpoint. The client includes its client identifier, requested
-              scope, local state, and a redirection URI to which the authorization server will send
-              the user-agent back once access is granted (or denied).
+              クライアントはリソースオーナーのユーザーエージェントを認可エンドポイントに向かわせることで処理が開始される．クライアントには，クライアント識別子、リクエストスコープ，ローカルステート，および認可サーバーがユーザーエージェントに対して一度許諾された場合（もしくは拒否された場合）に処理を戻すためのリダイレクトURIを含む．
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              The authorization server authenticates the resource owner (via the user-agent) and
-              establishes whether the resource owner grants or denies the client's access request.
+              認可サーバーは（ユーザーエージェントを通して）リソースオーナーを認証し、リソースオーナーを許諾するか拒否するかを決定する。
             
 </dd>
 <dt>(C)</dt>
 <dd>
-              Assuming the resource owner grants access, the authorization server redirects the
-              user-agent back to the client using the redirection URI provided earlier (in the
-              request or during client registration). The redirection URI includes an authorization
-              code and any local state provided by the client earlier.
+              リソースオーナーが許諾された場合、認可サーバーは予め与えられていたリダイレクトURI(リクエストもしくはクライアント登録時に指定されている)を用いてリダイレクト処理を行ってクライアントのユーザーエージェントが向く方向を変える。リダイレクトURIには、認可コード、クライアントから事前に送られたローカルステートが含まれる。
             
 </dd>
 <dt>(D)</dt>
 <dd>
-              The client requests an access token from the authorization server's token endpoint
-              by including the authorization code received in the previous step. When making the
-              request, the client authenticates with the authorization server. The client includes
-              the redirection URI used to obtain the authorization code for verification.
+              クライアントは前のステップで取得した認可コードを認可サーバーのトークンエンドポイントに送ることでアクセストークンを要求する。リクエストが処理されるとき、クライアントは認可サーバーによって認証される。クライアントには検証のため、認可コードを取得した際に使用したリダイレクトURIを含めておく。
             
 </dd>
 <dt>(E)</dt>
 <dd>
-              The authorization server authenticates the client, validates the authorization code,
-              and ensures the redirection URI received matches the URI used to redirect the client
-              in step (C). If valid, the authorization server responds back with an access token
-              and optional refresh token.
+              認可サーバーはクライアントを認証し、認可コードを検証し、受け取ったリダイレクトURIがステップ(C)で使用したURIと同一であることを確かめる。その結果、正当である場合、認可サーバーはアクセストークンと任意でリフレッシュトークンを返却する．
             
 </dd>
 </dl></blockquote><p>
@@ -1371,13 +1350,10 @@ Authorization Code</h3>
 <a name="code-authz-req"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.1.1"></a><h3>4.1.1.&nbsp;
-Authorization Request</h3>
+認可リクエスト</h3>
 
 <p>
-            The client constructs the request URI by adding the following parameters to the
-            query component of the authorization endpoint URI using the
-            <tt>application/x-www-form-urlencoded</tt> format as defined by
-            <a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>:
+            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
           
 </p>
 <p>
@@ -1386,48 +1362,42 @@ Authorization Request</h3>
 <dt>response_type</dt>
 <dd>
                 
-                REQUIRED. Value MUST be set to <tt>code</tt>.
+                必須(REQUIRED). 値は必ず<tt>code</tt>にしなければならない(MUST).
               
 </dd>
 <dt>client_id</dt>
 <dd>
                 
-                REQUIRED. The client identifier as described in
-                <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a>.
+                必須(REQUIRED). クライアント識別子は<a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>redirect_uri</dt>
 <dd>
                 
-                OPTIONAL, as described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>.
+                任意(OPTIONAL). 詳細は<a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>scope</dt>
 <dd>
                 
-                OPTIONAL. The scope of the access request as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>.
+                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>state</dt>
 <dd>
                 
-                RECOMMENDED. An opaque value used by the client to maintain state between the request
-                and callback. The authorization server includes this value when redirecting the
-                user-agent back to the client. The parameter SHOULD be used for preventing
-                cross-site request forgery as described in <a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></span><span>)</span></a>.
+                推奨(RECOMMENDED). リクエストとコールバックの間で状態を維持するために使用する意味のない値．認可サーバーはリダイレクトによってクライアントに処理を戻す際にこの値を付与する．このパラメータは<a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></span><span>)</span></a>に記載されているクロスサイトリクエストフォージェリを防ぐために用いられるべきである(SHOULD)．
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            The client directs the resource owner to the constructed URI using an HTTP redirection
-            response, or by other means available to it via the user-agent.
+            クライアントはHTTPリダイレクトまたはユーザーエージェントを介する利用可能な手段によってリソースオーナーを構築されたURIに向ける．
           
 </p>
 <p>
-              For example, the client directs the user-agent to make the following HTTP request
-              using transport-layer security (extra line breaks are for display purposes only):
+              例えば、クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1437,16 +1407,11 @@ Authorization Request</h3>
 
 </pre></div>
 <p>
-            The authorization server validates the request to ensure all required parameters are
-            present and valid. If the request is valid, the authorization server authenticates the
-            resource owner and obtains an authorization decision (by asking the resource owner or
-            by establishing approval via other means).
+            認可サーバーは必要なリクエストパラメータがすべて揃っていて、かつ正当であることを検証する．もしリクエストが正当なものであれば、認可サーバーはリソースオーナーを認証し、（リソースオーナーに確認することによって、または他の手段によって承認を確立することによって）認可の判定を得る．
           
 </p>
 <p>
-            When a decision is established, the authorization server directs the user-agent to the
-            provided client redirection URI using an HTTP redirection response, or by other means
-            available to it via the user-agent.
+            判定が成立したとき、HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて、認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
           
 </p>
 <a name="anchor26"></a><br /><hr />
@@ -1648,7 +1613,7 @@ Access Token Request</h3>
 <dd>
                 
                 REQUIRED, if the <tt>redirect_uri</tt> parameter was included in
-                the authorization request as described in <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a>, and
+                the authorization request as described in <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a>, and
                 their values MUST be identical.
               
 </dd>
@@ -1700,7 +1665,7 @@ Access Token Request</h3>
 <li>
                 ensure that the <tt>redirect_uri</tt> parameter is present if
                 the <tt>redirect_uri</tt> parameter was included in the initial
-                authorization request as described in <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a>, and if
+                authorization request as described in <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a>, and if
                 included ensure their values are identical.
               
 </li>
@@ -3400,41 +3365,33 @@ Request Confidentiality</h3>
 クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></h3>
 
 <p>
-          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザのユーザエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッション・クッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法です。
+          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザのユーザエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッション・クッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法である.
           
         
 </p>
 <p>
-          クライアントの転送URIに対するCSRD攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
+          クライアントの転送URIに対するCSRF攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
           
         
 </p>
 <p>
-          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現します (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <tt>state</tt> リクエストパラメーターを利用すべきである (SHOULD).
+          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現する (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <tt>state</tt> リクエストパラメーターを利用すべきである (SHOULD).
           
         
 </p>
 <p>
-          Once authorization has been obtained from the end-user, the authorization server
-          redirects the end-user's user-agent back to the client with the required binding value
-          contained in the <tt>state</tt> parameter. The binding value enables
-          the client to verify the validity of the request by matching the binding value to the
-          user-agent's authenticated state. The binding value used for CSRF protection MUST contain
-          a non-guessable value, and the user-agent's authenticated state (e.g. session cookie,
-          HTML5 local storage) MUST be kept in a location accessible only to the client and the
-          user-agent (i.e., protected by same-origin policy).
+          一旦認可がエンドユーザにより取得されると, 認可サーバはエンドユーザのユーザエージェントを <tt>state</tt> パラメータに含まれる要求されたバインド値と共にクライアントへリダイレクトする. クライアントはバインド値とユーザーエージェントの認証状態を突合することによりリクエストの正当性を確認することが出来る. CSRFを防ぐために使用されるバインド値は推測不能な値を含まねばならず (MUST), ユーザーエージェントの認証状態 (例えば, セッションクッキーやHTML5のローカルストレージ) はクライアントおよびユーザーエージェントのみがアクセスできる状態に保たれなければならない (つまり, 同一起源ポリシーによる保護)  (MUST).
+          
         
 </p>
 <p>
-          A CSRF attack against the authorization server's authorization endpoint can result in an
-          attacker obtaining end-user authorization for a malicious client without involving or
-          alerting the end-user.
+          認可サーバの認可エンドポイントへのCSRF攻撃はエンドユーザに知られることなく, 攻撃者が悪意のあるクライアントへのエンドユーザ認可を取得可能にしてしまう.
+          
         
 </p>
 <p>
-          The authorization server MUST implement CSRF protection for its authorization endpoint,
-          and ensure that a malicious client cannot obtain authorization without the awareness and
-          explicit consent of the resource owner.
+          認可サーバは認可エンドポイントにCSRF保護を実装せねばならず, 悪意あるクライアントがリソースオーナーへの通知と明確な同意なく認可を取得出来ないことを保証せねばならない (MUST).
+          
         
 </p>
 <a name="anchor52"></a><br /><hr />

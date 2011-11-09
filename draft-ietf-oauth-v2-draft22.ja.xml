@@ -3623,7 +3623,7 @@
 
       <section title='クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery -->' anchor='CSRF'>
         <t>
-          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザのユーザエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッション・クッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法です。
+          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザのユーザエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッション・クッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法である.
           <!--
           Cross-site request forgery (CSRF) is an exploit in which an attacker causes the
           user-agent of a victim end-user to follow a malicious URI (e.g. provided to the
@@ -3632,7 +3632,7 @@
           -->
         </t>
         <t>
-          クライアントの転送URIに対するCSRD攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
+          クライアントの転送URIに対するCSRF攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
           <!--
           A CSRF attack against the client's redirection URI allows an attacker to inject their own
           authorization code or access token, which can result in the client using an access token
@@ -3642,7 +3642,7 @@
           -->
         </t>
         <t>
-          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現します (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <spanx style='verb'>state</spanx> リクエストパラメーターを利用すべきである (SHOULD).
+          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現する (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <spanx style='verb'>state</spanx> リクエストパラメーターを利用すべきである (SHOULD).
           <!--
           The client MUST implement CSRF protection for its redirection URI. This is typically
           accomplished by requiring any request sent to the redirection URI endpoint to include a
@@ -3653,6 +3653,8 @@
           -->
         </t>
         <t>
+          一旦認可がエンドユーザにより取得されると, 認可サーバはエンドユーザのユーザエージェントを <spanx style='verb'>state</spanx> パラメータに含まれる要求されたバインド値と共にクライアントへリダイレクトする. クライアントはバインド値とユーザーエージェントの認証状態を突合することによりリクエストの正当性を確認することが出来る. CSRFを防ぐために使用されるバインド値は推測不能な値を含まねばならず (MUST), ユーザーエージェントの認証状態 (例えば, セッションクッキーやHTML5のローカルストレージ) はクライアントおよびユーザーエージェントのみがアクセスできる状態に保たれなければならない (つまり, 同一起源ポリシーによる保護)  (MUST).
+          <!--
           Once authorization has been obtained from the end-user, the authorization server
           redirects the end-user's user-agent back to the client with the required binding value
           contained in the <spanx style='verb'>state</spanx> parameter. The binding value enables
@@ -3661,16 +3663,23 @@
           a non-guessable value, and the user-agent's authenticated state (e.g. session cookie,
           HTML5 local storage) MUST be kept in a location accessible only to the client and the
           user-agent (i.e., protected by same-origin policy).
+          -->
         </t>
         <t>
+          認可サーバの認可エンドポイントへのCSRF攻撃はエンドユーザに知られることなく, 攻撃者が悪意のあるクライアントへのエンドユーザ認可を取得可能にしてしまう.
+          <!--
           A CSRF attack against the authorization server's authorization endpoint can result in an
           attacker obtaining end-user authorization for a malicious client without involving or
           alerting the end-user.
+          -->
         </t>
         <t>
+          認可サーバは認可エンドポイントにCSRF保護を実装せねばならず, 悪意あるクライアントがリソースオーナーへの通知と明確な同意なく認可を取得出来ないことを保証せねばならない (MUST).
+          <!--
           The authorization server MUST implement CSRF protection for its authorization endpoint,
           and ensure that a malicious client cannot obtain authorization without the awareness and
           explicit consent of the resource owner.
+          -->
         </t>
       </section>
 
