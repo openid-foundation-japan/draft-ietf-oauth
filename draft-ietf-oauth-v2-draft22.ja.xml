@@ -3688,35 +3688,50 @@
         </t>
       </section>
 
-      <section title='Resource Owner Password Credentials'>
+      <section title='リソースオーナーパスワードクレデンシャル<!--Resource Owner Password Credentials-->'>
         <t>
+          リソースオーナーパスワードクレデンシャルグラントタイプはレガシーシステム, もしくは移行のために利用される. これはクライアントがユーザー名とパスワードを保管するリスク全般を軽減する. しかし特権のあるクレデンシャルをクライアントにさらす必要性を取り除くことはできない. 
+        <!--
           The resource owner password credentials grant type is often used for legacy or migration
           reasons. It reduces the overall risk of storing username and password by the client, but
           does not eliminate the need to expose highly privileged credentials to the client.
+        -->
         </t>
         <t>
+          このグラントタイプは, 本プロトコルで回避するよう努力してきたパスワードアンチパターンを維持しているので, 他のグラントタイプより高いリスクを含んでいる. クライアントがパスワードを濫用することや, （例えば, ログファイルやクライアントが保持している他のリソースから）パスワードが意図せず攻撃者に公開されることがありえる. 
+        <!--
           This grant type carries a higher risk than other grant types because it maintains the
           password anti-pattern this protocol seeks to avoid. The client could abuse the password
           or the password could unintentionally be disclosed to an attacker (e.g. via log files or
           other records kept by the client).
+        -->
         </t>
         <t>
+          加えてリソースオーナーは認可プロセスをコントロールできない（クレデンシャルをクライアントに提示した時点でリソースオーナーの関与は終了する）ので, クライアントはリソースオーナーの要求より有効範囲が広く, 有効期間の長いアクセストークンを取得することができる. 認可サーバーはこのグラントタイプで発行されたアクセストークンについての有効範囲と有効期間をよく検討すべきである. 
+        <!--
           Additionally, because the resource owner does not have control over the authorization
           process (the resource owner involvement ends when it hands over its credentials to the
           client), the client can obtain access tokens with a broader scope and longer lifetime
           than desired by the resource owner. The authorization server should consider the scope
           and lifetime of access tokens issued via this grant type.
+        -->
         </t>
         <t>
+          認可サーバーとクライアントはこのグラントタイプの利用を控え, 可能であれば極力他のグラントタイプを利用すべきである(SHOULD). 
+        <!--
           The authorization server and client SHOULD minimize use of this grant type and utilize
           other grant types whenever possible.
+        -->
         </t>
       </section>
 
-      <section title='Request Confidentiality'>
+      <section title='リクエストの機密性<!--Request Confidentiality-->'>
         <t>
+          アクセストークン, リフレッシュトークン, リソースオーナーのパスワード, そしてクライアントのクレデンシャルは平文で伝送してはならない(MUST NOT). 認可コードは平文で伝送するべきではない(SHOULD NOT). 
+        <!--
           Access tokens, refresh tokens, resource owner passwords, and client credentials MUST NOT
           be transmitted in the clear. Authorization codes SHOULD NOT be transmitted in the clear.
+        -->
         </t>
       </section>
 
@@ -3905,14 +3920,19 @@
         </t>
       </section>
 
-      <section title='Open Redirectors' anchor='open-redirect'>
+      <section title='オープンリダイレクタ<!--Open Redirectors-->' anchor='open-redirect'>
         <t>
+          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作する. オープンリダイレクタは正当性の確認をせずにパラメータで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.  
+        <!--
           The authorization server authorization endpoint and the client redirection endpoint can
           be improperly configured and operate as open redirectors. An open redirector is an
           endpoint using a parameter to automatically redirect a user-agent to the location
           specified by the parameter value without any validation.
+        -->
         </t>
         <t>
+          オープンリダイレクタは, フィッシング攻撃, もしくはURIのオーソリティ部を見慣れた信頼できる通信先とする事で攻撃者がエンドユーザーを悪意のあるサイトに誘導するのに利用される. 加えて認可サーバーがクライアントにリダイレクトURIの一部のみでの登録を許可した場合, 攻撃者は, 認可サーバーの正当性確認を通過し, 認可コード, アクセストークンを攻撃者が管理するエンドポイントに送信するリダイレトURIの作成にクライアントの運営しているオープンリダイレクタを利用できる. 
+        <!--
           Open redirectors can be used in phishing attacks, or by an attacker to get end-users to
           visit malicious sites by making the URI's authority look like a familiar and trusted
           destination. In addition, if the authorization server allows the client to register only
@@ -3920,6 +3940,7 @@
           client to construct a redirection URI that will pass the authorization server validation
           but will send the authorization code or access token to an endpoint under the control of
           the attacker.
+        -->
         </t>
       </section>
 
