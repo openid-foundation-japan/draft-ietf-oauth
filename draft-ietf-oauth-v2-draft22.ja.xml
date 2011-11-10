@@ -3392,7 +3392,7 @@
       <t>
         <list style='symbols'>
           <t>
-            ネイティブアプリケーションはその性質上クライアントクレデンシャルを秘匿に保てないため, 認可コードグラントタイプを利用するネィティブアプリケーションはクライアントクレデンシャルを使うべきではない(SHOULD).
+            ネイティブアプリケーションはその性質上クライアントクレデンシャルを秘匿に保てないため, 認可コードグラントタイプを利用するネイティブアプリケーションはクライアントクレデンシャルを使うべきではない(SHOULD).
             <!--
             Native applications that use the authorization code grant type SHOULD do so without
             using client credentials, due to the native application’s inability to keep client
@@ -3867,7 +3867,7 @@
           -->
         </t>
         <t>
-          この攻撃形式を防ぐため, ネィティブアプリケーションはエンドユーザーの認可を要求するとき, iframe内に埋め込まれたブラウザの代わりに外部ブラウザを使用すべきである(SHOULD).
+          iframeにおけるこの攻撃形式を防ぐため, ネイティブアプリケーションはエンドユーザーの認可を要求するとき, 埋め込みのブラウザの代わりに外部ブラウザを使用すべきである(SHOULD).
           ほとんどの最新ブラウザは, 認可サーバーが非標準の<spanx style='verb'>x-frame-options</spanx>ヘッダーを利用することにより強制的にiframeを回避することができる. 
           このヘッダーは<spanx style='verb'>deny</spanx>と<spanx style='verb'>sameorigin</spanx>の2つの値を持つことができ, それぞれ全てのフレーミング, originが異なるサイトからのフレーミングを防ぐ.
           古いブラウザはJavaScriptのフレームバースティング技術を利用できるが, 全てのブラウザに有効ではないかもしれない.
