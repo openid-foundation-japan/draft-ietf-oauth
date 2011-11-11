@@ -3948,39 +3948,62 @@
 
     <section title='IANA Considerations'>
 
-      <section title='The OAuth Access Token Type Registry' anchor='type-registry'>
+      <section title='OAuth アクセストークンタイプレジストリー<!-- The OAuth Access Token Type Registry -->' anchor='type-registry'>
         <t>
+          本仕様では, OAuth アクセストークンタイプレジストリーを設立する.
+          <!--
           This specification establishes the OAuth access token type registry.
+          -->
         </t>
         <t>
+          アクセストークンタイプは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
+          (以降, 文中の専門用語については <xref target='RFC5226' /> を参照のこと)
+          しかしながら, 発行に先立ってそのトークンタイプを用いることができるように, Designated Experts はそのトークンタイプが公開できる状態になった時点で登録を許可することもありうる.
+          <!--
           Access token types are registered on the advice of one or more Designated Experts
           (appointed by the IESG or their delegate), with a Specification Required (using
           terminology from <xref target='RFC5226' />). However, to allow for the allocation of
           values prior to publication, the Designated Expert(s) may approve registration once they
           are satisfied that such a specification will be published.
+          -->
         </t>
         <t>
+          登録要請は, 適切な件名 (例: "Request for access token type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる.
+          [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
+          <!--
           Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
           comment, with an appropriate subject (e.g., "Request for access token type: example").
           [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
           with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+          -->
         </t>
         <t>
+          Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる.
+          要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          <!--
           Within at most 14 days of the request, the Designated Expert(s) will either approve or
           deny the registration request, communicating this decision to the review list and IANA.
           Denials should include an explanation and, if applicable, suggestions as to how to make
           the request successful.
+          -->
         </t>
         <t>
+          Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる.
+          また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
+          <!--
           Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
           Application Area Directors (contactable using app-ads@tools.ietf.org email address or
           directly by looking up their email addresses on http://www.iesg.org/ website) and, if the
           appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org
           mailing list).
+          -->
         </t>
         <t>
+          IANA は, Designated Experts によるすべてのレジストリー更新要請を承認し, すべての登録要請をレビューメーリングリストに送信するべきである.
+          <!--
           IANA should only accept registry updates from the Designated Expert(s), and should direct
           all requests for registration to the review mailing list.
+          -->
         </t>
 
         <section title='Registration Template'>
