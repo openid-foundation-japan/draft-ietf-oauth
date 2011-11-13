@@ -1980,30 +1980,52 @@
 
       </section>
 
-      <section title='Implicit Grant' anchor='grant-implicit'>
+      <section title='インプリシット認可' anchor='grant-implicit'>
+      <!-- <section title='Implicit Grant' anchor='grant-implicit'> -->
+        <t>
+          インプリシット認可タイプはアクセストークンを取得するために使用する(リフレッシュトークンの発行をサポートするものではない).そして,特定のリダイレクトURIによって運用されていることが既知である公開されたクライアントに最適化されている.これらのクライアントは,通常JavaScriptなどのスクリプト言語を使用してブラウザ上に実装される.
+        </t>
+        <!--
         <t>
           The implicit grant type is used to obtain access tokens (it does not support the issuance
           of refresh tokens) and is optimized for public clients known to operate a particular
           redirection URI. These clients are typically implemented in a browser using a scripting
           language such as JavaScript.
         </t>
+        -->
+        <t>
+          リダイレクトベースのフローとしては，クライアントはリソースオーナーのユーザーエージェント(通常はウェブブラウザ)と対話でき,認可サーバーから入っていくるリクエストを(リダイレクトによって)受け取ることができなくてはいけない.
+        </t>
+        <!--
         <t>
           As a redirection-based flow, the client must be capable of interacting with the
           resource owner's user-agent (typically a web browser) and capable of receiving incoming
           requests (via redirection) from the authorization server.
         </t>
+        -->
+        <t>
+          クライアントが認可とアクセストークンの取得で異なる要求を行う認可コード許可タイプと異なり,クライアントは認可リクエストの結果としてアクセストークンを受け取る.
+        </t>
+        <!--
         <t>
           Unlike the authorization code grant type in which the client makes separate requests for
           authorization and access token, the client receives the access token as the result of the
           authorization request.
         </t>
+        -->
+        <t>
+          インプリシット許可タイプはクライアントの認証を含まず,リソースオーナーの存在とリダイレクトURIが登録されていることで信頼する.アクセストークンはリダイレクトURIの中にエンコードされるため,デバイス上にあるリソースオーナーとその他のアプリケーションに漏えいするかもしれない.
+        </t>
+        <!--
         <t>
           The implicit grant type does not include client authentication, and relies on the
           presence of the resource owner and the registration of the redirection URI. Because the
           access token is encoded into the redirection URI, it may be exposed to the resource owner
           and other applications residing on its device.
         </t>
-        <figure title='Implicit Grant Flow' anchor='Figure-4'>
+        -->
+        <figure title='インプリシット許可フロー' anchor='Figure-4'>
+        <!-- <figure title='Implicit Grant Flow' anchor='Figure-4'> -->
           <artwork>
             <![CDATA[
   +----------+
@@ -2042,51 +2064,113 @@
           </artwork>
         </figure>
         <t>
+          <xref target='Figure-4' />で示した図は次のステップを含む:
+        </t>
+        <!--
+        <t>
           The flow illustrated in <xref target='Figure-4' /> includes the following steps:
         </t>
+        -->
         <t>
           <list style='format (%C)'>
+            <t>
+              クライアントはリソースオーナーのユーザーエージェントから認可エンドポイントに対してリダイレクトすることで処理が始まる.クライアントには,クライアント識別子，リクエストスコープ，ローカルステート，そして認可サーバーがアクセスを許可した場合(もしくは拒否した場合)にユーザーエージェントに処理を戻すために必要なリダイレクトURIが含まれる.
+            </t>
+            <!--
             <t>
               The client initiates the flow by directing the resource owner's user-agent to the
               authorization endpoint. The client includes its client identifier, requested
               scope, local state, and a redirection URI to which the authorization server will send
               the user-agent back once access is granted (or denied).
             </t>
+            -->
+            <t>
+              認可サーバーは(ユーザーエージェントを通じて)リソースオーナーを認証し,リソースオーナーがクライアントのアクセス要求を許可するか拒否するかを確定する.
+            </t>
+            <!--
             <t>
               The authorization server authenticates the resource owner (via the user-agent) and
               establishes whether the resource owner grants or denies the client's access request.
             </t>
+            -->
+            <t>
+              リソースオーナーがアクセスを許可した場合，認可サーバーは事前に与えられていたリダイレクトURIを用いてユーザーエージェントをクライアントに向け直す.リダイレクトURIには，URIの一部としてアクセストークンが含まれる.
+            </t>
+            <!--
             <t>
               Assuming the resource owner grants access, the authorization server redirects the
               user-agent back to the client using the redirection URI provided earlier. The
               redirection URI includes the access token in the URI fragment.
             </t>
+            -->
+            <t>
+              続いてユーザーエージェントは,ウェブでホストされたクライアントリソースに対して(フラグメントを含まない)リクエストを構築してリダイレクト処理を続ける.ユーザーエージェントはローカルにフラグメントの情報を保持している.
+            </t>
+            <!--
             <t>
               The user-agent follows the redirection instructions by making a request to the
               web-hosted client resource (which does not include the fragment). The user-agent
               retains the fragment information locally.
             </t>
+            -->
+            <t>
+              ウェブでホストされたクライアントリソースはユーザーエージェントによって保持されているフラグメントを含む完全なリダイレクトURLにアクセスし,フラグメントに含まれているアクセストークン(とその他のパラメータ)を取り出すことができるウェブページ(通常,埋め込みのスクリプトが含まれるHTMLドキュメント)を返却する.
+            </t>
+            <!--
             <t>
               The web-hosted client resource returns a web page (typically an HTML document with an
               embedded script) capable of accessing the full redirection URI including the fragment
               retained by the user-agent, and extracting the access token (and other parameters)
               contained in the fragment.
             </t>
+            -->
+            <t>
+              ユーザーエージェントはウェブでホストされたクライアントによって与えられたスクリプトをローカルに実行し,アクセストークンを取り出してクライアントに渡す.
+            </t>
+            <!--
             <t>
               The user-agent executes the script provided by the web-hosted client resource
               locally, which extracts the access token and passes it to the client.
             </t>
+            -->
           </list>
         </t>
 
-        <section title='Authorization Request' anchor='implicit-authz-req'>
+        <section title='認可リクエスト' anchor='implicit-authz-req'>
+        <!-- <section title='Authorization Request' anchor='implicit-authz-req'> -->
+          <t>
+            クライアントは、<spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
+          </t>
+          <!--
           <t>
             The client constructs the request URI by adding the following parameters to the
             query component of the authorization endpoint URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format:
           </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
+              <t hangText='response_type'>
+                <vspace />
+                必須(REQUIRED). 値は必ず<spanx style='verb'>token</spanx>にしなければならない(MUST).
+              </t>
+              <t hangText='client_id'>
+                <vspace />
+                必須(REQUIRED). クライアント識別子は<xref target='client-identifier' />を参照のこと.
+              </t>
+              <t hangText='redirect_uri'>
+                <vspace />
+                任意(OPTIONAL). 詳細は<xref target='redirect-uri' />を参照のこと.
+              </t>
+              <t hangText='scope'>
+                <vspace />
+                任意(OPTIONAL). リクエストスコープについては、<xref target='scope' />を参照のこと.
+              </t>
+              <t hangText='state'>
+                <vspace />
+                推奨(RECOMMENDED). リクエストとコールバックの間で状態を維持するために使用する意味のない値．認可サーバーはリダイレクトによってクライアントに処理を戻す際にこの値を付与する．このパラメータは<xref target='CSRF' />に記載されているクロスサイトリクエストフォージェリを防ぐために用いられるべきである(SHOULD)．
+              </t>
+              <!--
               <t hangText='response_type'>
                 <vspace />
                 REQUIRED. Value MUST be set to <spanx style='verb'>token</spanx>.
@@ -2111,17 +2195,28 @@
                 user-agent back to the client. The parameter SHOULD be used for preventing
                 cross-site request forgery as described in <xref target='CSRF' />.
               </t>
+              -->
             </list>
           </t>
+          <t>
+            クライアントはHTTPリダイレクトまたはユーザーエージェントを介する利用可能な手段によってリソースオーナーを構築されたURIに向ける．
+          </t>
+          <!--
           <t>
             The client directs the resource owner to the constructed URI using an HTTP redirection
             response, or by other means available to it via the user-agent.
           </t>
+          -->
           <figure>
+            <preamble>
+              例えば、クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
+            </preamble>
+            <!--
             <preamble>
               For example, the client directs the user-agent to make the following HTTP request
               using transport-layer security (extra line breaks are for display purposes only):
             </preamble>
+            -->
             <artwork>
               <![CDATA[
   GET /authorize?response_type=token&client_id=s6BhdRkqt3&state=xyz
@@ -2131,32 +2226,74 @@
             </artwork>
           </figure>
           <t>
+            認可サーバーは必要なリクエストパラメータがすべて揃っていて,かつ正当であることを検証する. 認可サーバーはアクセストークンに向けられたリダイレクトURIが, <xref target='redirect-uri' />に示すとおりにクライアントによって事前に登録されているものと同一であることを検証しなければならない(MUST).
+          </t>
+          <!--
+          <t>
             The authorization server validates the request to ensure all required parameters are
             present and valid. The authorization server MUST verify that the redirection URI to which
             it will redirect the access token matches a redirection URI registered by the client as
             described in <xref target='redirect-uri' />.
           </t>
+          -->
+          <t>
+            リクエストが正当であった場合, 認可サーバーはリソースオーナーを認証し, (リソースオーナーに問い合わせるか，その他の理由で承認が成立することで)認可の決定が確立される.
+          </t>
+          <!--
           <t>
             If the request is valid, the authorization server authenticates the resource owner and
             obtains an authorization decision (by asking the resource owner or by establishing
             approval via other means).
           </t>
+          -->
+          <t>
+            判定が成立したとき、HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて、認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
+          </t>
+          <!--
           <t>
             When a decision is established, the authorization server directs the user-agent to the
             provided client redirection URI using an HTTP redirection response, or by other means
             available to it via the user-agent.
           </t>
+          -->
         </section>
 
-        <section title='Access Token Response'>
+        <section title='アクセストークンレスポンス'>
+        <!-- <section title='Access Token Response'> -->
+          <t>
+            リソースオーナーがアクセスリクエストを許諾した場合、認可サーバーはアクセストークンを発行し、<spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いてリダイレクトURIの断片に次のパラメータを付与してクライアントに送る．
+          </t>
+          <!--
           <t>
             If the resource owner grants the access request, the authorization server issues an
             access token and delivers it to the client by adding the following parameters to
             the fragment component of the redirection URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format:
           </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
+              <t hangText='access_token'>
+                <vspace />
+                必須(REQUIRED). 認可サーバーによって発行されたアクセストークン.
+              </t>
+              <t hangText='token_type'>
+                <vspace />
+                必須(REQUIRED). <xref target='token-types' />に示されたトークンタイプ. 大文字・小文字は区別しない.
+              </t>
+              <t hangText='expires_in'>
+                <vspace />
+                任意(OPTIONAL). アクセストークンの有効期間を秒で表したもの. 例えば<spanx style='verb'>3600</spanx>という値は, レスポンスが生成されてから1時間でアクセストークンが無効になることを表す.
+              </t>
+              <t hangText='scope'>
+                <vspace />
+                任意(OPTIONAL). <xref target='scope' />によって示されたアクセストークンのスコープ.
+              </t>
+              <t hangText='state'>
+                <vspace />
+                クライアントの認可リクエストに<spanx style='verb'>state</spanx>が含まれていた場合は必須(REQUIRED). 正確な値はクライアントから送信される．
+              </t>
+              <!--
               <t hangText='access_token'>
                 <vspace />
                 REQUIRED. The access token issued by the authorization server.
@@ -2181,16 +2318,27 @@
                 REQUIRED if the <spanx style='verb'>state</spanx> parameter was present in the
                 client authorization request. The exact value received from the client.
               </t>
+              -->
             </list>
           </t>
           <t>
+            認可サーバーはリフレッシュトークンを発行してはならない(MUST NOT).
+          </t>
+          <!--
+          <t>
             The authorization server MUST NOT issue a refresh token.
           </t>
+          -->
           <figure>
+            <preamble>
+              例えば, 認可サーバーは次のHTTPレスポンスによってユーザーエージェントの向きを変える(URIの改行は掲載上の都合による).
+            </preamble>
+            <!--
             <preamble>
               For example, the authorization server redirects the user-agent by sending the
               following HTTP response (URI extra line breaks are for display purposes only):
             </preamble>
+            -->
             <artwork>
               <![CDATA[
   HTTP/1.1 302 Found
@@ -2199,27 +2347,47 @@
 ]]>
             </artwork>
             <postamble>
+              開発者は, いくつかのHTTPクライアント実装が, HTTP <spanx style='verb'>Location</spanx>レスポンスヘッダーフィールドをサポートしないことに注意するべきである.このようなクライアントは3xxリダイレクションレスポンス以外でクライアントを向け直すための方法が必要になるだろう.例えば, リダイレクトURI先にリンクするような"続行"ボタンを含むHTMLページを返却するなどである.
+            </postamble>
+            <!--
+            <postamble>
               Developers should note that some HTTP client implementations do not support the
               inclusion of a fragment component in the HTTP <spanx style='verb'>Location</spanx>
               response header field. Such client will require using other methods for redirecting
               the client than a 3xx redirection response. For example, returning an HTML page which
               includes a 'continue' button with an action linked to the redirection URI.
             </postamble>
+            -->
           </figure>
+          <t>
+            クライアントは正式ではないレスポンスパラメータは無視すべきである(SHOULD)．アクセストークンの文字列長は本仕様では定義しない．クライアントはコードの長さによって本物だと判断するのは避けるべきである．認可サーバーは発行するすべての値について長さを提示すべきである．
+          </t>
+          <!--
           <t>
             The client SHOULD ignore unrecognized response parameters. The access token string size
             is left undefined by this specification. The client should avoid making assumptions
             about value sizes. The authorization server should document the size of any value it
             issues.
           </t>
+          -->
 
-          <section title='Error Response' anchor='implicit-authz-error'>
+          <section title='エラーレスポンス' anchor='implicit-authz-error'>
+          <!-- <section title='Error Response' anchor='implicit-authz-error'> -->
+            <t>
+              リクエストが欠けていたり、不正であったり、リダイレクトURIとマッチしない場合、もしくはクライアント識別子が不正な場合は、認可サーバーはリソースオーナーにエラーを通知すべきである(SHOULD)．そして、不正なリダイレクトURIを用いてユーザーエージェントを自動的にリダイレクトさせてはならない(MUST NOT)．
+            </t>
+            <!--
             <t>
               If the request fails due to a missing, invalid, or mismatching redirection URI, or if
               the client identifier provided is invalid, the authorization server SHOULD inform the
               resource owner of the error, and MUST NOT automatically redirect the user-agent to
               the invalid redirection URI.
             </t>
+            -->
+            <t>
+              リソースオーナーがアクセス要求を拒否した場合、もしくはリダイレクトURIが欠けたり不正な場合以外でリクエスト処理に失敗した場合は、認可サーバーは<spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いてリダイレクトURIに次のようなフラグメントを付与してクライアントに返却する．
+            </t>
+            <!--
             <t>
               If the resource owner denies the access request or if the request fails for reasons
               other than a missing or invalid redirection URI, the authorization server informs the
@@ -2227,70 +2395,138 @@
               redirection URI using the
               <spanx style='verb'>application/x-www-form-urlencoded</spanx> format:
             </t>
+            -->
             <t>
               <list style='hanging' hangIndent='6'>
                 <t hangText='error'>
                   <vspace />
-                  REQUIRED. A single error code from the following:
+                  必須(REQUIRED). 次のエラーコードの中の1つ:
+                  <!-- REQUIRED. A single error code from the following: -->
 
                   <list style='hanging' hangIndent='6'>
+                    <t hangText='invalid_request'>
+                      <vspace />
+                      リクエストに必須パラメータが不足していた場合．サポート外のパラメータが付与されていた場合や、その他不正な形式であった場合もこれに含まれる．
+                    </t>
+                    <!--
                     <t hangText='invalid_request'>
                       <vspace />
                       The request is missing a required parameter, includes an unsupported
                       parameter value, or is otherwise malformed.
                     </t>
+                    -->
                     <t hangText='unauthorized_client'>
                       <vspace />
-                      The client is not authorized to request an access token using this method.
+                      認可コード取得時、クライアントが認証されなかった場合．
                     </t>
+                    <!--
+                    <t hangText='unauthorized_client'>
+                      <vspace />
+                      The client is not authorized to request an authorization code using this
+                      method.
+                    </t>
+                    -->
+                    <t hangText='access_denied'>
+                      <vspace />
+                      リソースオーナーまたは認可サーバーがリクエストを拒否した場合．
+                    </t>
+                    <!--
                     <t hangText='access_denied'>
                       <vspace />
                       The resource owner or authorization server denied the request.
                     </t>
+                    -->
+                    <t hangText='unsupported_response_type'>
+                      <vspace />
+                      認可サーバーがリクエストに含まれているアクセストークンをサポートしていない場合．
+                    </t>
+                    <!--
                     <t hangText='unsupported_response_type'>
                       <vspace />
                       The authorization server does not support obtaining an access token using
                       this method.
                     </t>
+                    -->
+                    <t hangText='invalid_scope'>
+                      <vspace />
+                      リクエストスコープが不正、未知、もしくはその他の不当な形式の場合．
+                    </t>
+                    <!--
                     <t hangText='invalid_scope'>
                       <vspace />
                       The requested scope is invalid, unknown, or malformed.
                     </t>
+                    -->
+                    <t hangText='server_error'>
+                      <vspace />
+                      認可サーバーがリクエストの処理ができないような予期しない状況に遭遇した場合．
+                    </t>
+                    <!--
                     <t hangText='server_error'>
                       <vspace />
                       The authorization server encountered an unexpected condition which prevented
                       it from fulfilling the request.
                     </t>
+                    -->
+                    <t hangText='temporarily_unavailable'>
+                      <vspace />
+                      認可サーバーが一時的な過負荷やメンテナンスによってリクエストを扱うことが出来ない場合．
+                    </t>
+                    <!--
                     <t hangText='temporarily_unavailable'>
                       <vspace />
                       The authorization server is currently unable to handle the request due to a
                       temporary overloading or maintenance of the server.
                     </t>
+                    -->
                   </list>
                 </t>
+                <t hangText='error_description'>
+                  <vspace />
+                  任意(OPTIONAL). 発生したエラーの内容をクライアント開発者が理解するのを補助するため、追加の情報を人間が読める形式でUTF-8で記載する．
+                </t>
+                <!--
                 <t hangText='error_description'>
                   <vspace />
                   OPTIONAL. A human-readable UTF-8 encoded text providing additional information,
                   used to assist the client developer in understanding the error that occurred.
                 </t>
+                -->
+                <t hangText='error_uri'>
+                  <vspace />
+                  任意(OPTIONAL). クライアント開発者がエラーに関する追加の情報を得るための、人間が読めるエラーに関するWebページのURI．
+                </t>
+                <!--
                 <t hangText='error_uri'>
                   <vspace />
                   OPTIONAL. A URI identifying a human-readable web page with information about the
                   error, used to provide the client developer with additional information about the
                   error.
                 </t>
+                -->
+                <t hangText='state'>
+                  <vspace />
+                  もし正当な<spanx style='verb'>state</spanx>パラメータがクライアントからの認可リクエストに含めれている場合は必須(REQUIRED)．正確な値はクライアントから送信される．
+                </t>
+                <!--
                 <t hangText='state'>
                   <vspace />
                   REQUIRED if a valid <spanx style='verb'>state</spanx> parameter was present in the
                   client authorization request. The exact value received from the client.
                 </t>
+                -->
               </list>
             </t>
             <figure>
               <preamble>
+                例えば、認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
+              </preamble>
+              <!--
+              <preamble>
                 For example, the authorization server redirects the user-agent by sending the
                 following HTTP response:
               </preamble>
+              -->
               <artwork>
                 <![CDATA[
   HTTP/1.1 302 Found
