@@ -4279,11 +4279,16 @@
 
       </section>
 
-      <section title='The OAuth Parameters Registry' anchor='parameters-registry'>
+      <section title='OAuth パラメータレジストリー<!-- The OAuth Parameters Registry -->' anchor='parameters-registry'>
         <t>
+          本仕様では, OAuth パラメータレジストリーを設立する.
+          <!--
           This specification establishes the OAuth parameters registry.
+          -->
         </t>
         <t>
+          認可エンドポイントリクエスト, 認可エンドポイントレスポンス, トークンエンドポイントリクエスト, トークンエンドポイントレスポンスに含める追加のパラメータは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される. (以降, 文中の専門用語については [RFC5226] を参照のこと) しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+          <!--
           Additional parameters for inclusion in the authorization endpoint request, the
           authorization endpoint response, the token endpoint request, or the token endpoint
           response are registered on the advice of one or more Designated Experts (appointed by
@@ -4291,62 +4296,90 @@
           <xref target='RFC5226' />). However, to allow for the allocation of values prior to
           publication, the Designated Expert(s) may approve registration once they are satisfied
           that such a specification will be published.
+          -->
         </t>
         <t>
+          登録要請は, 適切な件名 (例: "Request for parameter: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
+          <!--
           Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
           comment, with an appropriate subject (e.g., "Request for parameter: example").
           [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
           with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+          -->
         </t>
         <t>
+          Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          <!--
           Within at most 14 days of the request, the Designated Expert(s) will either approve or
           deny the registration request, communicating this decision to the review list and IANA.
           Denials should include an explanation and, if applicable, suggestions as to how to make
           the request successful.
+          -->
         </t>
         <t>
+          Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
+          <!--
           Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
           Application Area Directors (contactable using app-ads@tools.ietf.org email address or
           directly by looking up their email addresses on http://www.iesg.org/ website) and, if the
           appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org
           mailing list).
+          -->
         </t>
         <t>
+          IANA は, Designated Experts によるすべてのレジストリー更新要請を承認し, すべての登録要請をレビューメーリングリストに送信するべきである.
+          <!--
           IANA should only accept registry updates from the Designated Expert(s), and should direct
           all requests for registration to the review mailing list.
+          -->
         </t>
 
-        <section title='Registration Template'>
+        <section title='レジストリーテンプレート<!-- Registration Template -->'>
           <t>
             <list style='hanging'>
-              <t hangText='Parameter name:'>
+              <t hangText='パラメータ名:<!-- Parameter name: -->'>
                 <vspace />
+                名称 (例: "example").
+                <!--
                 The name requested (e.g., "example").
+                -->
               </t>
-              <t hangText='Parameter usage location:'>
+              <t hangText='パラメータ用途:<!-- Parameter usage location: -->'>
                 <vspace />
+                パラメータが利用できる箇所. 想定される箇所は以下の通り: 認可リクエスト, 認可レスポンス, トークンリクエスト, トークンリクエスト.
+                <!--
                 The location(s) where parameter can be used. The possible locations are:
                 authorization request, authorization response, token request, or token response.
+                -->
               </t>
-              <t hangText='Change controller:'>
+              <t hangText='変更管理者:<!-- Change controller: -->'>
                 <vspace />
+                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい.
+                <!--
                 For standards-track RFCs, state "IETF". For others, give the name of the
                 responsible party. Other details (e.g., postal address, e-mail address, home page
                 URI) may also be included.
+                -->
               </t>
-              <t hangText='Specification document(s):'>
+              <t hangText='仕様ドキュメント:<!-- Specification document(s): -->'>
                 <vspace />
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできるURIが記載されていることが望ましい. 明確な記載箇所への参照が含まれることが望ましいが必須ではない.
+                <!--
                 Reference to the document that specifies the parameter, preferably including a URI that
                 can be used to retrieve a copy of the document. An indication of the relevant
                 sections may also be included, but is not required.
+                -->
               </t>
             </list>
           </t>
         </section>
 
-        <section title='Initial Registry Contents'>
+        <section title='初期レジストリーコンテンツ<!-- Initial Registry Contents -->'>
           <t>
+            OAuth パラメータレジストリーの初期コンテンツは以下の通りである:
+            <!--
             The OAuth Parameters Registry's initial contents are:
+            -->
           </t>
           <t>
             <list style='symbols'>

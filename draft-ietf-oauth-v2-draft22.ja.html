@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 14, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 16, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 11, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 13, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 14, 2012.</p>
+This Internet-Draft will expire on May 16, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -254,11 +254,11 @@ Access Token Scope<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor28">4.1.4.</a>&nbsp;
 アクセストークンレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-implicit">4.2.</a>&nbsp;
-Implicit Grant<br />
+インプリシット認可<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#implicit-authz-req">4.2.1.</a>&nbsp;
-Authorization Request<br />
+認可リクエスト<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor29">4.2.2.</a>&nbsp;
-Access Token Response<br />
+アクセストークンレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-password">4.3.</a>&nbsp;
 Resource Owner Password Credentials<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor30">4.3.1.</a>&nbsp;
@@ -342,11 +342,11 @@ OAuth アクセストークンタイプレジストリー<!-- The OAuth Access T
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor55">11.1.1.</a>&nbsp;
 Registration Template<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#parameters-registry">11.2.</a>&nbsp;
-The OAuth Parameters Registry<br />
+OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor56">11.2.1.</a>&nbsp;
-Registration Template<br />
+レジストリーテンプレート<!-- Registration Template --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor57">11.2.2.</a>&nbsp;
-Initial Registry Contents<br />
+初期レジストリーコンテンツ<!-- Initial Registry Contents --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#response-type-registry">11.3.</a>&nbsp;
 The OAuth Authorization Endpoint Response Type Registry<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor58">11.3.1.</a>&nbsp;
@@ -1030,7 +1030,7 @@ Unregistered Clients</h3>
 <dd>
                 
                 必須 (REQUIRED).
-                レスポンスタイプの値は <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で述べる認可コードを要求するための <tt>code</tt> あるいは, <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>Authorization Request</span><span>)</span></a> で述べるアクセストークン(インプリシット許可)を要求する <tt>token</tt> あるいは, <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a> で述べる登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切り一覧(<tt>a b</tt> と <tt>b a</tt> は同じである)として無視する.
+                レスポンスタイプの値は <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で述べる認可コードを要求するための <tt>code</tt> あるいは, <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で述べるアクセストークン(インプリシット許可)を要求する <tt>token</tt> あるいは, <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a> で述べる登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切り一覧(<tt>a b</tt> と <tt>b a</tt> は同じである)として無視する.
               
 </dd>
 </dl></blockquote><p>
@@ -1662,32 +1662,22 @@ Access Token Scope</h3>
 <a name="grant-implicit"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.2"></a><h3>4.2.&nbsp;
-Implicit Grant</h3>
+インプリシット認可</h3>
 
 <p>
-          The implicit grant type is used to obtain access tokens (it does not support the issuance
-          of refresh tokens) and is optimized for public clients known to operate a particular
-          redirection URI. These clients are typically implemented in a browser using a scripting
-          language such as JavaScript.
+          インプリシット認可タイプはアクセストークンを取得するために使用する(リフレッシュトークンの発行をサポートするものではない).そして,特定のリダイレクトURIによって運用されていることが既知である公開されたクライアントに最適化されている.これらのクライアントは,通常JavaScriptなどのスクリプト言語を使用してブラウザ上に実装される.
         
 </p>
 <p>
-          As a redirection-based flow, the client must be capable of interacting with the
-          resource owner's user-agent (typically a web browser) and capable of receiving incoming
-          requests (via redirection) from the authorization server.
+          リダイレクトベースのフローとしては，クライアントはリソースオーナーのユーザーエージェント(通常はウェブブラウザ)と対話でき,認可サーバーから入っていくるリクエストを(リダイレクトによって)受け取ることができなくてはいけない.
         
 </p>
 <p>
-          Unlike the authorization code grant type in which the client makes separate requests for
-          authorization and access token, the client receives the access token as the result of the
-          authorization request.
+          クライアントが認可とアクセストークンの取得で異なる要求を行う認可コード許可タイプと異なり,クライアントは認可リクエストの結果としてアクセストークンを受け取る.
         
 </p>
 <p>
-          The implicit grant type does not include client authentication, and relies on the
-          presence of the resource owner and the registration of the redirection URI. Because the
-          access token is encoded into the redirection URI, it may be exposed to the resource owner
-          and other applications residing on its device.
+          インプリシット許可タイプはクライアントの認証を含まず,リソースオーナーの存在とリダイレクトURIが登録されていることで信頼する.アクセストークンはリダイレクトURIの中にエンコードされるため,デバイス上にあるリソースオーナーとその他のアプリケーションに漏えいするかもしれない.
         
 </p><br /><hr class="insert" />
 <a name="Figure-4"></a>
@@ -1726,10 +1716,10 @@ Implicit Grant</h3>
   |         |
   +---------+
 
-</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;4: Implicit Grant Flow&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
+</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;4: インプリシット許可フロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          The flow illustrated in <a class='info' href='#Figure-4'>Figure&nbsp;4<span> (</span><span class='info'>Implicit Grant Flow</span><span>)</span></a> includes the following steps:
+          <a class='info' href='#Figure-4'>Figure&nbsp;4<span> (</span><span class='info'>インプリシット許可フロー</span><span>)</span></a>で示した図は次のステップを含む:
         
 </p>
 <p>
@@ -1737,44 +1727,32 @@ Implicit Grant</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              The client initiates the flow by directing the resource owner's user-agent to the
-              authorization endpoint. The client includes its client identifier, requested
-              scope, local state, and a redirection URI to which the authorization server will send
-              the user-agent back once access is granted (or denied).
+              クライアントはリソースオーナーのユーザーエージェントから認可エンドポイントに対してリダイレクトすることで処理が始まる.クライアントには,クライアント識別子，リクエストスコープ，ローカルステート，そして認可サーバーがアクセスを許可した場合(もしくは拒否した場合)にユーザーエージェントに処理を戻すために必要なリダイレクトURIが含まれる.
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              The authorization server authenticates the resource owner (via the user-agent) and
-              establishes whether the resource owner grants or denies the client's access request.
+              認可サーバーは(ユーザーエージェントを通じて)リソースオーナーを認証し,リソースオーナーがクライアントのアクセス要求を許可するか拒否するかを確定する.
             
 </dd>
 <dt>(C)</dt>
 <dd>
-              Assuming the resource owner grants access, the authorization server redirects the
-              user-agent back to the client using the redirection URI provided earlier. The
-              redirection URI includes the access token in the URI fragment.
+              リソースオーナーがアクセスを許可した場合，認可サーバーは事前に与えられていたリダイレクトURIを用いてユーザーエージェントをクライアントに向け直す.リダイレクトURIには，URIの一部としてアクセストークンが含まれる.
             
 </dd>
 <dt>(D)</dt>
 <dd>
-              The user-agent follows the redirection instructions by making a request to the
-              web-hosted client resource (which does not include the fragment). The user-agent
-              retains the fragment information locally.
+              続いてユーザーエージェントは,ウェブでホストされたクライアントリソースに対して(フラグメントを含まない)リクエストを構築してリダイレクト処理を続ける.ユーザーエージェントはローカルにフラグメントの情報を保持している.
             
 </dd>
 <dt>(E)</dt>
 <dd>
-              The web-hosted client resource returns a web page (typically an HTML document with an
-              embedded script) capable of accessing the full redirection URI including the fragment
-              retained by the user-agent, and extracting the access token (and other parameters)
-              contained in the fragment.
+              ウェブでホストされたクライアントリソースはユーザーエージェントによって保持されているフラグメントを含む完全なリダイレクトURLにアクセスし,フラグメントに含まれているアクセストークン(とその他のパラメータ)を取り出すことができるウェブページ(通常,埋め込みのスクリプトが含まれるHTMLドキュメント)を返却する.
             
 </dd>
 <dt>(F)</dt>
 <dd>
-              The user-agent executes the script provided by the web-hosted client resource
-              locally, which extracts the access token and passes it to the client.
+              ユーザーエージェントはウェブでホストされたクライアントによって与えられたスクリプトをローカルに実行し,アクセストークンを取り出してクライアントに渡す.
             
 </dd>
 </dl></blockquote><p>
@@ -1783,12 +1761,10 @@ Implicit Grant</h3>
 <a name="implicit-authz-req"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.2.1"></a><h3>4.2.1.&nbsp;
-Authorization Request</h3>
+認可リクエスト</h3>
 
 <p>
-            The client constructs the request URI by adding the following parameters to the
-            query component of the authorization endpoint URI using the
-            <tt>application/x-www-form-urlencoded</tt> format:
+            クライアントは、<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
           
 </p>
 <p>
@@ -1797,48 +1773,42 @@ Authorization Request</h3>
 <dt>response_type</dt>
 <dd>
                 
-                REQUIRED. Value MUST be set to <tt>token</tt>.
+                必須(REQUIRED). 値は必ず<tt>token</tt>にしなければならない(MUST).
               
 </dd>
 <dt>client_id</dt>
 <dd>
                 
-                REQUIRED. The client identifier as described in
-                <a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a>.
+                必須(REQUIRED). クライアント識別子は<a class='info' href='#client-identifier'>Section&nbsp;2.2<span> (</span><span class='info'>クライアント識別子</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>redirect_uri</dt>
 <dd>
                 
-                OPTIONAL, as described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>.
+                任意(OPTIONAL). 詳細は<a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>scope</dt>
 <dd>
                 
-                OPTIONAL. The scope of the access request as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>.
+                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>state</dt>
 <dd>
                 
-                RECOMMENDED. An opaque value used by the client to maintain state between the request
-                and callback. The authorization server includes this value when redirecting the
-                user-agent back to the client. The parameter SHOULD be used for preventing
-                cross-site request forgery as described in <a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></span><span>)</span></a>.
+                推奨(RECOMMENDED). リクエストとコールバックの間で状態を維持するために使用する意味のない値．認可サーバーはリダイレクトによってクライアントに処理を戻す際にこの値を付与する．このパラメータは<a class='info' href='#CSRF'>Section&nbsp;10.12<span> (</span><span class='info'>クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery --></span><span>)</span></a>に記載されているクロスサイトリクエストフォージェリを防ぐために用いられるべきである(SHOULD)．
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            The client directs the resource owner to the constructed URI using an HTTP redirection
-            response, or by other means available to it via the user-agent.
+            クライアントはHTTPリダイレクトまたはユーザーエージェントを介する利用可能な手段によってリソースオーナーを構築されたURIに向ける．
           
 </p>
 <p>
-              For example, the client directs the user-agent to make the following HTTP request
-              using transport-layer security (extra line breaks are for display purposes only):
+              例えば、クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1848,34 +1818,24 @@ Authorization Request</h3>
 
 </pre></div>
 <p>
-            The authorization server validates the request to ensure all required parameters are
-            present and valid. The authorization server MUST verify that the redirection URI to which
-            it will redirect the access token matches a redirection URI registered by the client as
-            described in <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>.
+            認可サーバーは必要なリクエストパラメータがすべて揃っていて,かつ正当であることを検証する. 認可サーバーはアクセストークンに向けられたリダイレクトURIが, <a class='info' href='#redirect-uri'>Section&nbsp;3.1.2<span> (</span><span class='info'>リダイレクションエンドポイント</span><span>)</span></a>に示すとおりにクライアントによって事前に登録されているものと同一であることを検証しなければならない(MUST).
           
 </p>
 <p>
-            If the request is valid, the authorization server authenticates the resource owner and
-            obtains an authorization decision (by asking the resource owner or by establishing
-            approval via other means).
+            リクエストが正当であった場合, 認可サーバーはリソースオーナーを認証し, (リソースオーナーに問い合わせるか，その他の理由で承認が成立することで)認可の決定が確立される.
           
 </p>
 <p>
-            When a decision is established, the authorization server directs the user-agent to the
-            provided client redirection URI using an HTTP redirection response, or by other means
-            available to it via the user-agent.
+            判定が成立したとき、HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて、認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
           
 </p>
 <a name="anchor29"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.2.2"></a><h3>4.2.2.&nbsp;
-Access Token Response</h3>
+アクセストークンレスポンス</h3>
 
 <p>
-            If the resource owner grants the access request, the authorization server issues an
-            access token and delivers it to the client by adding the following parameters to
-            the fragment component of the redirection URI using the
-            <tt>application/x-www-form-urlencoded</tt> format:
+            リソースオーナーがアクセスリクエストを許諾した場合、認可サーバーはアクセストークンを発行し、<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIの断片に次のパラメータを付与してクライアントに送る．
           
 </p>
 <p>
@@ -1884,47 +1844,42 @@ Access Token Response</h3>
 <dt>access_token</dt>
 <dd>
                 
-                REQUIRED. The access token issued by the authorization server.
+                必須(REQUIRED). 認可サーバーによって発行されたアクセストークン.
               
 </dd>
 <dt>token_type</dt>
 <dd>
                 
-                REQUIRED. The type of the token issued as described in
-                <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>アクセストークンタイプ<!-- Access Token Types --></span><span>)</span></a>. Value is case insensitive.
+                必須(REQUIRED). <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>アクセストークンタイプ<!-- Access Token Types --></span><span>)</span></a>に示されたトークンタイプ. 大文字・小文字は区別しない.
               
 </dd>
 <dt>expires_in</dt>
 <dd>
                 
-                OPTIONAL. The lifetime in seconds of the access token. For example, the value
-                <tt>3600</tt> denotes that the access token will expire in one
-                hour from the time the response was generated.
+                任意(OPTIONAL). アクセストークンの有効期間を秒で表したもの. 例えば<tt>3600</tt>という値は, レスポンスが生成されてから1時間でアクセストークンが無効になることを表す.
               
 </dd>
 <dt>scope</dt>
 <dd>
                 
-                OPTIONAL. The scope of the access token as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>.
+                任意(OPTIONAL). <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>によって示されたアクセストークンのスコープ.
               
 </dd>
 <dt>state</dt>
 <dd>
                 
-                REQUIRED if the <tt>state</tt> parameter was present in the
-                client authorization request. The exact value received from the client.
+                クライアントの認可リクエストに<tt>state</tt>が含まれていた場合は必須(REQUIRED). 正確な値はクライアントから送信される．
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            The authorization server MUST NOT issue a refresh token.
+            認可サーバーはリフレッシュトークンを発行してはならない(MUST NOT).
           
 </p>
 <p>
-              For example, the authorization server redirects the user-agent by sending the
-              following HTTP response (URI extra line breaks are for display purposes only):
+              例えば, 認可サーバーは次のHTTPレスポンスによってユーザーエージェントの向きを変える(URIの改行は掲載上の都合による).
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1934,38 +1889,24 @@ Access Token Response</h3>
 
 </pre></div>
 <p>
-              Developers should note that some HTTP client implementations do not support the
-              inclusion of a fragment component in the HTTP <tt>Location</tt>
-              response header field. Such client will require using other methods for redirecting
-              the client than a 3xx redirection response. For example, returning an HTML page which
-              includes a 'continue' button with an action linked to the redirection URI.
+              開発者は, いくつかのHTTPクライアント実装が, HTTP <tt>Location</tt>レスポンスヘッダーフィールドをサポートしないことに注意するべきである.このようなクライアントは3xxリダイレクションレスポンス以外でクライアントを向け直すための方法が必要になるだろう.例えば, リダイレクトURI先にリンクするような"続行"ボタンを含むHTMLページを返却するなどである.
             
 </p>
 <p>
-            The client SHOULD ignore unrecognized response parameters. The access token string size
-            is left undefined by this specification. The client should avoid making assumptions
-            about value sizes. The authorization server should document the size of any value it
-            issues.
+            クライアントは正式ではないレスポンスパラメータは無視すべきである(SHOULD)．アクセストークンの文字列長は本仕様では定義しない．クライアントはコードの長さによって本物だと判断するのは避けるべきである．認可サーバーは発行するすべての値について長さを提示すべきである．
           
 </p>
 <a name="implicit-authz-error"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.2.2.1"></a><h3>4.2.2.1.&nbsp;
-Error Response</h3>
+エラーレスポンス</h3>
 
 <p>
-              If the request fails due to a missing, invalid, or mismatching redirection URI, or if
-              the client identifier provided is invalid, the authorization server SHOULD inform the
-              resource owner of the error, and MUST NOT automatically redirect the user-agent to
-              the invalid redirection URI.
+              リクエストが欠けていたり、不正であったり、リダイレクトURIとマッチしない場合、もしくはクライアント識別子が不正な場合は、認可サーバーはリソースオーナーにエラーを通知すべきである(SHOULD)．そして、不正なリダイレクトURIを用いてユーザーエージェントを自動的にリダイレクトさせてはならない(MUST NOT)．
             
 </p>
 <p>
-              If the resource owner denies the access request or if the request fails for reasons
-              other than a missing or invalid redirection URI, the authorization server informs the
-              client by adding the following parameters to the fragment component of the
-              redirection URI using the
-              <tt>application/x-www-form-urlencoded</tt> format:
+              リソースオーナーがアクセス要求を拒否した場合、もしくはリダイレクトURIが欠けたり不正な場合以外でリクエスト処理に失敗した場合は、認可サーバーは<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIに次のようなフラグメントを付与してクライアントに返却する．
             
 </p>
 <p>
@@ -1974,54 +1915,51 @@ Error Response</h3>
 <dt>error</dt>
 <dd>
                   
-                  REQUIRED. A single error code from the following:
+                  必須(REQUIRED). 次のエラーコードの中の1つ:
+                  
 
                   
 <blockquote class="text"><dl>
 <dt>invalid_request</dt>
 <dd>
                       
-                      The request is missing a required parameter, includes an unsupported
-                      parameter value, or is otherwise malformed.
+                      リクエストに必須パラメータが不足していた場合．サポート外のパラメータが付与されていた場合や、その他不正な形式であった場合もこれに含まれる．
                     
 </dd>
 <dt>unauthorized_client</dt>
 <dd>
                       
-                      The client is not authorized to request an access token using this method.
+                      認可コード取得時、クライアントが認証されなかった場合．
                     
 </dd>
 <dt>access_denied</dt>
 <dd>
                       
-                      The resource owner or authorization server denied the request.
+                      リソースオーナーまたは認可サーバーがリクエストを拒否した場合．
                     
 </dd>
 <dt>unsupported_response_type</dt>
 <dd>
                       
-                      The authorization server does not support obtaining an access token using
-                      this method.
+                      認可サーバーがリクエストに含まれているアクセストークンをサポートしていない場合．
                     
 </dd>
 <dt>invalid_scope</dt>
 <dd>
                       
-                      The requested scope is invalid, unknown, or malformed.
+                      リクエストスコープが不正、未知、もしくはその他の不当な形式の場合．
                     
 </dd>
 <dt>server_error</dt>
 <dd>
                       
-                      The authorization server encountered an unexpected condition which prevented
-                      it from fulfilling the request.
+                      認可サーバーがリクエストの処理ができないような予期しない状況に遭遇した場合．
                     
 </dd>
 <dt>temporarily_unavailable</dt>
 <dd>
                       
-                      The authorization server is currently unable to handle the request due to a
-                      temporary overloading or maintenance of the server.
+                      認可サーバーが一時的な過負荷やメンテナンスによってリクエストを扱うことが出来ない場合．
                     
 </dd>
 </dl></blockquote>
@@ -2030,31 +1968,26 @@ Error Response</h3>
 <dt>error_description</dt>
 <dd>
                   
-                  OPTIONAL. A human-readable UTF-8 encoded text providing additional information,
-                  used to assist the client developer in understanding the error that occurred.
+                  任意(OPTIONAL). 発生したエラーの内容をクライアント開発者が理解するのを補助するため、追加の情報を人間が読める形式でUTF-8で記載する．
                 
 </dd>
 <dt>error_uri</dt>
 <dd>
                   
-                  OPTIONAL. A URI identifying a human-readable web page with information about the
-                  error, used to provide the client developer with additional information about the
-                  error.
+                  任意(OPTIONAL). クライアント開発者がエラーに関する追加の情報を得るための、人間が読めるエラーに関するWebページのURI．
                 
 </dd>
 <dt>state</dt>
 <dd>
                   
-                  REQUIRED if a valid <tt>state</tt> parameter was present in the
-                  client authorization request. The exact value received from the client.
+                  もし正当な<tt>state</tt>パラメータがクライアントからの認可リクエストに含めれている場合は必須(REQUIRED)．正確な値はクライアントから送信される．
                 
 </dd>
 </dl></blockquote><p>
             
 </p>
 <p>
-                For example, the authorization server redirects the user-agent by sending the
-                following HTTP response:
+                例えば、認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
               
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2877,7 +2810,7 @@ Extensions</h3>
 新たなエンドポイントパラメーターの定義<!-- Defining New Endpoint Parameters --></h3>
 
 <p>
-          認可エンドポイントおよびトークンエンドポイントで用いられる新たなリクエストないしレスポンスパラメーターは, <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>The OAuth Parameters Registry</span><span>)</span></a> に示す手順に従って定義され, パラメーターレジストリーに登録される.
+          認可エンドポイントおよびトークンエンドポイントで用いられる新たなリクエストないしレスポンスパラメーターは, <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></span><span>)</span></a> に示す手順に従って定義され, パラメーターレジストリーに登録される.
           
         
 </p>
@@ -2904,7 +2837,7 @@ Extensions</h3>
 
 <p>
           新たな認可グラントタイプは <tt>grant_type</tt> パラメーター値として用いる重複の無い絶対 URI を用いることで定義される.
-          拡張グラントタイプを用いるために新たなトークンエンドポイントパラメーターが必要な場合は, それらのパラメーターを <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>The OAuth Parameters Registry</span><span>)</span></a> に述べるように OAuth パラメーターレジストリーに登録する必要がある (MUST).
+          拡張グラントタイプを用いるために新たなトークンエンドポイントパラメーターが必要な場合は, それらのパラメーターを <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></span><span>)</span></a> に述べるように OAuth パラメーターレジストリーに登録する必要がある (MUST).
           
         
 </p>
@@ -2940,7 +2873,7 @@ Extensions</h3>
 追加のエラーコードの定義<!-- Defining Additional Error Codes --></h3>
 
 <p>
-          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コードグラントエラーレスポンス (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>), implicit grant エラーレスポンス (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), トークンエラーレスポンス (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
+          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コードグラントエラーレスポンス (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>), implicit grant エラーレスポンス (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>), トークンエラーレスポンス (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
           
         
 </p>
@@ -3462,7 +3395,7 @@ Registration Template</h3>
                 Additional response parameters returned together with the
                 <tt>access_token</tt> parameter. New parameters MUST be
                 separately registered in the OAuth parameters registry as described by
-                <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>The OAuth Parameters Registry</span><span>)</span></a>.
+                <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></span><span>)</span></a>.
               
 </dd>
 <dt>HTTP Authentication Scheme(s):</dt>
@@ -3494,84 +3427,72 @@ Registration Template</h3>
 <a name="parameters-registry"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.2"></a><h3>11.2.&nbsp;
-The OAuth Parameters Registry</h3>
+OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></h3>
 
 <p>
-          This specification establishes the OAuth parameters registry.
+          本仕様では, OAuth パラメータレジストリーを設立する.
+          
         
 </p>
 <p>
-          Additional parameters for inclusion in the authorization endpoint request, the
-          authorization endpoint response, the token endpoint request, or the token endpoint
-          response are registered on the advice of one or more Designated Experts (appointed by
-          the IESG or their delegate), with a Specification Required (using terminology from
-          <a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a>). However, to allow for the allocation of values prior to
-          publication, the Designated Expert(s) may approve registration once they are satisfied
-          that such a specification will be published.
+          認可エンドポイントリクエスト, 認可エンドポイントレスポンス, トークンエンドポイントリクエスト, トークンエンドポイントレスポンスに含める追加のパラメータは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される. (以降, 文中の専門用語については [RFC5226] を参照のこと) しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+          
         
 </p>
 <p>
-          Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
-          comment, with an appropriate subject (e.g., "Request for parameter: example").
-          [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-          with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+          登録要請は, 適切な件名 (例: "Request for parameter: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
+          
         
 </p>
 <p>
-          Within at most 14 days of the request, the Designated Expert(s) will either approve or
-          deny the registration request, communicating this decision to the review list and IANA.
-          Denials should include an explanation and, if applicable, suggestions as to how to make
-          the request successful.
+          Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          
         
 </p>
 <p>
-          Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
-          Application Area Directors (contactable using app-ads@tools.ietf.org email address or
-          directly by looking up their email addresses on http://www.iesg.org/ website) and, if the
-          appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org
-          mailing list).
+          Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
+          
         
 </p>
 <p>
-          IANA should only accept registry updates from the Designated Expert(s), and should direct
-          all requests for registration to the review mailing list.
+          IANA は, Designated Experts によるすべてのレジストリー更新要請を承認し, すべての登録要請をレビューメーリングリストに送信するべきである.
+          
         
 </p>
 <a name="anchor56"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.2.1"></a><h3>11.2.1.&nbsp;
-Registration Template</h3>
+レジストリーテンプレート<!-- Registration Template --></h3>
 
 <p>
             </p>
 <blockquote class="text"><dl>
-<dt>Parameter name:</dt>
+<dt>パラメータ名:<!-- Parameter name: --></dt>
 <dd>
                 
-                The name requested (e.g., "example").
+                名称 (例: "example").
+                
               
 </dd>
-<dt>Parameter usage location:</dt>
+<dt>パラメータ用途:<!-- Parameter usage location: --></dt>
 <dd>
                 
-                The location(s) where parameter can be used. The possible locations are:
-                authorization request, authorization response, token request, or token response.
+                パラメータが利用できる箇所. 想定される箇所は以下の通り: 認可リクエスト, 認可レスポンス, トークンリクエスト, トークンリクエスト.
+                
               
 </dd>
-<dt>Change controller:</dt>
+<dt>変更管理者:<!-- Change controller: --></dt>
 <dd>
                 
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
-                URI) may also be included.
+                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい.
+                
               
 </dd>
-<dt>Specification document(s):</dt>
+<dt>仕様ドキュメント:<!-- Specification document(s): --></dt>
 <dd>
                 
-                Reference to the document that specifies the parameter, preferably including a URI that
-                can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできるURIが記載されていることが望ましい. 明確な記載箇所への参照が含まれることが望ましいが必須ではない.
+                
               
 </dd>
 </dl></blockquote><p>
@@ -3580,10 +3501,11 @@ Registration Template</h3>
 <a name="anchor57"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.2.2"></a><h3>11.2.2.&nbsp;
-Initial Registry Contents</h3>
+初期レジストリーコンテンツ<!-- Initial Registry Contents --></h3>
 
 <p>
-            The OAuth Parameters Registry's initial contents are:
+            OAuth パラメータレジストリーの初期コンテンツは以下の通りである:
+            
           
 </p>
 <p>
@@ -4125,7 +4047,7 @@ Registration Template</h3>
                 
                 The location(s) where the error can be used. The possible locations are:
                 authorization code grant error response (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>),
-                implicit grant error response (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>Error Response</span><span>)</span></a>), or token
+                implicit grant error response (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>), or token
                 error response (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>).
               
 </dd>
