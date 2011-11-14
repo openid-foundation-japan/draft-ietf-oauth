@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 16, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 17, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 13, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 14, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 16, 2012.</p>
+This Internet-Draft will expire on May 17, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -348,11 +348,11 @@ OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --><br
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor57">11.2.2.</a>&nbsp;
 初期レジストリーコンテンツ<!-- Initial Registry Contents --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#response-type-registry">11.3.</a>&nbsp;
-The OAuth Authorization Endpoint Response Type Registry<br />
+OAuth 認可エンドポイントレスポンスタイプレジストリー<!--The OAuth Authorization Endpoint Response Type Registry--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor58">11.3.1.</a>&nbsp;
-Registration Template<br />
+レジストリーテンプレート<!--Registration Template--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor59">11.3.2.</a>&nbsp;
-Initial Registry Contents<br />
+初期レジストリーコンテンツ<!--Initial Registry Contents--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#error-registry">11.4.</a>&nbsp;
 The OAuth Extensions Error Registry<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor60">11.4.1.</a>&nbsp;
@@ -2847,7 +2847,7 @@ Extensions</h3>
 新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></h3>
 
 <p>
-          認可エンドポイントで利用される新しいレスポンスタイプは認可エンドポイントレスポンスタイプレジストリーに <a class='info' href='#response-type-registry'>Section&nbsp;11.3<span> (</span><span class='info'>The OAuth Authorization Endpoint Response Type Registry</span><span>)</span></a> の手順で定義され登録される. レスポンスタイプ名は response-type ABNF に従って定義する必要がある (MUST).
+          認可エンドポイントで利用される新しいレスポンスタイプは認可エンドポイントレスポンスタイプレジストリーに <a class='info' href='#response-type-registry'>Section&nbsp;11.3<span> (</span><span class='info'>OAuth 認可エンドポイントレスポンスタイプレジストリー<!--The OAuth Authorization Endpoint Response Type Registry--></span><span>)</span></a> の手順で定義され登録される. レスポンスタイプ名は response-type ABNF に従って定義する必要がある (MUST).
           
         
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
@@ -3864,75 +3864,69 @@ OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></h
 <a name="response-type-registry"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.3"></a><h3>11.3.&nbsp;
-The OAuth Authorization Endpoint Response Type Registry</h3>
+OAuth 認可エンドポイントレスポンスタイプレジストリー<!--The OAuth Authorization Endpoint Response Type Registry--></h3>
 
 <p>
-          This specification establishes the OAuth authorization endpoint response type registry.
+          本仕様では, OAuth 認可エンドポイントレスポンスタイプレジストリーを設立する.
+          
         
 </p>
 <p>
-          Additional response type for use with the authorization endpoint are registered on the
-          advice of one or more Designated Experts (appointed by the IESG or their delegate), with
-          a Specification Required (using terminology from <a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a>). However, to
-          allow for the allocation of values prior to publication, the Designated Expert(s) may
-          approve registration once they are satisfied that such a specification will be published.
+          認可エンドポイントで利用される追加のレスポンスタイプは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される. 
+          (以降, 文中の専門用語については [RFC5226] を参照のこと) しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+          
         
 </p>
 <p>
-          Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
-          comment, with an appropriate subject (e.g., "Request for response type: example").
-          [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-          with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+          登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. 
+          [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
+          
         
 </p>
 <p>
-          Within at most 14 days of the request, the Designated Expert(s) will either approve or
-          deny the registration request, communicating this decision to the review list and IANA.
-          Denials should include an explanation and, if applicable, suggestions as to how to make
-          the request successful.
+          Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
+          要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          
         
 </p>
 <p>
-          Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
-          Application Area Directors (contactable using app-ads@tools.ietf.org email address or
-          directly by looking up their email addresses on http://www.iesg.org/ website) and, if the
-          appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org
-          mailing list).
+          Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. 
+          また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
+          
         
 </p>
 <p>
-          IANA should only accept registry updates from the Designated Expert(s), and should direct
-          all requests for registration to the review mailing list.
+          IANA は, Designated Experts によるすべてのレジストリー更新要請を承認し, すべての登録要請をレビューメーリングリストに送信するべきである.
+          
         
 </p>
 <a name="anchor58"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.3.1"></a><h3>11.3.1.&nbsp;
-Registration Template</h3>
+レジストリーテンプレート<!--Registration Template--></h3>
 
 <p>
             </p>
 <blockquote class="text"><dl>
-<dt>Response type name:</dt>
+<dt>レスポンスタイプ名:<!--Response type name:--></dt>
 <dd>
                 
-                The name requested (e.g., "example").
+                名称 (例: "example").
+                
               
 </dd>
-<dt>Change controller:</dt>
+<dt>変更管理者:<!--Change controller:--></dt>
 <dd>
                 
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
-                URI) may also be included.
+                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい.
+                
               
 </dd>
-<dt>Specification document(s):</dt>
+<dt>仕様ドキュメント:<!--Specification document(s):--></dt>
 <dd>
                 
-                Reference to the document that specifies the type, preferably including a URI that
-                can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできるURIが記載されていることが望ましい. 明確な記載箇所への参照が含まれることが望ましいが必須ではない.
+                
               
 </dd>
 </dl></blockquote><p>
@@ -3941,10 +3935,11 @@ Registration Template</h3>
 <a name="anchor59"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.3.2"></a><h3>11.3.2.&nbsp;
-Initial Registry Contents</h3>
+初期レジストリーコンテンツ<!--Initial Registry Contents--></h3>
 
 <p>
-            The OAuth Authorization Endpoint Response Type Registry's initial contents are:
+            OAuth 認可エンドポイントレスポンスタイプレジストリーの初期コンテンツは以下の通りである:
+            
           
 </p>
 <p>
