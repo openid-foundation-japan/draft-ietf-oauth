@@ -2540,20 +2540,28 @@
 
       </section>
 
-      <section title='Resource Owner Password Credentials' anchor='grant-password'>
+      <section title='リソースオーナーパスワードクレデンシャル' anchor='grant-password'>
+<!--       <section title='Resource Owner Password Credentials' anchor='grant-password'> -->
         <t>
+          リソースオーナーパスワードクレデンシャル認可は、リソースオーナーがクライアントと信頼関係にある場合、たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している。認可サーバーはこの認可タイプを有効にする際は特に注意するべきである。また他のフローが利用できない場合にのみ許可するべきである。
+        </t>
+        <!--
           The resource owner password credentials grant type is suitable in cases where the
           resource owner has a trust relationship with the client, such as its device operating
           system or a highly privileged application. The authorization server should take special
           care when enabling this grant type, and only allow it when other flows are not viable.
-        </t>
+        -->
         <t>
+          リソースオーナーのクレデンシャル（通常は対話型入力フォームにて取得するユーザー名とパスワード）を取得する機能を有するクライアントに適した認可タイプである。既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを、保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる。
+        </t>
+        <!--
           The grant type is suitable for clients capable of obtaining the resource owner's
           credentials (username and password, typically using an interactive form). It is also used
           to migrate existing clients using direct authentication schemes such as HTTP Basic or
           Digest authentication to OAuth by converting the stored credentials to an access token.
-        </t>
-        <figure title='Resource Owner Password Credentials Flow' anchor='Figure-5'>
+        -->
+        <figure title='リソースオーナーパスワードクレデンシャルのフロー' anchor='Figure-5'>
+<!--         <figure title='Resource Owner Password Credentials Flow' anchor='Figure-5'> -->
           <artwork>
             <![CDATA[
   +----------+
@@ -2577,31 +2585,47 @@
           </artwork>
         </figure>
         <t>
-          The flow illustrated in <xref target='Figure-5' /> includes the following steps:
+          <xref target='Figure-5' /> に示されるフローは以下の手順を含む。
         </t>
+        <!--
+          The flow illustrated in <xref target='Figure-5' /> includes the following steps:
+        -->
         <t>
           <list style='format (%C)'>
             <t>
-              The resource owner provides the client with its username and password.
+              リソースオーナーはクライアントにユーザー名とパスワードを提供する。
             </t>
+            <!--
+              The resource owner provides the client with its username and password.
+            -->
             <t>
+              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する。リクエストを生成する際に、クライアントは認可サーバーによって認証される。
+            </t>
+            <!--
               The client requests an access token from the authorization server's token endpoint by
               including the credentials received from the resource owner. When making the request,
               the client authenticates with the authorization server.
-            </t>
+            -->
             <t>
+              認可サーバーはクライアントを認証し、リソースオーナーのクレデンシャルを検証する。もし有効であればアクセストークンを発行する。
+            </t>
+            <!--
               The authorization server authenticates the client and validates the resource owner
               credentials, and if valid issues an access token.
-            </t>
+            -->
           </list>
         </t>
 
-        <section title='Authorization Request and Response'>
+        <section title='認可リクエストとレスポンス'>
+<!--         <section title='Authorization Request and Response'> -->
           <t>
+            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である。クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない（MUST）。
+          </t>
+          <!--
             The method through which the client obtains the resource owner credentials is beyond
             the scope of this specification. The client MUST discard the credentials once an access
             token has been obtained.
-          </t>
+          -->
         </section>
 
         <section title='Access Token Request'>

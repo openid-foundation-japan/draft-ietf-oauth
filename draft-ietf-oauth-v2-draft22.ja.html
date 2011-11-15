@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 17, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 18, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 14, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 15, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 17, 2012.</p>
+This Internet-Draft will expire on May 18, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -260,9 +260,9 @@ Access Token Scope<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor29">4.2.2.</a>&nbsp;
 アクセストークンレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-password">4.3.</a>&nbsp;
-Resource Owner Password Credentials<br />
+リソースオーナーパスワードクレデンシャル<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor30">4.3.1.</a>&nbsp;
-Authorization Request and Response<br />
+認可リクエストとレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor31">4.3.2.</a>&nbsp;
 Access Token Request<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor32">4.3.3.</a>&nbsp;
@@ -999,7 +999,7 @@ Unregistered Clients</h3>
         
 </p>
 <p>
-          エンドポイントのURIは (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) でフォーマットされたクエリー部に <tt>application/x-www-form-urlencoded</tt> を含んでもよい (MAY) (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
+          エンドポイントのURIは (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) でフォーマットされたクエリー部に <tt>application/x-www-form-urlencoded</tt> を含んでもよい (MAY) (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
         
 </p>
 <p>
@@ -1160,7 +1160,7 @@ Token Endpoint</h3>
 <p>
           The endpoint URI MAY include an
           <tt>application/x-www-form-urlencoded</tt> formatted
-          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
+          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
           section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
         
@@ -1353,7 +1353,7 @@ Access Token Scope</h3>
 認可リクエスト</h3>
 
 <p>
-            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
+            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
           
 </p>
 <p>
@@ -1998,20 +1998,14 @@ Access Token Scope</h3>
 <a name="grant-password"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.3"></a><h3>4.3.&nbsp;
-Resource Owner Password Credentials</h3>
+リソースオーナーパスワードクレデンシャル</h3>
 
 <p>
-          The resource owner password credentials grant type is suitable in cases where the
-          resource owner has a trust relationship with the client, such as its device operating
-          system or a highly privileged application. The authorization server should take special
-          care when enabling this grant type, and only allow it when other flows are not viable.
+          リソースオーナーパスワードクレデンシャル認可は、リソースオーナーがクライアントと信頼関係にある場合、たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している。認可サーバーはこの認可タイプを有効にする際は特に注意するべきである。また他のフローが利用できない場合にのみ許可するべきである。
         
 </p>
 <p>
-          The grant type is suitable for clients capable of obtaining the resource owner's
-          credentials (username and password, typically using an interactive form). It is also used
-          to migrate existing clients using direct authentication schemes such as HTTP Basic or
-          Digest authentication to OAuth by converting the stored credentials to an access token.
+          リソースオーナーのクレデンシャル（通常は対話型入力フォームにて取得するユーザー名とパスワード）を取得する機能を有するクライアントに適した認可タイプである。既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを、保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる。
         
 </p><br /><hr class="insert" />
 <a name="Figure-5"></a>
@@ -2035,10 +2029,10 @@ Resource Owner Password Credentials</h3>
   |         |    (w/ Optional Refresh Token)   |               |
   +---------+                                  +---------------+
 
-</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;5: Resource Owner Password Credentials Flow&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
+</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;5: リソースオーナーパスワードクレデンシャルのフロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          The flow illustrated in <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>Resource Owner Password Credentials Flow</span><span>)</span></a> includes the following steps:
+          <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>リソースオーナーパスワードクレデンシャルのフロー</span><span>)</span></a> に示されるフローは以下の手順を含む。
         
 </p>
 <p>
@@ -2046,20 +2040,17 @@ Resource Owner Password Credentials</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              The resource owner provides the client with its username and password.
+              リソースオーナーはクライアントにユーザー名とパスワードを提供する。
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              The client requests an access token from the authorization server's token endpoint by
-              including the credentials received from the resource owner. When making the request,
-              the client authenticates with the authorization server.
+              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する。リクエストを生成する際に、クライアントは認可サーバーによって認証される。
             
 </dd>
 <dt>(C)</dt>
 <dd>
-              The authorization server authenticates the client and validates the resource owner
-              credentials, and if valid issues an access token.
+              認可サーバーはクライアントを認証し、リソースオーナーのクレデンシャルを検証する。もし有効であればアクセストークンを発行する。
             
 </dd>
 </dl></blockquote><p>
@@ -2068,12 +2059,10 @@ Resource Owner Password Credentials</h3>
 <a name="anchor30"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.3.1"></a><h3>4.3.1.&nbsp;
-Authorization Request and Response</h3>
+認可リクエストとレスポンス</h3>
 
 <p>
-            The method through which the client obtains the resource owner credentials is beyond
-            the scope of this specification. The client MUST discard the credentials once an access
-            token has been obtained.
+            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である。クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない（MUST）。
           
 </p>
 <a name="anchor31"></a><br /><hr />
@@ -4184,7 +4173,7 @@ References</h3>
 <tr><td class="author-text" valign="top"><a name="RFC5246">[RFC5246]</a></td>
 <td class="author-text">Dierks, T. and E. Rescorla, &ldquo;<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>,&rdquo; RFC&nbsp;5246, August&nbsp;2008 (<a href="http://www.rfc-editor.org/rfc/rfc5246.txt">TXT</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="W3C.REC-html401-19991224">[W3C.REC-html401-19991224]</a></td>
-<td class="author-text">Raggett, D., Jacobs, I., and A. Hors, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
+<td class="author-text">Jacobs, I., Raggett, D., and A. Hors, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
 </table>
 
 <a name="rfc.references2"></a><br /><hr />
