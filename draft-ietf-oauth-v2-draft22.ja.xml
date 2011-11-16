@@ -4210,7 +4210,7 @@
 
       <section title='OAuth アクセストークンタイプレジストリー<!-- The OAuth Access Token Type Registry -->' anchor='type-registry'>
         <t>
-          本仕様では, OAuth アクセストークンタイプレジストリーを設立する.
+          本仕様では, OAuth アクセストークンタイプレジストリーを定める.
           <!--
           This specification establishes the OAuth access token type registry.
           -->
@@ -4324,7 +4324,7 @@
 
       <section title='OAuth パラメータレジストリー<!-- The OAuth Parameters Registry -->' anchor='parameters-registry'>
         <t>
-          本仕様では, OAuth パラメータレジストリーを設立する.
+          本仕様では, OAuth パラメータレジストリーを定める.
           <!--
           This specification establishes the OAuth parameters registry.
           -->
@@ -4687,7 +4687,7 @@
 
       <section title='OAuth 認可エンドポイントレスポンスタイプレジストリー<!--The OAuth Authorization Endpoint Response Type Registry-->' anchor='response-type-registry'>
         <t>
-          本仕様では, OAuth 認可エンドポイントレスポンスタイプレジストリーを設立する.
+          本仕様では, OAuth 認可エンドポイントレスポンスタイプレジストリーを定める.
           <!--
           This specification establishes the OAuth authorization endpoint response type registry.
           -->
