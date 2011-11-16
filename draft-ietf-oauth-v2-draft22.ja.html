@@ -260,9 +260,9 @@ Access Token Scope<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor29">4.2.2.</a>&nbsp;
 アクセストークンレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-password">4.3.</a>&nbsp;
-Resource Owner Password Credentials<br />
+リソースオーナーパスワードクレデンシャル<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor30">4.3.1.</a>&nbsp;
-Authorization Request and Response<br />
+認可リクエストとレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor31">4.3.2.</a>&nbsp;
 Access Token Request<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor32">4.3.3.</a>&nbsp;
@@ -340,7 +340,7 @@ IANA Considerations<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#type-registry">11.1.</a>&nbsp;
 OAuth アクセストークンタイプレジストリー<!-- The OAuth Access Token Type Registry --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor55">11.1.1.</a>&nbsp;
-Registration Template<br />
+レジストリーテンプレート<!-- Registration Template --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#parameters-registry">11.2.</a>&nbsp;
 OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor56">11.2.1.</a>&nbsp;
@@ -348,11 +348,11 @@ OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --><br
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor57">11.2.2.</a>&nbsp;
 初期レジストリーコンテンツ<!-- Initial Registry Contents --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#response-type-registry">11.3.</a>&nbsp;
-The OAuth Authorization Endpoint Response Type Registry<br />
+OAuth 認可エンドポイントレスポンスタイプレジストリー<!--The OAuth Authorization Endpoint Response Type Registry--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor58">11.3.1.</a>&nbsp;
-Registration Template<br />
+レジストリーテンプレート<!--Registration Template--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor59">11.3.2.</a>&nbsp;
-Initial Registry Contents<br />
+初期レジストリーコンテンツ<!--Initial Registry Contents--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#error-registry">11.4.</a>&nbsp;
 The OAuth Extensions Error Registry<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor60">11.4.1.</a>&nbsp;
@@ -1998,20 +1998,14 @@ Access Token Scope</h3>
 <a name="grant-password"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.3"></a><h3>4.3.&nbsp;
-Resource Owner Password Credentials</h3>
+リソースオーナーパスワードクレデンシャル</h3>
 
 <p>
-          The resource owner password credentials grant type is suitable in cases where the
-          resource owner has a trust relationship with the client, such as its device operating
-          system or a highly privileged application. The authorization server should take special
-          care when enabling this grant type, and only allow it when other flows are not viable.
+          リソースオーナーパスワードクレデンシャル認可は、リソースオーナーがクライアントと信頼関係にある場合、たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している。認可サーバーはこの認可タイプを有効にする際は特に注意するべきである。また他のフローが利用できない場合にのみ許可するべきである。
         
 </p>
 <p>
-          The grant type is suitable for clients capable of obtaining the resource owner's
-          credentials (username and password, typically using an interactive form). It is also used
-          to migrate existing clients using direct authentication schemes such as HTTP Basic or
-          Digest authentication to OAuth by converting the stored credentials to an access token.
+          リソースオーナーのクレデンシャル（通常は対話型入力フォームにて取得するユーザー名とパスワード）を取得する機能を有するクライアントに適した認可タイプである。既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを、保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる。
         
 </p><br /><hr class="insert" />
 <a name="Figure-5"></a>
@@ -2035,10 +2029,10 @@ Resource Owner Password Credentials</h3>
   |         |    (w/ Optional Refresh Token)   |               |
   +---------+                                  +---------------+
 
-</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;5: Resource Owner Password Credentials Flow&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
+</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;5: リソースオーナーパスワードクレデンシャルのフロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          The flow illustrated in <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>Resource Owner Password Credentials Flow</span><span>)</span></a> includes the following steps:
+          <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>リソースオーナーパスワードクレデンシャルのフロー</span><span>)</span></a> に示されるフローは以下の手順を含む。
         
 </p>
 <p>
@@ -2046,20 +2040,17 @@ Resource Owner Password Credentials</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              The resource owner provides the client with its username and password.
+              リソースオーナーはクライアントにユーザー名とパスワードを提供する。
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              The client requests an access token from the authorization server's token endpoint by
-              including the credentials received from the resource owner. When making the request,
-              the client authenticates with the authorization server.
+              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する。リクエストを生成する際に、クライアントは認可サーバーによって認証される。
             
 </dd>
 <dt>(C)</dt>
 <dd>
-              The authorization server authenticates the client and validates the resource owner
-              credentials, and if valid issues an access token.
+              認可サーバーはクライアントを認証し、リソースオーナーのクレデンシャルを検証する。もし有効であればアクセストークンを発行する。
             
 </dd>
 </dl></blockquote><p>
@@ -2068,12 +2059,10 @@ Resource Owner Password Credentials</h3>
 <a name="anchor30"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.3.1"></a><h3>4.3.1.&nbsp;
-Authorization Request and Response</h3>
+認可リクエストとレスポンス</h3>
 
 <p>
-            The method through which the client obtains the resource owner credentials is beyond
-            the scope of this specification. The client MUST discard the credentials once an access
-            token has been obtained.
+            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である。クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない（MUST）。
           
 </p>
 <a name="anchor31"></a><br /><hr />
@@ -2838,7 +2827,7 @@ Extensions</h3>
 新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></h3>
 
 <p>
-          認可エンドポイントで利用される新しいレスポンスタイプは認可エンドポイントレスポンスタイプレジストリーに <a class='info' href='#response-type-registry'>Section&nbsp;11.3<span> (</span><span class='info'>The OAuth Authorization Endpoint Response Type Registry</span><span>)</span></a> の手順で定義され登録される. レスポンスタイプ名は response-type ABNF に従って定義する必要がある (MUST).
+          認可エンドポイントで利用される新しいレスポンスタイプは認可エンドポイントレスポンスタイプレジストリーに <a class='info' href='#response-type-registry'>Section&nbsp;11.3<span> (</span><span class='info'>OAuth 認可エンドポイントレスポンスタイプレジストリー<!--The OAuth Authorization Endpoint Response Type Registry--></span><span>)</span></a> の手順で定義され登録される. レスポンスタイプ名は response-type ABNF に従って定義する必要がある (MUST).
           
         
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
@@ -3244,17 +3233,17 @@ Security Considerations</h3>
         
 </p>
 <p>
-          クライアントの転送URIに対するCSRF攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, 犠牲となるクライアントに自身の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
+          クライアントのリダイレクトURIに対するCSRF攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, クライアントに犠牲者の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
           
         
 </p>
 <p>
-          クライアントは自身の転送URIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, 転送URIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現する (例えば, ユーザーエージェントを認証されるために使われるセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <tt>state</tt> リクエストパラメーターを利用すべきである (SHOULD).
+          クライアントは自身のリダイレクトURIに対してCSRF保護対策を導入しなければならない (MUST). 一般的に保護対策は, リダイレクトURIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現する (例えば, ユーザーエージェントを認証するために使うセッションクッキーのハッシュなど). クライアントは認可要求の発行時, この値を認可サーバへ伝搬するために <tt>state</tt> リクエストパラメーターを利用すべきである (SHOULD).
           
         
 </p>
 <p>
-          一旦認可がエンドユーザにより取得されると, 認可サーバはエンドユーザのユーザエージェントを <tt>state</tt> パラメータに含まれる要求されたバインド値と共にクライアントへリダイレクトする. クライアントはバインド値とユーザーエージェントの認証状態を突合することによりリクエストの正当性を確認することが出来る. CSRFを防ぐために使用されるバインド値は推測不能な値を含まねばならず (MUST), ユーザーエージェントの認証状態 (例えば, セッションクッキーやHTML5のローカルストレージ) はクライアントおよびユーザーエージェントのみがアクセスできる状態に保たれなければならない (つまり, 同一起源ポリシーによる保護)  (MUST).
+          一旦エンドユーザーの認可が得られると, 認可サーバはエンドユーザのユーザエージェントを <tt>state</tt> パラメータに含まれる要求されたバインド値と共にクライアントへリダイレクトする. クライアントはバインド値とユーザーエージェントの認証状態を突合することによりリクエストの正当性を確認することが出来る. CSRFを防ぐために使用されるバインド値は推測不能な値を含まねばならず (MUST), ユーザーエージェントの認証状態 (例えば, セッションクッキーやHTML5のローカルストレージ) はクライアントおよびユーザーエージェントのみがアクセスできる状態に保たれなければならない (つまり, 同一起源ポリシーによる保護)  (MUST).
           
         
 </p>
@@ -3332,7 +3321,7 @@ IANA Considerations</h3>
 OAuth アクセストークンタイプレジストリー<!-- The OAuth Access Token Type Registry --></h3>
 
 <p>
-          本仕様では, OAuth アクセストークンタイプレジストリーを設立する.
+          本仕様では, OAuth アクセストークンタイプレジストリーを定める.
           
         
 </p>
@@ -3369,7 +3358,7 @@ OAuth アクセストークンタイプレジストリー<!-- The OAuth Access T
 <a name="anchor55"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.1.1"></a><h3>11.1.1.&nbsp;
-Registration Template</h3>
+レジストリーテンプレート<!-- Registration Template --></h3>
 
 <p>
             </p>
@@ -3377,39 +3366,40 @@ Registration Template</h3>
 <dt>Type name:</dt>
 <dd>
                 
-                The name requested (e.g., "example").
+                名称 (例: "example")
+                
               
 </dd>
 <dt>Additional Token Endpoint Response Parameters:</dt>
 <dd>
                 
-                Additional response parameters returned together with the
-                <tt>access_token</tt> parameter. New parameters MUST be
-                separately registered in the OAuth parameters registry as described by
-                <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></span><span>)</span></a>.
+                <tt>access_token</tt> と同時に返される追加のレスポンスパラメーター.
+                新規パラメーターは別個 <a class='info' href='#parameters-registry'>Section&nbsp;11.2<span> (</span><span class='info'>OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></span><span>)</span></a> に従って OAuth パラメーターレジストリーに登録すること (MUST).
+                
               
 </dd>
 <dt>HTTP Authentication Scheme(s):</dt>
 <dd>
                 
-                The HTTP authentication scheme name(s), if any, used to authenticate protected
-                resources requests using access tokens of this type.
+                登録トークンタイプのアクセストークンによるリソースリクエスト認証に用いられる HTTP Authentication スキーマ (もしあれば).
+                
               
 </dd>
 <dt>Change controller:</dt>
 <dd>
                 
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
-                URI) may also be included.
+                RFC の標準に従う際は, "IETF" と記載する. それ以外の場合は, 責任ある団体の名称を記載する.
+                その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページの URL) も記載してもよい.
+                
               
 </dd>
 <dt>Specification document(s):</dt>
 <dd>
                 
-                Reference to the document that specifies the parameter, preferably including a URI that
-                can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                パラメータ仕様を記載したドキュメントへの参照を記載する.
+                ドキュメントを取得することのできる URI が記載されていることが望ましい.
+                明確な記載箇所への参照が含まれることが望ましいが必須ではない.
+                
               
 </dd>
 </dl></blockquote><p>
@@ -3421,7 +3411,7 @@ Registration Template</h3>
 OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></h3>
 
 <p>
-          本仕様では, OAuth パラメータレジストリーを設立する.
+          本仕様では, OAuth パラメータレジストリーを定める.
           
         
 </p>
@@ -3458,28 +3448,28 @@ OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></h
 <p>
             </p>
 <blockquote class="text"><dl>
-<dt>パラメータ名:<!-- Parameter name: --></dt>
+<dt>Parameter name:</dt>
 <dd>
                 
                 名称 (例: "example").
                 
               
 </dd>
-<dt>パラメータ用途:<!-- Parameter usage location: --></dt>
+<dt>Parameter usage location:</dt>
 <dd>
                 
                 パラメータが利用できる箇所. 想定される箇所は以下の通り: 認可リクエスト, 認可レスポンス, トークンリクエスト, トークンリクエスト.
                 
               
 </dd>
-<dt>変更管理者:<!-- Change controller: --></dt>
+<dt>Change controller:</dt>
 <dd>
                 
                 RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい.
                 
               
 </dd>
-<dt>仕様ドキュメント:<!-- Specification document(s): --></dt>
+<dt>Specification document(s):</dt>
 <dd>
                 
                 パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできるURIが記載されていることが望ましい. 明確な記載箇所への参照が含まれることが望ましいが必須ではない.
@@ -3855,75 +3845,69 @@ OAuth パラメータレジストリー<!-- The OAuth Parameters Registry --></h
 <a name="response-type-registry"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.3"></a><h3>11.3.&nbsp;
-The OAuth Authorization Endpoint Response Type Registry</h3>
+OAuth 認可エンドポイントレスポンスタイプレジストリー<!--The OAuth Authorization Endpoint Response Type Registry--></h3>
 
 <p>
-          This specification establishes the OAuth authorization endpoint response type registry.
+          本仕様では, OAuth 認可エンドポイントレスポンスタイプレジストリーを定める.
+          
         
 </p>
 <p>
-          Additional response type for use with the authorization endpoint are registered on the
-          advice of one or more Designated Experts (appointed by the IESG or their delegate), with
-          a Specification Required (using terminology from <a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a>). However, to
-          allow for the allocation of values prior to publication, the Designated Expert(s) may
-          approve registration once they are satisfied that such a specification will be published.
+          認可エンドポイントで利用される追加のレスポンスタイプは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される. 
+          (以降, 文中の専門用語については [RFC5226] を参照のこと) しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+          
         
 </p>
 <p>
-          Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
-          comment, with an appropriate subject (e.g., "Request for response type: example").
-          [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-          with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+          登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. 
+          [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
+          
         
 </p>
 <p>
-          Within at most 14 days of the request, the Designated Expert(s) will either approve or
-          deny the registration request, communicating this decision to the review list and IANA.
-          Denials should include an explanation and, if applicable, suggestions as to how to make
-          the request successful.
+          Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
+          要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          
         
 </p>
 <p>
-          Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
-          Application Area Directors (contactable using app-ads@tools.ietf.org email address or
-          directly by looking up their email addresses on http://www.iesg.org/ website) and, if the
-          appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org
-          mailing list).
+          Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. 
+          また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
+          
         
 </p>
 <p>
-          IANA should only accept registry updates from the Designated Expert(s), and should direct
-          all requests for registration to the review mailing list.
+          IANA は, Designated Experts によるすべてのレジストリー更新要請を承認し, すべての登録要請をレビューメーリングリストに送信するべきである.
+          
         
 </p>
 <a name="anchor58"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.3.1"></a><h3>11.3.1.&nbsp;
-Registration Template</h3>
+レジストリーテンプレート<!--Registration Template--></h3>
 
 <p>
             </p>
 <blockquote class="text"><dl>
-<dt>Response type name:</dt>
+<dt>レスポンスタイプ名:<!--Response type name:--></dt>
 <dd>
                 
-                The name requested (e.g., "example").
+                名称 (例: "example").
+                
               
 </dd>
-<dt>Change controller:</dt>
+<dt>変更管理者:<!--Change controller:--></dt>
 <dd>
                 
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
-                URI) may also be included.
+                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい.
+                
               
 </dd>
-<dt>Specification document(s):</dt>
+<dt>仕様ドキュメント:<!--Specification document(s):--></dt>
 <dd>
                 
-                Reference to the document that specifies the type, preferably including a URI that
-                can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできるURIが記載されていることが望ましい. 明確な記載箇所への参照が含まれることが望ましいが必須ではない.
+                
               
 </dd>
 </dl></blockquote><p>
@@ -3932,10 +3916,11 @@ Registration Template</h3>
 <a name="anchor59"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.3.2"></a><h3>11.3.2.&nbsp;
-Initial Registry Contents</h3>
+初期レジストリーコンテンツ<!--Initial Registry Contents--></h3>
 
 <p>
-            The OAuth Authorization Endpoint Response Type Registry's initial contents are:
+            OAuth 認可エンドポイントレスポンスタイプレジストリーの初期コンテンツは以下の通りである:
+            
           
 </p>
 <p>
