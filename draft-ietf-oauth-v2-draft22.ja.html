@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 16, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 19, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 13, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 16, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 16, 2012.</p>
+This Internet-Draft will expire on May 19, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -268,11 +268,11 @@ Access Token Request<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor32">4.3.3.</a>&nbsp;
 Access Token Response<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-client">4.4.</a>&nbsp;
-Client Credentials<br />
+クライアントクレデンシャル<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor33">4.4.1.</a>&nbsp;
-Authorization Request and Response<br />
+認可リクエストとレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor34">4.4.2.</a>&nbsp;
-Access Token Request<br />
+アクセストークンリクエスト<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor35">4.4.3.</a>&nbsp;
 Access Token Response<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor36">4.5.</a>&nbsp;
@@ -975,7 +975,7 @@ Unregistered Clients</h3>
           
 </li>
 <li>
-            トークンエンドポイント - 認可の付与とアクセストークンと交換するために利用される. 一般的にクライアント認証を用いる.
+            トークンエンドポイント - 認可の付与とアクセストークンを交換するために利用される. 一般的にクライアント認証を用いる.
           
 </li>
 </ul><p>
@@ -999,7 +999,7 @@ Unregistered Clients</h3>
         
 </p>
 <p>
-          エンドポイントのURIは (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) でフォーマットされたクエリー部に <tt>application/x-www-form-urlencoded</tt> を含んでもよい (MAY) (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
+          エンドポイントのURIは (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) でフォーマットされたクエリー部に <tt>application/x-www-form-urlencoded</tt> を含んでもよい (MAY) (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
         
 </p>
 <p>
@@ -1030,7 +1030,7 @@ Unregistered Clients</h3>
 <dd>
                 
                 必須 (REQUIRED).
-                レスポンスタイプの値は <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で述べる認可コードを要求するための <tt>code</tt> あるいは, <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で述べるアクセストークン(インプリシット許可)を要求する <tt>token</tt> あるいは, <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a> で述べる登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切り一覧(<tt>a b</tt> と <tt>b a</tt> は同じである)として無視する.
+                レスポンスタイプの値は <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で後述する認可コードをリクエストするための <tt>code</tt> あるいは, <a class='info' href='#implicit-authz-req'>Section&nbsp;4.2.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a> で後述するアクセストークン(インプリシット許可)をリクエストする <tt>token</tt> あるいは, <a class='info' href='#response-type-ext'>Section&nbsp;8.4<span> (</span><span class='info'>新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types --></span><span>)</span></a> で後述する登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切りの一覧(<tt>a b</tt> と <tt>b a</tt> は同じである)として無視する.
               
 </dd>
 </dl></blockquote><p>
@@ -1160,7 +1160,7 @@ Token Endpoint</h3>
 <p>
           The endpoint URI MAY include an
           <tt>application/x-www-form-urlencoded</tt> formatted
-          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
+          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
           section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
         
@@ -1353,7 +1353,7 @@ Access Token Scope</h3>
 認可リクエスト</h3>
 
 <p>
-            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Jacobs, I., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
+            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
           
 </p>
 <p>
@@ -2199,18 +2199,14 @@ Access Token Response</h3>
 <a name="grant-client"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.4"></a><h3>4.4.&nbsp;
-Client Credentials</h3>
+クライアントクレデンシャル</h3>
 
 <p>
-          The client can request an access token using only its client credentials (or other
-          supported means of authentication) when the client is requesting access to the
-          protected resources under its control, or those of another resource owner which has been
-          previously arranged with the authorization server (the method of which is beyond the
-          scope of this specification).
+          クライアントが自身のコントロール下, または他のリソースオーナーの認可サーバーで事前に準備されている保護リソースにアクセスする場合, クライアントはクライアントクレデンシャル(あるいは認証をサポートしている他の方法)のみでアクセストークンをリクエストすることができる.
         
 </p>
 <p>
-          The client credentials grant type MUST only be used by confidential clients.
+          クライアントクレデンシャルの許可タイプは機密クライアントによって使用されなければならない (MUST).
         
 </p><br /><hr class="insert" />
 <a name="Figure-6"></a>
@@ -2224,10 +2220,10 @@ Client Credentials</h3>
   |         |                                  |               |
   +---------+                                  +---------------+
 
-</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;6: Client Credentials Flow&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
+</pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;6: クライアントクレデンシャルフロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          The flow illustrated in <a class='info' href='#Figure-6'>Figure&nbsp;6<span> (</span><span class='info'>Client Credentials Flow</span><span>)</span></a> includes the following steps:
+          <a class='info' href='#Figure-6'>Figure&nbsp;6<span> (</span><span class='info'>クライアントクレデンシャルフロー</span><span>)</span></a> で示されたフロー概要は以下のステップを含む.
         
 </p>
 <p>
@@ -2235,14 +2231,12 @@ Client Credentials</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              The client authenticates with the authorization server and requests an access token
-              from the token endpoint.
+              クライアントは認可サーバーで認証し, トークンエンドポイントからアクセストークンをリクエストする.
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              The authorization server authenticates the client, and if valid issues an access
-              token.
+              認可サーバーはアクセストークンが確認できた場合, クライアントを認証する.
             
 </dd>
 </dl></blockquote><p>
@@ -2251,22 +2245,19 @@ Client Credentials</h3>
 <a name="anchor33"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.4.1"></a><h3>4.4.1.&nbsp;
-Authorization Request and Response</h3>
+認可リクエストとレスポンス</h3>
 
 <p>
-            Since the client authentication is used as the authorization grant, no additional
-            authorization request is needed.
+            認可の付与としてクライアント認証が利用されている場合, 追加の認可リクエストは必要ない.
           
 </p>
 <a name="anchor34"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.4.2"></a><h3>4.4.2.&nbsp;
-Access Token Request</h3>
+アクセストークンリクエスト</h3>
 
 <p>
-            The client makes a request to the token endpoint by adding the following parameters
-            using the <tt>application/x-www-form-urlencoded</tt> format in the
-            HTTP request entity-body:
+            クライアントはHTTPリクエストボディーに <tt>application/x-www-form-urlencoded</tt> フォーマットを使用している下記のパラメーターを追加することでトークンエンドポイントにリクエストする.
           
 </p>
 <p>
@@ -2275,26 +2266,26 @@ Access Token Request</h3>
 <dt>grant_type</dt>
 <dd>
                 
-                REQUIRED. Value MUST be set to <tt>client_credentials</tt>.
+                必須 (REQUIRED).
+                <tt>client_credentials</tt> を指定しなければならない (MUST).
               
 </dd>
 <dt>scope</dt>
 <dd>
                 
-                OPTIONAL. The scope of the access request as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>.
+                任意 (OPTIONAL).
+                アクセス範囲は後述の <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a> によってリクエストする.
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            The client MUST authenticate with the authorization server as described in
-            <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>Client Authentication</span><span>)</span></a>.
+            クライアントは <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>Client Authentication</span><span>)</span></a> で後述される認可サーバーで認証しなければならない (MUST).
           
 </p>
 <p>
-              For example, the client makes the following HTTP request using transport-layer
-              security (extra line breaks are for display purposes only):
+              例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2307,7 +2298,7 @@ Access Token Request</h3>
 
 </pre></div>
 <p>
-            The authorization server MUST authenticate the client.
+            認可サーバーはクライアントを認証しなければならない (MUST).
           
 </p>
 <a name="anchor35"></a><br /><hr />
@@ -4189,7 +4180,7 @@ References</h3>
 <tr><td class="author-text" valign="top"><a name="RFC5246">[RFC5246]</a></td>
 <td class="author-text">Dierks, T. and E. Rescorla, &ldquo;<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>,&rdquo; RFC&nbsp;5246, August&nbsp;2008 (<a href="http://www.rfc-editor.org/rfc/rfc5246.txt">TXT</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="W3C.REC-html401-19991224">[W3C.REC-html401-19991224]</a></td>
-<td class="author-text">Raggett, D., Jacobs, I., and A. Hors, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
+<td class="author-text">Jacobs, I., Raggett, D., and A. Hors, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
 </table>
 
 <a name="rfc.references2"></a><br /><hr />
