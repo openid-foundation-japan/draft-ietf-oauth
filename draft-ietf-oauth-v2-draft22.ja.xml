@@ -1301,26 +1301,36 @@
 
       </section>
 
-      <section title='Access Token Scope' anchor='scope'>
+      <section title='アクセストークンスコープ' anchor='scope'>
+	      <!--      <section title='Access Token Scope' anchor='scope'> -->
         <t>
+          認証とトークンのエンドポイントは<spanx style='verb'>scope</spanx>リクエストパラメータを使用してアクセス要求の範囲を明記するのをクライアントに許可する. 同様に, 認可サーバは発行されたアクセストークンの範囲をクライアントに通知するために<spanx style='verb'>scope</spanx>レスポンスパラメータを使用します.
+        </t>
+        <!--
           The authorization and token endpoints allow the client to specify the scope of the access
           request using the <spanx style='verb'>scope</spanx> request parameter. In turn, the
           authorization server uses the <spanx style='verb'>scope</spanx> response parameter to
           inform the client of the scope of the access token issued.
-        </t>
+        -->
         <t>
+          scopeパラメータの値は大文字と小文字を区別する文字列で, スペース区切りのリストで示される. 文字列は認可サーバによって定義されている. 値が複数のスペース区切りの文字列を含んでいる場合, 順序は重要ではない. そして要求されたスコープの追加アクセス範囲である各文字列が追加される.
+        </t>
+        <!--
           The value of the scope parameter is expressed as a list of space-delimited, case
           sensitive strings. The strings are defined by the authorization server. If the value
           contains multiple space-delimited strings, their order does not matter, and each string
           adds an additional access range to the requested scope.
-        </t>
+        -->
         <t>
+          認可サーバは認可サーバポリシー, 又はリソースオーナーの指示に基づいてクライアントによって要求されたスコープの一部もしくは全て無視するかもしれない(MAY). 発行されたアクセストークンのスコープがクライアントから要求されたものと異なる場合, 認可サーバは実際に許可されたスコープをクライアントに通知するため, <spanx style='verb'>scope</spanx>レスポンスパラメータを含めるべきである.
+      </t>
+        <!--
           The authorization server MAY fully or partially ignore the scope requested by the client
           based on the authorization server policy or the resource owner's instructions. If the
           issued access token scope is different from the one requested by the client, the
           authorization server SHOULD include the <spanx style='verb'>scope</spanx> response
           parameter to inform the client of the actual scope granted.
-      </t>
+      -->
       </section>
 
     </section>
@@ -2864,18 +2874,27 @@
           -->
         </section>
 
-        <section title='Access Token Response'>
+        <section title='アクセストークンレスポンス'>
+<!--        <section title='Access Token Response'> -->
           <t>
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバは<xref target='token-response' />で説明されているようにアクセストークンを発行する. リフレッシュトークンは含むべきでない(SHOULD NOT). リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは<xref target='token-errors' />で説明されているようにエラーレスポンスを返す.
+          </t>
+          <!--
             If the access token request is valid and authorized, the authorization server issues an
             access token as described in <xref target='token-response' />. A refresh token SHOULD
             NOT be included. If the request failed client authentication or is invalid, the
             authorization server returns an error response as described in
             <xref target='token-errors' />.
-          </t>
+          -->
           <figure>
+            <preamble>
+              成功したレスポンスの例は次の通り.
+            </preamble>
+            <!--
             <preamble>
               An example successful response:
             </preamble>
+	    -->
             <artwork>
               <![CDATA[
   HTTP/1.1 200 OK
@@ -2896,20 +2915,29 @@
 
       </section>
 
-      <section title='Extensions'>
+      <section title='拡張'>
+      <!--      <section title='Extensions'> -->
         <t>
+          クライアントはトークンエンドポイントの<spanx style='verb'>grant_type</spanx>パラメータの値に(認可サーバによって定義された)絶対URIを用いて許可タイプを指定し, 追加必須パラメータを追加することによって, 拡張許可タイプを利用します.
+        </t>
+        <!--
           The client uses an extension grant type by specifying the grant type using an
           absolute URI (defined by the authorization server) as the value of the
           <spanx style='verb'>grant_type</spanx> parameter of the token endpoint, and by
           adding any additional parameters necessary.
-        </t>
+        -->
         <figure>
+          <preamble>
+            例えば, <xref target='I-D.ietf-oauth-saml2-bearer' />で定義されているSAML 2.0アサーション許可タイプを利用してアクセストークンを要求するために, クライアントはセキュリティ的に保護されたトランスポート層を用いて次のようなHTTPリクエストを行う. (改行は掲載上の都合による)
+          </preamble>
+          <!--
           <preamble>
             For example, to request an access token using a SAML 2.0 assertion grant type as
             defined by <xref target='I-D.ietf-oauth-saml2-bearer' />, the client makes the
             following HTTP request using transport-layer security (line breaks are for display
             purposes only):
           </preamble>
+	  -->
           <artwork>
             <![CDATA[
   POST /token HTTP/1.1
@@ -2923,11 +2951,14 @@
           </artwork>
         </figure>
         <t>
+          アクセストークンリクエストが正当かつ認可された場合, 認可サーバは<xref target='token-response' />で説明されているようにアクセストークンとオプションでリフレッシュトークンを発行する. リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは<xref target='token-errors' />で説明されているようにエラーレスポンスを返す.
+        </t>
+        <!--
           If the access token request is valid and authorized, the authorization server issues an
           access token and optional refresh token as described in <xref target='token-response' />.
           If the request failed client authentication or is invalid, the authorization server returns
           an error response as described in <xref target='token-errors' />.
-        </t>
+        -->
       </section>
 
     </section>

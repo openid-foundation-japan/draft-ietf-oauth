@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 19, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 20, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 16, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 17, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 19, 2012.</p>
+This Internet-Draft will expire on May 20, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -240,7 +240,7 @@ Token Endpoint<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-endpoint-auth">3.2.1.</a>&nbsp;
 Client Authentication<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#scope">3.3.</a>&nbsp;
-Access Token Scope<br />
+アクセストークンスコープ<br />
 <a href="#anchor25">4.</a>&nbsp;
 認可の取得<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-code">4.1.</a>&nbsp;
@@ -274,9 +274,9 @@ Access Token Response<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor34">4.4.2.</a>&nbsp;
 アクセストークンリクエスト<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor35">4.4.3.</a>&nbsp;
-Access Token Response<br />
+アクセストークンレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor36">4.5.</a>&nbsp;
-Extensions<br />
+拡張<br />
 <a href="#token-issue">5.</a>&nbsp;
 アクセストークンの発行<!-- Issuing an Access Token --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-response">5.1.</a>&nbsp;
@@ -1239,28 +1239,18 @@ Client Authentication</h3>
 <a name="scope"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.3"></a><h3>3.3.&nbsp;
-Access Token Scope</h3>
+アクセストークンスコープ</h3>
 
 <p>
-          The authorization and token endpoints allow the client to specify the scope of the access
-          request using the <tt>scope</tt> request parameter. In turn, the
-          authorization server uses the <tt>scope</tt> response parameter to
-          inform the client of the scope of the access token issued.
+          認証とトークンのエンドポイントは<tt>scope</tt>リクエストパラメータを使用してアクセス要求の範囲を明記するのをクライアントに許可する. 同様に, 認可サーバは発行されたアクセストークンの範囲をクライアントに通知するために<tt>scope</tt>レスポンスパラメータを使用します.
         
 </p>
 <p>
-          The value of the scope parameter is expressed as a list of space-delimited, case
-          sensitive strings. The strings are defined by the authorization server. If the value
-          contains multiple space-delimited strings, their order does not matter, and each string
-          adds an additional access range to the requested scope.
+          scopeパラメータの値は大文字と小文字を区別する文字列で, スペース区切りのリストで示される. 文字列は認可サーバによって定義されている. 値が複数のスペース区切りの文字列を含んでいる場合, 順序は重要ではない. そして要求されたスコープの追加アクセス範囲である各文字列が追加される.
         
 </p>
 <p>
-          The authorization server MAY fully or partially ignore the scope requested by the client
-          based on the authorization server policy or the resource owner's instructions. If the
-          issued access token scope is different from the one requested by the client, the
-          authorization server SHOULD include the <tt>scope</tt> response
-          parameter to inform the client of the actual scope granted.
+          認可サーバは認可サーバポリシー, 又はリソースオーナーの指示に基づいてクライアントによって要求されたスコープの一部もしくは全て無視するかもしれない(MAY). 発行されたアクセストークンのスコープがクライアントから要求されたものと異なる場合, 認可サーバは実際に許可されたスコープをクライアントに通知するため, <tt>scope</tt>レスポンスパラメータを含めるべきである.
       
 </p>
 <a name="anchor25"></a><br /><hr />
@@ -1380,7 +1370,7 @@ Access Token Scope</h3>
 <dt>scope</dt>
 <dd>
                 
-                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>を参照のこと.
+                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>state</dt>
@@ -1791,7 +1781,7 @@ Access Token Scope</h3>
 <dt>scope</dt>
 <dd>
                 
-                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>を参照のこと.
+                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>state</dt>
@@ -1862,7 +1852,7 @@ Access Token Scope</h3>
 <dt>scope</dt>
 <dd>
                 
-                任意(OPTIONAL). <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>によって示されたアクセストークンのスコープ.
+                任意(OPTIONAL). <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>によって示されたアクセストークンのスコープ.
               
 </dd>
 <dt>state</dt>
@@ -2100,7 +2090,7 @@ Access Token Request</h3>
 <dt>scope</dt>
 <dd>
                 
-                OPTIONAL. The scope of the access request as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>.
+                OPTIONAL. The scope of the access request as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>.
               
 </dd>
 </dl></blockquote><p>
@@ -2263,7 +2253,7 @@ Access Token Response</h3>
 <dd>
                 
                 任意 (OPTIONAL).
-                アクセス範囲は後述の <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a> によってリクエストする.
+                アクセス範囲は後述の <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> によってリクエストする.
               
 </dd>
 </dl></blockquote><p>
@@ -2293,18 +2283,14 @@ Access Token Response</h3>
 <a name="anchor35"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.4.3"></a><h3>4.4.3.&nbsp;
-Access Token Response</h3>
+アクセストークンレスポンス</h3>
 
 <p>
-            If the access token request is valid and authorized, the authorization server issues an
-            access token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>. A refresh token SHOULD
-            NOT be included. If the request failed client authentication or is invalid, the
-            authorization server returns an error response as described in
-            <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバは<a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>で説明されているようにアクセストークンを発行する. リフレッシュトークンは含むべきでない(SHOULD NOT). リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>で説明されているようにエラーレスポンスを返す.
           
 </p>
 <p>
-              An example successful response:
+              成功したレスポンスの例は次の通り.
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2324,20 +2310,14 @@ Access Token Response</h3>
 <a name="anchor36"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.5"></a><h3>4.5.&nbsp;
-Extensions</h3>
+拡張</h3>
 
 <p>
-          The client uses an extension grant type by specifying the grant type using an
-          absolute URI (defined by the authorization server) as the value of the
-          <tt>grant_type</tt> parameter of the token endpoint, and by
-          adding any additional parameters necessary.
+          クライアントはトークンエンドポイントの<tt>grant_type</tt>パラメータの値に(認可サーバによって定義された)絶対URIを用いて許可タイプを指定し, 追加必須パラメータを追加することによって, 拡張許可タイプを利用します.
         
 </p>
 <p>
-            For example, to request an access token using a SAML 2.0 assertion grant type as
-            defined by <a class='info' href='#I-D.ietf-oauth-saml2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;saml2&#8209;bearer]<span> (</span><span class='info'>Mortimore, C., &ldquo;SAML 2.0 Bearer Assertion Profiles for OAuth 2.0,&rdquo; August&nbsp;2011.</span><span>)</span></a>, the client makes the
-            following HTTP request using transport-layer security (line breaks are for display
-            purposes only):
+            例えば, <a class='info' href='#I-D.ietf-oauth-saml2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;saml2&#8209;bearer]<span> (</span><span class='info'>Mortimore, C., &ldquo;SAML 2.0 Bearer Assertion Profiles for OAuth 2.0,&rdquo; August&nbsp;2011.</span><span>)</span></a>で定義されているSAML 2.0アサーション許可タイプを利用してアクセストークンを要求するために, クライアントはセキュリティ的に保護されたトランスポート層を用いて次のようなHTTPリクエストを行う. (改行は掲載上の都合による)
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2351,10 +2331,7 @@ Extensions</h3>
 
 </pre></div>
 <p>
-          If the access token request is valid and authorized, the authorization server issues an
-          access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
-          If the request failed client authentication or is invalid, the authorization server returns
-          an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
+          アクセストークンリクエストが正当かつ認可された場合, 認可サーバは<a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>で説明されているようにアクセストークンとオプションでリフレッシュトークンを発行する. リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>で説明されているようにエラーレスポンスを返す.
         
 </p>
 <a name="token-issue"></a><br /><hr />
@@ -2424,7 +2401,7 @@ Extensions</h3>
               
               任意 (OPTIONAL).
               アクセストークンのスコープ.
-              詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a> で述べる.
+              詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> で述べる.
               
             
 </dd>
@@ -2619,7 +2596,7 @@ Extensions</h3>
             
 			任意 (OPTIONAL).
 			アクセス要求のスコープ.
-			詳細は<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>Access Token Scope</span><span>)</span></a>で述べる.
+			詳細は<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>で述べる.
 			要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
 			もし指定されなかった場合は, もともと許可された値として扱われる.
 			
