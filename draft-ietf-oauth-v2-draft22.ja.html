@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 20, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 22, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 17, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 19, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 20, 2012.</p>
+This Internet-Draft will expire on May 22, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -354,9 +354,9 @@ OAuth 認可エンドポイントレスポンスタイプレジストリー<!--T
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor59">11.3.2.</a>&nbsp;
 初期レジストリーコンテンツ<!--Initial Registry Contents--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#error-registry">11.4.</a>&nbsp;
-The OAuth Extensions Error Registry<br />
+OAuth拡張エラーレジストリー<!--The OAuth Extensions Error Registry--><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor60">11.4.1.</a>&nbsp;
-Registration Template<br />
+レジストリーテンプレート<!--Registration Template--><br />
 <a href="#anchor61">12.</a>&nbsp;
 Acknowledgements<br />
 <a href="#anchor62">Appendix&nbsp;A.</a>&nbsp;
@@ -999,7 +999,7 @@ Unregistered Clients</h3>
         
 </p>
 <p>
-          エンドポイントのURIは (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) でフォーマットされたクエリー部に <tt>application/x-www-form-urlencoded</tt> を含んでもよい (MAY) (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
+          エンドポイントのURIは (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) でフォーマットされたクエリー部に <tt>application/x-www-form-urlencoded</tt> を含んでもよい (MAY) (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
         
 </p>
 <p>
@@ -1160,7 +1160,7 @@ Token Endpoint</h3>
 <p>
           The endpoint URI MAY include an
           <tt>application/x-www-form-urlencoded</tt> formatted
-          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
+          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
           section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
         
@@ -1343,7 +1343,7 @@ Client Authentication</h3>
 認可リクエスト</h3>
 
 <p>
-            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Jacobs, I., Raggett, D., and A. Hors, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
+            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
           
 </p>
 <p>
@@ -2835,7 +2835,7 @@ Access Token Response</h3>
         
 </p>
 <p>
-          拡張エラーコードは登録されたアクセストークンタイプ, エンドポイントパラメータ, 拡張グラントタイプと共に利用する場合は (<a class='info' href='#error-registry'>Section&nbsp;11.4<span> (</span><span class='info'>The OAuth Extensions Error Registry</span><span>)</span></a> の手順に従って) 登録されなければならない (MUST). 登録されていない拡張と共に利用するエラーコードは登録してもよい (MAY).
+          拡張エラーコードは登録されたアクセストークンタイプ, エンドポイントパラメータ, 拡張グラントタイプと共に利用する場合は (<a class='info' href='#error-registry'>Section&nbsp;11.4<span> (</span><span class='info'>OAuth拡張エラーレジストリー<!--The OAuth Extensions Error Registry--></span><span>)</span></a> の手順に従って) 登録されなければならない (MUST). 登録されていない拡張と共に利用するエラーコードは登録してもよい (MAY).
           
         
 </p>
@@ -3939,92 +3939,83 @@ OAuth 認可エンドポイントレスポンスタイプレジストリー<!--T
 <a name="error-registry"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.4"></a><h3>11.4.&nbsp;
-The OAuth Extensions Error Registry</h3>
+OAuth拡張エラーレジストリー<!--The OAuth Extensions Error Registry--></h3>
 
 <p>
-          This specification establishes the OAuth extensions error registry.
+        本仕様では, OAuth拡張エラーレジストリーを定める.
+          
         
 </p>
 <p>
-          Additional error codes used together with other protocol extensions (i.e. extension grant
-          types, access token types, or extension parameters) are registered on the advice of one
-          or more Designated Experts (appointed by the IESG or their delegate), with a
-          Specification Required (using terminology from <a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a>). However, to
-          allow for the allocation of values prior to publication, the Designated Expert(s) may
-          approve registration once they are satisfied that such a specification will be published.
+        他のプロトコル拡張, 例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーターで利用されるエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される. 
+          (以降, 文中の専門用語については<a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a>を参照のこと) しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+          
         
 </p>
 <p>
-          Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
-          comment, with an appropriate subject (e.g., "Request for error code: example").
-          [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-          with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+        登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. 
+          [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
+          
         
 </p>
 <p>
-          Within at most 14 days of the request, the Designated Expert(s) will either approve or
-          deny the registration request, communicating this decision to the review list and IANA.
-          Denials should include an explanation and, if applicable, suggestions as to how to make
-          the request successful.
+        Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
+          要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          
         
 </p>
 <p>
-          Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
-          Application Area Directors (contactable using app-ads@tools.ietf.org email address or
-          directly by looking up their email addresses on http://www.iesg.org/ website) and, if the
-          appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org
-          mailing list).
+        Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. 
+          また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
+          
         
 </p>
 <p>
-          IANA should only accept registry updates from the Designated Expert(s), and should direct
-          all requests for registration to the review mailing list.
+        IANA は, Designated Experts によるすべてのレジストリー更新要請を承認し, すべての登録要請をレビューメーリングリストに送信するべきである.
+          
         
 </p>
 <a name="anchor60"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.11.4.1"></a><h3>11.4.1.&nbsp;
-Registration Template</h3>
+レジストリーテンプレート<!--Registration Template--></h3>
 
 <p>
             </p>
 <blockquote class="text"><dl>
-<dt>Error name:</dt>
+<dt>エラー名<!--Error name-->:</dt>
 <dd>
                 
-                The name requested (e.g., "example").
+                名称 (例: "example").
+                
               
 </dd>
 <dt>Error usage location:</dt>
 <dd>
                 
-                The location(s) where the error can be used. The possible locations are:
-                authorization code grant error response (<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>),
-                implicit grant error response (<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>), or token
-                error response (<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>).
+                エラーが利用できる箇所. 想定される箇所は以下の通り: 認可コード付与エラーレスポンス(<a class='info' href='#code-authz-error'>Section&nbsp;4.1.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>), インプリシット付与エラーレスポンス(<a class='info' href='#implicit-authz-error'>Section&nbsp;4.2.2.1<span> (</span><span class='info'>エラーレスポンス</span><span>)</span></a>), トークンエラーレスポンス(<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>). 
+                
               
 </dd>
 <dt>Related protocol extension:</dt>
 <dd>
                 
-                The name of the extension grant type, access token type, or extension parameter,
-                the error code is used in conjunction with.
+                エラーコードと共に用いられる拡張グラントタイプ名, アクセストークンタイプ名,もしくは拡張パラメーター名を記載する. 
+                
               
 </dd>
 <dt>Change controller:</dt>
 <dd>
                 
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
-                URI) may also be included.
+                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい. 
+                
               
 </dd>
 <dt>Specification document(s):</dt>
 <dd>
                 
-                Reference to the document that specifies the error code, preferably including a URI
-                that can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                エラーコード仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできるURIが記載されていることが望ましい. 明確な記載箇所への参照が含まれることが望ましいが必須ではない.
+                
               
 </dd>
 </dl></blockquote><p>
@@ -4142,7 +4133,7 @@ References</h3>
 <tr><td class="author-text" valign="top"><a name="RFC5246">[RFC5246]</a></td>
 <td class="author-text">Dierks, T. and E. Rescorla, &ldquo;<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>,&rdquo; RFC&nbsp;5246, August&nbsp;2008 (<a href="http://www.rfc-editor.org/rfc/rfc5246.txt">TXT</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="W3C.REC-html401-19991224">[W3C.REC-html401-19991224]</a></td>
-<td class="author-text">Jacobs, I., Raggett, D., and A. Hors, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
+<td class="author-text">Raggett, D., Hors, A., and I. Jacobs, &ldquo;<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML 4.01 Specification</a>,&rdquo; World Wide Web Consortium Recommendation&nbsp;REC-html401-19991224, December&nbsp;1999 (<a href="http://www.w3.org/TR/1999/REC-html401-19991224">HTML</a>).</td></tr>
 </table>
 
 <a name="rfc.references2"></a><br /><hr />
