@@ -4894,8 +4894,8 @@
           -->
         </t>
         <t>
-        他のプロトコル拡張, 例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーターで利用されるエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される. 
-          (以降, 文中の専門用語については<xref target='RFC5226' />を参照のこと) しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+        他のプロトコル拡張(例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーター)で利用される追加のエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される 
+          (以降, 文中の専門用語については<xref target='RFC5226' />を参照のこと). しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           <!--
           Additional error codes used together with other protocol extensions (i.e. extension grant
           types, access token types, or extension parameters) are registered on the advice of one
@@ -4917,7 +4917,7 @@
         </t>
         <t>
         Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
-          要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          要請が拒否された場合は, その理由が通知され, 可能な場合は承認に向けた提案が行われるべきである.
           <!--
           Within at most 14 days of the request, the Designated Expert(s) will either approve or
           deny the registration request, communicating this decision to the review list and IANA.
@@ -4947,7 +4947,7 @@
         <section title='レジストリーテンプレート<!--Registration Template-->'>
           <t>
             <list style='hanging'>
-              <t hangText='エラー名<!--Error name-->:'>
+              <t hangText='Error name:'>
                 <vspace />
                 名称 (例: "example").
                 <!--
