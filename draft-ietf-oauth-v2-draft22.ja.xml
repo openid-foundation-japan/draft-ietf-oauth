@@ -3372,9 +3372,9 @@
       </t>
     </section>
 
-    <section title='保護対象リソースへのアクセス<!-- Accessing Protected Resources -->' anchor='access-resource'>
+    <section title='保護されたリソースへのアクセス<!-- Accessing Protected Resources -->' anchor='access-resource'>
       <t>
-        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープの範囲内であることを確認しなければならない(MUST).アクセストークンを検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする. リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない(MUST). アクセストークン(同様にエラーレスポンス)を検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される. 
       <!--
         The client accesses protected resources by presenting the access token to the resource
         server. The resource server MUST validate the access token and ensure it has not expired
@@ -3385,7 +3385,7 @@
       -->
       </t>
       <t>
-        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンタイプに依存する.一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される.
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する. 一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される. 
       <!--
         The method in which the client utilized the access token to authenticate with the resource
         server depends on the type of access token issued by the authorization server. Typically,
@@ -3397,7 +3397,7 @@
 
       <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
         <t>
-          アクセストークンタイプにより, クライアントは保護対象リソースへの（型指定属性込みの）リクエスト時にアクセストークンを利用するために必要な情報を特定することができる.クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
+          アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する. クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT). 
         <!--
           The access token type provides the client with the information required to successfully
           utilize the access token to make a protected resource request (along with type-specific
@@ -3407,7 +3407,7 @@
         </t>
         <figure>
           <preamble>
-            例えば, <xref target='I-D.ietf-oauth-v2-bearer' />に定義される<spanx style='verb'>bearer</spanx>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる.
+            例えば, <xref target='I-D.ietf-oauth-v2-bearer' />に定義される<spanx style='verb'>bearer</spanx>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる. 
         <!--
             For example, the <spanx style='verb'>bearer</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-bearer' /> is utilized by simply including the access
@@ -3424,7 +3424,7 @@
         </figure>
         <figure>
           <preamble>
-            一方, <xref target='I-D.ietf-oauth-v2-http-mac' />に定義される<spanx style='verb'>mac</spanx>トークンタイプは, アクセストークンと共にMacキーをリクエストに含めて利用できる.このMackキーはHTTPリクエストの一部分を署名するのに利用される.
+            一方, <xref target='I-D.ietf-oauth-v2-http-mac' />に定義される<spanx style='verb'>mac</spanx>トークンタイプは, アクセストークンと共にMACキーをリクエストに含めて利用できる. このMACキーはHTTPリクエストの一部分を署名するのに利用される.
         <!-- 
             while the <spanx style='verb'>mac</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-http-mac' /> is utilized by issuing a MAC key
@@ -3451,7 +3451,7 @@
         -->
         </t>
         <t>
-          アクセストークンタイプでは, 必要な場合には<spanx style='verb'>access_token</spanx>レスポンス属性と共にクライアントに送り返す追加属性を定義することができる.また, 保護対象リソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義される.
+          各アクセストークンタイプ定義は, <spanx style='verb'>access_token</spanx>レスポンスパラメーターとともにクライアントへ送付される追加属性（もしあれば）を指定する. また, 保護されたリソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義する. 
         <!--
           Each access token type definition specifies the additional attributes (if any) sent to
           the client together with the <spanx style='verb'>access_token</spanx> response parameter.

@@ -286,7 +286,7 @@ Access Token Response<br />
 <a href="#token-refresh">6.</a>&nbsp;
 アクセストークンの更新<!--Refreshing an Access Token--><br />
 <a href="#access-resource">7.</a>&nbsp;
-保護対象リソースへのアクセス<!-- Accessing Protected Resources --><br />
+保護されたリソースへのアクセス<!-- Accessing Protected Resources --><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-types">7.1.</a>&nbsp;
 アクセストークンタイプ<!-- Access Token Types --><br />
 <a href="#extensions">8.</a>&nbsp;
@@ -2671,15 +2671,15 @@ Access Token Response</h3>
 <a name="access-resource"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.7"></a><h3>7.&nbsp;
-保護対象リソースへのアクセス<!-- Accessing Protected Resources --></h3>
+保護されたリソースへのアクセス<!-- Accessing Protected Resources --></h3>
 
 <p>
-        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープの範囲内であることを確認しなければならない(MUST).アクセストークンを検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする. リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない(MUST). アクセストークン(同様にエラーレスポンス)を検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される. 
       
       
 </p>
 <p>
-        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンタイプに依存する.一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <tt>Authorization</tt> ヘッダフィールド <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> が利用される.
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する. 一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <tt>Authorization</tt> ヘッダフィールド <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a> が利用される. 
       
       
 </p>
@@ -2689,12 +2689,12 @@ Access Token Response</h3>
 アクセストークンタイプ<!-- Access Token Types --></h3>
 
 <p>
-          アクセストークンタイプにより, クライアントは保護対象リソースへの（型指定属性込みの）リクエスト時にアクセストークンを利用するために必要な情報を特定することができる.クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
+          アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する. クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT). 
         
         
 </p>
 <p>
-            例えば, <a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>に定義される<tt>bearer</tt>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる.
+            例えば, <a class='info' href='#I-D.ietf-oauth-v2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;bearer]<span> (</span><span class='info'>Jones, M., Hardt, D., and D. Recordon, &ldquo;The OAuth 2.0 Protocol: Bearer Tokens,&rdquo; July&nbsp;2011.</span><span>)</span></a>に定義される<tt>bearer</tt>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる. 
         
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
@@ -2705,7 +2705,7 @@ Access Token Response</h3>
 
 </pre></div>
 <p>
-            一方, <a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>に定義される<tt>mac</tt>トークンタイプは, アクセストークンと共にMacキーをリクエストに含めて利用できる.このMackキーはHTTPリクエストの一部分を署名するのに利用される.
+            一方, <a class='info' href='#I-D.ietf-oauth-v2-http-mac'>[I&#8209;D.ietf&#8209;oauth&#8209;v2&#8209;http&#8209;mac]<span> (</span><span class='info'>Hammer-Lahav, E., Barth, A., and B. Adida, &ldquo;HTTP Authentication: MAC Access Authentication,&rdquo; May&nbsp;2011.</span><span>)</span></a>に定義される<tt>mac</tt>トークンタイプは, アクセストークンと共にMACキーをリクエストに含めて利用できる. このMACキーはHTTPリクエストの一部分を署名するのに利用される.
         
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
@@ -2723,7 +2723,7 @@ Access Token Response</h3>
         
 </p>
 <p>
-          アクセストークンタイプでは, 必要な場合には<tt>access_token</tt>レスポンス属性と共にクライアントに送り返す追加属性を定義することができる.また, 保護対象リソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義される.
+          各アクセストークンタイプ定義は, <tt>access_token</tt>レスポンスパラメーターとともにクライアントへ送付される追加属性（もしあれば）を指定する. また, 保護されたリソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義する. 
         
         
 </p>
