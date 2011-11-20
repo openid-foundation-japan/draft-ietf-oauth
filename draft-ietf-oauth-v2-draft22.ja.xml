@@ -4257,7 +4257,7 @@
 
       <section title='オープンリダイレクタ<!--Open Redirectors-->' anchor='open-redirect'>
         <t>
-          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作する. オープンリダイレクタは正当性の確認をせずにパラメータで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.  
+          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作しうる. オープンリダイレクタとは正当性の確認をせずにパラメータで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.  
         <!--
           The authorization server authorization endpoint and the client redirection endpoint can
           be improperly configured and operate as open redirectors. An open redirector is an
