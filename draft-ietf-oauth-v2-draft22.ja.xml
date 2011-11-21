@@ -3391,9 +3391,9 @@
       </t>
     </section>
 
-    <section title='保護対象リソースへのアクセス<!-- Accessing Protected Resources -->' anchor='access-resource'>
+    <section title='保護されたリソースへのアクセス<!-- Accessing Protected Resources -->' anchor='access-resource'>
       <t>
-        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープの範囲内であることを確認しなければならない(MUST).アクセストークンを検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする. リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない(MUST). アクセストークン(同様にエラーレスポンス)を検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される. 
       <!--
         The client accesses protected resources by presenting the access token to the resource
         server. The resource server MUST validate the access token and ensure it has not expired
@@ -3404,7 +3404,7 @@
       -->
       </t>
       <t>
-        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンタイプに依存する.一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される.
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する. 一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される. 
       <!--
         The method in which the client utilized the access token to authenticate with the resource
         server depends on the type of access token issued by the authorization server. Typically,
@@ -3416,7 +3416,7 @@
 
       <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
         <t>
-          アクセストークンタイプにより, クライアントは保護対象リソースへの（型指定属性込みの）リクエスト時にアクセストークンを利用するために必要な情報を特定することができる.クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
+          アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する. クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT). 
         <!--
           The access token type provides the client with the information required to successfully
           utilize the access token to make a protected resource request (along with type-specific
@@ -3426,7 +3426,7 @@
         </t>
         <figure>
           <preamble>
-            例えば, <xref target='I-D.ietf-oauth-v2-bearer' />に定義される<spanx style='verb'>bearer</spanx>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる.
+            例えば, <xref target='I-D.ietf-oauth-v2-bearer' />に定義される<spanx style='verb'>bearer</spanx>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる. 
         <!--
             For example, the <spanx style='verb'>bearer</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-bearer' /> is utilized by simply including the access
@@ -3443,7 +3443,7 @@
         </figure>
         <figure>
           <preamble>
-            一方, <xref target='I-D.ietf-oauth-v2-http-mac' />に定義される<spanx style='verb'>mac</spanx>トークンタイプは, アクセストークンと共にMacキーをリクエストに含めて利用できる.このMackキーはHTTPリクエストの一部分を署名するのに利用される.
+            一方, <xref target='I-D.ietf-oauth-v2-http-mac' />に定義される<spanx style='verb'>mac</spanx>トークンタイプは, アクセストークンと共にMACキーをリクエストに含めて利用できる. このMACキーはHTTPリクエストの一部分を署名するのに利用される.
         <!-- 
             while the <spanx style='verb'>mac</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-http-mac' /> is utilized by issuing a MAC key
@@ -3470,7 +3470,7 @@
         -->
         </t>
         <t>
-          アクセストークンタイプでは, 必要な場合には<spanx style='verb'>access_token</spanx>レスポンス属性と共にクライアントに送り返す追加属性を定義することができる.また, 保護対象リソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義される.
+          各アクセストークンタイプ定義は, <spanx style='verb'>access_token</spanx>レスポンスパラメーターとともにクライアントへ送付される追加属性（もしあれば）を指定する. また, 保護されたリソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義する. 
         <!--
           Each access token type definition specifies the additional attributes (if any) sent to
           the client together with the <spanx style='verb'>access_token</spanx> response parameter.
@@ -3765,7 +3765,7 @@
     </section>
     <section title='Security Considerations'>
       <t>
-        柔軟で拡張可能なフレームワークとして, OAuthでセキュリティに関して配慮すべき点は多くの因子によって決まる. 以下のセクションでは実装者に<xref target='client-types' />にある, webアプリケーション, user-agentベースアプリケーション, ネイティブアプリケーションの３つのクライアントプロファイルにフォーカスを当てたセキュリティガイドラインを提供する.
+        柔軟で拡張可能なフレームワークであるため, OAuthでセキュリティに関して配慮すべき点は多くの因子によって決まる. 以下のセクションでは実装者に<xref target='client-types' />にある, webアプリケーション, ユーザーエージェントベースのアプリケーション, ネイティブアプリケーションの３つのクライアントプロファイルにフォーカスを当てたセキュリティーガイドラインを提供する.
       <!--
         As a flexible and extensible framework, OAuth's security considerations depend on many
         factors. The following sections provide implementers with security guidelines focused on
@@ -3774,7 +3774,7 @@
       -->
       </t>
       <t>
-        完全なOAuthのセキュリティモデルとその分析は, プロトコルデザインの背景と共に<xref target='I-D.ietf-oauth-v2-threatmodel' />で提供される.
+        より包括的なOAuthのセキュリティーモデルとその分析は, プロトコルデザインの背景と共に<xref target='I-D.ietf-oauth-v2-threatmodel' />で提供される.
       <!--
         A comprehensive OAuth security model and analysis, as well as background for the protocol
         design is provided by <xref target='I-D.ietf-oauth-v2-threatmodel' />.
@@ -3783,7 +3783,7 @@
 
       <section title='クライアント認証<!--Client Authentication-->'>
         <t>
-          認可サーバーはクライアント認証の目的でwebアプリケーションとの間で認証情報を確立する. 認可サーバーはクライアントパスワードより強度の高い認証手段を検討することが推奨される. Webアプリケーションはクライアントパスワードやクレデンシャルの機密性を保持しなければならない(MUST).
+          認可サーバーはクライアント認証の目的でwebアプリケーションとの間でクレデンシャルを確立する. 認可サーバーはクライアントパスワードより強度の高い認証手段を検討することが推奨される. webアプリケーションはクライアントパスワードやその他のクレデンシャルの機密性を保持しなければならない(MUST).
         <!--
           The authorization server establishes client credentials with web application clients for
           the purpose of client authentication. The authorization server is encouraged to consider
@@ -3792,7 +3792,7 @@
         -->
         </t>
         <t>
-          認可サーバーはクライアント認証の目的でネイティブアプリケーションやuser-agentを利用したアプリケーションにパスワードや他のクレデンシャルを発行するべきではありません(MUST NOT). 認証サーバーは特定デバイス上に特化してインストールされたネイティブアプリケーションに対しては, クライアントパスワード, もしくはその他のクレデンシャルを発行するかもしれません(MAY).
+          認可サーバーはクライアント認証の目的でネイティブアプリケーションやユーザーエージェントベースのアプリケーションにパスワードやその他のクレデンシャルを発行するべきではない(MUST NOT). 認可サーバーは特定デバイス上に特定の方法でインストールされたネイティブアプリケーションに対しては, クライアントパスワード, もしくはその他のクレデンシャルを発行してもよい(MAY).
         <!--
           The authorization server MUST NOT issue client passwords or other client credentials to
           native application or user-agent-based application clients for the purpose of client
@@ -3801,7 +3801,7 @@
         -->
         </t>
         <t>
-          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティ認証のために他の手段を採用すべきです(SHOULD). 例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティ確認などです. エンドユーザーの認可時のクライアント認証ではリダイレクトURIの確認だけでは不十分ですが, エンドユーザの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる.
+          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティー検証のために他の手段を採用すべきである(SHOULD). 例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティー確認が考えられる. 有効なリダイレクトURIは, それ単体でエンドユーザーの認可時にクライアントのアイデンティティーを証明するには至らないが, エンドユーザーの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる. 
         <!--
           When client authentication is not possible, the authorization server SHOULD employ other
           means to validate the client's identity. For example, by requiring the registration of
@@ -3812,7 +3812,7 @@
         -->
         </t>
         <t>
-          認可サーバーは認証されていないクライアントとの通信によるセキュリティ影響を考慮しなけれならない. そして, そのようなクライアントに対するフレッシュトークンなどの他のクレデンシャルの開示を制限するための措置をとらなければならない.
+          認可サーバーは認証されていないクライアントとの通信によるセキュリティ上の影響を考慮しなけれならない. そして, そのようなクライアントに対するリフレッシュトークンなどの他のクレデンシャルの開示を制限するための措置をとらなければならない.
         <!--
           The authorization server must consider the security implications of interacting with
           unauthenticated clients and take measures to limit the potential exposure of other
@@ -4276,7 +4276,7 @@
 
       <section title='オープンリダイレクタ<!--Open Redirectors-->' anchor='open-redirect'>
         <t>
-          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作する. オープンリダイレクタは正当性の確認をせずにパラメータで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.  
+          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作しうる. オープンリダイレクタとは正当性の確認をせずにパラメータで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.  
         <!--
           The authorization server authorization endpoint and the client redirection endpoint can
           be improperly configured and operate as open redirectors. An open redirector is an
@@ -4905,72 +4905,109 @@
 
       </section>
 
-      <section title='The OAuth Extensions Error Registry' anchor='error-registry'>
+      <section title='OAuth拡張エラーレジストリー<!--The OAuth Extensions Error Registry-->' anchor='error-registry'>
         <t>
+        本仕様では, OAuth拡張エラーレジストリーを定める.
+          <!--
           This specification establishes the OAuth extensions error registry.
+          -->
         </t>
         <t>
+        他のプロトコル拡張(例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーター)で利用される追加のエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される 
+          (以降, 文中の専門用語については<xref target='RFC5226' />を参照のこと). しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+          <!--
           Additional error codes used together with other protocol extensions (i.e. extension grant
           types, access token types, or extension parameters) are registered on the advice of one
           or more Designated Experts (appointed by the IESG or their delegate), with a
           Specification Required (using terminology from <xref target='RFC5226' />). However, to
           allow for the allocation of values prior to publication, the Designated Expert(s) may
           approve registration once they are satisfied that such a specification will be published.
+        　-->
         </t>
         <t>
+        登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. 
+          [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
+          <!--
           Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
           comment, with an appropriate subject (e.g., "Request for error code: example").
           [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
           with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+          -->
         </t>
         <t>
+        Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
+          要請が拒否された場合は, その理由が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+          <!--
           Within at most 14 days of the request, the Designated Expert(s) will either approve or
           deny the registration request, communicating this decision to the review list and IANA.
           Denials should include an explanation and, if applicable, suggestions as to how to make
           the request successful.
+          -->
         </t>
         <t>
+        Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. 
+          また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
+          <!--
           Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
           Application Area Directors (contactable using app-ads@tools.ietf.org email address or
           directly by looking up their email addresses on http://www.iesg.org/ website) and, if the
           appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org
           mailing list).
+          -->
         </t>
         <t>
+        IANA は, Designated Experts によるすべてのレジストリー更新要請を承認し, すべての登録要請をレビューメーリングリストに送信するべきである.
+          <!--
           IANA should only accept registry updates from the Designated Expert(s), and should direct
           all requests for registration to the review mailing list.
+          -->
         </t>
 
-        <section title='Registration Template'>
+        <section title='レジストリーテンプレート<!--Registration Template-->'>
           <t>
             <list style='hanging'>
               <t hangText='Error name:'>
                 <vspace />
+                名称 (例: "example").
+                <!--
                 The name requested (e.g., "example").
+                -->
               </t>
               <t hangText='Error usage location:'>
                 <vspace />
+                エラーが利用できる箇所. 想定される箇所は以下の通り: 認可コード付与エラーレスポンス(<xref target='code-authz-error' />), インプリシット付与エラーレスポンス(<xref target='implicit-authz-error' />), トークンエラーレスポンス(<xref target='token-errors' />). 
+                <!--
                 The location(s) where the error can be used. The possible locations are:
                 authorization code grant error response (<xref target='code-authz-error' />),
                 implicit grant error response (<xref target='implicit-authz-error' />), or token
                 error response (<xref target='token-errors' />).
+                -->
               </t>
               <t hangText='Related protocol extension:'>
                 <vspace />
+                エラーコードと共に用いられる拡張グラントタイプ名, アクセストークンタイプ名,もしくは拡張パラメーター名を記載する. 
+                <!--
                 The name of the extension grant type, access token type, or extension parameter,
                 the error code is used in conjunction with.
+                -->
               </t>
               <t hangText='Change controller:'>
                 <vspace />
+                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい. 
+                <!--
                 For standards-track RFCs, state "IETF". For others, give the name of the
                 responsible party. Other details (e.g., postal address, e-mail address, home page
                 URI) may also be included.
+                -->
               </t>
               <t hangText='Specification document(s):'>
                 <vspace />
+                エラーコード仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできるURIが記載されていることが望ましい. 明確な記載箇所への参照が含まれることが望ましいが必須ではない.
+                <!--
                 Reference to the document that specifies the error code, preferably including a URI
                 that can be used to retrieve a copy of the document. An indication of the relevant
                 sections may also be included, but is not required.
+                -->
               </t>
             </list>
           </t>
