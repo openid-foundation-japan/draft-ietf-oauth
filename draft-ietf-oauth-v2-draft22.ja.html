@@ -145,9 +145,9 @@
 <tr><td class="header">Internet-Draft</td><td class="header">Yahoo!</td></tr>
 <tr><td class="header">Obsoletes: <a href='http://tools.ietf.org/html/rfc5849'>5849</a> (if&nbsp;approved)</td><td class="header">D. Recordon</td></tr>
 <tr><td class="header">Intended status: Standards Track</td><td class="header">Facebook</td></tr>
-<tr><td class="header">Expires: May 24, 2012</td><td class="header">D. Hardt</td></tr>
+<tr><td class="header">Expires: May 25, 2012</td><td class="header">D. Hardt</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Microsoft</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">November 21, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">November 22, 2011</td></tr>
 </table></td></tr></table>
 <h1><br />The OAuth 2.0 Authorization Protocol<br />draft-ietf-oauth-v2-22</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on May 24, 2012.</p>
+This Internet-Draft will expire on May 25, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -212,7 +212,7 @@ described in the Simplified BSD License.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor10">1.5.</a>&nbsp;
 リフレッシュトークン<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor11">1.6.</a>&nbsp;
-Notational Conventions<br />
+表記規約<br />
 <a href="#anchor12">2.</a>&nbsp;
 クライアント登録<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#client-types">2.1.</a>&nbsp;
@@ -226,7 +226,7 @@ Notational Conventions<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor14">2.3.2.</a>&nbsp;
 その他の認証方式<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor15">2.4.</a>&nbsp;
-Unregistered Clients<br />
+未登録クライアント<br />
 <a href="#anchor16">3.</a>&nbsp;
 プロトコルエンドポイント<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor17">3.1.</a>&nbsp;
@@ -236,7 +236,7 @@ Unregistered Clients<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#redirect-uri">3.1.2.</a>&nbsp;
 リダイレクションエンドポイント<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor24">3.2.</a>&nbsp;
-Token Endpoint<br />
+トークンエンドポイント<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#token-endpoint-auth">3.2.1.</a>&nbsp;
 クライアント認証<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#scope">3.3.</a>&nbsp;
@@ -264,9 +264,9 @@ Token Endpoint<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor30">4.3.1.</a>&nbsp;
 認可リクエストとレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor31">4.3.2.</a>&nbsp;
-Access Token Request<br />
+アクセストークンリクエスト<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor32">4.3.3.</a>&nbsp;
-Access Token Response<br />
+アクセストークンレスポンス<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-client">4.4.</a>&nbsp;
 クライアントクレデンシャル<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor33">4.4.1.</a>&nbsp;
@@ -727,7 +727,7 @@ Authors' Addresses<br />
 <a name="anchor11"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.1.6"></a><h3>1.6.&nbsp;
-Notational Conventions</h3>
+表記規約</h3>
 
 <p>
           本仕様書で用いられる各キーワード「MUST (しなければならない)」, 「MUST NOT (してはならない)」, 「REQUIRED (必須である)」, 「SHALL (するものとする)」, 「SHALL NOT (しないものとする)」, 「SHOULD (すべきである)」, 「SHOULD NOT (すべきではない)」, 「RECOMMENDED (推奨される)」, 「MAY (してもよい)」, 「OPTIONAL (任意である)」は <a class='info' href='#RFC2119'>[RFC2119]<span> (</span><span class='info'>Bradner, S., &ldquo;Key words for use in RFCs to Indicate Requirement Levels,&rdquo; March&nbsp;1997.</span><span>)</span></a> で述べられている通りに解釈されるべきものである.
@@ -952,7 +952,7 @@ Notational Conventions</h3>
 <a name="anchor15"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.2.4"></a><h3>2.4.&nbsp;
-Unregistered Clients</h3>
+未登録クライアント</h3>
 
 <p>
           この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合, このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
@@ -1063,7 +1063,7 @@ Unregistered Clients</h3>
             
 </p>
 <p>
-              トランスポート層のセキュリティの欠如はクライアントとアクセス認証された保護リソース上で深刻な影響を及ぼす. トランスポート層のセキュリティを使用することは、認可プロセスがクライアントによってエンドユーザ認証の委譲された形式で使用される場合特に重要である（例えばサードパーティサインインサービス）.
+              トランスポート層のセキュリティの欠如はクライアントとアクセス認証された保護リソース上で深刻な影響を及ぼす. トランスポート層のセキュリティを使用することは, 認可プロセスがクライアントによってエンドユーザ認証の委譲された形式で使用される場合特に重要である（例えばサードパーティサインインサービス）.
             
 </p>
 <a name="anchor20"></a><br /><hr />
@@ -1143,46 +1143,30 @@ Unregistered Clients</h3>
 <a name="anchor24"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
-Token Endpoint</h3>
+トークンエンドポイント</h3>
 
 <p>
-          The token endpoint is used by the client to obtain an access token by presenting its
-          authorization grant or refresh token. The token endpoint is used with every authorization
-          grant except for the implicit grant type (since an access token is issued directly).
+          トークンエンドポイントはクライアントが自身が認可提示することでのアクセストークン取得やトークン更新に利用される. トークンエンドポイントはインプリシット認可タイプを除く全ての認可タイプで利用される（アクセストークンは直接発行されるため）. 
         
 </p>
 <p>
-          The means through which the client obtains the location of the token endpoint are
-          beyond the scope of this specification but is typically provided in the service
-          documentation.
+          クライアントがトークンエンドポイントの所在を取得する方法についてはこの仕様の範囲外であるが, 通常はサービス文書中に記載されている. 
         
 </p>
 <p>
-          The endpoint URI MAY include an
-          <tt>application/x-www-form-urlencoded</tt> formatted
-          (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) query component (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>
-          section 3.4), which MUST be retained when adding additional query parameters. The
-          endpoint URI MUST NOT include a fragment component.
+          エンドポイントURIには<tt>application/x-www-form-urlencoded</tt> (<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>) で定義されるフォーマットのクエリ部 (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> 3.4章)が含まれていてもよい（MAY）. クエリパラメータが追加される際, そのクエリ部は維持されなければならない（MUST）. エンドポイントURIにはフラグメント部を含んではならない（MUST）. 
         
 </p>
 <p>
-          Since requests to the token endpoint result in the transmission of clear-text credentials
-          (in the HTTP request and response), the authorization server MUST require the use of a
-          transport-layer security mechanism when sending requests to the token endpoint. The
-          authorization server MUST support TLS 1.0 (<a class='info' href='#RFC2246'>[RFC2246]<span> (</span><span class='info'>Dierks, T. and C. Allen, &ldquo;The TLS Protocol Version 1.0,&rdquo; January&nbsp;1999.</span><span>)</span></a>), SHOULD support TLS
-          1.2 (<a class='info' href='#RFC5246'>[RFC5246]<span> (</span><span class='info'>Dierks, T. and E. Rescorla, &ldquo;The Transport Layer Security (TLS) Protocol Version 1.2,&rdquo; August&nbsp;2008.</span><span>)</span></a>) and its future replacements, and MAY support additional
-          transport-layer mechanisms meeting its security requirements.
+          トークンエンドポイントへのリクエストが平文で（HTTPリクエストおよびレスポンスにて）転送することになるため, 認可サーバーはトークンエンドポイントへリクエストを送信する際にTLSの仕組みを利用しなくてはならない（MUST）. 認可サーバーはTLS 1.0(<a class='info' href='#RFC2246'>[RFC2246]<span> (</span><span class='info'>Dierks, T. and C. Allen, &ldquo;The TLS Protocol Version 1.0,&rdquo; January&nbsp;1999.</span><span>)</span></a>)をサポートしなくてはならない（MUST）. 認可サーバーはTLS 1.2(<a class='info' href='#RFC5246'>[RFC5246]<span> (</span><span class='info'>Dierks, T. and E. Rescorla, &ldquo;The Transport Layer Security (TLS) Protocol Version 1.2,&rdquo; August&nbsp;2008.</span><span>)</span></a>)とその後継のプロトコルもサポートするべきである（SHOULD）. また, 認可サーバーは自身のセキュリティ要件を満たす追加のトランスポート層の仕組みをサポートしてもよい（MAY）. 
         
 </p>
 <p>
-          The client MUST use the HTTP <tt>POST</tt> method when making access
-          token requests.
+          クライアントはアクセストークンリクエストを送信する際に, HTTP <tt>POST</tt>メソッドを使用しなければならない（MUST）. 
         
 </p>
 <p>
-          Parameters sent without a value MUST be treated as if they were omitted from the request.
-          The authorization server SHOULD ignore unrecognized request parameters. Request and
-          response parameters MUST NOT be included more than once.
+          空の値で送信されたパラメータは省略されたものとして扱われなければならない（MUST）. 認可サーバーは未知のリクエストパラメータは無視するべきである（SHOULD）. リクエストおよびレスポンスパラメータは２つ以上含めてはならない（MUST NOT）. 
         
 </p>
 <a name="token-endpoint-auth"></a><br /><hr />
@@ -1287,7 +1271,7 @@ Token Endpoint</h3>
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;3: 認可コード処理フロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          <a class='info' href='#Figure-3'>Figure&nbsp;3<span> (</span><span class='info'>認可コード処理フロー</span><span>)</span></a>で示した図は、次のステップを含む:
+          <a class='info' href='#Figure-3'>Figure&nbsp;3<span> (</span><span class='info'>認可コード処理フロー</span><span>)</span></a>で示した図は, 次のステップを含む:
         
 </p>
 <p>
@@ -1295,27 +1279,27 @@ Token Endpoint</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              クライアントはリソースオーナーのユーザーエージェントを認可エンドポイントに向かわせることで処理が開始される．クライアントには，クライアント識別子、リクエストスコープ，ローカルステート，および認可サーバーがユーザーエージェントに対して一度許諾された場合（もしくは拒否された場合）に処理を戻すためのリダイレクトURIを含む．
+              クライアントはリソースオーナーのユーザーエージェントを認可エンドポイントに向かわせることで処理が開始される．クライアントには，クライアント識別子, リクエストスコープ，ローカルステート，および認可サーバーがユーザーエージェントに対して一度許諾された場合（もしくは拒否された場合）に処理を戻すためのリダイレクトURIを含む．
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              認可サーバーは（ユーザーエージェントを通して）リソースオーナーを認証し、リソースオーナーを許諾するか拒否するかを決定する。
+              認可サーバーは（ユーザーエージェントを通して）リソースオーナーを認証し, リソースオーナーを許諾するか拒否するかを決定する. 
             
 </dd>
 <dt>(C)</dt>
 <dd>
-              リソースオーナーが許諾された場合、認可サーバーは予め与えられていたリダイレクトURI(リクエストもしくはクライアント登録時に指定されている)を用いてリダイレクト処理を行ってクライアントのユーザーエージェントが向く方向を変える。リダイレクトURIには、認可コード、クライアントから事前に送られたローカルステートが含まれる。
+              リソースオーナーが許諾された場合, 認可サーバーは予め与えられていたリダイレクトURI(リクエストもしくはクライアント登録時に指定されている)を用いてリダイレクト処理を行ってクライアントのユーザーエージェントが向く方向を変える. リダイレクトURIには, 認可コード, クライアントから事前に送られたローカルステートが含まれる. 
             
 </dd>
 <dt>(D)</dt>
 <dd>
-              クライアントは前のステップで取得した認可コードを認可サーバーのトークンエンドポイントに送ることでアクセストークンを要求する。リクエストが処理されるとき、クライアントは認可サーバーによって認証される。クライアントには検証のため、認可コードを取得した際に使用したリダイレクトURIを含めておく。
+              クライアントは前のステップで取得した認可コードを認可サーバーのトークンエンドポイントに送ることでアクセストークンを要求する. リクエストが処理されるとき, クライアントは認可サーバーによって認証される. クライアントには検証のため, 認可コードを取得した際に使用したリダイレクトURIを含めておく. 
             
 </dd>
 <dt>(E)</dt>
 <dd>
-              認可サーバーはクライアントを認証し、認可コードを検証し、受け取ったリダイレクトURIがステップ(C)で使用したURIと同一であることを確かめる。その結果、正当である場合、認可サーバーはアクセストークンと任意でリフレッシュトークンを返却する．
+              認可サーバーはクライアントを認証し, 認可コードを検証し, 受け取ったリダイレクトURIがステップ(C)で使用したURIと同一であることを確かめる. その結果, 正当である場合, 認可サーバーはアクセストークンと任意でリフレッシュトークンを返却する．
             
 </dd>
 </dl></blockquote><p>
@@ -1327,7 +1311,7 @@ Token Endpoint</h3>
 認可リクエスト</h3>
 
 <p>
-            クライアントは、<a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
+            クライアントは, <a class='info' href='#W3C.REC-html401-19991224'>[W3C.REC&#8209;html401&#8209;19991224]<span> (</span><span class='info'>Raggett, D., Hors, A., and I. Jacobs, &ldquo;HTML 4.01 Specification,&rdquo; December&nbsp;1999.</span><span>)</span></a>で規定された<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメータを付与する. 
           
 </p>
 <p>
@@ -1354,7 +1338,7 @@ Token Endpoint</h3>
 <dt>scope</dt>
 <dd>
                 
-                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>を参照のこと.
+                任意(OPTIONAL). リクエストスコープについては, <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>state</dt>
@@ -1371,7 +1355,7 @@ Token Endpoint</h3>
           
 </p>
 <p>
-              例えば、クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
+              例えば, クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1381,11 +1365,11 @@ Token Endpoint</h3>
 
 </pre></div>
 <p>
-            認可サーバーは必要なリクエストパラメータがすべて揃っていて、かつ正当であることを検証する．もしリクエストが正当なものであれば、認可サーバーはリソースオーナーを認証し、（リソースオーナーに確認することによって、または他の手段によって承認を確立することによって）認可の判定を得る．
+            認可サーバーは必要なリクエストパラメータがすべて揃っていて, かつ正当であることを検証する．もしリクエストが正当なものであれば, 認可サーバーはリソースオーナーを認証し, （リソースオーナーに確認することによって, または他の手段によって承認を確立することによって）認可の判定を得る．
           
 </p>
 <p>
-            判定が成立したとき、HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて、認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
+            判定が成立したとき, HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて, 認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
           
 </p>
 <a name="anchor26"></a><br /><hr />
@@ -1394,7 +1378,7 @@ Token Endpoint</h3>
 認可レスポンス</h3>
 
 <p>
-            リソースオーナーがアクセスリクエストを許諾した場合、認可サーバーは認可コードを発行し、<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIのクエリーに次のパラメータを付与してクライアントに送る．
+            リソースオーナーがアクセスリクエストを許諾した場合, 認可サーバーは認可コードを発行し, <tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIのクエリーに次のパラメータを付与してクライアントに送る．
           
 </p>
 <p>
@@ -1403,7 +1387,7 @@ Token Endpoint</h3>
 <dt>code</dt>
 <dd>
                 
-                必須(REQUIRED). 認可コードは認可サーバーによって許諾される．漏洩のリスクを軽減するため、認可コードは発行されてから短期間で無効にしなければならない(MUST)．認可コードの有効期限は最大でも10分を推奨する(RECOMMENDED)．クライアントは2回以上認可コードを使用してはならない(MUST NOT)．もし認可コードが2回以上使用された場合は、認可サーバーはリクエストを拒否しなければならず(MUST)、この認可コードを基に発行されたこれまでのすべてのトークンを無効化すべきである(SHOULD)．認可コードはクライアント識別子とリダイレクトURIに紐づく．
+                必須(REQUIRED). 認可コードは認可サーバーによって許諾される．漏洩のリスクを軽減するため, 認可コードは発行されてから短期間で無効にしなければならない(MUST)．認可コードの有効期限は最大でも10分を推奨する(RECOMMENDED)．クライアントは2回以上認可コードを使用してはならない(MUST NOT)．もし認可コードが2回以上使用された場合は, 認可サーバーはリクエストを拒否しなければならず(MUST), この認可コードを基に発行されたこれまでのすべてのトークンを無効化すべきである(SHOULD)．認可コードはクライアント識別子とリダイレクトURIに紐づく．
               
 </dd>
 <dt>state</dt>
@@ -1416,7 +1400,7 @@ Token Endpoint</h3>
           
 </p>
 <p>
-              例えば、認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
+              例えば, 認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1435,11 +1419,11 @@ Token Endpoint</h3>
 エラーレスポンス</h3>
 
 <p>
-              リクエストが欠けていたり、不正であったり、リダイレクトURIとマッチしない場合、もしくはクライアント識別子が不正な場合は、認可サーバーはリソースオーナーにエラーを通知すべきである(SHOULD)．そして、不正なリダイレクトURIを用いてユーザーエージェントを自動的にリダイレクトさせてはならない(MUST NOT)．
+              リクエストが欠けていたり, 不正であったり, リダイレクトURIとマッチしない場合, もしくはクライアント識別子が不正な場合は, 認可サーバーはリソースオーナーにエラーを通知すべきである(SHOULD)．そして, 不正なリダイレクトURIを用いてユーザーエージェントを自動的にリダイレクトさせてはならない(MUST NOT)．
             
 </p>
 <p>
-              リソースオーナーがアクセス要求を拒否した場合、もしくはリダイレクトURIが欠けたり不正な場合以外でリクエスト処理に失敗した場合は、認可サーバーは<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIに次のようなクエリーパラメータを付与してクライアントに返却する．
+              リソースオーナーがアクセス要求を拒否した場合, もしくはリダイレクトURIが欠けたり不正な場合以外でリクエスト処理に失敗した場合は, 認可サーバーは<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIに次のようなクエリーパラメータを付与してクライアントに返却する．
             
 </p>
 <p>
@@ -1456,13 +1440,13 @@ Token Endpoint</h3>
 <dt>invalid_request</dt>
 <dd>
                       
-                      リクエストに必須パラメータが不足していた場合．サポート外のパラメータが付与されていた場合や、その他不正な形式であった場合もこれに含まれる．
+                      リクエストに必須パラメータが不足していた場合．サポート外のパラメータが付与されていた場合や, その他不正な形式であった場合もこれに含まれる．
                     
 </dd>
 <dt>unauthorized_client</dt>
 <dd>
                       
-                      認可コード取得時、クライアントが認証されなかった場合．
+                      認可コード取得時, クライアントが認証されなかった場合．
                     
 </dd>
 <dt>access_denied</dt>
@@ -1480,7 +1464,7 @@ Token Endpoint</h3>
 <dt>invalid_scope</dt>
 <dd>
                       
-                      リクエストスコープが不正、未知、もしくはその他の不当な形式の場合．
+                      リクエストスコープが不正, 未知, もしくはその他の不当な形式の場合．
                     
 </dd>
 <dt>server_error</dt>
@@ -1501,13 +1485,13 @@ Token Endpoint</h3>
 <dt>error_description</dt>
 <dd>
                   
-                  任意(OPTIONAL). 発生したエラーの内容をクライアント開発者が理解するのを補助するため、追加の情報を人間が読める形式でUTF-8で記載する．
+                  任意(OPTIONAL). 発生したエラーの内容をクライアント開発者が理解するのを補助するため, 追加の情報を人間が読める形式でUTF-8で記載する．
                 
 </dd>
 <dt>error_uri</dt>
 <dd>
                   
-                  任意(OPTIONAL). クライアント開発者がエラーに関する追加の情報を得るための、人間が読めるエラーに関するWebページのURI．
+                  任意(OPTIONAL). クライアント開発者がエラーに関する追加の情報を得るための, 人間が読めるエラーに関するWebページのURI．
                 
 </dd>
 <dt>state</dt>
@@ -1520,7 +1504,7 @@ Token Endpoint</h3>
             
 </p>
 <p>
-                例えば、認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
+                例えば, 認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
               
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1534,7 +1518,7 @@ Token Endpoint</h3>
 アクセストークンリクエスト</h3>
 
 <p>
-            クライアントはトークンエンドポイントに対して、次のようなパラメータを付与してリクエストを送信する．リクエストはHTTPリクエストのエンティティボディに<tt>application/x-www-form-urlencoded</tt>フォーマットで記載する．
+            クライアントはトークンエンドポイントに対して, 次のようなパラメータを付与してリクエストを送信する．リクエストはHTTPリクエストのエンティティボディに<tt>application/x-www-form-urlencoded</tt>フォーマットで記載する．
           
 </p>
 <p>
@@ -1555,18 +1539,18 @@ Token Endpoint</h3>
 <dt>redirect_uri</dt>
 <dd>
                 
-                <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a>で示す認可リクエストに、<tt>redirect_uri</tt>パラメータが含まれていた場合は必須(REQUIRED)．その値をそのまま付与しなくてはいけない(MUST)．
+                <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a>で示す認可リクエストに, <tt>redirect_uri</tt>パラメータが含まれていた場合は必須(REQUIRED)．その値をそのまま付与しなくてはいけない(MUST)．
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            クライアントの種別が秘密の場合か、クライアントがクライアントクレデンシャル（またはその他の認証要求）によって発行されている場合、クライアントは<a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>クライアント認証</span><span>)</span></a>に示されているとおり認可サーバーによって認証しなければならない(MUST)．
+            クライアントの種別が秘密の場合か, クライアントがクライアントクレデンシャル（またはその他の認証要求）によって発行されている場合, クライアントは<a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>クライアント認証</span><span>)</span></a>に示されているとおり認可サーバーによって認証しなければならない(MUST)．
           
 </p>
 <p>
-              例えば、クライアントは次のようなHTTPリクエストをTLSを用いて送信する(改行は掲載上の都合による)．
+              例えば, クライアントは次のようなHTTPリクエストをTLSを用いて送信する(改行は掲載上の都合による)．
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1587,19 +1571,19 @@ Token Endpoint</h3>
             </p>
 <ul class="text">
 <li>
-                認可サーバーは、機密のクライアント、あるいはクライアントクレデンシャル(あるいは他の認証必要条件)を発行したあらゆるクライアントのため、クライアント認証を要求しなくてはいけない(MUST)．
+                認可サーバーは, 機密のクライアント, あるいはクライアントクレデンシャル(あるいは他の認証必要条件)を発行したあらゆるクライアントのため, クライアント認証を要求しなくてはいけない(MUST)．
               
 </li>
 <li>
-                認可サーバーは、クライアント認証が含まれていた場合はクライアントを認証し、認可コードを認証したクライアントに対して発行する．
+                認可サーバーは, クライアント認証が含まれていた場合はクライアントを認証し, 認可コードを認証したクライアントに対して発行する．
               
 </li>
 <li>
-                認可サーバーは認可コードが正当であることを検証し、そして、
+                認可サーバーは認可コードが正当であることを検証し, そして, 
               
 </li>
 <li>
-                認可サーバーは、<a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a>に示すように最初の認可リクエストに<tt>redirect_uri</tt>が含まれていた場合は、<tt>redirect_uri</tt>が全く同一であることを保証する．
+                認可サーバーは, <a class='info' href='#code-authz-req'>Section&nbsp;4.1.1<span> (</span><span class='info'>認可リクエスト</span><span>)</span></a>に示すように最初の認可リクエストに<tt>redirect_uri</tt>が含まれていた場合は, <tt>redirect_uri</tt>が全く同一であることを保証する．
               
 </li>
 </ul><p>
@@ -1611,7 +1595,7 @@ Token Endpoint</h3>
 アクセストークンレスポンス</h3>
 
 <p>
-            アクセストークンリクエストが正当かつ認可された場合、認可サーバーは<a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>に示すとおりアクセストークンと任意でリフレッシュトークンを発行する．もしクライアント認証リクエストが失敗もしくは不正だった場合、認可サーバーは<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>に示すとおりエラーレスポンスを返却する．
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは<a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>に示すとおりアクセストークンと任意でリフレッシュトークンを発行する．もしクライアント認証リクエストが失敗もしくは不正だった場合, 認可サーバーは<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>に示すとおりエラーレスポンスを返却する．
           
 </p>
 <p>
@@ -1738,7 +1722,7 @@ Token Endpoint</h3>
 認可リクエスト</h3>
 
 <p>
-            クライアントは、<tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして、次のパラメータを付与する。
+            クライアントは, <tt>application/x-www-form-urlencoded</tt>フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメータを付与する. 
           
 </p>
 <p>
@@ -1765,7 +1749,7 @@ Token Endpoint</h3>
 <dt>scope</dt>
 <dd>
                 
-                任意(OPTIONAL). リクエストスコープについては、<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>を参照のこと.
+                任意(OPTIONAL). リクエストスコープについては, <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>を参照のこと.
               
 </dd>
 <dt>state</dt>
@@ -1782,7 +1766,7 @@ Token Endpoint</h3>
           
 </p>
 <p>
-              例えば、クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
+              例えば, クライアントは次のHTTPリクエストをTLSを用いてユーザーエージェントから送信する(改行は掲載上の都合による).
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1800,7 +1784,7 @@ Token Endpoint</h3>
           
 </p>
 <p>
-            判定が成立したとき、HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて、認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
+            判定が成立したとき, HTTPリダイレクトレスポンスまたはユーザーエージェントを介して利用可能な方法を用いて, 認可サーバーは与えられていたリダイレクトURIにユーザーエージェントを向ける．
           
 </p>
 <a name="anchor29"></a><br /><hr />
@@ -1809,7 +1793,7 @@ Token Endpoint</h3>
 アクセストークンレスポンス</h3>
 
 <p>
-            リソースオーナーがアクセスリクエストを許諾した場合、認可サーバーはアクセストークンを発行し、<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIの断片に次のパラメータを付与してクライアントに送る．
+            リソースオーナーがアクセスリクエストを許諾した場合, 認可サーバーはアクセストークンを発行し, <tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIの断片に次のパラメータを付与してクライアントに送る．
           
 </p>
 <p>
@@ -1876,11 +1860,11 @@ Token Endpoint</h3>
 エラーレスポンス</h3>
 
 <p>
-              リクエストが欠けていたり、不正であったり、リダイレクトURIとマッチしない場合、もしくはクライアント識別子が不正な場合は、認可サーバーはリソースオーナーにエラーを通知すべきである(SHOULD)．そして、不正なリダイレクトURIを用いてユーザーエージェントを自動的にリダイレクトさせてはならない(MUST NOT)．
+              リクエストが欠けていたり, 不正であったり, リダイレクトURIとマッチしない場合, もしくはクライアント識別子が不正な場合は, 認可サーバーはリソースオーナーにエラーを通知すべきである(SHOULD)．そして, 不正なリダイレクトURIを用いてユーザーエージェントを自動的にリダイレクトさせてはならない(MUST NOT)．
             
 </p>
 <p>
-              リソースオーナーがアクセス要求を拒否した場合、もしくはリダイレクトURIが欠けたり不正な場合以外でリクエスト処理に失敗した場合は、認可サーバーは<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIに次のようなフラグメントを付与してクライアントに返却する．
+              リソースオーナーがアクセス要求を拒否した場合, もしくはリダイレクトURIが欠けたり不正な場合以外でリクエスト処理に失敗した場合は, 認可サーバーは<tt>application/x-www-form-urlencoded</tt>フォーマットを用いてリダイレクトURIに次のようなフラグメントを付与してクライアントに返却する．
             
 </p>
 <p>
@@ -1897,13 +1881,13 @@ Token Endpoint</h3>
 <dt>invalid_request</dt>
 <dd>
                       
-                      リクエストに必須パラメータが不足していた場合．サポート外のパラメータが付与されていた場合や、その他不正な形式であった場合もこれに含まれる．
+                      リクエストに必須パラメータが不足していた場合．サポート外のパラメータが付与されていた場合や, その他不正な形式であった場合もこれに含まれる．
                     
 </dd>
 <dt>unauthorized_client</dt>
 <dd>
                       
-                      認可コード取得時、クライアントが認証されなかった場合．
+                      認可コード取得時, クライアントが認証されなかった場合．
                     
 </dd>
 <dt>access_denied</dt>
@@ -1921,7 +1905,7 @@ Token Endpoint</h3>
 <dt>invalid_scope</dt>
 <dd>
                       
-                      リクエストスコープが不正、未知、もしくはその他の不当な形式の場合．
+                      リクエストスコープが不正, 未知, もしくはその他の不当な形式の場合．
                     
 </dd>
 <dt>server_error</dt>
@@ -1942,13 +1926,13 @@ Token Endpoint</h3>
 <dt>error_description</dt>
 <dd>
                   
-                  任意(OPTIONAL). 発生したエラーの内容をクライアント開発者が理解するのを補助するため、追加の情報を人間が読める形式でUTF-8で記載する．
+                  任意(OPTIONAL). 発生したエラーの内容をクライアント開発者が理解するのを補助するため, 追加の情報を人間が読める形式でUTF-8で記載する．
                 
 </dd>
 <dt>error_uri</dt>
 <dd>
                   
-                  任意(OPTIONAL). クライアント開発者がエラーに関する追加の情報を得るための、人間が読めるエラーに関するWebページのURI．
+                  任意(OPTIONAL). クライアント開発者がエラーに関する追加の情報を得るための, 人間が読めるエラーに関するWebページのURI．
                 
 </dd>
 <dt>state</dt>
@@ -1961,7 +1945,7 @@ Token Endpoint</h3>
             
 </p>
 <p>
-                例えば、認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
+                例えば, 認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する．
               
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1975,11 +1959,11 @@ Token Endpoint</h3>
 リソースオーナーパスワードクレデンシャル</h3>
 
 <p>
-          リソースオーナーパスワードクレデンシャル認可は、リソースオーナーがクライアントと信頼関係にある場合、たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している。認可サーバーはこの認可タイプを有効にする際は特に注意するべきである。また他のフローが利用できない場合にのみ許可するべきである。
+          リソースオーナーパスワードクレデンシャル認可は, リソースオーナーがクライアントと信頼関係にある場合, たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している. 認可サーバーはこの認可タイプを有効にする際は特に注意するべきである. また他のフローが利用できない場合にのみ許可するべきである. 
         
 </p>
 <p>
-          リソースオーナーのクレデンシャル（通常は対話型入力フォームにて取得するユーザー名とパスワード）を取得する機能を有するクライアントに適した認可タイプである。既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを、保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる。
+          リソースオーナーのクレデンシャル（通常は対話型入力フォームにて取得するユーザー名とパスワード）を取得する機能を有するクライアントに適した認可タイプである. 既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを, 保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる. 
         
 </p><br /><hr class="insert" />
 <a name="Figure-5"></a>
@@ -2006,7 +1990,7 @@ Token Endpoint</h3>
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;5: リソースオーナーパスワードクレデンシャルのフロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>リソースオーナーパスワードクレデンシャルのフロー</span><span>)</span></a> に示されるフローは以下の手順を含む。
+          <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>リソースオーナーパスワードクレデンシャルのフロー</span><span>)</span></a> に示されるフローは以下の手順を含む. 
         
 </p>
 <p>
@@ -2014,17 +1998,17 @@ Token Endpoint</h3>
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              リソースオーナーはクライアントにユーザー名とパスワードを提供する。
+              リソースオーナーはクライアントにユーザー名とパスワードを提供する. 
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する。リクエストを生成する際に、クライアントは認可サーバーによって認証される。
+              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する. リクエストを生成する際に, クライアントは認可サーバーによって認証される. 
             
 </dd>
 <dt>(C)</dt>
 <dd>
-              認可サーバーはクライアントを認証し、リソースオーナーのクレデンシャルを検証する。もし有効であればアクセストークンを発行する。
+              認可サーバーはクライアントを認証し, リソースオーナーのクレデンシャルを検証する. もし有効であればアクセストークンを発行する. 
             
 </dd>
 </dl></blockquote><p>
@@ -2036,18 +2020,16 @@ Token Endpoint</h3>
 認可リクエストとレスポンス</h3>
 
 <p>
-            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である。クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない（MUST）。
+            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である. クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない（MUST）. 
           
 </p>
 <a name="anchor31"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.3.2"></a><h3>4.3.2.&nbsp;
-Access Token Request</h3>
+アクセストークンリクエスト</h3>
 
 <p>
-            The client makes a request to the token endpoint by adding the following parameters
-            using the <tt>application/x-www-form-urlencoded</tt> format in the
-            HTTP request entity-body:
+            クライアントは, 下記のパラメーターを<tt>application/x-www-form-urlencoded</tt>フォーマットでHTTPリクエストボディーに含め, リクエストを構築する.
           
 </p>
 <p>
@@ -2056,39 +2038,40 @@ Access Token Request</h3>
 <dt>grant_type</dt>
 <dd>
                 
-                REQUIRED. Value MUST be set to <tt>password</tt>.
+                必須 (REQUIRED). 値には<tt>password</tt>を指定しなければならない (MUST). 
+                
               
 </dd>
 <dt>username</dt>
 <dd>
                 
-                REQUIRED. The resource owner username, encoded as UTF-8.
+                必須 (REQUIRED).UTF-8でエンコードしたリソースオーナーのusername.
+                
               
 </dd>
 <dt>password</dt>
 <dd>
                 
-                REQUIRED. The resource owner password, encoded as UTF-8.
+                必須 (REQUIRED).UTF-8でエンコードしたリソースオーナーのpassword
+                
               
 </dd>
 <dt>scope</dt>
 <dd>
                 
-                OPTIONAL. The scope of the access request as described by <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>.
+                任意(OPTIONAL.) Section 3.3で示すとおりのアクセス要求の際の<a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a>
+                
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            If the client type is confidential or the client was issued client credentials (or
-            assigned other authentication requirements), the client MUST authenticate with the
-            authorization server as described in <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>クライアント認証</span><span>)</span></a>.
+            クライアントタイプがconfidentialである場合, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントは, Section 3.2.1.に示すとおりに認可サーバにより認証されなければならない (MUST). 
           
 </p>
 <p>
-              For example, the client makes the following HTTP request using transport-layer
-              security (extra line breaks are for display purposes only):
+              例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2101,47 +2084,42 @@ Access Token Request</h3>
 
 </pre></div>
 <p>
-            The authorization server MUST:
+            認可サーバーは次のことを実施しなければならない (MUST):
           
 </p>
 <p>
             </p>
 <ul class="text">
 <li>
-                require client authentication for confidential clients or for any client that was
-                issued client credentials (or with other authentication requirements),
+                confidentialなクライアント, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントにクライアント認証を要求し,
               
 </li>
 <li>
-                authenticate the client if client authentication is included, and
+                クライアント認証が含まれている場合はクライアントを認証し, 
               
 </li>
 <li>
-                validate the resource owner password credentials.
+                リソースオーナーパスワードクレデンシャルの妥当性を確認する
               
 </li>
 </ul><p>
           
 </p>
 <p>
-            Since this access token request utilizes the resource owner's password, the
-            authorization server MUST protect the endpoint against brute force attacks.
+            このアクセストークンリクエストにリソースオーナーのパスワードを利用するため, 認可サーバーはブルートフォース攻撃からこのエンドポイントを保護しなければならない（MUST）. 
           
 </p>
 <a name="anchor32"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.4.3.3"></a><h3>4.3.3.&nbsp;
-Access Token Response</h3>
+アクセストークンレスポンス</h3>
 
 <p>
-            If the access token request is valid and authorized, the authorization server issues an
-            access token and optional refresh token as described in <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>.
-            If the request failed client authentication or is invalid, the authorization server returns
-            an error response as described in <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>.
+                  アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは<a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a>に示すとおりアクセストークンと任意でリフレッシュトークンを発行する．もしクライアント認証リクエストが失敗もしくは不正だった場合, 認可サーバーは<a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a>に示すとおりエラーレスポンスを返却する．
           
 </p>
 <p>
-              An example successful response:
+              成功したレスポンスの例は下記のとおり.
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
