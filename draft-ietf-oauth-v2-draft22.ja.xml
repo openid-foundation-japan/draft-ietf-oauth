@@ -322,7 +322,7 @@
             resource owner's credentials are never shared with the client.
           -->
           <t>
-            認可コードは, クライアントを認証する効果や,  リソースオーナーのユーザーエージェントを経由せずリソースオーナーを含む第三者に露出することなしにアクセストークンをクライアントに直接伝搬できるなど, いくつかの点で重要なセキュリティ的なメリットを提供する.
+            認可コードは, クライアントを認証する効果や, リソースオーナーのユーザーエージェントを経由せずリソースオーナーを含む第三者に露出することなしにアクセストークンをクライアントに直接伝搬できるなど, いくつかの点で重要なセキュリティ的なメリットを提供する.
           </t>
           <!--
             The authorization code provides a few important security benefits such as the ability
@@ -5129,6 +5129,44 @@
       <t>
         Special thanks goes to Mike Curtis and Yahoo! for their unconditional support of this work
         for over three years.
+      </t>
+    </appendix>
+
+    <appendix title="翻訳者">
+      <t>
+        本仕様書の翻訳は, <xref target='oidfj'>OpenIDファウンデーションジャパン</xref> <xref target='oidfj-trans'>翻訳・教育ワーキンググループ</xref>を主体として, 有志のメンバーによって行われました.
+        質問や修正依頼などについては, <xref target='oidfj-github'>Githubレポジトリー</xref> にご連絡ください.
+      </t>
+      <t>
+        <list style='symbols'>
+          <t>
+            Masaru Kurahayashi (Yahoo! Japan)
+          </t>
+          <t>
+            Naohiro Fujie (Itochu Techno Solutions)
+          </t>
+          <t>
+            Noboru Kurumai (Fujitsu)
+          </t>
+          <t>
+            Nov Matake (Cerego Japan)
+          </t>
+          <t>
+            Ryo Ito (**)
+          </t>
+          <t>
+            Shunsuke Kouchi (Yahoo! Japan)
+          </t>
+          <t>
+            Taizo Matsuoka (Yahoo! Japan)
+          </t>
+          <t>
+            Yusuke Kondo (Yahoo! Japan)
+          </t>
+          <t>
+            Yutaka Obuchi (**)
+          </t>
+        </list>
       </t>
     </appendix>
 
