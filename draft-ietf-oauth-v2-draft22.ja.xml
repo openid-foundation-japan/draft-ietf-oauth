@@ -157,7 +157,7 @@
             <t hangText='リソースオーナー'>
 <!--             <t hangText='resource owner'> -->
               <vspace />
-              保護されたリソースへのアクセスを許可するエンティティー. （例：エンドユーザー）
+              保護されたリソースへのアクセスを許可するエンティティー. (例：エンドユーザー)
               <!--
               An entity capable of granting access to a protected resource (e.g. end-user).
               -->
@@ -183,7 +183,7 @@
             <t hangText='認可サーバー'>
 <!--             <t hangText='authorization server'> -->
               <vspace />
-              リソースオーナーの認証とリソースオーナーからの認可取得が成功した後, アクセストークンをクライアントに発行するサーバー.  
+              リソースオーナーの認証とリソースオーナーからの認可取得が成功した後, アクセストークンをクライアントに発行するサーバー.
               <!--
               The server issuing access tokens to the client after successfully authenticating the
               resource owner and obtaining authorization.
@@ -238,7 +238,7 @@
         <t>
           <list style='format (%C)'>
             <t>
-              クライアントはリソースオーナーからの認可を要求する. その際の認可リクエストはリソースオーナーへ直接送ることが出来るか（図のように）, または間接的に認可サーバを経由して送信できることがのぞましい.
+              クライアントはリソースオーナーからの認可を要求する. その際の認可リクエストはリソースオーナーへ直接送ることが出来るか (図のように), または間接的に認可サーバを経由して送信できることがのぞましい.
             </t>
             <!--
               The client requests authorization from the resource owner. The authorization request
@@ -290,7 +290,7 @@
 <!--       <section title='Authorization Grant'> -->
         <t>
           リソースオーナーの認可許諾を示すクレデンシャルは, クライアントが利用する取得済みのアクセストークンによって示される.
-          この仕様では４つの許諾方式を定義している：認可コード, インプリクト, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルに加え, 拡張仕様によってタイプを追加することもできる
+          この仕様では４つの許諾方式を定義している：認可コード, インプリクト, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルに加え, 拡張仕様によってタイプを追加することもできる.
         </t>
         <!--
           An authorization grant is a credential representing the resource owner's authorization
@@ -303,7 +303,7 @@
         <section title='認可コード'>
 <!--         <section title='Authorization Code'> -->
           <t>
-            認可コードは, クライアントとリソースオーナーの仲介者である認可サーバで利用するために取得する. リソースオーナーへ認可リクエストを直接行う代わりに, クライアントをリソースオーナーから認可サーバーへリダイレクトし（<xref target='RFC2616' />に定義されたユーザーエージェントを経由して）, クライアントをリソースオーナーへリダイレクトする際に一緒に認可コードを返します.
+            認可コードは, クライアントとリソースオーナーの仲介者である認可サーバで利用するために取得する. リソースオーナーへ認可リクエストを直接行う代わりに, クライアントをリソースオーナーから認可サーバーへリダイレクトし (<xref target='RFC2616' />に定義されたユーザーエージェントを経由して), クライアントをリソースオーナーへリダイレクトする際に一緒に認可コードを返します.
           </t>
           <!--
             The authorization code is obtained by using an authorization server as an intermediary
@@ -334,7 +334,7 @@
 
         <section title='インプリシット'>
           <t>
-            インプリシット許可はJavaScriptの様なスクリプト言語を使用して, ブラウザで実行されるクライアントに最適化され, 認可コードを単純化したものです. インプリシットフローにおいて, 認可コードを発行する代わりにクライアントは（リソースオーナー認可の結果）直接アクセストークンを発行できる. (認可コードのような)仲介のクレデンシャルが発行されない（そして後にアクセストークンを得られる）許可タイプがインプリシットです.
+            インプリシット許可はJavaScriptの様なスクリプト言語を使用して, ブラウザで実行されるクライアントに最適化され, 認可コードを単純化したものです. インプリシットフローにおいて, 認可コードを発行する代わりにクライアントは (リソースオーナー認可の結果) 直接アクセストークンを発行できる. (認可コードのような) 仲介のクレデンシャルが発行されない (そして後にアクセストークンを得られる) 許可タイプがインプリシットです.
           </t>
           <!--
             The implicit grant is a simplified authorization code flow optimized for clients
@@ -354,7 +354,7 @@
             resource owner or other applications with access to the resource owner's user-agent.
           -->
           <t>
-            アクセストークンを得るのに必要な往復の回数を減らせるため, インプリシット許可は（ブラウザにおけるアプリケーションとして実行されたクライアントなど）いくつかのクライアントで反応性と効率性を高めます. しかしながら, この利便性はimplicit許可を使った安全保障の影響でauthorization code許可を利用できる場合は特に一方的に不利になります.
+            アクセストークンを得るのに必要な往復の回数を減らせるため, インプリシット許可は (ブラウザにおけるアプリケーションとして実行されたクライアントなど) いくつかのクライアントで反応性と効率性を高めます. しかしながら, この利便性はimplicit許可を使った安全保障の影響でauthorization code許可を利用できる場合は特に一方的に不利になります.
           </t>
           <!--
             Implicit grants improve the responsiveness and efficiency of some clients (such as a
@@ -367,7 +367,7 @@
 
         <section title="リソースオーナーパスワードクレデンシャル">
           <t>
-            リソースオーナーパスワードクレデンシャル（例えばユーザ名とパスワード）がアクセストークンを得るための認可に直接使用されるものである. このクレデンシャルは, リソースオーナーとクライアント（例えばデバイスOSや非常に特権のあるアプリケーション）の間で高い信頼があり, （認可コードのような）他の認可タイプが利用できない場合のみ使用されるべきである.
+            リソースオーナーパスワードクレデンシャル (例えばユーザ名とパスワード) がアクセストークンを得るための認可に直接使用されるものである. このクレデンシャルは, リソースオーナーとクライアント (例えばデバイスOSや非常に特権のあるアプリケーション) の間で高い信頼があり, (認可コードのような) 他の認可タイプが利用できない場合のみ使用されるべきである.
           </t>
           <!--
             The resource owner password credentials (i.e. username and password) can be used
@@ -390,7 +390,7 @@
 
         <section title='クライアントクレデンシャル'>
           <t>
-            認可範囲がクライアントの管理下の保護されたリソース, もしくは以前認可サーバでアレンジされた保護されたリソースに制限された場合, 認可許可としてクライアントクレデンシャル（もしくは他のクライアント認証形式）が使用できる. クライアントがクライアント自身のために行動している（またはクライアントがリソースオーナー）か, クライアントが以前に認可サーバでアレンジされた認可をベースにした保護されたリソースアクセスを求めている場合, クライアントクレデンシャルは通常の認可許可として使用される.
+            認可範囲がクライアントの管理下の保護されたリソース, もしくは以前認可サーバでアレンジされた保護されたリソースに制限された場合, 認可許可としてクライアントクレデンシャル (もしくは他のクライアント認証形式) が使用できる. クライアントがクライアント自身のために行動している (またはクライアントがリソースオーナー) か, クライアントが以前に認可サーバでアレンジされた認可をベースにした保護されたリソースアクセスを求めている場合, クライアントクレデンシャルは通常の認可許可として使用される.
           </t>
           <!--
             The client credentials (or other forms of client authentication) can be used as an
@@ -615,7 +615,7 @@
         registration form.
       -->
       <t>
-        クライアントの登録はクライアントと認可サーバ間の直接な相互作用を必須としない. 認可サーバでサポートされている場合, 登録は, 必要なクライアントのプロパティーを取得し, 信頼を確立する他の方法（例えばリダイレクトURIやクライアントタイプ）に頼ることができる. 例えば, 登録は自身で発行, もしくはサードパーティに発行されたアサーションを使用する, または信頼できるチャンネルを使用することでクライアントの発見を行う認可サーバによって行うことができる.
+        クライアントの登録はクライアントと認可サーバ間の直接な相互作用を必須としない. 認可サーバでサポートされている場合, 登録は, 必要なクライアントのプロパティーを取得し, 信頼を確立する他の方法 (例えばリダイレクトURIやクライアントタイプ) に頼ることができる. 例えば, 登録は自身で発行, もしくはサードパーティに発行されたアサーションを使用する, または信頼できるチャンネルを使用することでクライアントの発見を行う認可サーバによって行うことができる.
       </t>
       <!--
         Client registration does not require a direct interaction between the client and the
@@ -640,14 +640,14 @@
             specifies the client type as described in <xref target='client-types' />,
           -->
           <t>
-            <xref target='redirect-uri' />で説明されているようなリダイレクトURIを提供します. そして, 
+            <xref target='redirect-uri' />で説明されているようなリダイレクトURIを提供します. そして,
           </t>
           <!--
             provides its client redirection URIs as described in
             <xref target='redirect-uri' />, and
           -->
           <t>
-            認可サーバによって他の必須情報を含みます. （例えばアプリケーション名, ウェブサイト, 説明, ロゴイメージ, 利用規則）
+            認可サーバによって他の必須情報を含みます. (例えばアプリケーション名, ウェブサイト, 説明, ロゴイメージ, 利用規則)
           </t>
           <!--
             includes any other information required by the authorization server (e.g. application
@@ -658,7 +658,7 @@
 
       <section title='クライアントタイプ' anchor='client-types'>
         <t>
-          認可サーバと安全に認証する能力に基づいて（つまりクライアントクレデンシャルの機密性を維持できる能力）, OAuthは二つのクライアントタイプを定義している.
+          認可サーバと安全に認証する能力に基づいて (つまりクライアントクレデンシャルの機密性を維持できる能力), OAuthは二つのクライアントタイプを定義している.
         </t>
         <!--
           OAuth defines two client types, based on their ability to authenticate securely with the
@@ -669,7 +669,7 @@
           <list style='hanging'>
             <t hangText='コンフィデンシャル'>
               <vspace />
-              クレデンシャルの機密性を維持することができるクライアント（例えば, クライアントクレデンシャルへのアクセスが制限されたセキュアサーバ上に実装されたクライアント）, または他の手段を使用したセキュアなクライアント認証ができるクライアント.
+              クレデンシャルの機密性を維持することができるクライアント (例えば, クライアントクレデンシャルへのアクセスが制限されたセキュアサーバ上に実装されたクライアント), または他の手段を使用したセキュアなクライアント認証ができるクライアント.
             <!--
               Clients capable of maintaining the confidentiality of their credentials (e.g.
               client implemented on a secure server with restricted access to the client
@@ -678,7 +678,7 @@
             </t>
             <t hangText='パブリック'>
               <vspace />
-	      クレデンシャルの機密性を維持することができないクライアント（例えばインストールされたネイティブアプリケーションやブラウザベースのウェブアプリケーションのようにリソースオーナーのデバイス上で実行するクライアント）, および他の手段を通してセキュアなクライアント認証ができないクライアント.
+	      クレデンシャルの機密性を維持することができないクライアント (例えばインストールされたネイティブアプリケーションやブラウザベースのウェブアプリケーションのようにリソースオーナーのデバイス上で実行するクライアント), および他の手段を通してセキュアなクライアント認証ができないクライアント.
 	      <!--
               Clients incapable of maintaining the confidentiality of their credentials (e.g.
               clients executing on the resource owner's device such as an installed native
@@ -696,7 +696,7 @@
           authentication and its acceptable exposure levels of client credentials.
         -->
         <t>
-          この仕様は次のクライアントプロファイルに基づいて設計されている, 
+          この仕様は次のクライアントプロファイルに基づいて設計されている,
         </t>
         <!--
           This specification has been designed around the following client profiles:
@@ -716,7 +716,7 @@
             -->
             <t hangText='ユーザエージェントベースアプリケーション'>
               <vspace />
-              ユーザエージェントベースアプリケーションはクライアントコードがWebサーバからダウンロードされ, リソースオーナーのデバイス上でユーザエージェント（例えばWebブラウザ）内で実行されるパブリッククライアントです. プロトコルのデータとクレデンシャルはリソースオーナーに簡単にアクセス（かつ多くの場合は見ること）できる. このようなアプリケーションはユーザエージェント内にあるので, 認可を要求する時ユーザエージェントの能力をシームレスに使用することができる.
+              ユーザエージェントベースアプリケーションはクライアントコードがWebサーバからダウンロードされ, リソースオーナーのデバイス上でユーザエージェント (例えばWebブラウザ) 内で実行されるパブリッククライアントです. プロトコルのデータとクレデンシャルはリソースオーナーに簡単にアクセス (かつ多くの場合は見ること) できる. このようなアプリケーションはユーザエージェント内にあるので, 認可を要求する時ユーザエージェントの能力をシームレスに使用することができる.
             </t>
             <!--
               A user-agent-based application is a public client in which the client code is
@@ -742,12 +742,11 @@
             -->
           </list>
         </t>
-      </section>
-
+      </section>q
       <section title='クライアント識別子' anchor='client-identifier'>
 <!--       <section title='Client Identifier' anchor='client-identifier'> -->
         <t>
-          認可サーバーは登録済みのクライアントにクライアント識別子（クライアントが提供した登録情報を表すユニーク文字列）を発行する. クライアント識別子はシークレットと異なり, リソースオーナーに露出されるため, クライアント認証に単独で利用してはならない（MUST NOT）.
+          認可サーバーは登録済みのクライアントにクライアント識別子 (クライアントが提供した登録情報を表すユニーク文字列) を発行する. クライアント識別子はシークレットと異なり, リソースオーナーに露出されるため, クライアント認証に単独で利用してはならない (MUST NOT).
         </t>
         <!--
           The authorization server issues the registered client a client identifier - a unique
@@ -760,7 +759,7 @@
       <section title='クライアント認証' anchor='client-authentication'>
 <!--       <section title='Client Authentication' anchor='client-authentication'> -->
         <t>
-          クライアントタイプがコンフィデンシャルである場合, クライアントと認可サーバーは, 認可サーバーのセキュリティ要求を満たすクライアント認証方式を確立する. 認可サーバーは自身のセキュリティ要求を満たすあらゆる方式のクライアント認証に対応してもよい（MAY）
+          クライアントタイプがコンフィデンシャルである場合, クライアントと認可サーバーは, 認可サーバーのセキュリティ要求を満たすクライアント認証方式を確立する. 認可サーバーは自身のセキュリティ要求を満たすあらゆる方式のクライアント認証に対応してもよい (MAY).
         </t>
         <!--
           If the client type is confidential, the client and authorization server establish a client
@@ -769,14 +768,14 @@
           security requirements.
         -->
         <t>
-          コンフィデンシャルクライアントには, 通常は認可サーバーでの認証に使われるクライアントクレデンシャルのセットが発行（もしくは確立）される. 例）パスワード, 公開鍵／秘密鍵のペア
+          コンフィデンシャルクライアントには, 通常は認可サーバーでの認証に使われるクライアントクレデンシャルのセットが発行 (もしくは確立) される. 例) パスワード, 公開鍵／秘密鍵のペア
         </t>
         <!--
           Confidential clients are typically issued (or establish) a set of client credentials used for
           authenticating with the authorization server (e.g. password, public/private key pair).
 	-->
         <t>
-          認可サーバーはクライアントタイプを仮定したり, クライアントとその開発者との信頼確立せずに提供されたタイプ情報に対応すべきではない（SHOULD NOT）. 認可サーバーはパブリッククライアントとクライアント認証によって信頼確立してもよい（MAY）. しかし, 認可サーバーはクライアントを識別する目的で, パブリッククライアントを信頼してはならない（MUST NOT）.
+          認可サーバーはクライアントタイプを仮定したり, クライアントとその開発者との信頼確立せずに提供されたタイプ情報に対応すべきではない (SHOULD NOT). 認可サーバーはパブリッククライアントとクライアント認証によって信頼確立してもよい (MAY). しかし, 認可サーバーはクライアントを識別する目的で, パブリッククライアントを信頼してはならない (MUST NOT).
         </t>
         <!--
           The authorization server SHOULD NOT make assumptions about the client type or accept the
@@ -786,7 +785,7 @@
           for the purpose of identifying the client.
 	-->
         <t>
-          クライアントは各リクエストにおいて二つ以上の認証方式を利用してはならない（MUST NOT）.
+          クライアントは各リクエストにおいて二つ以上の認証方式を利用してはならない (MUST NOT).
         </t>
         <!--
           The client MUST NOT use more than one authentication method in each request.
@@ -795,7 +794,7 @@
         <section title='クライアントパスワード'>
 <!--         <section title='Client Password'> -->
           <t>
-                  クライアントパスワードを保持しているクライアントは, 認可サーバー上での認証に<xref target='RFC2617' />で定義されている HTTP Basic 認証スキームを使用してもよい（MAY）. クライアント識別子はユーザー名, クライアントパスワードはパスワードとして利用される.
+                  クライアントパスワードを保持しているクライアントは, 認可サーバー上での認証に<xref target='RFC2617' />で定義されている HTTP Basic 認証スキームを使用してもよい (MAY). クライアント識別子はユーザー名, クライアントパスワードはパスワードとして利用される.
           </t>
 	        <!--
             Clients in possession of a client password MAY use the HTTP Basic authentication scheme
@@ -815,7 +814,7 @@
             </artwork>
           </figure>
           <t>
-            認可サーバーは以下のパラメータを用いて, リクエストボディにクライアントクレデンシャルを含めてもよい（MAY）.
+            認可サーバーは以下のパラメータを用いて, リクエストボディにクライアントクレデンシャルを含めてもよい (MAY).
           </t>
 	  <!--
             Alternatively, the authorization server MAY allow including the client credentials in the
@@ -825,7 +824,7 @@
             <list style='hanging' hangIndent='6'>
               <t hangText='client_id'>
                 <vspace />
-                必須（REQUIRED）. <xref target='client-identifier' />に示されるクライアント登録手順にて発行されたクライアント識別子.
+                必須 (REQUIRED). <xref target='client-identifier' />に示されるクライアント登録手順にて発行されたクライアント識別子.
 		<!--
                 REQUIRED. The client identifier issued to the client during the registration process
                 described by <xref target='client-identifier' />.
@@ -833,7 +832,7 @@
               </t>
               <t hangText='client_secret'>
                 <vspace />
-                必須（REQUIRED）. クライアントのシークレット. 空の場合は省略してもよい（MAY）.
+                必須 (REQUIRED). クライアントのシークレット. 空の場合は省略してもよい (MAY).
 		<!--
                 REQUIRED. The client secret. The client MAY omit the parameter if the client secret
                 is an empty string.
@@ -842,7 +841,7 @@
             </list>
           </t>
           <t>
-            ２つのパラメータを使ってクライアントクレデンシャルをリクエストボディに含めることは推奨されていない（NOT RECOMMENDED）. また, それはHTTP Basic 認証スキーム（もしくは他のパスワードベースのHTTP認証スキーム）が直接利用できないクライアントに限定すべきある.
+            ２つのパラメータを使ってクライアントクレデンシャルをリクエストボディに含めることは推奨されていない (NOT RECOMMENDED). また, それはHTTP Basic 認証スキーム (もしくは他のパスワードベースのHTTP認証スキーム) が直接利用できないクライアントに限定すべきある.
           </t>
 	  <!--
             Including the client credentials in the request body using the two parameters is NOT
@@ -851,7 +850,7 @@
 	  -->
           <figure>
             <preamble>
-              例：ボディパラメータを使ってアクセストークンの更新 (<xref target='token-refresh' />）のリクエストを送信する場合（改行は見やすくするために付与している）
+              例：ボディパラメータを使ってアクセストークンの更新 (<xref target='token-refresh' />) のリクエストを送信する場合 (改行は見やすくするために付与している)
 	          <!--
               For example, requesting to refresh an access token (<xref target='token-refresh' />)
               using the body parameters (extra line breaks are for display purposes only):
@@ -869,7 +868,7 @@
             </artwork>
           </figure>
           <t>
-            トークンエンドポイントにリクエスト送信する際に, 平文のクレデンシャルを送信することになるので, 認可サーバーはTLSを使用することを要求しなければならない（MUST）.
+            トークンエンドポイントにリクエスト送信する際に, 平文のクレデンシャルを送信することになるので, 認可サーバーはTLSを使用することを要求しなければならない (MUST).
           </t>
           <!--
             The authorization server MUST require the use of a transport-layer security mechanism
@@ -877,7 +876,7 @@
             method result in the transmission of clear-text credentials.
           -->
           <t>
-            クライアント認証方式にパスワードが含まれるので, 認可サーバーはブルートフォースアタック対策のために全てのエンドポイントを保護しなくてはならない（MUST）.
+            クライアント認証方式にパスワードが含まれるので, 認可サーバーはブルートフォースアタック対策のために全てのエンドポイントを保護しなくてはならない (MUST).
           </t>
 	  <!--
             Since this client authentication method involves a password, the authorization server
@@ -888,7 +887,7 @@
         <section title='その他の認証方式'>
 <!--         <section title='Other Authentication Methods'> -->
           <t>
-            認証サーバは, セキュリティ要件に適合する適切なHTTP認証スキームをサポートすべきである（MAY）. 他の認証方式を利用する際には, 認可サーバはClient Identifierと認証方式の双方をマッピングしておかねばならない（MUST）. 
+            認証サーバは, セキュリティ要件に適合する適切なHTTP認証スキームをサポートすべきである (MAY). 他の認証方式を利用する際には, 認可サーバはClient Identifierと認証方式の双方をマッピングしておかねばならない (MUST).
           </t>
           <!--
             The authorization server MAY support any suitable HTTP authentication scheme matching
@@ -903,7 +902,7 @@
       <section title='未登録クライアント'>
 <!--       <section title='Unregistered Clients'> -->
         <t>
-          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合, このようなクライアントの利用方法はこの仕様のおけるスコープを越える. 
+          この仕様は, 未登録のクライアントでの利用を排除するものではない. しかしながら, 追加的にセキュリティ面の保障を必要とする場合, 相互運用性への影響を評価する場合, このようなクライアントの利用方法はこの仕様のおけるスコープを越える.
         </t>
         <!--
           This specification does not exclude the use of unregistered clients. However, the use
@@ -1071,7 +1070,7 @@
 
           <section title='エンドポイントリクエストの機密性'>
             <t>
-              もしリダイレクションリクエストが（リソースオーナーのユーザエージェントとクライアントの間で）オープンなネットワークにわたって認可コードやアクセストークンの通信が生じるなら, クライアントはトランスポート層でのセキュリティメカニズムの使用を求めるべきである（SHOULD）.
+              もしリダイレクションリクエストが (リソースオーナーのユーザエージェントとクライアントの間で) オープンなネットワークにわたって認可コードやアクセストークンの通信が生じるなら, クライアントはトランスポート層でのセキュリティメカニズムの使用を求めるべきである (SHOULD).
             </t>
             <!--
               If a redirection request will result in the transmission of an authorization code or
@@ -1079,7 +1078,7 @@
               client), the client SHOULD require the use of a transport-layer security mechanism.
             -->
             <t>
-              トランスポート層のセキュリティの欠如はクライアントとアクセス認証された保護リソース上で深刻な影響を及ぼす. トランスポート層のセキュリティを使用することは, 認可プロセスがクライアントによってエンドユーザ認証の委譲された形式で使用される場合特に重要である（例えばサードパーティサインインサービス）.
+              トランスポート層のセキュリティの欠如はクライアントとアクセス認証された保護リソース上で深刻な影響を及ぼす. トランスポート層のセキュリティを使用することは, 認可プロセスがクライアントによってエンドユーザ認証の委譲された形式で使用される場合特に重要である (例えばサードパーティサインインサービス).
             </t>
             <!--
               Lack of transport-layer security can have a severe impact on the security of the
@@ -1092,7 +1091,7 @@
 
           <section title='登録要件'>
             <t>
-              認可エンドポイントを使用する前に認可サーバはリダイレクションURIを登録することをクライアント全てに要求するべきです（SHOULD）. 以下のクライアントはリダイレクションURIの登録を要求しなければいけない（MUST）.
+              認可エンドポイントを使用する前に認可サーバはリダイレクションURIを登録することをクライアント全てに要求するべきです (SHOULD). 以下のクライアントはリダイレクションURIの登録を要求しなければいけない (MUST).
             </t>
             <!--
               The authorization server SHOULD require all clients to register their redirection URI
@@ -1116,7 +1115,7 @@
               </list>
             </t>
             <t>
-		    認可サーバは完全なリダイレクションURI（クライアントはリクエスト毎のカスタマイズを得るため<spanx style='verb'>state</spanx>リクエストパラメータを使用してもよい（MAY））の提供をクライアントに要求するべきです（SHOULD）. 認可サーバはクライアントに複数のリダイレクトURIの登録を許可するべきである（MAY）. 完全なリダイレクションURIの登録を要求することが可能出ないなら, 認可サーバはURIスキーム, 権限, パス（認可要求の時, リダイレクションURIのクエリーコンポーネントのみ動的に変更を許可する）の登録を要求するべきである（SHOULD）.
+		    認可サーバは完全なリダイレクションURI (クライアントはリクエスト毎のカスタマイズを得るため<spanx style='verb'>state</spanx>リクエストパラメータを使用してもよい (MAY) ) の提供をクライアントに要求するべきです (SHOULD). 認可サーバはクライアントに複数のリダイレクトURIの登録を許可するべきである (MAY). 完全なリダイレクションURIの登録を要求することが可能出ないなら, 認可サーバはURIスキーム, 権限, パス (認可要求の時, リダイレクションURIのクエリーコンポーネントのみ動的に変更を許可する) の登録を要求するべきである (SHOULD).
             </t>
             <!--
               The authorization server SHOULD require the client to provide the complete
@@ -1132,7 +1131,7 @@
 
           <section title='動的設定'>
             <t>
-              リダイレクションURIが複数登録されていた場合, リダイレクションURIの一部のみ登録されていた場合, もしくはリダイレクションURIが登録されていなかった場合, クライアントは<spanx style='verb'>redirect_uri</spanx>リクエストパラメータを使用して認可リクエストでリダイレクションURIを含まなければいけない（MUST）.
+              リダイレクションURIが複数登録されていた場合, リダイレクションURIの一部のみ登録されていた場合, もしくはリダイレクションURIが登録されていなかった場合, クライアントは<spanx style='verb'>redirect_uri</spanx>リクエストパラメータを使用して認可リクエストでリダイレクションURIを含まなければいけない (MUST).
             </t>
             <!--
               If multiple redirection URIs have been registered, if only part of the redirection
@@ -1141,7 +1140,7 @@
               <spanx style='verb'>redirect_uri</spanx> request parameter.
             -->
             <t>
-              リダイレクションURIが認可リクエストに含まれていた時, いくつかのリダイレクションURIが登録されていた場合<xref target='RFC3986' />セクション6で説明されているように登録されているリダイレクションURI（もしくはURIコンポーネント）のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.もしクライアントの登録にフルのリダイレクションURIが含まれていた場合, 認可サーバは<xref target='RFC3986' />セクション6.2.1.で定義されているように単純な文字列比較を使用し二つのURIを比較しなければいけない（MUST）.
+              リダイレクションURIが認可リクエストに含まれていた時, いくつかのリダイレクションURIが登録されていた場合<xref target='RFC3986' />セクション6で説明されているように登録されているリダイレクションURI (もしくはURIコンポーネント) のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.もしクライアントの登録にフルのリダイレクションURIが含まれていた場合, 認可サーバは<xref target='RFC3986' />セクション6.2.1.で定義されているように単純な文字列比較を使用し二つのURIを比較しなければいけない (MUST).
             </t>
             <!--
               When a redirection URI is included in an authorization request, the authorization
@@ -1165,7 +1164,7 @@
 
           <section title='無効なエンドポイント'>
             <t>
-              認可リクエストがリダイレクションURIの欠落, 無効, もしくは不一致のため検証失敗なら, 認可サーバはエラーをリソースオーナーに知らせるべきである（SHOULD）. そして無効なリダイレクションURIにユーザエージェントを自動でリダイレクトしてはいけない（MUST NOT）.
+              認可リクエストがリダイレクションURIの欠落, 無効, もしくは不一致のため検証失敗なら, 認可サーバはエラーをリソースオーナーに知らせるべきである (SHOULD). そして無効なリダイレクションURIにユーザエージェントを自動でリダイレクトしてはいけない (MUST NOT).
             </t>
             <!--
               If an authorization request fails validation due to a missing, invalid, or
@@ -1174,7 +1173,7 @@
               redirection URI.
             -->
             <t>
-              認可サーバは認可エンドポイントをオープンリダイレクタとして使われることから防ぐために登録されていない, もしくは信頼できないURIにユーザエージェントをリダイレクトするべきでない（SHOULD NOT）.
+              認可サーバは認可エンドポイントをオープンリダイレクタとして使われることから防ぐために登録されていない, もしくは信頼できないURIにユーザエージェントをリダイレクトするべきでない (SHOULD NOT).
             </t>
             <!--
               The authorization server SHOULD NOT redirect the user-agent to unregistered or
@@ -1195,7 +1194,7 @@
               contains.
             -->
             <t>
-              クライアントはURIからクレデンシャルを抽出し削除するのに使用される独自のスクリプトが最初に実行されることを確認せず, リダイレクションエンドポイントのレスポンスに信頼できないサードパーティのスクリプトを含んではいけない（MUST NOT）（例えばサードパーティの分析性, ソーシャルプラグイン, 広告ネットワーク）.
+              クライアントはURIからクレデンシャルを抽出し削除するのに使用される独自のスクリプトが最初に実行されることを確認せず, リダイレクションエンドポイントのレスポンスに信頼できないサードパーティのスクリプトを含んではいけない (MUST NOT) (例えばサードパーティの分析性, ソーシャルプラグイン, 広告ネットワーク).
             </t>
             <!--
               The client MUST NOT include any untrusted third-party scripts in the redirection
@@ -1204,7 +1203,7 @@
               the URI will execute first.
             -->
             <t>
-              クライアントはリダイレクションエンドポイントのレスポンスにサードパーティスクリプトを含めるべきではない（SHOULD NOT）. 代わりにそのURIからクレデンシャルを抽出し, URIのクレデンシャルなしで別のエンドポイントへ再びユーザエージェントをリダイレクトするべきです.
+              クライアントはリダイレクションエンドポイントのレスポンスにサードパーティスクリプトを含めるべきではない (SHOULD NOT). 代わりにそのURIからクレデンシャルを抽出し, URIのクレデンシャルなしで別のエンドポイントへ再びユーザエージェントをリダイレクトするべきです.
             </t>
             <!--
               The client SHOULD NOT include any third-party scripts in the redirection endpoint
@@ -1220,7 +1219,7 @@
       <section title='トークンエンドポイント'>
 <!--       <section title='Token Endpoint'> -->
         <t>
-          トークンエンドポイントはクライアントが自身が認可提示することでのアクセストークン取得やトークン更新に利用される. トークンエンドポイントはインプリシット認可タイプを除く全ての認可タイプで利用される（アクセストークンは直接発行されるため）. 
+          トークンエンドポイントはクライアントが自身が認可提示することでのアクセストークン取得やトークン更新に利用される. トークンエンドポイントはインプリシット認可タイプを除く全ての認可タイプで利用される (アクセストークンは直接発行されるため).
         </t>
         <!--
           The token endpoint is used by the client to obtain an access token by presenting its
@@ -1228,7 +1227,7 @@
           grant except for the implicit grant type (since an access token is issued directly).
         -->
         <t>
-          クライアントがトークンエンドポイントの所在を取得する方法についてはこの仕様の範囲外であるが, 通常はサービス文書中に記載されている. 
+          クライアントがトークンエンドポイントの所在を取得する方法についてはこの仕様の範囲外であるが, 通常はサービス文書中に記載されている.
         </t>
       	<!--
           The means through which the client obtains the location of the token endpoint are
@@ -1236,7 +1235,7 @@
           documentation.
       	-->
         <t>
-          エンドポイントURIには<spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='W3C.REC-html401-19991224' />) で定義されるフォーマットのクエリ部 (<xref target='RFC3986' /> 3.4章)が含まれていてもよい（MAY）. クエリパラメータが追加される際, そのクエリ部は維持されなければならない（MUST）. エンドポイントURIにはフラグメント部を含んではならない（MUST）. 
+          エンドポイントURIには<spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='W3C.REC-html401-19991224' />) で定義されるフォーマットのクエリ部 (<xref target='RFC3986' /> 3.4章)が含まれていてもよい (MAY). クエリパラメータが追加される際, そのクエリ部は維持されなければならない (MUST). エンドポイントURIにはフラグメント部を含んではならない (MUST).
         </t>
 	      <!--
           The endpoint URI MAY include an
@@ -1246,7 +1245,7 @@
           endpoint URI MUST NOT include a fragment component.
       	-->
         <t>
-          トークンエンドポイントへのリクエストが平文で（HTTPリクエストおよびレスポンスにて）転送することになるため, 認可サーバーはトークンエンドポイントへリクエストを送信する際にTLSの仕組みを利用しなくてはならない（MUST）. 認可サーバーはTLS 1.0(<xref target='RFC2246' />)をサポートしなくてはならない（MUST）. 認可サーバーはTLS 1.2(<xref target='RFC5246' />)とその後継のプロトコルもサポートするべきである（SHOULD）. また, 認可サーバーは自身のセキュリティ要件を満たす追加のトランスポート層の仕組みをサポートしてもよい（MAY）. 
+          トークンエンドポイントへのリクエストが平文で (HTTPリクエストおよびレスポンスにて) 転送することになるため, 認可サーバーはトークンエンドポイントへリクエストを送信する際にTLSの仕組みを利用しなくてはならない (MUST). 認可サーバーはTLS 1.0(<xref target='RFC2246' />)をサポートしなくてはならない (MUST). 認可サーバーはTLS 1.2(<xref target='RFC5246' />)とその後継のプロトコルもサポートするべきである (SHOULD). また, 認可サーバーは自身のセキュリティ要件を満たす追加のトランスポート層の仕組みをサポートしてもよい (MAY).
         </t>
       	<!--
           Since requests to the token endpoint result in the transmission of clear-text credentials
@@ -1257,14 +1256,14 @@
           transport-layer mechanisms meeting its security requirements.
 	      -->
         <t>
-          クライアントはアクセストークンリクエストを送信する際に, HTTP <spanx style='verb'>POST</spanx>メソッドを使用しなければならない（MUST）. 
+          クライアントはアクセストークンリクエストを送信する際に, HTTP <spanx style='verb'>POST</spanx>メソッドを使用しなければならない (MUST).
         </t>
 	      <!--
           The client MUST use the HTTP <spanx style='verb'>POST</spanx> method when making access
           token requests.
 	      -->
         <t>
-          空の値で送信されたパラメータは省略されたものとして扱われなければならない（MUST）. 認可サーバーは未知のリクエストパラメータは無視するべきである（SHOULD）. リクエストおよびレスポンスパラメータは２つ以上含めてはならない（MUST NOT）. 
+          空の値で送信されたパラメータは省略されたものとして扱われなければならない (MUST). 認可サーバーは未知のリクエストパラメータは無視するべきである (SHOULD). リクエストおよびレスポンスパラメータは２つ以上含めてはならない (MUST NOT).
         </t>
         <!--
           Parameters sent without a value MUST be treated as if they were omitted from the request.
@@ -1371,7 +1370,7 @@
     <section title='認可の取得'>
     <!-- <section title='Obtaining Authorization'> -->
       <t>
-        アクセストークンを要求するには，まずクライアントはリソースオーナーから認可を取得する．認可は，クライアントがアクセストークンを要求するのに使用する認可許諾の形式で表現される．OAuthでは，4つの許諾方式（認可コード, インプリクト, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャル）を定義している．また，拡張仕様によって方式を追加することも可能である．
+        アクセストークンを要求するには，まずクライアントはリソースオーナーから認可を取得する．認可は，クライアントがアクセストークンを要求するのに使用する認可許諾の形式で表現される．OAuthでは，4つの許諾方式 (認可コード, インプリクト, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャル) を定義している．また，拡張仕様によって方式を追加することも可能である．
       </t>
       <!--
       <t>
@@ -1386,7 +1385,7 @@
       <section title='認可コード' anchor='grant-code'>
       <!-- <section title='Authorization Code' anchor='grant-code'> -->
         <t>
-          認可コード許諾方式では，アクセストークンとリフレッシュトークの両方を取得し，クライアントの機密性を維持します．リダイレクションベースの処理フローによって，クライアントはリソースオーナーのユーザーエージェント（通常はウェブブラウザ）と対話し，認可サーバーによる（リダイレクションを通した）リクエストを受け付けることが出来なくてはいけない．
+          認可コード許諾方式では，アクセストークンとリフレッシュトークの両方を取得し，クライアントの機密性を維持します．リダイレクションベースの処理フローによって，クライアントはリソースオーナーのユーザーエージェント (通常はウェブブラウザ) と対話し，認可サーバーによる (リダイレクションを通した) リクエストを受け付けることが出来なくてはいけない．
         </t>
       <!--
         <t>
@@ -1441,7 +1440,7 @@
         <t>
           <list style='format (%C)'>
             <t>
-              クライアントはリソースオーナーのユーザーエージェントを認可エンドポイントに向かわせることで処理が開始される．クライアントには，クライアント識別子, リクエストスコープ，ローカルステート，および認可サーバーがユーザーエージェントに対して一度許諾された場合（もしくは拒否された場合）に処理を戻すためのリダイレクトURIを含む．
+              クライアントはリソースオーナーのユーザーエージェントを認可エンドポイントに向かわせることで処理が開始される．クライアントには，クライアント識別子, リクエストスコープ，ローカルステート，および認可サーバーがユーザーエージェントに対して一度許諾された場合 (もしくは拒否された場合) に処理を戻すためのリダイレクトURIを含む．
             </t>
             <!--
             <t>
@@ -1452,7 +1451,7 @@
             </t>
             -->
             <t>
-              認可サーバーは（ユーザーエージェントを通して）リソースオーナーを認証し, リソースオーナーを許諾するか拒否するかを決定する. 
+              認可サーバーは (ユーザーエージェントを通して) リソースオーナーを認証し, リソースオーナーを許諾するか拒否するかを決定する.
             </t>
             <!--
             <t>
@@ -1461,7 +1460,7 @@
             </t>
             -->
             <t>
-              リソースオーナーが許諾された場合, 認可サーバーは予め与えられていたリダイレクトURI(リクエストもしくはクライアント登録時に指定されている)を用いてリダイレクト処理を行ってクライアントのユーザーエージェントが向く方向を変える. リダイレクトURIには, 認可コード, クライアントから事前に送られたローカルステートが含まれる. 
+              リソースオーナーが許諾された場合, 認可サーバーは予め与えられていたリダイレクトURI(リクエストもしくはクライアント登録時に指定されている)を用いてリダイレクト処理を行ってクライアントのユーザーエージェントが向く方向を変える. リダイレクトURIには, 認可コード, クライアントから事前に送られたローカルステートが含まれる.
             </t>
             <!--
             <t>
@@ -1472,7 +1471,7 @@
             </t>
             -->
             <t>
-              クライアントは前のステップで取得した認可コードを認可サーバーのトークンエンドポイントに送ることでアクセストークンを要求する. リクエストが処理されるとき, クライアントは認可サーバーによって認証される. クライアントには検証のため, 認可コードを取得した際に使用したリダイレクトURIを含めておく. 
+              クライアントは前のステップで取得した認可コードを認可サーバーのトークンエンドポイントに送ることでアクセストークンを要求する. リクエストが処理されるとき, クライアントは認可サーバーによって認証される. クライアントには検証のため, 認可コードを取得した際に使用したリダイレクトURIを含めておく.
             </t>
             <!--
             <t>
@@ -1499,7 +1498,7 @@
         <section title='認可リクエスト' anchor='code-authz-req'>
         <!-- <section title='Authorization Request' anchor='code-authz-req'> -->
           <t>
-            クライアントは, <xref target='W3C.REC-html401-19991224' />で規定された<spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメータを付与する. 
+            クライアントは, <xref target='W3C.REC-html401-19991224' />で規定された<spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメータを付与する.
           </t>
           <!--
           <t>
@@ -1571,7 +1570,7 @@
           <t>
             クライアントはHTTPリダイレクトまたはユーザーエージェントを介する利用可能な手段によってリソースオーナーを構築されたURIに向ける．
           </t>
-          <!-- 
+          <!--
           <t>
             The client directs the resource owner to the constructed URI using an HTTP redirection
             response, or by other means available to it via the user-agent.
@@ -1597,7 +1596,7 @@
           </figure>
             
           <t>
-            認可サーバーは必要なリクエストパラメータがすべて揃っていて, かつ正当であることを検証する．もしリクエストが正当なものであれば, 認可サーバーはリソースオーナーを認証し, （リソースオーナーに確認することによって, または他の手段によって承認を確立することによって）認可の判定を得る．
+            認可サーバーは必要なリクエストパラメータがすべて揃っていて, かつ正当であることを検証する．もしリクエストが正当なものであれば, 認可サーバーはリソースオーナーを認証し, (リソースオーナーに確認することによって, または他の手段によって承認を確立することによって) 認可の判定を得る．
           </t>
           <!--
           <t>
@@ -1904,7 +1903,7 @@
             </list>
           </t>
           <t>
-            クライアントの種別が秘密の場合か, クライアントがクライアントクレデンシャル（またはその他の認証要求）によって発行されている場合, クライアントは<xref target='token-endpoint-auth' />に示されているとおり認可サーバーによって認証しなければならない(MUST)．
+            クライアントの種別が秘密の場合か, クライアントがクライアントクレデンシャル (またはその他の認証要求) によって発行されている場合, クライアントは<xref target='token-endpoint-auth' />に示されているとおり認可サーバーによって認証しなければならない(MUST)．
           </t>
           <!--
           <t>
@@ -1952,7 +1951,7 @@
                 認可サーバーは, クライアント認証が含まれていた場合はクライアントを認証し, 認可コードを認証したクライアントに対して発行する．
               </t>
               <t>
-                認可サーバーは認可コードが正当であることを検証し, そして, 
+                認可サーバーは認可コードが正当であることを検証し, そして,
               </t>
               <t>
                 認可サーバーは, <xref target='code-authz-req' />に示すように最初の認可リクエストに<spanx style='verb'>redirect_uri</spanx>が含まれていた場合は, <spanx style='verb'>redirect_uri</spanx>が全く同一であることを保証する．
@@ -2182,7 +2181,7 @@
         <section title='認可リクエスト' anchor='implicit-authz-req'>
         <!-- <section title='Authorization Request' anchor='implicit-authz-req'> -->
           <t>
-            クライアントは, <spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメータを付与する. 
+            クライアントは, <spanx style='verb'>application/x-www-form-urlencoded</spanx>フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメータを付与する.
           </t>
           <!--
           <t>
@@ -2586,7 +2585,7 @@
       <section title='リソースオーナーパスワードクレデンシャル' anchor='grant-password'>
 <!--       <section title='Resource Owner Password Credentials' anchor='grant-password'> -->
         <t>
-          リソースオーナーパスワードクレデンシャル認可は, リソースオーナーがクライアントと信頼関係にある場合, たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している. 認可サーバーはこの認可タイプを有効にする際は特に注意するべきである. また他のフローが利用できない場合にのみ許可するべきである. 
+          リソースオーナーパスワードクレデンシャル認可は, リソースオーナーがクライアントと信頼関係にある場合, たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している. 認可サーバーはこの認可タイプを有効にする際は特に注意するべきである. また他のフローが利用できない場合にのみ許可するべきである.
         </t>
         <!--
           The resource owner password credentials grant type is suitable in cases where the
@@ -2595,7 +2594,7 @@
           care when enabling this grant type, and only allow it when other flows are not viable.
         -->
         <t>
-          リソースオーナーのクレデンシャル（通常は対話型入力フォームにて取得するユーザー名とパスワード）を取得する機能を有するクライアントに適した認可タイプである. 既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを, 保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる. 
+          リソースオーナーのクレデンシャル (通常は対話型入力フォームにて取得するユーザー名とパスワード) を取得する機能を有するクライアントに適した認可タイプである. 既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを, 保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる.
         </t>
         <!--
           The grant type is suitable for clients capable of obtaining the resource owner's
@@ -2628,7 +2627,7 @@
           </artwork>
         </figure>
         <t>
-          <xref target='Figure-5' /> に示されるフローは以下の手順を含む. 
+          <xref target='Figure-5' /> に示されるフローは以下の手順を含む.
         </t>
         <!--
           The flow illustrated in <xref target='Figure-5' /> includes the following steps:
@@ -2636,13 +2635,13 @@
         <t>
           <list style='format (%C)'>
             <t>
-              リソースオーナーはクライアントにユーザー名とパスワードを提供する. 
+              リソースオーナーはクライアントにユーザー名とパスワードを提供する.
             </t>
             <!--
               The resource owner provides the client with its username and password.
             -->
             <t>
-              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する. リクエストを生成する際に, クライアントは認可サーバーによって認証される. 
+              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する. リクエストを生成する際に, クライアントは認可サーバーによって認証される.
             </t>
             <!--
               The client requests an access token from the authorization server's token endpoint by
@@ -2650,7 +2649,7 @@
               the client authenticates with the authorization server.
             -->
             <t>
-              認可サーバーはクライアントを認証し, リソースオーナーのクレデンシャルを検証する. もし有効であればアクセストークンを発行する. 
+              認可サーバーはクライアントを認証し, リソースオーナーのクレデンシャルを検証する. もし有効であればアクセストークンを発行する.
             </t>
             <!--
               The authorization server authenticates the client and validates the resource owner
@@ -2662,7 +2661,7 @@
         <section title='認可リクエストとレスポンス'>
 <!--         <section title='Authorization Request and Response'> -->
           <t>
-            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である. クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない（MUST）. 
+            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である. クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない (MUST).
           </t>
           <!--
             The method through which the client obtains the resource owner credentials is beyond
@@ -2685,7 +2684,7 @@
             <list style='hanging' hangIndent='6'>
               <t hangText='grant_type'>
                 <vspace />
-                必須 (REQUIRED). 値には<spanx style='verb'>password</spanx>を指定しなければならない (MUST). 
+                必須 (REQUIRED). 値には<spanx style='verb'>password</spanx>を指定しなければならない (MUST).
                 <!-- REQUIRED. Value MUST be set to <spanx style='verb'>password</spanx>.-->
               </t>
               <t hangText='username'>
@@ -2706,7 +2705,7 @@
             </list>
           </t>
           <t>
-            クライアントタイプがconfidentialである場合, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントは, Section 3.2.1.に示すとおりに認可サーバにより認証されなければならない (MUST). 
+            クライアントタイプがconfidentialである場合, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントは, Section 3.2.1.に示すとおりに認可サーバにより認証されなければならない (MUST).
           </t>
           <!--
             If the client type is confidential or the client was issued client credentials (or
@@ -2748,7 +2747,7 @@
                 issued client credentials (or with other authentication requirements),
               -->
               <t>
-                クライアント認証が含まれている場合はクライアントを認証し, 
+                クライアント認証が含まれている場合はクライアントを認証し,
               </t>
               <!--
                 authenticate the client if client authentication is included, and
@@ -2762,7 +2761,7 @@
             </list>
           </t>
           <t>
-            このアクセストークンリクエストにリソースオーナーのパスワードを利用するため, 認可サーバーはブルートフォース攻撃からこのエンドポイントを保護しなければならない（MUST）. 
+            このアクセストークンリクエストにリソースオーナーのパスワードを利用するため, 認可サーバーはブルートフォース攻撃からこのエンドポイントを保護しなければならない (MUST).
           </t>
           <!--
             Since this access token request utilizes the resource owner's password, the
@@ -3393,14 +3392,14 @@
       <t>
         <list style='symbols'>
           <t>
-		  confidentialなクライアント, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントにクライアント認証を要求し, 
+		  confidentialなクライアント, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントにクライアント認証を要求し,
 		  <!--
             require client authentication for confidential clients or for any client that was
             issued client credentials (or with other authentication requirements),
 			-->
           </t>
           <t>
-		  クライアント認証に必要な情報が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し, 
+		  クライアント認証に必要な情報が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し,
 		  <!--
             authenticate the client if client authentication is included and ensure the
             refresh token was issued to the authenticated client, and
@@ -3443,7 +3442,7 @@
 
     <section title='保護されたリソースへのアクセス<!-- Accessing Protected Resources -->' anchor='access-resource'>
       <t>
-        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする. リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない(MUST). アクセストークン(同様にエラーレスポンス)を検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される. 
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする. リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない(MUST). アクセストークン(同様にエラーレスポンス)を検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
       <!--
         The client accesses protected resources by presenting the access token to the resource
         server. The resource server MUST validate the access token and ensure it has not expired
@@ -3454,7 +3453,7 @@
       -->
       </t>
       <t>
-        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する. 一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される. 
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する. 一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される.
       <!--
         The method in which the client utilized the access token to authenticate with the resource
         server depends on the type of access token issued by the authorization server. Typically,
@@ -3466,7 +3465,7 @@
 
       <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
         <t>
-          アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する. クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT). 
+          アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する. クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
         <!--
           The access token type provides the client with the information required to successfully
           utilize the access token to make a protected resource request (along with type-specific
@@ -3476,7 +3475,7 @@
         </t>
         <figure>
           <preamble>
-            例えば, <xref target='I-D.ietf-oauth-v2-bearer' />に定義される<spanx style='verb'>bearer</spanx>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる. 
+            例えば, <xref target='I-D.ietf-oauth-v2-bearer' />に定義される<spanx style='verb'>bearer</spanx>トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる.
         <!--
             For example, the <spanx style='verb'>bearer</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-bearer' /> is utilized by simply including the access
@@ -3494,7 +3493,7 @@
         <figure>
           <preamble>
             一方, <xref target='I-D.ietf-oauth-v2-http-mac' />に定義される<spanx style='verb'>mac</spanx>トークンタイプは, アクセストークンと共にMACキーをリクエストに含めて利用できる. このMACキーはHTTPリクエストの一部分を署名するのに利用される.
-        <!-- 
+        <!--
             while the <spanx style='verb'>mac</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-http-mac' /> is utilized by issuing a MAC key
             together with the access token which is used to sign certain components of the HTTP
@@ -3520,7 +3519,7 @@
         -->
         </t>
         <t>
-          各アクセストークンタイプ定義は, <spanx style='verb'>access_token</spanx>レスポンスパラメーターとともにクライアントへ送付される追加属性（もしあれば）を指定する. また, 保護されたリソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義する. 
+          各アクセストークンタイプ定義は, <spanx style='verb'>access_token</spanx>レスポンスパラメーターとともにクライアントへ送付される追加属性 (もしあれば) を指定する. また, 保護されたリソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義する.
         <!--
           Each access token type definition specifies the additional attributes (if any) sent to
           the client together with the <spanx style='verb'>access_token</spanx> response parameter.
@@ -3851,7 +3850,7 @@
         -->
         </t>
         <t>
-          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティー検証のために他の手段を採用すべきである(SHOULD). 例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティー確認が考えられる. 有効なリダイレクトURIは, それ単体でエンドユーザーの認可時にクライアントのアイデンティティーを証明するには至らないが, エンドユーザーの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる. 
+          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティー検証のために他の手段を採用すべきである(SHOULD). 例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティー確認が考えられる. 有効なリダイレクトURIは, それ単体でエンドユーザーの認可時にクライアントのアイデンティティーを証明するには至らないが, エンドユーザーの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる.
         <!--
           When client authentication is not possible, the authorization server SHOULD employ other
           means to validate the client's identity. For example, by requiring the registration of
@@ -4038,7 +4037,7 @@
 
       <section title='認可コードリダイレクトURIの操作<!--Authorization Code Redirection URI Manipulation-->'>
         <t>
-          認可要求に認可コードグラントタイプを用いるとき, クライアントは<spanx style='verb'>redirect_uri</spanx>パラメータによりリダイレクトURIを指定できる. 
+          認可要求に認可コードグラントタイプを用いるとき, クライアントは<spanx style='verb'>redirect_uri</spanx>パラメータによりリダイレクトURIを指定できる.
           攻撃者がリダイレクトURIの値を操作可能であるとき, 認可サーバーによってリソースオーナーのユーザーエージェントを攻撃者の管理下にあるURIに認可コードを含んだ状態でリダイレクトさせることができる.
           <!--
           When requesting authorization using the authorization code grant type, the client can
@@ -4094,7 +4093,7 @@
 
       <section title='リソースオーナーパスワードクレデンシャル<!--Resource Owner Password Credentials-->'>
         <t>
-          リソースオーナーパスワードクレデンシャルグラントタイプはレガシーシステム, もしくは移行のために利用される. これはクライアントがユーザー名とパスワードを保管するリスク全般を軽減する. しかし特権のあるクレデンシャルをクライアントにさらす必要性を取り除くことはできない. 
+          リソースオーナーパスワードクレデンシャルグラントタイプはレガシーシステム, もしくは移行のために利用される. これはクライアントがユーザー名とパスワードを保管するリスク全般を軽減する. しかし特権のあるクレデンシャルをクライアントにさらす必要性を取り除くことはできない.
         <!--
           The resource owner password credentials grant type is often used for legacy or migration
           reasons. It reduces the overall risk of storing username and password by the client, but
@@ -4102,7 +4101,7 @@
         -->
         </t>
         <t>
-          このグラントタイプは, 本プロトコルで回避するよう努力してきたパスワードアンチパターンを維持しているので, 他のグラントタイプより高いリスクを含んでいる. クライアントがパスワードを濫用することや, （例えば, ログファイルやクライアントが保持している他のリソースから）パスワードが意図せず攻撃者に公開されることがありえる. 
+          このグラントタイプは, 本プロトコルで回避するよう努力してきたパスワードアンチパターンを維持しているので, 他のグラントタイプより高いリスクを含んでいる. クライアントがパスワードを濫用することや, (例えば, ログファイルやクライアントが保持している他のリソースから) パスワードが意図せず攻撃者に公開されることがありえる.
         <!--
           This grant type carries a higher risk than other grant types because it maintains the
           password anti-pattern this protocol seeks to avoid. The client could abuse the password
@@ -4111,7 +4110,7 @@
         -->
         </t>
         <t>
-          加えてリソースオーナーは認可プロセスをコントロールできない（クレデンシャルをクライアントに提示した時点でリソースオーナーの関与は終了する）ので, クライアントはリソースオーナーの要求より有効範囲が広く, 有効期間の長いアクセストークンを取得することができる. 認可サーバーはこのグラントタイプで発行されたアクセストークンについての有効範囲と有効期間をよく検討すべきである. 
+          加えてリソースオーナーは認可プロセスをコントロールできない (クレデンシャルをクライアントに提示した時点でリソースオーナーの関与は終了する) ので, クライアントはリソースオーナーの要求より有効範囲が広く, 有効期間の長いアクセストークンを取得することができる. 認可サーバーはこのグラントタイプで発行されたアクセストークンについての有効範囲と有効期間をよく検討すべきである.
         <!--
           Additionally, because the resource owner does not have control over the authorization
           process (the resource owner involvement ends when it hands over its credentials to the
@@ -4121,7 +4120,7 @@
         -->
         </t>
         <t>
-          認可サーバーとクライアントはこのグラントタイプの利用を控え, 可能であれば極力他のグラントタイプを利用すべきである(SHOULD). 
+          認可サーバーとクライアントはこのグラントタイプの利用を控え, 可能であれば極力他のグラントタイプを利用すべきである(SHOULD).
         <!--
           The authorization server and client SHOULD minimize use of this grant type and utilize
           other grant types whenever possible.
@@ -4131,7 +4130,7 @@
 
       <section title='リクエストの機密性<!--Request Confidentiality-->'>
         <t>
-          アクセストークン, リフレッシュトークン, リソースオーナーのパスワード, そしてクライアントのクレデンシャルは平文で伝送してはならない(MUST NOT). 認可コードは平文で伝送するべきではない(SHOULD NOT). 
+          アクセストークン, リフレッシュトークン, リソースオーナーのパスワード, そしてクライアントのクレデンシャルは平文で伝送してはならない(MUST NOT). 認可コードは平文で伝送するべきではない(SHOULD NOT).
         <!--
           Access tokens, refresh tokens, resource owner passwords, and client credentials MUST NOT
           be transmitted in the clear. Authorization codes SHOULD NOT be transmitted in the clear.
@@ -4237,7 +4236,7 @@
           -->
         </t>
         <t>
-          一旦エンドユーザーの認可が得られると, 認可サーバはエンドユーザのユーザエージェントを <spanx style='verb'>state</spanx> パラメータに含まれる要求されたバインド値と共にクライアントへリダイレクトする. クライアントはバインド値とユーザーエージェントの認証状態を突合することによりリクエストの正当性を確認することが出来る. CSRFを防ぐために使用されるバインド値は推測不能な値を含まねばならず (MUST), ユーザーエージェントの認証状態 (例えば, セッションクッキーやHTML5のローカルストレージ) はクライアントおよびユーザーエージェントのみがアクセスできる状態に保たれなければならない (つまり, 同一起源ポリシーによる保護)  (MUST).
+          一旦エンドユーザーの認可が得られると, 認可サーバはエンドユーザのユーザエージェントを <spanx style='verb'>state</spanx> パラメータに含まれる要求されたバインド値と共にクライアントへリダイレクトする. クライアントはバインド値とユーザーエージェントの認証状態を突合することによりリクエストの正当性を確認することが出来る. CSRFを防ぐために使用されるバインド値は推測不能な値を含まねばならず (MUST), ユーザーエージェントの認証状態 (例えば, セッションクッキーやHTML5のローカルストレージ) はクライアントおよびユーザーエージェントのみがアクセスできる状態に保たれなければならない (つまり, 同一起源ポリシーによる保護) (MUST).
           <!--
           Once authorization has been obtained from the end-user, the authorization server
           redirects the end-user's user-agent back to the client with the required binding value
@@ -4287,7 +4286,7 @@
         </t>
         <t>
           iframeにおけるこの攻撃形式を防ぐため, ネイティブアプリケーションはエンドユーザーの認可を要求するとき, 埋め込みのブラウザの代わりに外部ブラウザを使用すべきである(SHOULD).
-          ほとんどの最新ブラウザは, 認可サーバーが非標準の<spanx style='verb'>x-frame-options</spanx>ヘッダーを利用することにより強制的にiframeを回避することができる. 
+          ほとんどの最新ブラウザは, 認可サーバーが非標準の<spanx style='verb'>x-frame-options</spanx>ヘッダーを利用することにより強制的にiframeを回避することができる.
           このヘッダーは<spanx style='verb'>deny</spanx>と<spanx style='verb'>sameorigin</spanx>の2つの値を持つことができ, それぞれ全てのフレーミング, originが異なるサイトからのフレーミングを防ぐ.
           古いブラウザはJavaScriptのフレームバースティング技術を利用できるが, 全てのブラウザに有効ではないかもしれない.
           <!--
@@ -4326,7 +4325,7 @@
 
       <section title='オープンリダイレクタ<!--Open Redirectors-->' anchor='open-redirect'>
         <t>
-          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作しうる. オープンリダイレクタとは正当性の確認をせずにパラメータで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.  
+          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作しうる. オープンリダイレクタとは正当性の確認をせずにパラメータで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.
         <!--
           The authorization server authorization endpoint and the client redirection endpoint can
           be improperly configured and operate as open redirectors. An open redirector is an
@@ -4335,7 +4334,7 @@
         -->
         </t>
         <t>
-          オープンリダイレクタは, フィッシング攻撃, もしくはURIのオーソリティ部を見慣れた信頼できる通信先とする事で攻撃者がエンドユーザーを悪意のあるサイトに誘導するのに利用される. 加えて認可サーバーがクライアントにリダイレクトURIの一部のみでの登録を許可した場合, 攻撃者は, 認可サーバーの正当性確認を通過し, 認可コード, アクセストークンを攻撃者が管理するエンドポイントに送信するリダイレトURIの作成にクライアントの運営しているオープンリダイレクタを利用できる. 
+          オープンリダイレクタは, フィッシング攻撃, もしくはURIのオーソリティ部を見慣れた信頼できる通信先とする事で攻撃者がエンドユーザーを悪意のあるサイトに誘導するのに利用される. 加えて認可サーバーがクライアントにリダイレクトURIの一部のみでの登録を許可した場合, 攻撃者は, 認可サーバーの正当性確認を通過し, 認可コード, アクセストークンを攻撃者が管理するエンドポイントに送信するリダイレトURIの作成にクライアントの運営しているオープンリダイレクタを利用できる.
         <!--
           Open redirectors can be used in phishing attacks, or by an attacker to get end-users to
           visit malicious sites by making the URI's authority look like a familiar and trusted
@@ -4837,7 +4836,7 @@
           -->
         </t>
         <t>
-          認可エンドポイントで利用される追加のレスポンスタイプは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される. 
+          認可エンドポイントで利用される追加のレスポンスタイプは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
           (以降, 文中の専門用語については [RFC5226] を参照のこと) しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           <!--
           Additional response type for use with the authorization endpoint are registered on the
@@ -4848,7 +4847,7 @@
           -->
         </t>
         <t>
-          登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. 
+          登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる.
           [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
           <!--
           Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
@@ -4858,7 +4857,7 @@
           -->
         </t>
         <t>
-          Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
+          Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる.
           要請が拒否された場合は, その理由の通知が通知され, 可能な場合は承認に向けた提案が行われるべきである.
           <!--
           Within at most 14 days of the request, the Designated Expert(s) will either approve or
@@ -4868,7 +4867,7 @@
           -->
         </t>
         <t>
-          Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. 
+          Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる.
           また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
           <!--
           Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
@@ -4963,8 +4962,8 @@
           -->
         </t>
         <t>
-        他のプロトコル拡張(例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーター)で利用される追加のエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される 
-          (以降, 文中の専門用語については<xref target='RFC5226' />を参照のこと). しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+        他のプロトコル拡張(例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーター)で利用される追加のエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される (以降, 文中の専門用語については<xref target='RFC5226' />を参照のこと).
+        しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           <!--
           Additional error codes used together with other protocol extensions (i.e. extension grant
           types, access token types, or extension parameters) are registered on the advice of one
@@ -4975,7 +4974,7 @@
         　-->
         </t>
         <t>
-        登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる. 
+        登録要請は, 適切な件名 (例: "Request for response type: example") で [TBD]@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる.
           [[ Note to RFC-EDITOR: メーリングリストのアドレスは, IESG と IANA の協議によって定められる. 提案: oauth-ext-review@ietf.org ]]
           <!--
           Registration requests should be sent to the [TBD]@ietf.org mailing list for review and
@@ -4985,7 +4984,7 @@
           -->
         </t>
         <t>
-        Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
+        Designated Experts は要請から14日以内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる.
           要請が拒否された場合は, その理由が通知され, 可能な場合は承認に向けた提案が行われるべきである.
           <!--
           Within at most 14 days of the request, the Designated Expert(s) will either approve or
@@ -4995,7 +4994,7 @@
           -->
         </t>
         <t>
-        Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる. 
+        Designated Experts の決定 (もしくは決定の欠如) に異議がある場合は, Application Area Directors (app-ads@tools.ietf.org もしくは http://www.iesg.org/ にリストアップされている彼らのメールアドレス経由でコンタクト可能) に上訴することができる.
           また上訴に対する返答にも満足できない場合は, IESG 全体 (iesg@iesg.org のメーリングリスト) に上訴すること.
           <!--
           Decisions (or lack thereof) made by the Designated Expert(s) can be first appealed to
@@ -5025,7 +5024,7 @@
               </t>
               <t hangText='Error usage location:'>
                 <vspace />
-                エラーが利用できる箇所. 想定される箇所は以下の通り: 認可コード付与エラーレスポンス(<xref target='code-authz-error' />), インプリシット付与エラーレスポンス(<xref target='implicit-authz-error' />), トークンエラーレスポンス(<xref target='token-errors' />). 
+                エラーが利用できる箇所. 想定される箇所は以下の通り: 認可コード付与エラーレスポンス(<xref target='code-authz-error' />), インプリシット付与エラーレスポンス(<xref target='implicit-authz-error' />), トークンエラーレスポンス(<xref target='token-errors' />).
                 <!--
                 The location(s) where the error can be used. The possible locations are:
                 authorization code grant error response (<xref target='code-authz-error' />),
@@ -5035,7 +5034,7 @@
               </t>
               <t hangText='Related protocol extension:'>
                 <vspace />
-                エラーコードと共に用いられる拡張グラントタイプ名, アクセストークンタイプ名,もしくは拡張パラメーター名を記載する. 
+                エラーコードと共に用いられる拡張グラントタイプ名, アクセストークンタイプ名,もしくは拡張パラメーター名を記載する.
                 <!--
                 The name of the extension grant type, access token type, or extension parameter,
                 the error code is used in conjunction with.
@@ -5043,7 +5042,7 @@
               </t>
               <t hangText='Change controller:'>
                 <vspace />
-                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい. 
+                RFCの標準に従う際は, "IETF"と記載する. それ以外の場合は, 責任ある団体の名称を記載する. その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページのURL) も記載してもよい.
                 <!--
                 For standards-track RFCs, state "IETF". For others, give the name of the
                 responsible party. Other details (e.g., postal address, e-mail address, home page
