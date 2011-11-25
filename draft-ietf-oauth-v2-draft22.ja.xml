@@ -5140,6 +5140,12 @@
       <t>
         <list style='symbols'>
           <t>
+            Boku Kihara (Lepidum)
+          </t>
+          <t>
+            Kazuki Shimizu (Lepidum)
+          </t>
+          <t>
             Masaru Kurahayashi (Yahoo! Japan)
           </t>
           <t>
@@ -5152,13 +5158,16 @@
             Nov Matake (Cerego Japan)
           </t>
           <t>
-            Ryo Ito (**)
+            Ryo Ito
           </t>
           <t>
             Shunsuke Kouchi (Yahoo! Japan)
           </t>
           <t>
             Taizo Matsuoka (Yahoo! Japan)
+          </t>
+          <t>
+            Tatsuya Katsuhara (NRI)
           </t>
           <t>
             Yusuke Kondo (Yahoo! Japan)
@@ -5212,6 +5221,36 @@
         <format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hardt-oauth-01.txt" />
       </reference>
 
+    </references>
+
+    <references title='翻訳プロジェクト'>
+      <reference anchor="oidfj">
+        <front>
+          <title>OpenIDファウンデーションジャパン</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://www.openid.or.jp/' />
+      </reference>
+      <reference anchor="oidfj-trans">
+        <front>
+          <title>翻訳・教育ワーキンググループ</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://openid-foundation-japan.github.com/' />
+      </reference>
+      <reference anchor="oidfj-github">
+        <front>
+          <title>Githubレポジトリー</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='https://github.com/openid-foundation-japan' />
+      </reference>
     </references>
 
   </back>
