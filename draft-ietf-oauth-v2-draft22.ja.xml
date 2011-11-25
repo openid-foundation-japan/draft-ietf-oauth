@@ -931,7 +931,7 @@
             user-agent redirection.
           -->
           <t>
-            トークンエンドポイント - 認可の付与とアクセストークンを交換するために利用される. 一般的にクライアント認証を用いる.
+            トークンエンドポイント - 認可グラントとアクセストークンを交換するために利用される. 一般的にクライアント認証を用いる.
           </t>
           <!--
             Token endpoint - used to exchange an authorization grant for an access token, typically
@@ -968,7 +968,8 @@
           service documentation.
         -->
         <t>
-          エンドポイントのURIは (<xref target='W3C.REC-html401-19991224' />) でフォーマットされたクエリー部に <spanx style='verb'>application/x-www-form-urlencoded</spanx> を含んでもよい (MAY) (<xref target='RFC3986' /> section 3.4). そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
+          エンドポイントのURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> でフォーマットされた (<xref target='W3C.REC-html401-19991224' />) クエリー部 (<xref target='RFC3986' /> section 3.4) を含んでもよい (MAY).
+          そのクエリーパラメータは他のクエリーパラメーターを追加する場合, そのままにしなければならない (MUST). エンドポイントURIはフラグメント部を含んではいけない (MUST NOT).
         </t>
         <!--
           The endpoint URI MAY include an
@@ -1021,7 +1022,8 @@
               <t hangText='response_type'>
                 <vspace />
                 必須 (REQUIRED).
-                レスポンスタイプの値は <xref target='code-authz-req' /> で後述する認可コードをリクエストするための <spanx style='verb'>code</spanx> あるいは, <xref target='implicit-authz-req' /> で後述するアクセストークン(インプリシット許可)をリクエストする <spanx style='verb'>token</spanx> あるいは, <xref target='response-type-ext' /> で後述する登録されている拡張された値のいずれかでなければならない (MUST). レスポンスタイプに1つ以上の空白文字(%x20)が含まれている場合, 値の順序は問題としない値の空白区切りの一覧(<spanx style='verb'>a b</spanx> と <spanx style='verb'>b a</spanx> は同じである)として無視する.
+                レスポンスタイプの値は <xref target='code-authz-req' /> で後述する認可コードをリクエストするための <spanx style='verb'>code</spanx> あるいは, <xref target='implicit-authz-req' /> で後述するアクセストークン (インプリシットグラント) をリクエストする <spanx style='verb'>token</spanx> あるいは, <xref target='response-type-ext' /> で後述する登録されている拡張された値のいずれかでなければならない (MUST).
+                レスポンスタイプに1つ以上の空白文字 (%x20) が含まれている場合, 空白区切りの一覧として解釈すること. なお値の順序は問題としない (<spanx style='verb'>a b</spanx> と <spanx style='verb'>b a</spanx> は同じである).
               </t>
               <!--
                 REQUIRED. The value MUST be one of <spanx style='verb'>code</spanx> for requesting
@@ -1057,7 +1059,7 @@
             the authorization request.
           -->
           <t>
-		  リダイレクションURIは<xref target='RFC3986' />セクション4.3で定義されているように絶対URIでなければいけない(MUST). エンドポイントURIは"application/x-www-form-urlencoded"でフォーマットされたクエリコンポーネントを含んでもよい(MAY). 追加クエリパラメータを追加する場合, これは保持されなければいけない(MUST).エンドポイントURIはフラグメントコンポーネントを含んではいけない(MUST NOT).
+		  リダイレクションURIは<xref target='RFC3986' />セクション4.3で定義されているように絶対URIでなければいけない(MUST). エンドポイントURIは"application/x-www-form-urlencoded"でフォーマットされたクエリコンポーネントを含んでもよい(MAY). クエリパラメータを追加する場合, これは保持されなければいけない(MUST).エンドポイントURIはフラグメントコンポーネントを含んではいけない(MUST NOT).
           </t>
           <!--
             The redirection endpoint URI MUST be an absolute URI as defined by
@@ -3599,7 +3601,7 @@
         </figure>
         <t>
           ベンダー固有の未登録拡張パラメーターは, 広く一般には適用されず, それが用いられる認可サーバーの実装詳細に固有のものである.
-          これらの拡張パラメーターには, その他の登録済みの値と衝突しないようなベンダー固有のプレフィックスを用いるべきである. (例: パラメーター名を 'companyname_' で始める)
+          これらの拡張パラメーターには, その他の登録済みの値と衝突しないようなベンダー固有のプレフィックスを用いるべきである (SHOULD). (例: パラメーター名を 'companyname_' で始める)
           <!--
           Unregistered vendor-specific parameter extensions that are not commonly applicable, and
           are specific to the implementation details of the authorization server where they are
