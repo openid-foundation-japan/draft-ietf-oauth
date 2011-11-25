@@ -723,13 +723,13 @@
             </t>
             <t hangText='パブリック'>
               <vspace />
-	            クレデンシャルの機密性を維持することができず (例えばインストールされたネイティブアプリケーションやブラウザベースのウェブアプリケーションのようにリソースオーナーのデバイス上で実行するクライアント), かつ他の手段を使用したセキュアなクライアント認証もできないクライアント.
-	            <!--
+              クレデンシャルの機密性を維持することができず (例えばインストールされたネイティブアプリケーションやブラウザベースのウェブアプリケーションのようにリソースオーナーのデバイス上で実行するクライアント), かつ他の手段を使用したセキュアなクライアント認証もできないクライアント.
+              <!--
               Clients incapable of maintaining the confidentiality of their credentials (e.g.
               clients executing on the resource owner's device such as an installed native
               application or a web browser-based application), and incapable of secure client
               authentication via any other means.
-	            -->
+              -->
             </t>
           </list>
         </t>
@@ -830,7 +830,7 @@
         <!--
           Confidential clients are typically issued (or establish) a set of client credentials used for
           authenticating with the authorization server (e.g. password, public/private key pair).
-	      -->
+          -->
         <t>
           認可サーバーはクライアントタイプを仮定したり, クライアントとその開発者との信頼確立せずに提供されたタイプ情報に対応すべきではない (SHOULD NOT).
           認可サーバーはパブリッククライアントとクライアント認証によって信頼確立してもよい (MAY).
@@ -842,13 +842,13 @@
           The authorization server MAY establish a client authentication method with public
           clients. However, the authorization server MUST NOT rely on public client authentication
           for the purpose of identifying the client.
-	      -->
+          -->
         <t>
           クライアントは1回のリクエストにおいて二つ以上の認証方式を利用してはならない (MUST NOT).
         </t>
         <!--
           The client MUST NOT use more than one authentication method in each request.
-	      -->
+          -->
 
         <section title='クライアントパスワード'>
 <!--         <section title='Client Password'> -->
@@ -856,16 +856,16 @@
             クライアントパスワードを保持しているクライアントは, 認可サーバー上での認証に <xref target='RFC2617' /> で定義されている HTTP Basic 認証スキームを使用してもよい (MAY).
             この場合, クライアント識別子がユーザー名, クライアントパスワードがパスワードとして利用される.
           </t>
-	        <!--
+            <!--
             Clients in possession of a client password MAY use the HTTP Basic authentication scheme
             as defined in <xref target='RFC2617' /> to authenticate with the authorization server.
             The client identifier is used as the username, and the client password is used as the
             password.
-	        -->
+            -->
           <figure>
             <preamble>
               例 (改行は掲載上の都合による):
-	      <!--For example (extra line breaks are for display purposes only):-->
+              <!--For example (extra line breaks are for display purposes only):-->
             </preamble>
             <artwork>
               <![CDATA[
@@ -876,30 +876,30 @@
           <t>
             認可サーバーは以下のパラメーターを用いて, リクエストボディにクライアントクレデンシャルを含めてもよい (MAY).
           </t>
-	        <!--
+            <!--
             Alternatively, the authorization server MAY allow including the client credentials in the
             request body using the following parameters:
-	        -->
+            -->
           <t>
             <list style='hanging' hangIndent='6'>
               <t hangText='client_id'>
                 <vspace />
                 必須 (REQUIRED).
                 <xref target='client-identifier' /> に示されるクライアント登録時に発行されたクライアント識別子.
-		          <!--
+                <!--
                 REQUIRED. The client identifier issued to the client during the registration process
                 described by <xref target='client-identifier' />.
-		          -->
+                -->
               </t>
               <t hangText='client_secret'>
                 <vspace />
                 必須 (REQUIRED).
                 クライアントのシークレット.
                 空の場合は省略してもよい (MAY).
-		          <!--
+                <!--
                 REQUIRED. The client secret. The client MAY omit the parameter if the client secret
                 is an empty string.
-		          -->
+                -->
               </t>
             </list>
           </t>
@@ -907,18 +907,18 @@
             2つのパラメーターを使ってクライアントクレデンシャルをリクエストボディに含めることは推奨されていない (NOT RECOMMENDED).
             この方法は HTTP Basic 認証スキーム (もしくは他のパスワードベースのHTTP認証スキーム) が直接利用できないクライアントに限定すべきある.
           </t>
-	        <!--
+            <!--
             Including the client credentials in the request body using the two parameters is NOT
             RECOMMENDED, and should be limited to clients unable to directly utilize the HTTP Basic
             authentication scheme (or other password-based HTTP authentication schemes).
-	        -->
+            -->
           <figure>
             <preamble>
               例：ボディパラメーターを使ってアクセストークンを更新 (<xref target='token-refresh' />) する場合 (改行は掲載上の都合による)
-	          <!--
+              <!--
               For example, requesting to refresh an access token (<xref target='token-refresh' />)
               using the body parameters (extra line breaks are for display purposes only):
-	          -->
+              -->
             </preamble>
             <artwork>
               <![CDATA[
@@ -942,10 +942,10 @@
           <t>
             クライアント認証方式にパスワードが含まれるので, 認可サーバーはクライアント認証を行う全てのエンドポイントでブルートフォースアタック対策を行わなくてはならない (MUST).
           </t>
-	       　<!--
+          <!--
             Since this client authentication method involves a password, the authorization server
             MUST protect any endpoint utilizing it against brute force attacks.
-	       　-->
+          -->
         </section>
 
         <section title='その他の認証方式'>
@@ -1038,7 +1038,7 @@
         -->
         <t>
           エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='W3C.REC-html401-19991224' />) でフォーマットされたクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
-    		  クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
+          クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
           エンドポイントURIはフラグメントコンポーネントを含んではいけない (MUST NOT).
         </t>
         <!--
@@ -1135,9 +1135,9 @@
             the authorization request.
           -->
           <t>
-      		  リダイレクションURIは <xref target='RFC3986' /> セクション4.3で定義されているように絶対URIでなければいけない (MUST).
-      		  エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='W3C.REC-html401-19991224' />) でフォーマットされたクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
-      		  クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
+            リダイレクションURIは <xref target='RFC3986' /> セクション4.3で定義されているように絶対URIでなければいけない (MUST).
+            エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='W3C.REC-html401-19991224' />) でフォーマットされたクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
+            クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
             エンドポイントURIはフラグメントコンポーネントを含んではいけない (MUST NOT).
           </t>
           <!--
@@ -1198,10 +1198,10 @@
               </list>
             </t>
             <t>
-		          認可サーバは完全なリダイレクションURIの提供をクライアントに要求するべきである (SHOULD).
-		          (クライアントはリクエスト毎のカスタマイズを得るため <spanx style='verb'>state</spanx> リクエストパラメーターを使用できる (MAY))
-		          認可サーバはクライアントに複数のリダイレクトURIの登録を許可するべきである (MAY).
-		          完全なリダイレクションURIの登録を要求することが可能出ないなら, 認可サーバはURIスキーム, 権限, パス (認可要求の時, リダイレクションURIのクエリーコンポーネントのみ動的に変更を許可する) の登録を要求するべきである (SHOULD).
+              認可サーバは完全なリダイレクションURIの提供をクライアントに要求するべきである (SHOULD).
+              (クライアントはリクエスト毎のカスタマイズを得るため <spanx style='verb'>state</spanx> リクエストパラメーターを使用できる (MAY))
+              認可サーバはクライアントに複数のリダイレクトURIの登録を許可するべきである (MAY).
+              完全なリダイレクションURIの登録を要求することが可能出ないなら, 認可サーバはURIスキーム, 権限, パス (認可要求の時, リダイレクションURIのクエリーコンポーネントのみ動的に変更を許可する) の登録を要求するべきである (SHOULD).
             </t>
             <!--
               The authorization server SHOULD require the client to provide the complete
@@ -1320,44 +1320,44 @@
         <t>
           クライアントがトークンエンドポイントの所在を取得する方法についてはこの仕様の範囲外であるが, 通常はサービス文書中に記載されている.
         </t>
-      	<!--
+          <!--
           The means through which the client obtains the location of the token endpoint are
           beyond the scope of this specification but is typically provided in the service
           documentation.
-      	-->
+          -->
         <t>
           エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='W3C.REC-html401-19991224' />) でフォーマットされたクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
-      		クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
+          クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
           エンドポイントURIはフラグメントコンポーネントを含んではいけない (MUST NOT).
         </t>
-	      <!--
+          <!--
           The endpoint URI MAY include an
           <spanx style='verb'>application/x-www-form-urlencoded</spanx> formatted
           (<xref target='W3C.REC-html401-19991224' />) query component (<xref target='RFC3986' />
           section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
-      	-->
+          -->
         <t>
           トークンエンドポイントへのリクエストが平文で (HTTPリクエストおよびレスポンスにて) 転送することになるため, 認可サーバーはトークンエンドポイントへリクエストを送信する際にTLSの仕組みを利用しなくてはならない (MUST).
           認可サーバーはTLS 1.0(<xref target='RFC2246' />)をサポートしなくてはならない (MUST).
           認可サーバーはTLS 1.2(<xref target='RFC5246' />)とその後継のプロトコルもサポートするべきである (SHOULD).
           また, 認可サーバーは自身のセキュリティ要件を満たす追加のトランスポート層の仕組みをサポートしてもよい (MAY).
         </t>
-      	<!--
+          <!--
           Since requests to the token endpoint result in the transmission of clear-text credentials
           (in the HTTP request and response), the authorization server MUST require the use of a
           transport-layer security mechanism when sending requests to the token endpoint. The
           authorization server MUST support TLS 1.0 (<xref target='RFC2246' />), SHOULD support TLS
           1.2 (<xref target='RFC5246' />) and its future replacements, and MAY support additional
           transport-layer mechanisms meeting its security requirements.
-	      -->
+          -->
         <t>
           クライアントはアクセストークンリクエストを送信する際に, HTTP <spanx style='verb'>POST</spanx> メソッドを使用しなければならない (MUST).
         </t>
-	      <!--
+          <!--
           The client MUST use the HTTP <spanx style='verb'>POST</spanx> method when making access
           token requests.
-	      -->
+          -->
         <t>
           空の値で送信されたパラメーターは省略されたものとして扱われなければならない (MUST).
           認可サーバーは未知のリクエストパラメーターは無視するべきである (SHOULD).
@@ -1406,7 +1406,7 @@
               <t>
                 定期的なクレデンシャルの更新など, 認証管理のベストプラクティスを実施する.
                 一連のすべてのリフレッシュトークンを更新するのは困難だが, クライアントクレデンシャルの更新は非常に容易である.
-              </t>]
+              </t>
               <!--
                 Implementing authentication management best practices which require periodic
                 credential rotation. Rotation of an entire set of refresh tokens can be
@@ -1436,7 +1436,7 @@
       </section>
 
       <section title='アクセストークンスコープ' anchor='scope'>
-	      <!--      <section title='Access Token Scope' anchor='scope'> -->
+          <!--      <section title='Access Token Scope' anchor='scope'> -->
         <t>
           認可エンドポイントおよびトークンエンドポイントでは, クライアントは <spanx style='verb'>scope</spanx> リクエストパラメーターを用いて要求するアクセス範囲を明示することができる.
           同様に, 認可サーバは発行されたアクセストークンの範囲をクライアントに通知するために <spanx style='verb'>scope</spanx> レスポンスパラメーターを使用する.
@@ -3150,7 +3150,7 @@
             <preamble>
               An example successful response:
             </preamble>
-	    -->
+        -->
             <artwork>
               <![CDATA[
   HTTP/1.1 200 OK
@@ -3193,7 +3193,7 @@
             following HTTP request using transport-layer security (line breaks are for display
             purposes only):
           </preamble>
-	  -->
+          -->
           <artwork>
             <![CDATA[
   POST /token HTTP/1.1
@@ -3497,68 +3497,68 @@
 
     <section title='アクセストークンの更新<!--Refreshing an Access Token-->' anchor='token-refresh'>
       <t>
-	      認可サーバーがクライアントにリフレッシュトークンを発行していれば, クライアントはトークンエンドポイントに更新リクエストを送ることができる.
-	      以下のパラメーターが <spanx style='verb'>application/x-www-form-urlencoded</spanx> 形式でHTTPリクエストエンティティーボディーに加えられる.
-	      <!--
+        認可サーバーがクライアントにリフレッシュトークンを発行していれば, クライアントはトークンエンドポイントに更新リクエストを送ることができる.
+        以下のパラメーターが <spanx style='verb'>application/x-www-form-urlencoded</spanx> 形式でHTTPリクエストエンティティーボディーに加えられる.
+        <!--
         If the authorization server issued a refresh token to the client, the client makes a
         refresh request to the token endpoint by adding the following parameters using the
         <spanx style='verb'>application/x-www-form-urlencoded</spanx> format in the HTTP request
         entity-body:
-		    -->
+        -->
       </t>
       <t>
         <list style='hanging' hangIndent='6'>
           <t hangText='grant_type'>
             <vspace />
-			      必須 (REQUIRED).
-			      値には <spanx style='verb'>refresh_token</spanx> がセットされなければならない (MUST).
-			      <!--
+            必須 (REQUIRED).
+            値には <spanx style='verb'>refresh_token</spanx> がセットされなければならない (MUST).
+            <!--
             REQUIRED. Value MUST be set to <spanx style='verb'>refresh_token</spanx>.
-			      -->
+            -->
           </t>
           <t hangText='refresh_token'>
             <vspace />
-			必須 (REQUIRED).
-			クライアントに発行されたリフレッシュトークン.
-			<!--
+            必須 (REQUIRED).
+            クライアントに発行されたリフレッシュトークン.
+            <!--
             REQUIRED. The refresh token issued to the client.
-			-->
+            -->
           </t>
           <t hangText='scope'>
             <vspace />
-      			任意 (OPTIONAL).
-      			アクセス要求のスコープ.
-      			詳細は <xref target='scope' /> で述べる.
-      			要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
-      			もし指定されなかった場合は, もともと許可された値として扱われる.
-      			<!--
+            任意 (OPTIONAL).
+            アクセス要求のスコープ.
+            詳細は <xref target='scope' /> で述べる.
+            要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
+            もし指定されなかった場合は, もともと許可された値として扱われる.
+            <!--
             OPTIONAL. The scope of the access request as described by <xref target='scope' />.
             The requested scope MUST NOT include any scope not originally granted by the resource
             owner, and if omitted is treated as equal to the scope originally granted by the
             resource owner.
-			      -->
+            -->
           </t>
         </list>
       </t>
       <t>
-    	  リフレッシュトークンは一般的にアクセストークンの要求に用いる永続的なクレデンシャルであるため, 発行されたクライアントと紐づく.
-    	  クライアントタイプがconfidential, もしくはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントは, 認可サーバーにより認証されなければならない (MUST).
-    	  クライアント認証は <xref target='token-endpoint-auth' /> で述べる.
-    	  <!--
+        リフレッシュトークンは一般的にアクセストークンの要求に用いる永続的なクレデンシャルであるため, 発行されたクライアントと紐づく.
+        クライアントタイプがconfidential, もしくはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントは, 認可サーバーにより認証されなければならない (MUST).
+        クライアント認証は <xref target='token-endpoint-auth' /> で述べる.
+        <!--
         Because refresh tokens are typically long-lasting credentials used to request additional
         access tokens, the refresh token is bound to the client it was issued. If the client type
         is confidential or the client was issued client credentials (or assigned other
         authentication requirements), the client MUST authenticate with the authorization server as
         described in <xref target='token-endpoint-auth' />.
-		    -->
+        -->
       </t>
       <figure>
         <preamble>
-      		例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
-      		<!--
+          例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
+          <!--
           For example, the client makes the following HTTP request using transport-layer
           security (extra line breaks are for display purposes only):
-		      -->
+          -->
         </preamble>
         <artwork>
           <![CDATA[
@@ -3572,59 +3572,59 @@
         </artwork>
       </figure>
       <t>
-    	  認可サーバーは次のことを実施しなければならない (MUST):
-    	  <!--
+        認可サーバーは次のことを実施しなければならない (MUST):
+        <!--
         The authorization server MUST:
-		    -->
+        -->
       </t>
       <t>
         <list style='symbols'>
           <t>
-      		  confidentialなクライアント, もしくはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントにクライアント認証を要求し,
-      		  <!--
+            confidentialなクライアント, もしくはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントにクライアント認証を要求し,
+            <!--
             require client authentication for confidential clients or for any client that was
             issued client credentials (or with other authentication requirements),
-			      -->
+            -->
           </t>
           <t>
-		        クライアント認証に必要な情報が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し,
-		        <!--
+            クライアント認証に必要な情報が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し,
+            <!--
             authenticate the client if client authentication is included and ensure the
             refresh token was issued to the authenticated client, and
-			      -->
+            -->
           </t>
           <t>
-      		  リフレッシュトークンを検証する.
-      		  <!--
+            リフレッシュトークンを検証する.
+            <!--
             validate the refresh token.
-			      -->
+            -->
           </t>
         </list>
       </t>
       <t>
-    	  リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
-    	  レスポンスの詳細は <xref target='token-response' /> で述べる.
-    	  リクエストの確認に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
-    	  エラーレスポンスの詳細は <xref target='token-errors' /> で述べる.
-    	  <!--
+        リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
+        レスポンスの詳細は <xref target='token-response' /> で述べる.
+        リクエストの確認に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
+        エラーレスポンスの詳細は <xref target='token-errors' /> で述べる.
+        <!--
         If valid and authorized, the authorization server issues an access token as described in
         <xref target='token-response' />. If the request failed verification or is invalid, the
         authorization server returns an error response as described in
         <xref target='token-errors' />.
-    		-->
+        -->
       </t>
       <t>
-    	  認可サーバーは新しいリフレッシュトークンを返してもよい (MAY).
-    	  その時, クライアントは古いリフレッシュトークンを破棄し, 新しいリフレッシュトークンに取り替える.
-    	  認可サーバーは新しいリフレッシュトークンを発行した後, 古いリフレッシュトークンを無効化してもよい (MAY).
-    	  新しいリフレッシュトークンが発行された時, リフレッシュトークンのスコープはクライアントによってリクエストに含まれたリフレッシュトークンのスコープと同一でなければならない (MUST).
-    	  <!--
+        認可サーバーは新しいリフレッシュトークンを返してもよい (MAY).
+        その時, クライアントは古いリフレッシュトークンを破棄し, 新しいリフレッシュトークンに取り替える.
+        認可サーバーは新しいリフレッシュトークンを発行した後, 古いリフレッシュトークンを無効化してもよい (MAY).
+        新しいリフレッシュトークンが発行された時, リフレッシュトークンのスコープはクライアントによってリクエストに含まれたリフレッシュトークンのスコープと同一でなければならない (MUST).
+        <!--
         The authorization server MAY issue a new refresh token, in which case the client MUST
         discard the old refresh token and replace it with the new refresh token. The authorization
         server MAY revoke the old refresh token after issuing a new refresh token to the client. If
         a new refresh token is issued, the refresh token scope MUST be identical to that of the
         refresh token included by the client in the request.
-    		-->
+        -->
       </t>
     </section>
 
@@ -3633,14 +3633,14 @@
         クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.
         リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない (MUST).
         アクセストークン (同様にエラーレスポンス) を検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
-      <!--
+        <!--
         The client accesses protected resources by presenting the access token to the resource
         server. The resource server MUST validate the access token and ensure it has not expired
         and that its scope covers the requested resource. The methods used by the resource server
         to validate the access token (as well as any error responses) are beyond the scope of this
         specification, but generally involve an interaction or coordination between the resource
         server and the authorization server.
-      -->
+        -->
       </t>
       <t>
         クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する.
@@ -3904,52 +3904,52 @@
 
     <section title='ネイティブアプリケーション<!--Native Applications-->'>
       <t>
-    	  ネイティブアプリケーションはリソースオーナーの端末にインストールされ, 実行されるクライアントである (例えば, デスクトップアプリケーション, ネイティブモバイルアプリケーション).
-    	  ネイティブアプリケーションではセキュリティ, プラットフォーム性能と全体的なエンドユーザー経験に関する特別な考慮を必要とするかもしれない (MAY).
-    	  <!--
+        ネイティブアプリケーションはリソースオーナーの端末にインストールされ, 実行されるクライアントである (例えば, デスクトップアプリケーション, ネイティブモバイルアプリケーション).
+        ネイティブアプリケーションではセキュリティ, プラットフォーム性能と全体的なエンドユーザー経験に関する特別な考慮を必要とするかもしれない (MAY).
+        <!--
         Native applications are clients installed and executed on the resource owner's device
         (i.e. desktop application, native mobile application). Native applications may require
         special consideration related to security, platform capabilities, and overall end-user
         experience.
-    		-->
+        -->
       </t>
       <t>
-    	  認可エンドポイントはクライアントとリソースオーナーのユーザーエージェントによるインタラクションを要求する.
-    	  ネイティブアプリケーションは外部のユーザーエージェントを起動もしくはアプリケーション内にユーザーエージェントを埋め込むことができる.
-    	  <!--
+        認可エンドポイントはクライアントとリソースオーナーのユーザーエージェントによるインタラクションを要求する.
+        ネイティブアプリケーションは外部のユーザーエージェントを起動もしくはアプリケーション内にユーザーエージェントを埋め込むことができる.
+        <!--
         The authorization endpoint requires interaction between the client and the resource
         owner's user-agent. Native applications can invoke an external user-agent or embed a
         user-agent within the application. For example:
-    		-->
+        -->
       </t>
       <t>
         <list style='symbols'>
           <t>
-      		  外部のユーザーエージェント - ネイティブアプリケーションは, クライアントを起動するためのハンドラとしてオペレーションシステムに登録したスキームをリダイレクトURIにして利用する, クレデンシャルをコピーアンドペーストする, ローカルのウェブサーバーを利用する, ユーザーエクステンションをインストールする, クライアントの管理下にあるサーバ上のリソースをリダイレクトURIとして利用するなど, ネイティブアプリケーションがレスポンスにアクセスすることを可能にする手段を用いて, 認可サーバーからのレスポンスを取得することができる.
-      	    <!--
+            外部のユーザーエージェント - ネイティブアプリケーションは, クライアントを起動するためのハンドラとしてオペレーションシステムに登録したスキームをリダイレクトURIにして利用する, クレデンシャルをコピーアンドペーストする, ローカルのウェブサーバーを利用する, ユーザーエクステンションをインストールする, クライアントの管理下にあるサーバ上のリソースをリダイレクトURIとして利用するなど, ネイティブアプリケーションがレスポンスにアクセスすることを可能にする手段を用いて, 認可サーバーからのレスポンスを取得することができる.
+            <!--
             External user-agent - the native application can capture the response from the
             authorization server using a redirection URI with a scheme registered with the
             operating system to invoke the client as the handler, manual copy-and-paste of the
             credentials, running a local web server, installing a user-agent extension, or by
             providing a redirection URI identifying a server-hosted resource under the client's
             control, which in turn makes the response available to the native application.
-		-->
+            -->
           </t>
           <t>
-      		  埋め込まれたユーザーエージェント - ネイティブアプリケーションは, リソースを読み込んでいる間に発生した状態変更の監視やユーザーエージェントのクッキーストレージへのアクセスなど, 埋め込まれたユーザーエージェントとの直接通信によりレスポンスを受け取ることができる.
-      		  <!--
+            埋め込まれたユーザーエージェント - ネイティブアプリケーションは, リソースを読み込んでいる間に発生した状態変更の監視やユーザーエージェントのクッキーストレージへのアクセスなど, 埋め込まれたユーザーエージェントとの直接通信によりレスポンスを受け取ることができる.
+            <!--
             Embedded user-agent - the native application obtains the response by directly
             communicating with the embedded user-agent by monitoring state changes emitted during
             the resource load, or accessing the user-agent's cookies storage.
-      			-->
+            -->
           </t>
         </list>
       </t>
       <t>
-    	  外部のユーザーエージェントか埋め込みのユーザーエージェントかを選択するとき, 開発者は以下のことを考慮すべきである.
-    	  <!--
+        外部のユーザーエージェントか埋め込みのユーザーエージェントかを選択するとき, 開発者は以下のことを考慮すべきである.
+        <!--
         When choosing between an external or embedded user-agent, developers should consider:
-    		-->
+        -->
       </t>
       <t>
         <list style='symbols'>
@@ -4291,7 +4291,7 @@
         </t>
         <t>
           このような攻撃を防ぐため, 認可サーバーは認可コードの取得に用いたリダイレクトURIと, 認可コードとアクセストークンの交換時に提供されたリダイレクトURIが同一であることを確認しなければならない (MUST).
-          認可サーバはパブリッククライアントに対してリダイレクトURIの登録を要求しなければならず (MUST), confidencialクライアントに対してもリダイレクトURIの登録を要求すべきである (SHOULD).
+          認可サーバはパブリッククライアントに対してリダイレクトURIの登録を要求しなければならず (MUST), コンフィデンシャルクライアントに対してもリダイレクトURIの登録を要求すべきである (SHOULD).
           リダイレクトURIがリクエストにより提供されたとき, 認可サーバーは登録された値を用いてそれを検証しければならない (MUST).
           <!--
           In order to prevent such an attack, the authorization server MUST ensure that the
@@ -4548,17 +4548,17 @@
         <t>
           認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作しうる.
           オープンリダイレクタとは正当性の確認をせずにパラメーターで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.
-        <!--
+          <!--
           The authorization server authorization endpoint and the client redirection endpoint can
           be improperly configured and operate as open redirectors. An open redirector is an
           endpoint using a parameter to automatically redirect a user-agent to the location
           specified by the parameter value without any validation.
-        -->
+          -->
         </t>
         <t>
           オープンリダイレクタは, フィッシング攻撃, もしくはURIのオーソリティ部を見慣れた信頼できる通信先とする事で攻撃者がエンドユーザーを悪意のあるサイトに誘導するのに利用される.
           加えて認可サーバーがクライアントにリダイレクトURIの一部のみでの登録を許可した場合, 攻撃者は, 認可サーバーの正当性確認を通過し, 認可コード, アクセストークンを攻撃者が管理するエンドポイントに送信するリダイレトURIの作成にクライアントの運営しているオープンリダイレクタを利用できる.
-        <!--
+          <!--
           Open redirectors can be used in phishing attacks, or by an attacker to get end-users to
           visit malicious sites by making the URI's authority look like a familiar and trusted
           destination. In addition, if the authorization server allows the client to register only
@@ -4566,7 +4566,7 @@
           client to construct a redirection URI that will pass the authorization server validation
           but will send the authorization code or access token to an endpoint under the control of
           the attacker.
-        -->
+          -->
         </t>
       </section>
 
