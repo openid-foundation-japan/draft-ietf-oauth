@@ -712,7 +712,7 @@ Authors' Addresses<br />
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;2: 期限切れのアクセストークンのリフレッシュ&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          <a class='info' href='#Figure-2'>Figure&nbsp;2<span> (</span><span class='info'>期限切れのアクセストークンのリフレッシュ</span><span>)</span></a> で示されたフローは以下のステップを含む.
+          <a class='info' href='#Figure-2'>Figure&nbsp;2<span> (</span><span class='info'>期限切れのアクセストークンのリフレッシュ</span><span>)</span></a> のフローは以下の通りである.
         
 </p>
 <p>
@@ -1187,12 +1187,12 @@ Authors' Addresses<br />
             
 </p>
 <p>
-              リダイレクトURIが認可リクエストに含まれていた時, いくつかのリダイレクトURIが登録されていた場合<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>セクション6で説明されているように登録されているリダイレクトURI (もしくはURIコンポーネント) のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.
+              リダイレクトURIが認可リクエストに含まれていた時, いくつかのリダイレクトURIが登録されていた場合<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>セクション6に示すとおり登録されているリダイレクトURI (もしくはURIコンポーネント) のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.
               もしクライアントの登録にフルのリダイレクトURIが含まれていた場合, 認可サーバは <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> セクション6.2.1.で定義されているように単純な文字列比較を使用し二つのURIを比較しなければいけない (MUST).
             
 </p>
 <p>
-               認可サーバがリダイレクトURIのクエリーコンポーネントの動的変更をクライアントに許可するなら, 攻撃者が<a class='info' href='#open-redirect'>Section&nbsp;10.15<span> (</span><span class='info'>オープンリダイレクタ<!--Open Redirectors--></span><span>)</span></a>で説明されているようにリダイレクトエンドポイントの乱用できないことによってクライアントはクエリーコンポーネントの操作を保証しなければいけない.
+               認可サーバがリダイレクトURIのクエリーコンポーネントの動的変更をクライアントに許可するなら, 攻撃者が<a class='info' href='#open-redirect'>Section&nbsp;10.15<span> (</span><span class='info'>オープンリダイレクタ<!--Open Redirectors--></span><span>)</span></a>に示すとおりリダイレクトエンドポイントの乱用できないことによってクライアントはクエリーコンポーネントの操作を保証しなければいけない.
              
 </p>
 <a name="anchor22"></a><br /><hr />
@@ -1379,7 +1379,7 @@ Authors' Addresses<br />
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;3: 認可コード処理フロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          <a class='info' href='#Figure-3'>Figure&nbsp;3<span> (</span><span class='info'>認可コード処理フロー</span><span>)</span></a> で示した図は, 次のステップを含む:
+          <a class='info' href='#Figure-3'>Figure&nbsp;3<span> (</span><span class='info'>認可コード処理フロー</span><span>)</span></a> のフローは以下の通りである.
         
 </p>
 <p>
@@ -1541,7 +1541,7 @@ Authors' Addresses<br />
             クライアントは理解できないレスポンスパラメーターは無視すべきである (SHOULD).
             認可コードの文字列長は本仕様では定義しない.
             クライアントはコード値のサイズについてなんらかの仮定をすべきではない.
-            サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+            認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
           
 </p>
 <a name="code-authz-error"></a><br /><hr />
@@ -1620,14 +1620,14 @@ Authors' Addresses<br />
 <dd>
                   
                   任意 (OPTIONAL).
-                  発生したエラーの内容をクライアント開発者が理解するのを補助するため, 追加の情報を人間が読める形式でUTF-8で記載する. 
+                  クライアント開発者が発生したエラーを理解する際の手助けとなる, UTF-8エンコードされた可読性のある追加情報.
                 
 </dd>
 <dt>error_uri</dt>
 <dd>
                   
                   任意 (OPTIONAL).
-                  クライアント開発者がエラーに関する追加の情報を得るための, 人間が読めるエラーに関するWebページのURI. 
+                  クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
                 
 </dd>
 <dt>state</dt>
@@ -1741,7 +1741,7 @@ Authors' Addresses<br />
           
 </p>
 <p>
-              成功したレスポンスの例は次のとおり. 
+              成功レスポンス例を以下に示す.
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -1821,7 +1821,7 @@ Authors' Addresses<br />
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;4: インプリシットグラントフロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          <a class='info' href='#Figure-4'>Figure&nbsp;4<span> (</span><span class='info'>インプリシットグラントフロー</span><span>)</span></a> で示した図は次のステップを含む:
+          <a class='info' href='#Figure-4'>Figure&nbsp;4<span> (</span><span class='info'>インプリシットグラントフロー</span><span>)</span></a> のフローは以下の通りである.
         
 </p>
 <p>
@@ -1975,7 +1975,7 @@ Authors' Addresses<br />
                 
                 任意 (OPTIONAL).
                 アクセストークンの有効期間を秒で表したもの.
-                例えば <tt>3600</tt> という値は, レスポンスが生成されてから1時間でアクセストークンが無効になることを表す.
+                例えばこの値が <tt>3600</tt> であれば, そのアクセストークンは発行から1時間後に期限切れとなる.
               
 </dd>
 <dt>scope</dt>
@@ -2019,7 +2019,7 @@ Authors' Addresses<br />
             クライアントは理解できないレスポンスパラメーターは無視すべきである (SHOULD).
             アクセストークンの文字列長は本仕様では定義しない.
             クライアントは値のサイズについてなんらかの仮定をすべきではない.
-            サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである. 
+            認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである. 
           
 </p>
 <a name="implicit-authz-error"></a><br /><hr />
@@ -2098,14 +2098,14 @@ Authors' Addresses<br />
 <dd>
                   
                   任意 (OPTIONAL).
-                  発生したエラーの内容をクライアント開発者が理解するのを補助するため, 追加の情報を人間が読める形式でUTF-8で記載する. 
+                  クライアント開発者が発生したエラーを理解する際の手助けとなる, UTF-8エンコードされた可読性のある追加情報.
                 
 </dd>
 <dt>error_uri</dt>
 <dd>
                   
                   任意 (OPTIONAL).
-                  クライアント開発者がエラーに関する追加の情報を得るための, 人間が読めるエラーに関するWebページのURI. 
+                  クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
                 
 </dd>
 <dt>state</dt>
@@ -2167,7 +2167,7 @@ Authors' Addresses<br />
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;5: リソースオーナーパスワードクレデンシャルフロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>リソースオーナーパスワードクレデンシャルフロー</span><span>)</span></a> に示されるフローは以下の手順を含む.
+          <a class='info' href='#Figure-5'>Figure&nbsp;5<span> (</span><span class='info'>リソースオーナーパスワードクレデンシャルフロー</span><span>)</span></a> のフローは以下の通りである.
         
 </p>
 <p>
@@ -2300,11 +2300,11 @@ Authors' Addresses<br />
 
 <p>
             アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に示すとおりアクセストークンと任意でリフレッシュトークンを発行する.
-            もしクライアント認証リクエストが失敗もしくは不正だった場合, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> に示すとおりエラーレスポンスを返却する. 
+            クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> に示すとおりエラーレスポンスを返却する.
           
 </p>
 <p>
-              成功したレスポンスの例は下記のとおり.
+              成功レスポンス例を以下に示す.
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2328,11 +2328,11 @@ Authors' Addresses<br />
 クライアントクレデンシャル</h3>
 
 <p>
-          クライアントが自身のコントロール下, または他のリソースオーナーの認可サーバーで事前に準備されている保護リソースにアクセスする場合, クライアントはクライアントクレデンシャル (あるいは認証をサポートしている他の方法) のみでアクセストークンをリクエストすることができる.
+          クライアント自身のコントロール下にある保護リソースまたは認可サーバーとの間で調整済みの保護リソースにアクセスする場合, クライアントはクライアントクレデンシャル (あるいはサポートされているその他の認証方式) のみでアクセストークンをリクエストすることができる.
         
 </p>
 <p>
-          クライアントクレデンシャルのグラントタイプは機密クライアントによって使用されなければならない (MUST).
+          コンフィデンシャルクライアントのみが, クライアントクレデンシャルグラントタイプを利用できる (MUST).
         
 </p><br /><hr class="insert" />
 <a name="Figure-6"></a>
@@ -2349,7 +2349,7 @@ Authors' Addresses<br />
 </pre></div><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;6: クライアントクレデンシャルフロー&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
 
 <p>
-          <a class='info' href='#Figure-6'>Figure&nbsp;6<span> (</span><span class='info'>クライアントクレデンシャルフロー</span><span>)</span></a> で示されたフロー概要は以下のステップを含む.
+          <a class='info' href='#Figure-6'>Figure&nbsp;6<span> (</span><span class='info'>クライアントクレデンシャルフロー</span><span>)</span></a> のフローは以下の通りである.
         
 </p>
 <p>
@@ -2357,12 +2357,12 @@ Authors' Addresses<br />
 <blockquote class="text"><dl>
 <dt>(A)</dt>
 <dd>
-              クライアントは認可サーバーで認証し, トークンエンドポイントからアクセストークンをリクエストする.
+              クライアントは自身の認証情報を含めてトークンエンドポイントにアクセストークンリクエストを送る.
             
 </dd>
 <dt>(B)</dt>
 <dd>
-              認可サーバーはアクセストークンが確認できた場合, クライアントを認証する.
+              認可サーバーはクライアントを認証し, 認証に成功すればアクセストークンを発行する.
             
 </dd>
 </dl></blockquote><p>
@@ -2374,7 +2374,7 @@ Authors' Addresses<br />
 認可リクエストとレスポンス</h3>
 
 <p>
-            認可の付与としてクライアント認証が利用されている場合, 追加の認可リクエストは必要ない.
+            クライアント認証が認可グラントとして利用されるため, 追加の認可リクエストは必要ない.
           
 </p>
 <a name="anchor34"></a><br /><hr />
@@ -2383,7 +2383,7 @@ Authors' Addresses<br />
 アクセストークンリクエスト</h3>
 
 <p>
-            クライアントはHTTPリクエストボディーに <tt>application/x-www-form-urlencoded</tt> フォーマットを使用している下記のパラメーターを追加することでトークンエンドポイントにリクエストする.
+            クライアントは, HTTPリクエストボディーに <tt>application/x-www-form-urlencoded</tt> フォーマットで下記のパラメーターを追加し, トークンエンドポイントにリクエストを送る.
           
 </p>
 <p>
@@ -2400,14 +2400,15 @@ Authors' Addresses<br />
 <dd>
                 
                 任意 (OPTIONAL).
-                アクセス範囲は後述の <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> によってリクエストする.
+                詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> を参照のこと.
               
 </dd>
 </dl></blockquote><p>
           
 </p>
 <p>
-            クライアントは <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>クライアント認証</span><span>)</span></a> で後述される認可サーバーで認証しなければならない (MUST).
+            クライアントは認可サーバーに対して認証を行わなければならない (MUST).
+            詳細は <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>クライアント認証</span><span>)</span></a> を参照のこと.
           
 </p>
 <p>
@@ -2433,13 +2434,13 @@ Authors' Addresses<br />
 アクセストークンレスポンス</h3>
 
 <p>
-            アクセストークンリクエストが正当かつ認可された場合, 認可サーバは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> で説明されているようにアクセストークンを発行する.
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に示すとおりアクセストークンを発行する.
             リフレッシュトークンは含むべきでない (SHOULD NOT).
-            リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> で説明されているようにエラーレスポンスを返す.
+            クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> に示すとおりエラーレスポンスを返す.
           
 </p>
 <p>
-              成功したレスポンスの例は次の通り.
+              成功レスポンス例を以下に示す.
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2462,11 +2463,11 @@ Authors' Addresses<br />
 拡張</h3>
 
 <p>
-          クライアントはトークンエンドポイントの <tt>grant_type</tt> パラメーターの値に(認可サーバによって定義された)絶対URIを用いてグラントタイプを指定し, 追加必須パラメーターを追加することによって, 拡張グラントタイプを利用する.
+          クライアントはトークンエンドポイントの <tt>grant_type</tt> パラメーターの値に (認可サーバによって定義された) 絶対URIを指定し, 追加の必須パラメーターを付与することによって, 拡張グラントタイプを利用できる.
         
 </p>
 <p>
-            例えば, <a class='info' href='#I-D.ietf-oauth-saml2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;saml2&#8209;bearer]<span> (</span><span class='info'>Mortimore, C., &ldquo;SAML 2.0 Bearer Assertion Profiles for OAuth 2.0,&rdquo; August&nbsp;2011.</span><span>)</span></a> で定義されているSAML 2.0アサーショングラントタイプを利用してアクセストークンを要求するために, クライアントはセキュリティ的に保護されたトランスポート層を用いて次のようなHTTPリクエストを行う. (改行は掲載上の都合による)
+            例えば, <a class='info' href='#I-D.ietf-oauth-saml2-bearer'>[I&#8209;D.ietf&#8209;oauth&#8209;saml2&#8209;bearer]<span> (</span><span class='info'>Mortimore, C., &ldquo;SAML 2.0 Bearer Assertion Profiles for OAuth 2.0,&rdquo; August&nbsp;2011.</span><span>)</span></a> で定義されているSAML 2.0アサーショングラントタイプを利用してアクセストークンを要求するために, クライアントはTLSを用いて次のようなHTTPリクエストを行う. (改行は掲載上の都合による)
           
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 
@@ -2480,7 +2481,8 @@ Authors' Addresses<br />
 
 </pre></div>
 <p>
-          アクセストークンリクエストが正当かつ認可された場合, 認可サーバは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> で説明されているようにアクセストークンとオプションでリフレッシュトークンを発行する. リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> で説明されているようにエラーレスポンスを返す.
+          アクセストークンリクエストが正当かつ認可されている場合, 認可サーバは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に示すとおりアクセストークンとオプションでリフレッシュトークンを発行する.
+          クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> に示すとおりエラーレスポンスを返す.
         
 </p>
 <a name="token-issue"></a><br /><hr />
@@ -2490,7 +2492,7 @@ Authors' Addresses<br />
 
 <p>
         アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> に述べる形式でアクセストークン (および任意でリフレッシュトークン) を発行する.
-        クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> に述べる形式でエラーレスポンスを返す.
+        クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> に述べる形式でエラーレスポンスを返す.
         
       
 </p>
@@ -2522,7 +2524,7 @@ Authors' Addresses<br />
               必須 (REQUIRED).
               トークンのタイプ.
               値は大文字・小文字を区別しない.
-              詳細は <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>アクセストークンタイプ<!-- Access Token Types --></span><span>)</span></a> で述べる.
+              詳細は <a class='info' href='#token-types'>Section&nbsp;7.1<span> (</span><span class='info'>アクセストークンタイプ<!-- Access Token Types --></span><span>)</span></a> を参照のこと.
               
             
 </dd>
@@ -2540,8 +2542,8 @@ Authors' Addresses<br />
               
               任意 (OPTIONAL).
               リフレッシュトークン.
-              同じアクセス許可を用いて新しいアクセストークンを取得するのに利用される.
-              詳細は <a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>アクセストークンの更新<!--Refreshing an Access Token--></span><span>)</span></a> で述べる.
+              同じ認可グラントを用いて新しいアクセストークンを取得するのに利用される.
+              詳細は <a class='info' href='#token-refresh'>Section&nbsp;6<span> (</span><span class='info'>アクセストークンの更新<!--Refreshing an Access Token--></span><span>)</span></a> を参照のこと.
               
             
 </dd>
@@ -2550,7 +2552,7 @@ Authors' Addresses<br />
               
               任意 (OPTIONAL).
               アクセストークンのスコープ.
-              詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> で述べる.
+              詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> を参照のこと.
               
             
 </dd>
@@ -2591,10 +2593,10 @@ Authors' Addresses<br />
 
 </pre></div>
 <p>
-          クライアントは認識できないレスポンスパラメーターを無視するべきである (SHOULD).
+          クライアントは理解できないレスポンスパラメーターを無視するべきである (SHOULD).
           トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
           クライアントは値のサイズについてなんらかの仮定をすべきではない.
-          認可サーバーは自身が発行するあらゆる値のサイズについて明記すべきである.
+          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
           
         
 </p>
@@ -2630,7 +2632,7 @@ Authors' Addresses<br />
 <dt>invalid_client</dt>
 <dd>
                   
-                  クライアント認証に失敗した (例えば未知のクライアントやクライアント認証がされていない, もしくはサポートされない認証方式).
+                  クライアント認証に失敗した (例: 未知のクライアントである, クライアント認証情報が含まれていない, サポートされない認証方式が利用されている).
                   認可サーバーはHTTP認証スキームがサポートされていないことを示すためにHTTP ステータスコード 401 (Unauthorized) を返してもよい (MAY).
                   もしクライアントが <tt>Authorization</tt> リクエストヘッダー経由で認証を試みた場合, 認可サーバーはHTTP ステータスコード 401 (Unauthorized) と共に, <tt>WWW-Authenticate</tt> レスポンスヘッダーにクライアントが利用すべき認証スキームを含めなければならない (MUST).
                   
@@ -2639,28 +2641,28 @@ Authors' Addresses<br />
 <dt>invalid_grant</dt>
 <dd>
                   
-                  提供されたアクセス許可 (例えば認可コード, リソースオーナークレデンシャル, クライアントクレデンシャル) が不正, 有効期限切れ, 失効している, 認可要求の中のリダイレクト先URIとマッチしていない, 他のクライアントに対して発行されたものである.
+                  提供された認可グラント (例えば認可コード, リソースオーナークレデンシャル, クライアントクレデンシャル) が不正, 有効期限切れ, 失効している, 認可リクエストで用いられたリダイレクト先URIとマッチしていない, 他のクライアントに対して発行されたものである.
                   
                 
 </dd>
 <dt>unauthorized_client</dt>
 <dd>
                   
-                  認証されたクライアントが当該の grant_type を利用する様に認可されていない.
+                  認証されたクライアントが当該のグラントタイプを利用する様に認可されていない.
                   
                 
 </dd>
 <dt>unsupported_grant_type</dt>
 <dd>
                   
-                  grant_type が認可サーバーによってサポートされていない.
+                  グラントタイプが認可サーバーによってサポートされていない.
                   
                 
 </dd>
 <dt>invalid_scope</dt>
 <dd>
                   
-                  要求された scope が不正, 未知, 異常, リソースオーナーによって与えられた範囲を超えている.
+                  要求されたスコープが不正, 未知, 異常, リソースオーナーによって与えられた範囲を超えている.
                   
                 
 </dd>
@@ -2671,7 +2673,7 @@ Authors' Addresses<br />
 <dd>
               
               任意 (OPTIONAL).
-              クライアント開発者が発生したエラーを理解しやすくするためのUTF-8でエンコードされた可読性のある追加情報.
+              クライアント開発者が発生したエラーを理解する際の手助けとなる, UTF-8エンコードされた可読性のある追加情報.
               
             
 </dd>
@@ -2679,7 +2681,7 @@ Authors' Addresses<br />
 <dd>
               
               任意 (OPTIONAL).
-              クライアント開発者に発生したエラーに関する追加情報を提供する可読性のある情報が記載されているWebページのURI.
+              クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
               
             
 </dd>
@@ -2745,7 +2747,7 @@ Authors' Addresses<br />
             
             任意 (OPTIONAL).
             アクセス要求のスコープ.
-            詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> で述べる.
+            詳細は <a class='info' href='#scope'>Section&nbsp;3.3<span> (</span><span class='info'>アクセストークンスコープ</span><span>)</span></a> を参照のこと.
             要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
             もし指定されなかった場合は, もともと許可された値として扱われる.
             
@@ -2757,7 +2759,7 @@ Authors' Addresses<br />
 <p>
         リフレッシュトークンは一般的にアクセストークンの要求に用いる永続的なクレデンシャルであるため, 発行されたクライアントと紐づく.
         クライアントタイプがconfidential, あるいはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントは, 認可サーバーにより認証されなければならない (MUST).
-        クライアント認証は <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>クライアント認証</span><span>)</span></a> で述べる.
+        クライアント認証は <a class='info' href='#token-endpoint-auth'>Section&nbsp;3.2.1<span> (</span><span class='info'>クライアント認証</span><span>)</span></a> を参照のこと.
         
       
 </p>
@@ -2803,9 +2805,9 @@ Authors' Addresses<br />
 </p>
 <p>
         リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
-        レスポンスの詳細は <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> で述べる.
+        レスポンスの詳細は <a class='info' href='#token-response'>Section&nbsp;5.1<span> (</span><span class='info'>成功レスポンス<!-- Successful Response --></span><span>)</span></a> を参照のこと.
         リクエストの確認に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
-        エラーレスポンスの詳細は <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> で述べる.
+        エラーレスポンスの詳細は <a class='info' href='#token-errors'>Section&nbsp;5.2<span> (</span><span class='info'>エラーレスポンス<!-- Error Response --></span><span>)</span></a> を参照のこと.
         
       
 </p>
@@ -3579,7 +3581,7 @@ OAuth パラメーターレジストリー<!-- The OAuth Parameters Registry -->
 </p>
 <p>
           認可エンドポイントリクエスト, 認可エンドポイントレスポンス, トークンエンドポイントリクエスト, トークンエンドポイントレスポンスに含める追加のパラメーターは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
-          (以降, 文中の専門用語については [RFC5226] を参照のこと)
+          (以降, 文中の専門用語については <a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a> を参照のこと)
           しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           
         
@@ -4026,7 +4028,7 @@ OAuth 認可エンドポイントレスポンスタイプレジストリー<!--T
 </p>
 <p>
           認可エンドポイントで利用される追加のレスポンスタイプは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
-          (以降, 文中の専門用語については [RFC5226] を参照のこと)
+          (以降, 文中の専門用語については <a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a> を参照のこと)
           しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           
         
@@ -4148,7 +4150,7 @@ OAuth拡張エラーレジストリー<!--The OAuth Extensions Error Registry-->
 </p>
 <p>
           他のプロトコル拡張 (例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーター) で利用される追加のエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
-          (以降, 文中の専門用語については<a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a>を参照のこと)
+          (以降, 文中の専門用語については <a class='info' href='#RFC5226'>[RFC5226]<span> (</span><span class='info'>Narten, T. and H. Alvestrand, &ldquo;Guidelines for Writing an IANA Considerations Section in RFCs,&rdquo; May&nbsp;2008.</span><span>)</span></a> を参照のこと)
           しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           
         
