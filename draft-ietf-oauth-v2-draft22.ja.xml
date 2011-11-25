@@ -538,7 +538,7 @@
           </artwork>
         </figure>
         <t>
-          <xref target='Figure-2' /> で示されたフローは以下のステップを含む.
+          <xref target='Figure-2' /> のフローは以下の通りである.
         </t>
         <!--
           The flow illustrated in <xref target='Figure-2' /> includes the following steps:
@@ -1226,7 +1226,7 @@
               <spanx style='verb'>redirect_uri</spanx> request parameter.
             -->
             <t>
-              リダイレクトURIが認可リクエストに含まれていた時, いくつかのリダイレクトURIが登録されていた場合<xref target='RFC3986' />セクション6で説明されているように登録されているリダイレクトURI (もしくはURIコンポーネント) のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.
+              リダイレクトURIが認可リクエストに含まれていた時, いくつかのリダイレクトURIが登録されていた場合<xref target='RFC3986' />セクション6に示すとおり登録されているリダイレクトURI (もしくはURIコンポーネント) のうちの少なくとも一つに対して受け取った値と比較し一致しなければいけない.
               もしクライアントの登録にフルのリダイレクトURIが含まれていた場合, 認可サーバは <xref target='RFC3986' /> セクション6.2.1.で定義されているように単純な文字列比較を使用し二つのURIを比較しなければいけない (MUST).
             </t>
             <!--
@@ -1239,7 +1239,7 @@
               in <xref target='RFC3986' /> section 6.2.1.
             -->
              <t>
-               認可サーバがリダイレクトURIのクエリーコンポーネントの動的変更をクライアントに許可するなら, 攻撃者が<xref target='open-redirect' />で説明されているようにリダイレクトエンドポイントの乱用できないことによってクライアントはクエリーコンポーネントの操作を保証しなければいけない.
+               認可サーバがリダイレクトURIのクエリーコンポーネントの動的変更をクライアントに許可するなら, 攻撃者が<xref target='open-redirect' />に示すとおりリダイレクトエンドポイントの乱用できないことによってクライアントはクエリーコンポーネントの操作を保証しなければいけない.
              </t>
              <!--
                If the authorization server allows the client to dynamically change the query
@@ -1540,7 +1540,7 @@
           </artwork>
         </figure>
         <t>
-          <xref target='Figure-3' /> で示した図は, 次のステップを含む:
+          <xref target='Figure-3' /> のフローは以下の通りである.
         </t>
         <!--
         <t>
@@ -2138,7 +2138,7 @@
           -->
           <figure>
             <preamble>
-              成功したレスポンスの例は次のとおり. 
+              成功レスポンス例を以下に示す.
             </preamble>
             <!--
             <preamble>
@@ -2252,7 +2252,7 @@
           </artwork>
         </figure>
         <t>
-          <xref target='Figure-4' /> で示した図は次のステップを含む:
+          <xref target='Figure-4' /> のフローは以下の通りである.
         </t>
         <!--
         <t>
@@ -2805,7 +2805,7 @@
           </artwork>
         </figure>
         <t>
-          <xref target='Figure-5' /> に示されるフローは以下の手順を含む.
+          <xref target='Figure-5' /> のフローは以下の通りである.
         </t>
         <!--
           The flow illustrated in <xref target='Figure-5' /> includes the following steps:
@@ -2958,7 +2958,7 @@
 <!--         <section title='Access Token Response'> -->
           <t>
             アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは <xref target='token-response' /> に示すとおりアクセストークンと任意でリフレッシュトークンを発行する.
-            もしクライアント認証リクエストが失敗もしくは不正だった場合, 認可サーバーは <xref target='token-errors' /> に示すとおりエラーレスポンスを返却する. 
+            クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <xref target='token-errors' /> に示すとおりエラーレスポンスを返却する.
           </t>
           <!--
             If the access token request is valid and authorized, the authorization server issues an
@@ -2968,7 +2968,7 @@
           -->
           <figure>
             <preamble>
-              成功したレスポンスの例は下記のとおり.
+              成功レスポンス例を以下に示す.
             </preamble>
             <!--
               An example successful response:
@@ -2997,7 +2997,7 @@
       <section title='クライアントクレデンシャル' anchor='grant-client'>
 <!--      <section title='Client Credentials' anchor='grant-client'>  -->
         <t>
-          クライアントが自身のコントロール下, または他のリソースオーナーの認可サーバーで事前に準備されている保護リソースにアクセスする場合, クライアントはクライアントクレデンシャル (あるいは認証をサポートしている他の方法) のみでアクセストークンをリクエストすることができる.
+          クライアント自身のコントロール下にある保護リソースまたは認可サーバーとの間で調整済みの保護リソースにアクセスする場合, クライアントはクライアントクレデンシャル (あるいはサポートされているその他の認証方式) のみでアクセストークンをリクエストすることができる.
         </t>
         <!--
           The client can request an access token using only its client credentials (or other
@@ -3007,7 +3007,7 @@
           scope of this specification).
         -->
         <t>
-          クライアントクレデンシャルのグラントタイプは機密クライアントによって使用されなければならない (MUST).
+          コンフィデンシャルクライアントのみが, クライアントクレデンシャルグラントタイプを利用できる (MUST).
         </t>
         <!--
           The client credentials grant type MUST only be used by confidential clients.
@@ -3027,7 +3027,7 @@
           </artwork>
         </figure>
         <t>
-          <xref target='Figure-6' /> で示されたフロー概要は以下のステップを含む.
+          <xref target='Figure-6' /> のフローは以下の通りである.
         </t>
         <!--
           The flow illustrated in <xref target='Figure-6' /> includes the following steps:
@@ -3035,14 +3035,14 @@
         <t>
           <list style='format (%C)'>
             <t>
-              クライアントは認可サーバーで認証し, トークンエンドポイントからアクセストークンをリクエストする.
+              クライアントは自身の認証情報を含めてトークンエンドポイントにアクセストークンリクエストを送る.
             </t>
             <!--
               The client authenticates with the authorization server and requests an access token
               from the token endpoint.
             -->
             <t>
-              認可サーバーはアクセストークンが確認できた場合, クライアントを認証する.
+              認可サーバーはクライアントを認証し, 認証に成功すればアクセストークンを発行する.
             </t>
             <!--
               The authorization server authenticates the client, and if valid issues an access
@@ -3054,7 +3054,7 @@
         <section title='認可リクエストとレスポンス'>
 <!--        <section title='Authorization Request and Response'>  -->
           <t>
-            認可の付与としてクライアント認証が利用されている場合, 追加の認可リクエストは必要ない.
+            クライアント認証が認可グラントとして利用されるため, 追加の認可リクエストは必要ない.
           </t>
           <!--
             Since the client authentication is used as the authorization grant, no additional
@@ -3065,7 +3065,7 @@
         <section title='アクセストークンリクエスト'>
 <!--        <section title='Access Token Request'>  -->
           <t>
-            クライアントはHTTPリクエストボディーに <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットを使用している下記のパラメーターを追加することでトークンエンドポイントにリクエストする.
+            クライアントは, HTTPリクエストボディーに <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットで下記のパラメーターを追加し, トークンエンドポイントにリクエストを送る.
           </t>
           <!--
             The client makes a request to the token endpoint by adding the following parameters
@@ -3086,7 +3086,7 @@
               <t hangText='scope'>
                 <vspace />
                 任意 (OPTIONAL).
-                アクセス範囲は後述の <xref target='scope' /> によってリクエストする.
+                詳細は <xref target='scope' /> を参照のこと.
               </t>
               <!--
                 <vspace />
@@ -3095,7 +3095,8 @@
             </list>
           </t>
           <t>
-            クライアントは <xref target='token-endpoint-auth' /> で後述される認可サーバーで認証しなければならない (MUST).
+            クライアントは認可サーバーに対して認証を行わなければならない (MUST).
+            詳細は <xref target='token-endpoint-auth' /> を参照のこと.
           </t>
           <!--
             The client MUST authenticate with the authorization server as described in
@@ -3131,9 +3132,9 @@
         <section title='アクセストークンレスポンス'>
 <!--        <section title='Access Token Response'> -->
           <t>
-            アクセストークンリクエストが正当かつ認可された場合, 認可サーバは <xref target='token-response' /> で説明されているようにアクセストークンを発行する.
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバは <xref target='token-response' /> に示すとおりアクセストークンを発行する.
             リフレッシュトークンは含むべきでない (SHOULD NOT).
-            リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは <xref target='token-errors' /> で説明されているようにエラーレスポンスを返す.
+            クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバは <xref target='token-errors' /> に示すとおりエラーレスポンスを返す.
           </t>
           <!--
             If the access token request is valid and authorized, the authorization server issues an
@@ -3144,7 +3145,7 @@
           -->
           <figure>
             <preamble>
-              成功したレスポンスの例は次の通り.
+              成功レスポンス例を以下に示す.
             </preamble>
             <!--
             <preamble>
@@ -3174,7 +3175,7 @@
       <section title='拡張'>
       <!--      <section title='Extensions'> -->
         <t>
-          クライアントはトークンエンドポイントの <spanx style='verb'>grant_type</spanx> パラメーターの値に(認可サーバによって定義された)絶対URIを用いてグラントタイプを指定し, 追加必須パラメーターを追加することによって, 拡張グラントタイプを利用する.
+          クライアントはトークンエンドポイントの <spanx style='verb'>grant_type</spanx> パラメーターの値に (認可サーバによって定義された) 絶対URIを指定し, 追加の必須パラメーターを付与することによって, 拡張グラントタイプを利用できる.
         </t>
         <!--
           The client uses an extension grant type by specifying the grant type using an
@@ -3184,7 +3185,7 @@
         -->
         <figure>
           <preamble>
-            例えば, <xref target='I-D.ietf-oauth-saml2-bearer' /> で定義されているSAML 2.0アサーショングラントタイプを利用してアクセストークンを要求するために, クライアントはセキュリティ的に保護されたトランスポート層を用いて次のようなHTTPリクエストを行う. (改行は掲載上の都合による)
+            例えば, <xref target='I-D.ietf-oauth-saml2-bearer' /> で定義されているSAML 2.0アサーショングラントタイプを利用してアクセストークンを要求するために, クライアントはTLSを用いて次のようなHTTPリクエストを行う. (改行は掲載上の都合による)
           </preamble>
           <!--
           <preamble>
@@ -3207,7 +3208,8 @@
           </artwork>
         </figure>
         <t>
-          アクセストークンリクエストが正当かつ認可された場合, 認可サーバは <xref target='token-response' /> で説明されているようにアクセストークンとオプションでリフレッシュトークンを発行する. リクエストがクライアント認証に失敗, もしくは不正であった場合, 認可サーバは <xref target='token-errors' /> で説明されているようにエラーレスポンスを返す.
+          アクセストークンリクエストが正当かつ認可されている場合, 認可サーバは <xref target='token-response' /> に示すとおりアクセストークンとオプションでリフレッシュトークンを発行する.
+          クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバは <xref target='token-errors' /> に示すとおりエラーレスポンスを返す.
         </t>
         <!--
           If the access token request is valid and authorized, the authorization server issues an
@@ -3222,7 +3224,7 @@
     <section title='アクセストークンの発行<!-- Issuing an Access Token -->' anchor='token-issue'>
       <t>
         アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <xref target='token-response' /> に述べる形式でアクセストークン (および任意でリフレッシュトークン) を発行する.
-        クライアント認証に失敗したりリクエストが不正であった場合は, 認可サーバーは <xref target='token-errors' /> に述べる形式でエラーレスポンスを返す.
+        クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <xref target='token-errors' /> に述べる形式でエラーレスポンスを返す.
         <!--
         If the access token request is valid and authorized, the authorization server issues an
         access token and optional refresh token as described in <xref target='token-response' />.
