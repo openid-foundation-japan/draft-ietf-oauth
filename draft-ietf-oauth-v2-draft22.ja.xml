@@ -2046,7 +2046,7 @@
             </list>
           </t>
           <t>
-            クライアントタイプがコンフィデンシャルである場合, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントは, <xref target='token-endpoint-auth' /> に示すとおりに認可サーバにより認証されなければならない (MUST).
+            クライアントタイプがコンフィデンシャルである場合, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントは, <xref target='token-endpoint-auth' /> に示すとおり認可サーバにより認証されなければならない (MUST).
           </t>
           <!--
           <t>
@@ -2890,7 +2890,7 @@
             </list>
           </t>
           <t>
-            クライアントタイプがコンフィデンシャルである場合, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントは, <xref target='token-endpoint-auth' /> に示すとおりに認可サーバにより認証されなければならない (MUST).
+            クライアントタイプがコンフィデンシャルである場合, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントは, <xref target='token-endpoint-auth' /> に示すとおり認可サーバにより認証されなければならない (MUST).
           </t>
           <!--
             If the client type is confidential or the client was issued client credentials (or
@@ -3532,7 +3532,7 @@
             アクセス要求のスコープ.
             詳細は <xref target='scope' /> を参照のこと.
             要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
-            もし指定されなかった場合は, もともと許可された値として扱われる.
+            もし指定されなかった場合は, もともと許可された値が用いられる.
             <!--
             OPTIONAL. The scope of the access request as described by <xref target='scope' />.
             The requested scope MUST NOT include any scope not originally granted by the resource
@@ -3543,9 +3543,8 @@
         </list>
       </t>
       <t>
-        リフレッシュトークンは一般的にアクセストークンの要求に用いる永続的なクレデンシャルであるため, 発行されたクライアントと紐づく.
-        クライアントタイプがconfidential, あるいはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントは, 認可サーバーにより認証されなければならない (MUST).
-        クライアント認証は <xref target='token-endpoint-auth' /> を参照のこと.
+        リフレッシュトークンは, 一般的に有効期間の長い追加のアクセストークンを要求するためのクレデンシャルであるため, 発行されたクライアントと紐づく.
+        クライアントタイプがコンフィデンシャルである場合, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントは, <xref target='token-endpoint-auth' /> に示すとおり認可サーバにより認証されなければならない (MUST).
         <!--
         Because refresh tokens are typically long-lasting credentials used to request additional
         access tokens, the refresh token is bound to the client it was issued. If the client type
@@ -3556,7 +3555,7 @@
       </t>
       <figure>
         <preamble>
-          例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
+          例えば, クライアントはTLSを用いて次のようなHTTPリクエストを送信する (改行は掲載上の都合による).
           <!--
           For example, the client makes the following HTTP request using transport-layer
           security (extra line breaks are for display purposes only):
@@ -3604,9 +3603,9 @@
         </list>
       </t>
       <t>
-        リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
+        リクエストが有効で認可されている場合, 認可サーバーはアクセストークンを発行する.
         レスポンスの詳細は <xref target='token-response' /> を参照のこと.
-        リクエストの確認に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
+        リクエストの検証に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
         エラーレスポンスの詳細は <xref target='token-errors' /> を参照のこと.
         <!--
         If valid and authorized, the authorization server issues an access token as described in
@@ -3617,7 +3616,7 @@
       </t>
       <t>
         認可サーバーは新しいリフレッシュトークンを返してもよい (MAY).
-        その時, クライアントは古いリフレッシュトークンを破棄し, 新しいリフレッシュトークンに取り替える.
+        その場合, クライアントは古いリフレッシュトークンを破棄し, 新しいリフレッシュトークンに取り替えなければならない (MUST).
         認可サーバーは新しいリフレッシュトークンを発行した後, 古いリフレッシュトークンを無効化してもよい (MAY).
         新しいリフレッシュトークンが発行された時, リフレッシュトークンのスコープはクライアントによってリクエストに含まれたリフレッシュトークンのスコープと同一でなければならない (MUST).
         <!--
@@ -3634,7 +3633,7 @@
       <t>
         クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.
         リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない (MUST).
-        アクセストークン (同様にエラーレスポンス) を検証する具体的な方法は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+        アクセストークンを検証する具体的な方法 (およびエラーレスポンス) は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
         <!--
         The client accesses protected resources by presenting the access token to the resource
         server. The resource server MUST validate the access token and ensure it has not expired
@@ -3647,34 +3646,34 @@
       <t>
         クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する.
         一般的には, アクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される.
-      <!--
+        <!--
         The method in which the client utilized the access token to authenticate with the resource
         server depends on the type of access token issued by the authorization server. Typically,
         it involves using the HTTP <spanx style='verb'>Authorization</spanx> request header field
         <xref target='RFC2617' /> with an authentication scheme defined by the access token type
         specification.
-      -->
+        -->
       </t>
 
       <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
         <t>
           アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する.
-          クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない(MUST NOT).
-        <!--
+          クライアントはトークンタイプが想定外のものであるとき, または信頼できない時にはそのアクセストークンを利用するべきではない (MUST NOT).
+          <!--
           The access token type provides the client with the information required to successfully
           utilize the access token to make a protected resource request (along with type-specific
           attributes). The client MUST NOT use an access token if it does not understand or does
           not trust the token type.
-        -->
+          -->
         </t>
         <figure>
           <preamble>
-            例えば, <xref target='I-D.ietf-oauth-v2-bearer' /> に定義される <spanx style='verb'>bearer</spanx> トークンタイプは, 単にリクエストにアクセストークンを含めることで利用できる.
-        <!--
+            例えば, <xref target='I-D.ietf-oauth-v2-bearer' /> に定義される <spanx style='verb'>bearer</spanx> トークンタイプでは, 単にリクエストにアクセストークンを含めるだけでよい.
+            <!--
             For example, the <spanx style='verb'>bearer</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-bearer' /> is utilized by simply including the access
             token string in the request:
-        -->
+            -->
           </preamble>
           <artwork>
             <![CDATA[
@@ -3686,14 +3685,14 @@
         </figure>
         <figure>
           <preamble>
-            一方, <xref target='I-D.ietf-oauth-v2-http-mac' /> に定義される <spanx style='verb'>mac</spanx> トークンタイプは, アクセストークンと共にMACキーをリクエストに含めて利用できる.
+            一方, <xref target='I-D.ietf-oauth-v2-http-mac' /> に定義される <spanx style='verb'>mac</spanx> トークンタイプでは, アクセストークンと共にMACキーを発行する.
             このMACキーはHTTPリクエストの一部分を署名するのに利用される.
-        <!--
+            <!--
             while the <spanx style='verb'>mac</spanx> token type defined in
             <xref target='I-D.ietf-oauth-v2-http-mac' /> is utilized by issuing a MAC key
             together with the access token which is used to sign certain components of the HTTP
             requests:
-        -->
+            -->
           </preamble>
           <artwork>
             <![CDATA[
@@ -3707,21 +3706,21 @@
         </figure>
         <t>
           尚, 上記はあくまで参考例であり, 開発者は利用前に <xref target='I-D.ietf-oauth-v2-bearer' /> や <xref target='I-D.ietf-oauth-v2-http-mac' /> を参照することが推奨される.
-        <!--
+          <!--
           The above examples are provided for illustration purposes only. Developers are advised to
           consult the <xref target='I-D.ietf-oauth-v2-bearer' /> and
           <xref target='I-D.ietf-oauth-v2-http-mac' /> specifications before use.
-        -->
+          -->
         </t>
         <t>
           各アクセストークンタイプ定義は, <spanx style='verb'>access_token</spanx> レスポンスパラメーターとともにクライアントへ送付される追加属性 (もしあれば) を指定する.
           また, 保護されたリソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義する.
-        <!--
+          <!--
           Each access token type definition specifies the additional attributes (if any) sent to
           the client together with the <spanx style='verb'>access_token</spanx> response parameter.
           It also defines the HTTP authentication method used to include the access token when
           making a protected resource request.
-        -->
+          -->
         </t>
       </section>
 
@@ -3863,7 +3862,7 @@
 
       <section title='追加のエラーコードの定義<!-- Defining Additional Error Codes -->' anchor='new-errors'>
         <t>
-          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コードグラントエラーレスポンス (<xref target='code-authz-error' />), implicit grant エラーレスポンス (<xref target='implicit-authz-error' />), トークンエラーレスポンス (<xref target='token-errors' />) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
+          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コードグラントエラーレスポンス (<xref target='code-authz-error' />), インプリシットグラントエラーレスポンス (<xref target='implicit-authz-error' />), トークンエラーレスポンス (<xref target='token-errors' />) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
           <!--
           In cases where protocol extensions (i.e. access token types, extension parameters, or
           extension grant types) require additional error codes to be used with the authorization
@@ -4016,7 +4015,7 @@
     <section title='Security Considerations'>
       <t>
         柔軟で拡張可能なフレームワークであるため, OAuthでセキュリティに関して配慮すべき点は多くの因子によって決まる.
-        以下のセクションでは実装者に <xref target='client-types' /> にある, webアプリケーション, ユーザーエージェントベースのアプリケーション, ネイティブアプリケーションの3つのクライアントプロファイルにフォーカスを当てたセキュリティーガイドラインを提供する.
+        以下のセクションでは実装者に <xref target='client-types' /> にある, Webアプリケーション, ユーザーエージェントベースのアプリケーション, ネイティブアプリケーションの3つのクライアントプロファイルにフォーカスを当てたセキュリティーガイドラインを提供する.
         <!--
         As a flexible and extensible framework, OAuth's security considerations depend on many
         factors. The following sections provide implementers with security guidelines focused on
@@ -4034,9 +4033,9 @@
 
       <section title='クライアント認証<!--Client Authentication-->'>
         <t>
-          認可サーバーはクライアント認証の目的でwebアプリケーションとの間でクレデンシャルを確立する.
+          認可サーバーはクライアント認証の目的でWebアプリケーションとの間でクレデンシャルを確立する.
           認可サーバーはクライアントパスワードより強度の高い認証手段を検討することが推奨される.
-          webアプリケーションはクライアントパスワードやその他のクレデンシャルの機密性を保持しなければならない (MUST).
+          Webアプリケーションはクライアントパスワードやその他のクレデンシャルの機密性を保持しなければならない (MUST).
           <!--
           The authorization server establishes client credentials with web application clients for
           the purpose of client authentication. The authorization server is encouraged to consider
@@ -4055,7 +4054,7 @@
           -->
         </t>
         <t>
-          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティー検証のために他の手段を採用すべきである(SHOULD).
+          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティー検証のために他の手段を採用すべきである (SHOULD).
           例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティー確認が考えられる.
           有効なリダイレクトURIは, それ単体でエンドユーザーの認可時にクライアントのアイデンティティーを証明するには至らないが, エンドユーザーの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる.
           <!--
@@ -4133,7 +4132,7 @@
           -->
         </t>
         <t>
-          implicit grant を利用する場合, アクセストークンは URI フラグメント経由で送信されるため, 認可対象外の何者かに漏洩する可能性がある.
+          インプリシットグラントを利用する場合, アクセストークンは URI フラグメント経由で送信されるため, 認可対象外の何者かに漏洩する可能性がある.
           <!--
           When using the implicit grant type, the access token is transmitted in the URI fragment,
           which can expose it to unauthorized parties.
@@ -4308,7 +4307,8 @@
 
       <section title='リソースオーナーパスワードクレデンシャル<!--Resource Owner Password Credentials-->'>
         <t>
-          リソースオーナーパスワードクレデンシャルグラントタイプはレガシーシステム, もしくは移行のために利用される. これはクライアントがユーザー名とパスワードを保管するリスク全般を軽減する.
+          リソースオーナーパスワードクレデンシャルグラントタイプはレガシーシステム, もしくは移行のために利用される.
+          これはクライアントがユーザー名とパスワードを保管するリスク全般を軽減する.
           しかし特権のあるクレデンシャルをクライアントにさらす必要性を取り除くことはできない.
         <!--
           The resource owner password credentials grant type is often used for legacy or migration
@@ -5125,14 +5125,14 @@
         <section title='レジストリーテンプレート<!--Registration Template-->'>
           <t>
             <list style='hanging'>
-              <t hangText='レスポンスタイプ名:<!--Response type name:-->'>
+              <t hangText='Response type name:'>
                 <vspace />
                 名称 (例: "example").
                 <!--
                 The name requested (e.g., "example").
                 -->
               </t>
-              <t hangText='変更管理者:<!--Change controller:-->'>
+              <t hangText='Change controller:'>
                 <vspace />
                 RFCの標準に従う際は, "IETF"と記載する.
                 それ以外の場合は, 責任ある団体の名称を記載する.
@@ -5143,7 +5143,7 @@
                 URI) may also be included.
                 -->
               </t>
-              <t hangText='仕様ドキュメント:<!--Specification document(s):-->'>
+              <t hangText='Specification document(s):'>
                 <vspace />
                 パラメーター仕様を記載したドキュメントへの参照を記載する.
                 ドキュメントを取得することのできるURIが記載されていることが望ましい.
