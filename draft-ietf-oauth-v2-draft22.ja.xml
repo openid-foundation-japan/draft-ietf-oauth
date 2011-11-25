@@ -1814,7 +1814,7 @@
             クライアントは理解できないレスポンスパラメーターは無視すべきである (SHOULD).
             認可コードの文字列長は本仕様では定義しない.
             クライアントはコード値のサイズについてなんらかの仮定をすべきではない.
-            サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+            認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
           </t>
           <!--
           <t>
@@ -1940,7 +1940,7 @@
                 <t hangText='error_description'>
                   <vspace />
                   任意 (OPTIONAL).
-                  発生したエラーの内容をクライアント開発者が理解するのを補助するため, 追加の情報を人間が読める形式でUTF-8で記載する. 
+                  クライアント開発者が発生したエラーを理解する際の手助けとなる, UTF-8エンコードされた可読性のある追加情報.
                 </t>
                 <!--
                 <t hangText='error_description'>
@@ -1952,7 +1952,7 @@
                 <t hangText='error_uri'>
                   <vspace />
                   任意 (OPTIONAL).
-                  クライアント開発者がエラーに関する追加の情報を得るための, 人間が読めるエラーに関するWebページのURI. 
+                  クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
                 </t>
                 <!--
                 <t hangText='error_uri'>
@@ -2488,7 +2488,7 @@
                 <vspace />
                 任意 (OPTIONAL).
                 アクセストークンの有効期間を秒で表したもの.
-                例えば <spanx style='verb'>3600</spanx> という値は, レスポンスが生成されてから1時間でアクセストークンが無効になることを表す.
+                例えばこの値が <spanx style='verb'>3600</spanx> であれば, そのアクセストークンは発行から1時間後に期限切れとなる.
               </t>
               <t hangText='scope'>
                 <vspace />
@@ -2572,7 +2572,7 @@
             クライアントは理解できないレスポンスパラメーターは無視すべきである (SHOULD).
             アクセストークンの文字列長は本仕様では定義しない.
             クライアントは値のサイズについてなんらかの仮定をすべきではない.
-            サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである. 
+            認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである. 
           </t>
           <!--
           <t>
@@ -2698,7 +2698,7 @@
                 <t hangText='error_description'>
                   <vspace />
                   任意 (OPTIONAL).
-                  発生したエラーの内容をクライアント開発者が理解するのを補助するため, 追加の情報を人間が読める形式でUTF-8で記載する. 
+                  クライアント開発者が発生したエラーを理解する際の手助けとなる, UTF-8エンコードされた可読性のある追加情報.
                 </t>
                 <!--
                 <t hangText='error_description'>
@@ -2710,7 +2710,7 @@
                 <t hangText='error_uri'>
                   <vspace />
                   任意 (OPTIONAL).
-                  クライアント開発者がエラーに関する追加の情報を得るための, 人間が読めるエラーに関するWebページのURI. 
+                  クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
                 </t>
                 <!--
                 <t hangText='error_uri'>
@@ -3258,7 +3258,7 @@
               必須 (REQUIRED).
               トークンのタイプ.
               値は大文字・小文字を区別しない.
-              詳細は <xref target='token-types' /> で述べる.
+              詳細は <xref target='token-types' /> を参照のこと.
               <!--
               REQUIRED. The type of the token issued as described in <xref target='token-types' />.
               Value is case insensitive.
@@ -3279,8 +3279,8 @@
               <vspace />
               任意 (OPTIONAL).
               リフレッシュトークン.
-              同じアクセス許可を用いて新しいアクセストークンを取得するのに利用される.
-              詳細は <xref target='token-refresh' /> で述べる.
+              同じ認可グラントを用いて新しいアクセストークンを取得するのに利用される.
+              詳細は <xref target='token-refresh' /> を参照のこと.
               <!--
               OPTIONAL. The refresh token which can be used to obtain new access tokens using the
               same authorization grant as described in <xref target='token-refresh' />.
@@ -3290,7 +3290,7 @@
               <vspace />
               任意 (OPTIONAL).
               アクセストークンのスコープ.
-              詳細は <xref target='scope' /> で述べる.
+              詳細は <xref target='scope' /> を参照のこと.
               <!--
               OPTIONAL. The scope of the access token as described by <xref target='scope' />.
               -->
@@ -3347,10 +3347,10 @@
           </artwork>
         </figure>
         <t>
-          クライアントは認識できないレスポンスパラメーターを無視するべきである (SHOULD).
+          クライアントは理解できないレスポンスパラメーターを無視するべきである (SHOULD).
           トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
           クライアントは値のサイズについてなんらかの仮定をすべきではない.
-          認可サーバーは自身が発行するあらゆる値のサイズについて明記すべきである.
+          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
           <!--
           The client SHOULD ignore unrecognized response parameters. The sizes of tokens and other
           values received from the authorization server are left undefined. The client should
@@ -3391,7 +3391,7 @@
                 </t>
                 <t hangText='invalid_client'>
                   <vspace />
-                  クライアント認証に失敗した (例えば未知のクライアントやクライアント認証がされていない, もしくはサポートされない認証方式).
+                  クライアント認証に失敗した (例: 未知のクライアントである, クライアント認証情報が含まれていない, サポートされない認証方式が利用されている).
                   認可サーバーはHTTP認証スキームがサポートされていないことを示すためにHTTP ステータスコード 401 (Unauthorized) を返してもよい (MAY).
                   もしクライアントが <spanx style='verb'>Authorization</spanx> リクエストヘッダー経由で認証を試みた場合, 認可サーバーはHTTP ステータスコード 401 (Unauthorized) と共に, <spanx style='verb'>WWW-Authenticate</spanx> レスポンスヘッダーにクライアントが利用すべき認証スキームを含めなければならない (MUST).
                   <!--
@@ -3407,7 +3407,7 @@
                 </t>
                 <t hangText='invalid_grant'>
                   <vspace />
-                  提供されたアクセス許可 (例えば認可コード, リソースオーナークレデンシャル, クライアントクレデンシャル) が不正, 有効期限切れ, 失効している, 認可要求の中のリダイレクト先URIとマッチしていない, 他のクライアントに対して発行されたものである.
+                  提供された認可グラント (例えば認可コード, リソースオーナークレデンシャル, クライアントクレデンシャル) が不正, 有効期限切れ, 失効している, 認可リクエストで用いられたリダイレクト先URIとマッチしていない, 他のクライアントに対して発行されたものである.
                   <!--
                   The provided authorization grant (e.g. authorization code, resource owner
                   credentials, client credentials) is invalid, expired, revoked, does not match the
@@ -3416,21 +3416,21 @@
                 </t>
                 <t hangText='unauthorized_client'>
                   <vspace />
-                  認証されたクライアントが当該の grant_type を利用する様に認可されていない.
+                  認証されたクライアントが当該のグラントタイプを利用する様に認可されていない.
                   <!--
                   The authenticated client is not authorized to use this authorization grant type.
                   -->
                 </t>
                 <t hangText='unsupported_grant_type'>
                   <vspace />
-                  grant_type が認可サーバーによってサポートされていない.
+                  グラントタイプが認可サーバーによってサポートされていない.
                   <!--
                   The authorization grant type is not supported by the authorization server.
                   -->
                 </t>
                 <t hangText='invalid_scope'>
                   <vspace />
-                  要求された scope が不正, 未知, 異常, リソースオーナーによって与えられた範囲を超えている.
+                  要求されたスコープが不正, 未知, 異常, リソースオーナーによって与えられた範囲を超えている.
                   <!--
                   The requested scope is invalid, unknown, malformed, or exceeds the scope granted
                   by the resource owner.
@@ -3441,7 +3441,7 @@
             <t hangText='error_description'>
               <vspace />
               任意 (OPTIONAL).
-              クライアント開発者が発生したエラーを理解しやすくするためのUTF-8でエンコードされた可読性のある追加情報.
+              クライアント開発者が発生したエラーを理解する際の手助けとなる, UTF-8エンコードされた可読性のある追加情報.
               <!--
               OPTIONAL. A human-readable UTF-8 encoded text providing additional information,
               used to assist the client developer in understanding the error that occurred.
@@ -3450,7 +3450,7 @@
             <t hangText='error_uri'>
               <vspace />
               任意 (OPTIONAL).
-              クライアント開発者に発生したエラーに関する追加情報を提供する可読性のある情報が記載されているWebページのURI.
+              クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
               <!--
               OPTIONAL. A URI identifying a human-readable web page with information about the
               error, used to provide the client developer with additional information about the
@@ -3530,7 +3530,7 @@
             <vspace />
             任意 (OPTIONAL).
             アクセス要求のスコープ.
-            詳細は <xref target='scope' /> で述べる.
+            詳細は <xref target='scope' /> を参照のこと.
             要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
             もし指定されなかった場合は, もともと許可された値として扱われる.
             <!--
@@ -3545,7 +3545,7 @@
       <t>
         リフレッシュトークンは一般的にアクセストークンの要求に用いる永続的なクレデンシャルであるため, 発行されたクライアントと紐づく.
         クライアントタイプがconfidential, あるいはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントは, 認可サーバーにより認証されなければならない (MUST).
-        クライアント認証は <xref target='token-endpoint-auth' /> で述べる.
+        クライアント認証は <xref target='token-endpoint-auth' /> を参照のこと.
         <!--
         Because refresh tokens are typically long-lasting credentials used to request additional
         access tokens, the refresh token is bound to the client it was issued. If the client type
@@ -3605,9 +3605,9 @@
       </t>
       <t>
         リクエストが有効で認可された場合, 認可サーバーはアクセストークンを発行する.
-        レスポンスの詳細は <xref target='token-response' /> で述べる.
+        レスポンスの詳細は <xref target='token-response' /> を参照のこと.
         リクエストの確認に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
-        エラーレスポンスの詳細は <xref target='token-errors' /> で述べる.
+        エラーレスポンスの詳細は <xref target='token-errors' /> を参照のこと.
         <!--
         If valid and authorized, the authorization server issues an access token as described in
         <xref target='token-response' />. If the request failed verification or is invalid, the
@@ -4700,7 +4700,7 @@
         </t>
         <t>
           認可エンドポイントリクエスト, 認可エンドポイントレスポンス, トークンエンドポイントリクエスト, トークンエンドポイントレスポンスに含める追加のパラメーターは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
-          (以降, 文中の専門用語については [RFC5226] を参照のこと)
+          (以降, 文中の専門用語については <xref target='RFC5226' /> を参照のこと)
           しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           <!--
           Additional parameters for inclusion in the authorization endpoint request, the
@@ -5073,7 +5073,7 @@
         </t>
         <t>
           認可エンドポイントで利用される追加のレスポンスタイプは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
-          (以降, 文中の専門用語については [RFC5226] を参照のこと)
+          (以降, 文中の専門用語については <xref target='RFC5226' /> を参照のこと)
           しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           <!--
           Additional response type for use with the authorization endpoint are registered on the
@@ -5204,7 +5204,7 @@
         </t>
         <t>
           他のプロトコル拡張 (例えば, 拡張グラントタイプ, アクセストークンタイプ, もしくは拡張パラメーター) で利用される追加のエラーコードは, 1名以上の (IESG もしくはその代理者によって任命された) Designated Experts の勧告に従い, Specification Required な状態で登録される.
-          (以降, 文中の専門用語については<xref target='RFC5226' />を参照のこと)
+          (以降, 文中の専門用語については <xref target='RFC5226' /> を参照のこと)
           しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
           <!--
           Additional error codes used together with other protocol extensions (i.e. extension grant
