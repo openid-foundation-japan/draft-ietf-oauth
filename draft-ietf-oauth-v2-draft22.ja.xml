@@ -147,7 +147,7 @@
       <section title='ロール'>
 <!--       <section title='Roles'> -->
         <t>
-          OAuthは以下４つのロールを定義する
+          OAuthは以下4つのロールを定義する
         </t>
         <!--
           OAuth defines four roles:
@@ -229,7 +229,7 @@
           </artwork>
         </figure>
         <t>
-                <xref target='Figure-1' />で示されたフロー概要は, ４つのロール間での相互作用と以下のステップについて記載している.
+                <xref target='Figure-1' />で示されたフロー概要は, 4つのロール間での相互作用と以下のステップについて記載している.
         </t>
         <!--
           The abstract flow illustrated in <xref target='Figure-1' /> describes the interaction
@@ -246,7 +246,7 @@
               the authorization server as an intermediary.
             -->
             <t>
-              クライアントは, リソースオーナーの認可許諾を表すクレデンシャルを受け取り, その際は仕様上定義された４つのタイプの１つの許諾タイプか, または拡張された認可形式で発行される. その認可タイプはクライアントの利用する認可リクエストの方式と認可サーバーがサポートする認可タイプ次第である.
+              クライアントは, リソースオーナーの認可許諾を表すクレデンシャルを受け取り, その際は仕様上定義された4つのタイプの1つの許諾タイプか, または拡張された認可形式で発行される. その認可タイプはクライアントの利用する認可リクエストの方式と認可サーバーがサポートする認可タイプ次第である.
             </t>
             <!--
               The client receives an authorization grant which is a credential representing
@@ -290,7 +290,7 @@
 <!--       <section title='Authorization Grant'> -->
         <t>
           リソースオーナーの認可許諾を示すクレデンシャルは, クライアントが利用する取得済みのアクセストークンによって示される.
-          この仕様では４つの許諾方式を定義している：認可コード, インプリシット, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルに加え, 拡張仕様によってタイプを追加することもできる.
+          この仕様では4つの許諾方式を定義している：認可コード, インプリシット, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルに加え, 拡張仕様によってタイプを追加することもできる.
         </t>
         <!--
           An authorization grant is a credential representing the resource owner's authorization
@@ -313,7 +313,7 @@
             directs the resource owner back to the client with the authorization code.
           -->
           <t>
-            クライアントをリソースオーナーにリダイレクトする前に一緒に認可コードを付与し, リソースオーナーとその認可を得たことを認可サーバが認証する. これによりリソースオーナーは認可サーバによってのみ認証され, リソースオーナーのクレデンシャルはクライアントへ共有されない.
+            クライアントをリソースオーナーにリダイレクトする前に一緒に認可コードを付与し, 認可サーバはリソースオーナーを認証し認可を得る. これによりリソースオーナーは認可サーバによってのみ認証され, リソースオーナーのクレデンシャルはクライアントへ共有されない.
           </t>
           <!--
             Before directing the resource owner back to the client with the authorization code, the
@@ -367,7 +367,7 @@
 
         <section title="リソースオーナーパスワードクレデンシャル">
           <t>
-            リソースオーナーパスワードクレデンシャル (例えばユーザ名とパスワード) がアクセストークンを得るための認可に直接使用されるものである. このクレデンシャルは, リソースオーナーとクライアント (例えばデバイスOSや非常に特権のあるアプリケーション) の間で高い信頼があり, (認可コードのような) 他の認可タイプが利用できない場合のみ使用されるべきである.
+            リソースオーナーパスワードクレデンシャル (例えばユーザ名とパスワード) がアクセストークンを得るための許諾として直接使用することが出来る. このクレデンシャルは, リソースオーナーとクライアント (例えばデバイスOSや非常に特権のあるアプリケーション) の間で高い信頼があり, (認可コードのような) 他の認可タイプが利用できない場合のみ使用されるべきである.
           </t>
           <!--
             The resource owner password credentials (i.e. username and password) can be used
@@ -377,7 +377,7 @@
             when other authorization grant types are not available (such as an authorization code).
           -->
           <t>
-            仮にこの許可タイプがリソースオーナークレデンシャルに直接アクセスすることが必要であるとしても, リソースオーナークレデンシャルは１回のリクエストにのみ使用され, アクセストークンに交換される. この認可タイプでは, 寿命の長いアクセストークンやリフレッシュトークンによってクレデンシャルを交換することにより, クライアントがリソースオーナークレデンシャルを将来的に使用する目的で格納しておく必要がなくなる.
+            仮にこの許可タイプがリソースオーナークレデンシャルに直接アクセスすることが必要であるとしても, リソースオーナークレデンシャルは1回のリクエストにのみ使用され, アクセストークンに交換される. この認可タイプでは, 寿命の長いアクセストークンやリフレッシュトークンによってクレデンシャルを交換することにより, クライアントがリソースオーナークレデンシャルを将来的に使用する目的で格納しておく必要がなくなる.
           </t>
           <!--
             Even though this grant type requires direct client access to the resource owner
@@ -841,7 +841,7 @@
             </list>
           </t>
           <t>
-            ２つのパラメータを使ってクライアントクレデンシャルをリクエストボディに含めることは推奨されていない (NOT RECOMMENDED). また, それはHTTP Basic 認証スキーム (もしくは他のパスワードベースのHTTP認証スキーム) が直接利用できないクライアントに限定すべきある.
+            2つのパラメータを使ってクライアントクレデンシャルをリクエストボディに含めることは推奨されていない (NOT RECOMMENDED). また, それはHTTP Basic 認証スキーム (もしくは他のパスワードベースのHTTP認証スキーム) が直接利用できないクライアントに限定すべきある.
           </t>
 	  <!--
             Including the client credentials in the request body using the two parameters is NOT
@@ -1263,7 +1263,7 @@
           token requests.
 	      -->
         <t>
-          空の値で送信されたパラメータは省略されたものとして扱われなければならない (MUST). 認可サーバーは未知のリクエストパラメータは無視するべきである (SHOULD). リクエストおよびレスポンスパラメータは２つ以上含めてはならない (MUST NOT).
+          空の値で送信されたパラメータは省略されたものとして扱われなければならない (MUST). 認可サーバーは未知のリクエストパラメータは無視するべきである (SHOULD). リクエストおよびレスポンスパラメータは2つ以上含めてはならない (MUST NOT).
         </t>
         <!--
           Parameters sent without a value MUST be treated as if they were omitted from the request.
@@ -3814,7 +3814,7 @@
     </section>
     <section title='Security Considerations'>
       <t>
-        柔軟で拡張可能なフレームワークであるため, OAuthでセキュリティに関して配慮すべき点は多くの因子によって決まる. 以下のセクションでは実装者に<xref target='client-types' />にある, webアプリケーション, ユーザーエージェントベースのアプリケーション, ネイティブアプリケーションの３つのクライアントプロファイルにフォーカスを当てたセキュリティーガイドラインを提供する.
+        柔軟で拡張可能なフレームワークであるため, OAuthでセキュリティに関して配慮すべき点は多くの因子によって決まる. 以下のセクションでは実装者に<xref target='client-types' />にある, webアプリケーション, ユーザーエージェントベースのアプリケーション, ネイティブアプリケーションの3つのクライアントプロファイルにフォーカスを当てたセキュリティーガイドラインを提供する.
       <!--
         As a flexible and extensible framework, OAuth's security considerations depend on many
         factors. The following sections provide implementers with security guidelines focused on
