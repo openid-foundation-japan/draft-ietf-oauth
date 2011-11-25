@@ -2091,7 +2091,7 @@
                 コンフィデンシャルクライアント, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントにクライアント認証を要求し,
               </t>
               <t>
-                認証情報が含まれていた場合はクライアントを認証し, 認証したクライアントに対して認可コードを発行し,
+                クライアントの認証情報が含まれていた場合はクライアントを認証し, 認可コードが確かにそのクライアントに対して発行されたものであることを確認し,
               </t>
               <t>
                 認可コードが正当であることを検証し,
@@ -2760,7 +2760,7 @@
       <section title='リソースオーナーパスワードクレデンシャル' anchor='grant-password'>
 <!--       <section title='Resource Owner Password Credentials' anchor='grant-password'> -->
         <t>
-          リソースオーナーパスワードクレデンシャル認可は, リソースオーナーがクライアントと信頼関係にある場合, たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している.
+          リソースオーナーパスワードクレデンシャルグラントタイプは, リソースオーナーがクライアントと信頼関係にある場合, たとえばリソースオーナーの所有するデバイスOSや特別許可されたアプリなどに適している.
           認可サーバーはこのグラントタイプを有効にする際は特に注意するべきである.
           また他のフローが利用できない場合にのみ許可するべきである.
         </t>
@@ -2771,8 +2771,8 @@
           care when enabling this grant type, and only allow it when other flows are not viable.
         -->
         <t>
-          リソースオーナーのクレデンシャル (通常は対話型入力フォームにて取得するユーザー名とパスワード) を取得する機能を有するクライアントに適したグラントタイプである.
-          既存のクライアントをBasic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントを, 保存済みのクレデンシャルをアクセストークンへ変換することでOAuthへ移行することにも利用することができる.
+          このグラントタイプは, リソースオーナーのクレデンシャル (通常は対話型入力フォームにて取得するユーザー名とパスワード) を取得できるクライアントに適している.
+          また, 保存済みのクレデンシャルをアクセストークンへ変換できるため, Basic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントをOAuthへ移行する際にも利用できる.
         </t>
         <!--
           The grant type is suitable for clients capable of obtaining the resource owner's
@@ -2841,7 +2841,7 @@
         <section title='認可リクエストとレスポンス'>
 <!--         <section title='Authorization Request and Response'> -->
           <t>
-            クライアントがリソースオーナーのクレデンシャルを取得する方法をこの仕様の範囲外である.
+            クライアントがリソースオーナーのクレデンシャルを取得する方法は, この仕様の範囲外である.
             クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない (MUST).
           </t>
           <!--
@@ -2866,25 +2866,25 @@
               <t hangText='grant_type'>
                 <vspace />
                 必須 (REQUIRED).
-                値には<spanx style='verb'>password</spanx>を指定しなければならない (MUST).
+                値には <spanx style='verb'>password</spanx> を指定しなければならない (MUST).
                 <!-- REQUIRED. Value MUST be set to <spanx style='verb'>password</spanx>.-->
               </t>
               <t hangText='username'>
                 <vspace />
                 必須 (REQUIRED).
-                UTF-8でエンコードしたリソースオーナーのusername.
+                UTF-8エンコードされたリソースオーナーのユーザーネーム.
                 <!-- REQUIRED. The resource owner username, encoded as UTF-8.-->
               </t>
               <t hangText='password'>
                 <vspace />
                 必須 (REQUIRED).
-                UTF-8でエンコードしたリソースオーナーのpassword
+                UTF-8エンコードされたリソースオーナーのパスワード.
                 <!-- REQUIRED. The resource owner password, encoded as UTF-8.-->
               </t>
               <t hangText='scope'>
                 <vspace />
                 任意 (OPTIONAL).
-                <xref target='scope' /> で示すとおりのアクセス要求の際のスコープ.
+                詳細は <xref target='scope' /> を参照のこと.
                 <!-- OPTIONAL. The scope of the access request as described by <xref target='scope' />.-->
               </t>
             </list>
@@ -2925,14 +2925,14 @@
           <t>
             <list style='symbols'>
               <t>
-                confidentialなクライアント, もしくはクライアントクレデンシャルが発行された(もしくは他の認証が要求された)クライアントにクライアント認証を要求し,
+                コンフィデンシャルクライアント, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントにクライアント認証を要求し,
               </t>
               <!--
                 require client authentication for confidential clients or for any client that was
                 issued client credentials (or with other authentication requirements),
               -->
               <t>
-                クライアント認証が含まれている場合はクライアントを認証し,
+                クライアントの認証情報が含まれていた場合はクライアントを認証し,
               </t>
               <!--
                 authenticate the client if client authentication is included, and
@@ -2946,7 +2946,7 @@
             </list>
           </t>
           <t>
-            このアクセストークンリクエストにリソースオーナーのパスワードを利用するため, 認可サーバーはブルートフォース攻撃からこのエンドポイントを保護しなければならない (MUST).
+            このアクセストークンリクエストにはリソースオーナーのパスワードが含まれるため, 認可サーバーはブルートフォース攻撃からこのエンドポイントを保護しなければならない (MUST).
           </t>
           <!--
             Since this access token request utilizes the resource owner's password, the
@@ -3580,14 +3580,14 @@
       <t>
         <list style='symbols'>
           <t>
-            confidentialなクライアント, あるいはクライアントクレデンシャルが発行された (もしくは他の認証が要求された) クライアントにクライアント認証を要求し,
+            コンフィデンシャルクライアント, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントにクライアント認証を要求し,
             <!--
             require client authentication for confidential clients or for any client that was
             issued client credentials (or with other authentication requirements),
             -->
           </t>
           <t>
-            クライアント認証に必要な情報が含まれ, リフレッシュトークンが認証されたクライアントに発行されたことが保証された時にクライアントを認証し,
+            クライアントの認証情報が含まれていた場合はクライアントを認証し, リフレッシュトークンが確かにそのクライアントに対して発行されたものであることを確認し,
             <!--
             authenticate the client if client authentication is included and ensure the
             refresh token was issued to the authenticated client, and
