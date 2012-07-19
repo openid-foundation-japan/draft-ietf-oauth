@@ -874,7 +874,7 @@
             </artwork>
           </figure>
           <t>
-            認可サーバーは以下のパラメーターを用いて, リクエストボディにクライアントクレデンシャルを含めてもよい (MAY).
+            認可サーバーは以下のパラメーターを用いて, リクエストボディーにクライアントクレデンシャルを含めてもよい (MAY).
           </t>
             <!--
             Alternatively, the authorization server MAY allow including the client credentials in the
@@ -904,7 +904,7 @@
             </list>
           </t>
           <t>
-            2つのパラメーターを使ってクライアントクレデンシャルをリクエストボディに含めることは推奨されていない (NOT RECOMMENDED).
+            2つのパラメーターを使ってクライアントクレデンシャルをリクエストボディーに含めることは推奨されていない (NOT RECOMMENDED).
             この方法は HTTP Basic 認証スキーム (もしくは他のパスワードベースのHTTP認証スキーム) が直接利用できないクライアントに限定すべきある.
           </t>
             <!--
