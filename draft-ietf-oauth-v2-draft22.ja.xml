@@ -96,7 +96,7 @@
             to a limited subset of resources.
           -->
           <t>
-            リソースオーナーは各サードパーティーごとにアクセス権を無効化することはできず, アクセス権を無効化する際には全てのサードパーティーが持つアクセス権を無効化しなければならない.
+            リソースオーナーは各サードパーティーごとにアクセス権を無効化することはできず, アクセス権を無効化する際にはすべてのサードパーティーが持つアクセス権を無効化しなければならない.
             つまりそれはパスワード変更を意味する.
           </t>
           <!--
@@ -104,7 +104,7 @@
             access to all third-parties, and must do so by changing their password.
           -->
           <t>
-            サードパーティーアプリケーションの情報漏えいはエンドユーザーのパスワードおよびパスワードによって保護されている全ての情報の漏洩につながる.
+            サードパーティーアプリケーションの情報漏えいはエンドユーザーのパスワードおよびパスワードによって保護されているすべての情報の漏洩につながる.
           </t>
           <!--
             Compromise of any third-party application results in compromise of the end-user’s
@@ -637,7 +637,7 @@
           'encryption', 'identity', 'sign', 'signature', 'trust', 'validate', and 'verify'.
         -->
         <t>
-          特に記載が無い限り, 全てのプロトコルパラメーター名と値は, 大文字・小文字を区別する.
+          特に記載が無い限り, すべてのプロトコルパラメーター名と値は, 大文字・小文字を区別する.
         </t>
         <!--
           Unless otherwise noted, all the protocol parameter names and values are case sensitive.
@@ -940,7 +940,7 @@
             method result in the transmission of clear-text credentials.
           -->
           <t>
-            クライアント認証方式にパスワードが含まれるので, 認可サーバーはクライアント認証を行う全てのエンドポイントでブルートフォースアタック対策を行わなくてはならない (MUST).
+            クライアント認証方式にパスワードが含まれるので, 認可サーバーはクライアント認証を行うすべてのエンドポイントでブルートフォースアタック対策を行わなくてはならない (MUST).
           </t>
           <!--
             Since this client authentication method involves a password, the authorization server
@@ -1006,7 +1006,7 @@
         </list>
       </t>
       <t>
-        全てのグラントタイプが両方のエンドポイントを使用するわけではない.
+        すべてのグラントタイプが両方のエンドポイントを使用するわけではない.
         拡張されたグラントタイプは必要に応じて追加のエンドポイントを定義してもよい (MAY).
       </t>
       <!--
@@ -1173,7 +1173,7 @@
 
           <section title='登録要件'>
             <t>
-              認可エンドポイントを使用する前に認可サーバーはリダイレクトURIを登録することをクライアント全てに要求するべきである (SHOULD).
+              認可エンドポイントを使用する前に認可サーバーはリダイレクトURIを登録することをクライアントすべてに要求するべきである (SHOULD).
               以下のクライアントはリダイレクトURIの登録を要求しなければいけない (MUST).
             </t>
             <!--
@@ -1310,7 +1310,7 @@
 <!--       <section title='Token Endpoint'> -->
         <t>
           トークンエンドポイントは認可グラントもしくはリフレッシュトークンを提示することでクライアントがアクセストークンを取得するための利用される
-          トークンエンドポイントはインプリシットグラントタイプを除く全てのグラントタイプで利用される (アクセストークンは直接発行されるため).
+          トークンエンドポイントはインプリシットグラントタイプを除くすべてのグラントタイプで利用される (アクセストークンは直接発行されるため).
         </t>
         <!--
           The token endpoint is used by the client to obtain an access token by presenting its
@@ -1459,7 +1459,7 @@
           adds an additional access range to the requested scope.
         -->
         <t>
-          認可サーバーは, 認可サーバーのポリシーまたはリソースオーナーの指示に基づいて, クライアントに要求されたスコープの一部もしくは全てを無視してもよい (MAY).
+          認可サーバーは, 認可サーバーのポリシーまたはリソースオーナーの指示に基づいて, クライアントに要求されたスコープの一部もしくはすべてを無視してもよい (MAY).
           発行されたアクセストークンのスコープがクライアントから要求されたものと異なる場合, 認可サーバーは実際に許可されたスコープをクライアントに通知するため, <spanx style='verb'>scope</spanx> レスポンスパラメーターを含めるべきである (SHOULD).
         </t>
         <!--
@@ -4510,8 +4510,8 @@
         <t>
           iframeにおけるこの攻撃形式を防ぐため, ネイティブアプリケーションはエンドユーザーの認可を要求するとき, 埋め込みのブラウザの代わりに外部ブラウザを使用すべきである (SHOULD).
           ほとんどの最新ブラウザは, 認可サーバーが非標準の <spanx style='verb'>x-frame-options</spanx> ヘッダーを利用することにより強制的にiframeを回避することができる.
-          このヘッダーは <spanx style='verb'>deny</spanx> と <spanx style='verb'>sameorigin</spanx> の2つの値を持つことができ, それぞれ全てのフレーミング, originが異なるサイトからのフレーミングを防ぐ.
-          古いブラウザはJavaScriptのフレームバースティング技術を利用できるが, 全てのブラウザに有効ではないかもしれない.
+          このヘッダーは <spanx style='verb'>deny</spanx> と <spanx style='verb'>sameorigin</spanx> の2つの値を持つことができ, それぞれすべてのフレーミング, originが異なるサイトからのフレーミングを防ぐ.
+          古いブラウザはJavaScriptのフレームバースティング技術を利用できるが, すべてのブラウザに有効ではないかもしれない.
           <!--
           To prevent this form of attack, native applications SHOULD use external browsers instead
           of embedding browsers in an iframe when requesting end-user authorization. For most newer
