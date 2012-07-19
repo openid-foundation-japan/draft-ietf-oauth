@@ -4054,9 +4054,9 @@
           -->
         </t>
         <t>
-          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティー検証のために他の手段を採用すべきである (SHOULD).
-          例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティー確認が考えられる.
-          有効なリダイレクトURIは, それ単体でエンドユーザーの認可時にクライアントのアイデンティティーを証明するには至らないが, エンドユーザーの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる.
+          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティ検証のために他の手段を採用すべきである (SHOULD).
+          例えば, クライアントのリダイレクトURIの登録要求やリソース所有者によるアイデンティティ確認が考えられる.
+          有効なリダイレクトURIは, それ単体でエンドユーザーの認可時にクライアントのアイデンティティを証明するには至らないが, エンドユーザーの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる.
           <!--
           When client authentication is not possible, the authorization server SHOULD employ other
           means to validate the client's identity. For example, by requiring the registration of
@@ -4147,7 +4147,7 @@
         </t>
         <t>
           クライアントは, 必要最小限のスコープおよび有効期間のアクセストークンを要求すべきである (SHOULD).
-          認可サーバーは, 要求されたスコープおよび有効期間をどのように受け入れるかを判断する際, クライアントのアイデンティティーを考慮すべきであり (SHOULD), 場合によっては要求よりも狭い権限しか持たないアクセストークンを発行することもある (MAY).
+          認可サーバーは, 要求されたスコープおよび有効期間をどのように受け入れるかを判断する際, クライアントのアイデンティティを考慮すべきであり (SHOULD), 場合によっては要求よりも狭い権限しか持たないアクセストークンを発行することもある (MAY).
           <!--
           The client SHOULD request access tokens with the minimal scope and lifetime necessary.
           The authorization server SHOULD take the client identity into account when choosing how
