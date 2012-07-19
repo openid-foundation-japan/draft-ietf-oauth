@@ -4166,7 +4166,8 @@
           -->
         </t>
         <t>
-          リフレッシュトークンは通信経路・ストレージ上ともに機密に保たれ, 認可サーバーとリフレッシュトークンの発行先のクライアントの間のみで共有されなければならない (MUST).
+          リフレッシュトークンは通信経路・ストレージ上ともに機密に保たれ, 認可サーバーとリフレッシュトークン発行先クライアントの間のみで共有されなければならない (MUST).
+          認可サーバーは, どのリフレッシュトークンがどのクライアントに発行されたかを記録しておかなくてはならない (MUST).
           <!--
           Refresh tokens MUST be kept confidential in transit and storage, and shared only among
           the authorization server and the client to whom the refresh tokens were issued. The
