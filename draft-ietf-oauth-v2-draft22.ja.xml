@@ -262,7 +262,7 @@
             -->
             <t>
               クライアントは, リソースオーナーの認可を表すクレデンシャルとして認可グラントを受け取る.
-              認可グラントは仕様上定義された4つのグラントタイプの内の1つ, または拡張されたグラントタイプで発行される.
+              認可グラントは本仕様で定義される4つのグラントタイプの内の1つ, または拡張されたグラントタイプで発行される.
               どの認可グラントタイプを用いるかは, クライアントの利用する認可リクエストの方式と認可サーバーがサポートするグラントタイプに依存する.
             </t>
             <!--
@@ -307,7 +307,7 @@
 <!--       <section title='Authorization Grant'> -->
         <t>
           認可グラントは, リソースオーナーの (保護されたリソースへのアクセスを行うことに対する) 認可を示し, クライアントがアクセストークンを取得する際に用いられる.
-          この仕様では認可コード, インプリシット, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルの4つのグラントタイプを定義しており, 拡張仕様によってタイプを追加することもできる.
+          本仕様では認可コード, インプリシット, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルの4つのグラントタイプを定義しており, 拡張仕様によってタイプを追加することもできる.
         </t>
         <!--
           An authorization grant is a credential representing the resource owner's authorization
@@ -649,7 +649,7 @@
     <section title='クライアント登録'>
       <t>
         OAuth プロトコルフローを開始する前に, クライアントは認可サーバーに登録する.
-        クライアントが認可サーバーに登録する方法はこの仕様での範囲外であるが, 通常エンドユーザーとの対話を伴うHTML登録フォームを持つ.
+        クライアントが認可サーバーに登録する方法は本仕様での範囲外であるが, 通常エンドユーザーとの対話を伴うHTML登録フォームを持つ.
       </t>
       <!--
         Before initiating the protocol, the client registers with the authorization server. The
@@ -741,7 +741,7 @@
           authentication and its acceptable exposure levels of client credentials.
         -->
         <t>
-          この仕様は次のクライアントプロファイルに基づいて設計されている,
+          本仕様は次のクライアントプロファイルに基づいて設計されている,
         </t>
         <!--
           This specification has been designed around the following client profiles:
@@ -967,7 +967,7 @@
       <section title='未登録クライアント'>
 <!--       <section title='Unregistered Clients'> -->
         <t>
-          この仕様は, 未登録のクライアントの利用を排除するものではない.
+          本仕様は, 未登録のクライアントの利用を排除するものではない.
           しなしながら, そのようなクライアントの利用は本仕様のスコープ外であり, さらなるセキュリティー面の分析と相互運用性への影響度評価が必要である.
         </t>
         <!--
@@ -1318,7 +1318,7 @@
           grant except for the implicit grant type (since an access token is issued directly).
         -->
         <t>
-          クライアントがトークンエンドポイントの所在を取得する方法についてはこの仕様の範囲外であるが, 通常はサービス文書中に記載されている.
+          クライアントがトークンエンドポイントの所在を取得する方法については本仕様の範囲外であるが, 通常はサービス文書中に記載されている.
         </t>
           <!--
           The means through which the client obtains the location of the token endpoint are
@@ -2841,7 +2841,7 @@
         <section title='認可リクエストとレスポンス'>
 <!--         <section title='Authorization Request and Response'> -->
           <t>
-            クライアントがリソースオーナーのクレデンシャルを取得する方法は, この仕様の範囲外である.
+            クライアントがリソースオーナーのクレデンシャルを取得する方法は, 本仕様の範囲外である.
             クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない (MUST).
           </t>
           <!--
@@ -5382,7 +5382,7 @@
 
     <appendix title="翻訳者">
       <t>
-        本仕様書の翻訳は, <xref target='oidfj'>OpenIDファウンデーションジャパン</xref> <xref target='oidfj-trans'>翻訳・教育ワーキンググループ</xref>を主体として, 有志のメンバーによって行われました.
+        本仕様の翻訳は, <xref target='oidfj'>OpenIDファウンデーションジャパン</xref> <xref target='oidfj-trans'>翻訳・教育ワーキンググループ</xref>を主体として, 有志のメンバーによって行われました.
         質問や修正依頼などについては, <xref target='oidfj-github'>Githubレポジトリー</xref> にご連絡ください.
       </t>
       <t>
