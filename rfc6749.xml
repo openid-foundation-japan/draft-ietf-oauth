@@ -1,16 +1,18 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='US-ASCII' ?>
 <!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category='std' ipr='trust200902' obsoletes='5849' docName='draft-ietf-oauth-v2-31'>
-  <?rfc strict='yes' ?>
+<rfc category="std" ipr="trust200902" obsoletes="5849" number="6749"
+submissionType="IETF" consensus="yes">
+
   <?rfc toc='yes' ?>
   <?rfc tocdepth='3' ?>
   <?rfc symrefs='yes' ?>
   <?rfc sortrefs='yes' ?>
   <?rfc compact='yes' ?>
-  <?rfc subcompact='yes' ?>
-
+  <?rfc subcompact='no' ?>
+  <?rfc rfcedstyle="yes"?>
+  
   <front>
     <title abbrev='OAuth 2.0'>The OAuth 2.0 Authorization Framework</title>
 
@@ -22,7 +24,7 @@
       </address>
     </author>
 
-    <date year="2012" month="July" day="31" />
+    <date month="October" year="2012" />
 
     <area>Security</area>
     <workgroup>OAuth Working Group</workgroup>
@@ -42,10 +44,12 @@
 
     <section title='Introduction'>
       <t>
-        In the traditional client-server authentication model, the client requests an access
-        restricted resource (protected resource) on the server by authenticating with the server
+        In the traditional client-server authentication model, the client
+requests an access-restricted resource (protected resource) on the server by
+authenticating with the server
         using the resource owner's credentials. In order to provide third-party applications access
-        to restricted resources, the resource owner shares its credentials with the third-party.
+        to restricted resources, the resource owner shares its credentials with
+the third party.
         This creates several problems and limitations:
       </t>
       <t>
@@ -64,8 +68,10 @@
             to a limited subset of resources.
           </t>
           <t>
-            Resource owners cannot revoke access to an individual third-party without revoking
-            access to all third-parties, and must do so by changing their password.
+            Resource owners cannot revoke access to an individual third party
+without revoking
+            access to all third parties, and must do so by changing the
+            third party's password.
           </t>
           <t>
             Compromise of any third-party application results in compromise of the end-user's
@@ -81,30 +87,31 @@
       </t>
       <t>
         Instead of using the resource owner's credentials to access protected resources, the client
-        obtains an access token - a string denoting a specific scope, lifetime, and other access
+        obtains an access token -- a string denoting a specific scope, lifetime, and other access
         attributes. Access tokens are issued to third-party clients by an authorization server with
         the approval of the resource owner. The client uses the access token to access the
         protected resources hosted by the resource server.
       </t>
       <t>
         For example, an end-user (resource owner) can grant a printing service (client) access
-        to her protected photos stored at a photo sharing service (resource server), without
+        to her protected photos stored at a photo-sharing service (resource server), without
         sharing her username and password with the printing service. Instead, she authenticates
-        directly with a server trusted by the photo sharing service (authorization server), which
+        directly with a server trusted by the photo-sharing service (authorization server), which
         issues the printing service delegation-specific credentials (access token).
       </t>
       <t>
         This specification is designed for use with HTTP (<xref target='RFC2616' />). The use of
-        OAuth over any other protocol than HTTP is out of scope.
+        OAuth over any protocol other than HTTP is out of scope.
       </t>
       <t>
         The OAuth 1.0 protocol (<xref target='RFC5849' />), published as an informational document,
-        was the result of a small ad-hoc community effort. This standards-track specification builds
+        was the result of a small ad hoc community effort. This Standards Track specification builds
         on the OAuth 1.0 deployment experience, as well as additional use cases and extensibility
         requirements gathered from the wider IETF community. The OAuth 2.0 protocol is not backward
-        compatible with OAuth 1.0. The two versions may co-exist on the network and implementations
+        compatible with OAuth 1.0. The two versions may co-exist on the
+ network, and implementations
         may choose to support both. However, it is the intention of this specification that new
-        implementation support OAuth 2.0 as specified in this document, and that OAuth 1.0 is used
+        implementations support OAuth 2.0 as specified in this document and that OAuth 1.0 is used
         only to support existing deployments. The OAuth 2.0 protocol shares very few implementation
         details with the OAuth 1.0 protocol. Implementers familiar with OAuth 1.0 should approach
         this document without any assumptions as to its structure and details.
@@ -119,7 +126,7 @@
             <t hangText='resource owner'>
               <vspace />
               An entity capable of granting access to a protected resource. When the resource owner
-              is a person, it is referred to as an end-user.
+              is a person, it is referred to as an end&nbhy;user.
             </t>
             <t hangText='resource server'>
               <vspace />
@@ -129,8 +136,8 @@
             <t hangText='client'>
               <vspace />
               An application making protected resource requests on behalf of the resource owner and
-              with its authorization. The term client does not imply any particular implementation
-              characteristics (e.g. whether the application executes on a server, a desktop, or
+              with its authorization. The term "client" does not imply any particular implementation
+              characteristics (e.g., whether the application executes on a server, a desktop, or
               other devices).
             </t>
             <t hangText='authorization server'>
@@ -194,7 +201,7 @@
             </t>
             <t>
               The authorization server authenticates the client and validates the authorization
-              grant, and if valid issues an access token.
+              grant, and if valid, issues an access token.
             </t>
             <t>
               The client requests the protected resource from the resource server and authenticates
@@ -207,17 +214,20 @@
         </t>
         <t>
           The preferred method for the client to obtain an authorization grant from the resource
-          owner (depicted in steps (A) and (B)) is to use the authorization server as an intermediary,
-          which is illustrated in <xref target='Figure-3' />.
+          owner (depicted in steps (A) and (B)) is to use the authorization
+server as an intermediary,
+          which is illustrated in <xref target='Figure-3'/>
+          in <xref target="grant-code"/>.
         </t>
+
       </section>
 
       <section title='Authorization Grant'>
         <t>
           An authorization grant is a credential representing the resource owner's authorization
           (to access its protected resources) used by the client to obtain an access token. This
-          specification defines four grant types: authorization code, implicit, resource owner
-          password credentials, and client credentials, as well as an extensibility mechanism for
+          specification defines four grant types -- authorization code, implicit, resource owner
+          password credentials, and client credentials -- as well as an extensibility mechanism for
           defining additional types.
         </t>
 
@@ -226,7 +236,7 @@
             The authorization code is obtained by using an authorization server as an intermediary
             between the client and resource owner. Instead of requesting authorization directly
             from the resource owner, the client directs the resource owner to an authorization
-            server (via its user-agent as defined in <xref target='RFC2616' />), which in turn
+            server (via its user&nbhy;agent as defined in <xref target='RFC2616' />), which in turn
             directs the resource owner back to the client with the authorization code.
           </t>
           <t>
@@ -236,20 +246,22 @@
             resource owner's credentials are never shared with the client.
           </t>
           <t>
-            The authorization code provides a few important security benefits such as the ability
-            to authenticate the client, and the transmission of the access token directly to
-            the client without passing it through the resource owner's user-agent, potentially
-            exposing it to others, including the resource owner.
+          The authorization code provides a few important security benefits,
+          such as the ability to authenticate the client, as well as the
+          transmission of the access token directly to the client without
+          passing it through the resource owner's user-agent and potentially
+          exposing it to others, including the resource owner.
           </t>
         </section>
 
         <section title='Implicit' anchor="ImplicitIntro">
           <t>
-            The implicit grant is a simplified authorization code flow optimized for clients
+            The implicit grant is a simplified authorization code flow
+optimized for clients
             implemented in a browser using a scripting language such as JavaScript. In the implicit
             flow, instead of issuing the client an authorization code, the client is issued an
             access token directly (as the result of the resource owner authorization). The grant
-            type is implicit as no intermediate credentials (such as an authorization code) are
+            type is implicit, as no intermediate credentials (such as an authorization code) are
             issued (and later used to obtain an access token).
           </t>
           <t>
@@ -261,21 +273,22 @@
           </t>
           <t>
             Implicit grants improve the responsiveness and efficiency of some clients (such as a
-            client implemented as an in-browser application) since it reduces the number of round
+            client implemented as an in-browser application), since it reduces the number of round
             trips required to obtain an access token. However, this convenience should be weighed
             against the security implications of using implicit grants,
-	    such as those described in <xref target="AccessTokenSecurity"/> and
-	    <xref target="ImplicitImpersonation"/>,
-	    especially when the authorization code grant type is available.
+            such as those described in Sections <xref
+target="AccessTokenSecurity" format="counter"/> and
+            <xref target="ImplicitImpersonation" format="counter"/>,
+            especially when the authorization code grant type is available.
           </t>
         </section>
 
         <section title="Resource Owner Password Credentials">
           <t>
-            The resource owner password credentials (i.e. username and password) can be used
+            The resource owner password credentials (i.e., username and password) can be used
             directly as an authorization grant to obtain an access token. The credentials should
             only be used when there is a high degree of trust between the resource owner and the
-            client (e.g. the client is part of the device operating system or a highly privileged
+            client (e.g., the client is part of the device operating system or a highly privileged
             application), and when other authorization grant types are not available (such as an
             authorization code).
           </t>
@@ -294,7 +307,7 @@
             authorization grant when the authorization scope is limited to the protected resources
             under the control of the client, or to protected resources previously arranged with the
             authorization server. Client credentials are used as an authorization grant typically
-            when the client is acting on its own behalf (the client is also the resource owner), or
+            when the client is acting on its own behalf (the client is also the resource owner) or
             is requesting access to protected resources based on an authorization previously
             arranged with the authorization server.
           </t>
@@ -310,24 +323,26 @@
           resource owner, and enforced by the resource server and authorization server.
         </t>
         <t>
-          The token may denote an identifier used to retrieve the authorization information, or
-          self-contain the authorization information in a verifiable manner (i.e. a token string
+          The token may denote an identifier used to retrieve the authorization
+information or may
+          self-contain the authorization information in a verifiable manner (i.e., a token string
           consisting of some data and a signature). Additional authentication credentials, which
           are beyond the scope of this specification, may be required in order for the client to
           use a token.
         </t>
         <t>
           The access token provides an abstraction layer, replacing different authorization
-          constructs (e.g. username and password) with a single token understood by the resource
+          constructs (e.g., username and password) with a single token understood by the resource
           server. This abstraction enables issuing access tokens more restrictive than the
           authorization grant used to obtain them, as well as removing the resource server's need to
           understand a wide range of authentication methods.
         </t>
         <t>
-          Access tokens can have different formats, structures, and methods of utilization (e.g.
+          Access tokens can have different formats, structures, and methods of utilization (e.g.,
           cryptographic properties) based on the resource server security requirements. Access token
           attributes and the methods used to access protected resources are beyond the scope of this
-          specification and are defined by companion specifications.
+          specification and are defined by companion specifications such as
+<xref target="RFC6750"/>.
         </t>
       </section>
 
@@ -339,7 +354,7 @@
           with identical or narrower scope (access tokens may have a shorter lifetime and fewer
           permissions than authorized by the resource owner). Issuing a refresh token is optional
           at the discretion of the authorization server. If the authorization server issues a
-          refresh token, it is included when issuing an access token (i.e. step (D) in
+          refresh token, it is included when issuing an access token (i.e., step (D) in
           <xref target='Figure-1' />).
         </t>
         <t>
@@ -379,12 +394,12 @@
         <t>
           <list style='format (%C)'>
             <t>
-              The client requests an access token by authenticating with the authorization server,
+              The client requests an access token by authenticating with the authorization server
               and presenting an authorization grant.
             </t>
             <t>
               The authorization server authenticates the client and validates the authorization
-              grant, and if valid issues an access token and a refresh token.
+              grant, and if valid, issues an access token and a refresh token.
             </t>
             <t>
               The client makes a protected resource request to the resource server by presenting
@@ -395,7 +410,7 @@
             </t>
             <t>
               Steps (C) and (D) repeat until the access token expires. If the client knows the
-              access token expired, it skips to step (G), otherwise it makes another protected
+              access token expired, it skips to step (G); otherwise, it makes another protected
               resource request.
             </t>
             <t>
@@ -409,24 +424,24 @@
             </t>
             <t>
               The authorization server authenticates the client and validates the refresh token,
-              and if valid issues a new access token (and optionally, a new refresh token).
+              and if valid, issues a new access token (and, optionally, a new refresh token).
             </t>
           </list>
         </t>
         <t>
-          Steps C, D, E, and F are outside the scope of this specification as described in
+          Steps (C), (D), (E), and (F) are outside the scope of this specification, as described in
           <xref target='access-resource' />.
         </t>
       </section>
 
       <section title='TLS Version' anchor='tls'>
         <t>
-          Whenever TLS is used by this specification, the appropriate version (or versions) of
+          Whenever Transport Layer Security (TLS) is used by this specification, the appropriate version (or versions) of
           TLS will vary over time, based on the widespread deployment and known security
           vulnerabilities. At the time of this writing, TLS version 1.2 <xref target='RFC5246' />
           is the most recent version, but has a very limited deployment base and might not be
           readily available for implementation. TLS version 1.0 <xref target='RFC2246' /> is the
-          most widely deployed version, and will provide the broadest interoperability.
+          most widely deployed version and will provide the broadest interoperability.
         </t>
         <t>
           Implementations MAY also support additional transport-layer security mechanisms
@@ -453,7 +468,7 @@
         </t>
         <t>
           In addition, this specification leaves a few required components partially or fully
-          undefined (e.g. client registration, authorization server capabilities, endpoint
+          undefined (e.g., client registration, authorization server capabilities, endpoint
           discovery). Without these components, clients must be manually and specifically
           configured against a specific authorization server and resource server in order to
           interoperate.
@@ -474,8 +489,8 @@
         <t>
           This specification uses the Augmented Backus-Naur Form (ABNF) notation of
           <xref target='RFC5234' />.
-	  Additionally, the rule URI-Reference is included from
-	  Uniform Resource Identifier (URI) <xref target='RFC3986' />.
+          Additionally, the rule URI-reference is included from
+          "Uniform Resource Identifier (URI): Generic Syntax" <xref target='RFC3986' />.
         </t>
         <t>
           Certain security-related terms are to be understood in the sense defined in
@@ -494,13 +509,13 @@
       <t>
         Before initiating the protocol, the client registers with the authorization server. The
         means through which the client registers with the authorization server are beyond the
-        scope of this specification, but typically involve end-user interaction with an HTML
+        scope of this specification but typically involve end-user interaction with an HTML
         registration form.
       </t>
       <t>
         Client registration does not require a direct interaction between the client and the
         authorization server. When supported by the authorization server, registration can rely
-        on other means for establishing trust and obtaining the required client properties (e.g.
+        on other means for establishing trust and obtaining the required client properties (e.g.,
         redirection URI, client type). For example, registration can be accomplished using a
         self-issued or third-party-issued assertion, or by the authorization server performing
         client discovery using a trusted channel.
@@ -518,7 +533,7 @@
             <xref target='redirect-uri' />, and
           </t>
           <t>
-            include any other information required by the authorization server (e.g. application
+            include any other information required by the authorization server (e.g., application
             name, website, description, logo image, the acceptance of legal terms).
           </t>
         </list>
@@ -527,21 +542,21 @@
       <section title='Client Types' anchor='client-types'>
         <t>
           OAuth defines two client types, based on their ability to authenticate securely with the
-          authorization server (i.e. ability to maintain the confidentiality of their client
+          authorization server (i.e., ability to maintain the confidentiality of their client
           credentials):
         </t>
         <t>
           <list style='hanging'>
             <t hangText='confidential'>
               <vspace />
-              Clients capable of maintaining the confidentiality of their credentials (e.g.
+              Clients capable of maintaining the confidentiality of their credentials (e.g.,
               client implemented on a secure server with restricted access to the client
               credentials), or capable of secure client authentication using other means.
             </t>
             <t hangText='public'>
               <vspace />
-              Clients incapable of maintaining the confidentiality of their credentials (e.g.
-              clients executing on the device used by the resource owner such as an installed
+              Clients incapable of maintaining the confidentiality of their credentials (e.g.,
+              clients executing on the device used by the resource owner, such as an installed
               native application or a web browser-based application), and incapable of secure
               client authentication via any other means.
             </t>
@@ -554,9 +569,9 @@
         </t>
         <t>
           A client may be implemented as a distributed set of components, each with a different
-          client type and security context (e.g. a distributed client with both a confidential
+          client type and security context (e.g., a distributed client with both a confidential
           server-based component and a public browser-based component). If the authorization server
-          does not provide support for such clients, or does not provide guidance with regard to
+          does not provide support for such clients or does not provide guidance with regard to
           their registration, the client SHOULD register each component as a separate client.
         </t>
         <t>
@@ -575,7 +590,7 @@
             <t hangText='user-agent-based application'>
               <vspace />
               A user-agent-based application is a public client in which the client code is
-              downloaded from a web server and executes within a user-agent (e.g. web browser) on
+              downloaded from a web server and executes within a user-agent (e.g., web browser) on
               the device used by the resource owner. Protocol data and credentials are easily
               accessible (and often visible) to the resource owner. Since such applications reside
               within the user-agent, they can make seamless use of the user-agent capabilities when
@@ -589,7 +604,7 @@
               application can be extracted. On the other hand, dynamically issued credentials such
               as access tokens or refresh tokens can receive an acceptable level of protection. At a
               minimum, these credentials are protected from hostile servers with which the
-              application may interact with. On some platforms these credentials might be protected
+              application may interact. On some platforms, these credentials might be protected
               from other applications residing on the same device.
             </t>
           </list>
@@ -598,9 +613,9 @@
 
       <section title='Client Identifier' anchor='client-identifier'>
         <t>
-          The authorization server issues the registered client a client identifier - a unique
+          The authorization server issues the registered client a client identifier -- a unique
           string representing the registration information provided by the client. The client
-          identifier is not a secret; it is exposed to the resource owner, and MUST NOT be used
+          identifier is not a secret; it is exposed to the resource owner and MUST NOT be used
           alone for client authentication. The client identifier is unique to the authorization
           server.
         </t>
@@ -620,7 +635,7 @@
         </t>
         <t>
           Confidential clients are typically issued (or establish) a set of client credentials used for
-          authenticating with the authorization server (e.g. password, public/private key pair).
+          authenticating with the authorization server (e.g., password, public/private key pair).
         </t>
         <t>
           The authorization server MAY establish a client authentication method with public clients.
@@ -636,10 +651,10 @@
             Clients in possession of a client password MAY use the HTTP Basic authentication scheme
             as defined in <xref target='RFC2617' /> to authenticate with the authorization server.
             The client identifier is encoded using the
-	    <spanx style='verb'>application/x-www-form-urlencoded</spanx>
-	    encoding algorithm per <xref target="urlencoded"/> and the encoded value is
-	    used as the username; the client password is encoded using
-	    the same algorithm and used as the
+            <spanx style='verb'>application/x-www-form-urlencoded</spanx>
+            encoding algorithm per <xref target="urlencoded"/>, and the encoded value is
+            used as the username; the client password is encoded using
+            the same algorithm and used as the
             password. The authorization server MUST support the HTTP Basic authentication scheme
             for authenticating clients that were issued a client password.
           </t>
@@ -653,7 +668,7 @@
           </figure>
           <t>
             Alternatively, the authorization server MAY support including the client credentials in
-            the request body using the following parameters:
+            the request-body using the following parameters:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -670,15 +685,15 @@
             </list>
           </t>
           <t>
-            Including the client credentials in the request body using the two parameters is NOT
-            RECOMMENDED, and SHOULD be limited to clients unable to directly utilize the HTTP Basic
+            Including the client credentials in the request-body using the two parameters is NOT
+            RECOMMENDED and SHOULD be limited to clients unable to directly utilize the HTTP Basic
             authentication scheme (or other password-based HTTP authentication schemes). The
-            parameters can only be transmitted in the request body and MUST NOT be included in the
+            parameters can only be transmitted in the request-body and MUST NOT be included in the
             request URI.
           </t>
           <figure>
             <preamble>
-              For example, requesting to refresh an access token (<xref target='token-refresh' />)
+              For example, a request to refresh an access token (<xref target='token-refresh' />)
               using the body parameters (with extra line breaks for display purposes only):
             </preamble>
             <artwork><![CDATA[
@@ -714,11 +729,11 @@
       <section title='Unregistered Clients'>
         <t>
           This specification does not exclude the use of unregistered clients. However, the use
-          with such clients is beyond the scope of this specification, and requires additional
+          of such clients is beyond the scope of this specification and requires additional
           security analysis and review of its interoperability impact.
         </t>
       </section>
-
+      
     </section>
 
     <section title='Protocol Endpoints'>
@@ -743,8 +758,9 @@
       <t>
         <list style='symbols'>
           <t>
-            Redirection endpoint - used by the authorization server to return authorization
-            credentials responses to the client via the resource owner user-agent.
+            Redirection endpoint - used by the authorization server to return
+            responses containing authorization credentials to the client via
+            the resource owner user-agent.
           </t>
         </list>
       </t>
@@ -758,7 +774,7 @@
           The authorization endpoint is used to interact with the resource owner and obtain
           an authorization grant. The authorization server MUST first verify the identity of the
           resource owner. The way in which the authorization server authenticates the resource
-          owner (e.g. username and password login, session cookies) is beyond the scope of this
+          owner (e.g., username and password login, session cookies) is beyond the scope of this
           specification.
         </t>
         <t>
@@ -770,7 +786,7 @@
           The endpoint URI MAY include an
           <spanx style='verb'>application/x-www-form-urlencoded</spanx> formatted
           (per <xref target="urlencoded"/>) query component (<xref target='RFC3986' />
-          section 3.4), which MUST be retained when adding additional query parameters. The
+          Section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
         </t>
         <t>
@@ -781,7 +797,7 @@
         </t>
         <t>
           The authorization server MUST support the use of the HTTP <spanx style='verb'>GET</spanx>
-          method <xref target='RFC2616' /> for the authorization endpoint, and MAY support the use
+          method <xref target='RFC2616' /> for the authorization endpoint and MAY support the use
           of the <spanx style='verb'>POST</spanx> method as well.
         </t>
         <t>
@@ -810,7 +826,7 @@
           </t>
           <t>
             Extension response types MAY contain a space-delimited (%x20) list of values, where the
-            order of values does not matter (e.g. response type <spanx style='verb'>a b</spanx> is
+            order of values does not matter (e.g., response type <spanx style='verb'>a b</spanx> is
             the same as <spanx style='verb'>b a</spanx>). The meaning of such composite response
             types is defined by their respective specifications.
           </t>
@@ -831,10 +847,10 @@
           </t>
           <t>
             The redirection endpoint URI MUST be an absolute URI as defined by
-            <xref target='RFC3986' /> section 4.3. The endpoint URI MAY include an
+            <xref target='RFC3986' /> Section 4.3. The endpoint URI MAY include an
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> formatted
             (per <xref target="urlencoded"/>) query component (<xref target='RFC3986' />
-            section 3.4), which MUST be retained when adding additional query parameters. The
+            Section 3.4), which MUST be retained when adding additional query parameters. The
             endpoint URI MUST NOT include a fragment component.
           </t>
 
@@ -847,14 +863,14 @@
               over an open network. This specification does not mandate the use of TLS because at
               the time of this writing, requiring clients to deploy TLS is a significant hurdle for
               many client developers. If TLS is not available, the authorization server SHOULD warn
-              the resource owner about the insecure endpoint prior to redirection (e.g. display a
+              the resource owner about the insecure endpoint prior to redirection (e.g., display a
               message during the authorization request).
             </t>
             <t>
               Lack of transport-layer security can have a severe impact on the security of the
               client and the protected resources it is authorized to access. The use of
               transport-layer security is particularly critical when the authorization process is
-              used as a form of delegated end-user authentication by the client (e.g. third-party
+              used as a form of delegated end-user authentication by the client (e.g., third-party
               sign-in service).
             </t>
           </section>
@@ -893,7 +909,7 @@
             </t>
             <t>
               Lack of a redirection URI registration requirement can enable an attacker to use
-              the authorization endpoint as open redirector as described in
+              the authorization endpoint as an open redirector as described in
               <xref target='open-redirect' />.
             </t>
           </section>
@@ -909,10 +925,10 @@
               When a redirection URI is included in an authorization request, the authorization
               server MUST compare and match the value received against at least one of the
               registered redirection URIs (or URI components) as defined in
-              <xref target='RFC3986' /> section 6, if any redirection URIs were registered.
+              <xref target='RFC3986' /> Section 6, if any redirection URIs were registered.
               If the client registration included the full redirection URI, the authorization
               server MUST compare the two URIs using simple string comparison as defined
-              in <xref target='RFC3986' /> section 6.2.1.
+              in <xref target='RFC3986' /> Section 6.2.1.
             </t>
          </section>
 
@@ -920,7 +936,7 @@
             <t>
               If an authorization request fails validation due to a missing, invalid, or
               mismatching redirection URI, the authorization server SHOULD inform the resource
-              owner of the error, and MUST NOT automatically redirect the user-agent to the invalid
+              owner of the error and MUST NOT automatically redirect the user-agent to the invalid
               redirection URI.
             </t>
           </section>
@@ -934,7 +950,7 @@
               contains.
             </t>
             <t>
-              The client SHOULD NOT include any third-party scripts (e.g. third-party analytics,
+              The client SHOULD NOT include any third-party scripts (e.g., third-party analytics,
               social plug-ins, ad networks) in the redirection endpoint response. Instead, it
               SHOULD extract the credentials from the URI and redirect the user-agent again to
               another endpoint without exposing the credentials (in the URI or elsewhere). If
@@ -942,7 +958,7 @@
               (used to extract and remove the credentials from the URI) will execute first.
             </t>
           </section>
-
+          
         </section>
 
       </section>
@@ -955,14 +971,14 @@
         </t>
         <t>
           The means through which the client obtains the location of the token endpoint are
-          beyond the scope of this specification but is typically provided in the service
+          beyond the scope of this specification, but the location is typically provided in the service
           documentation.
         </t>
         <t>
           The endpoint URI MAY include an
           <spanx style='verb'>application/x-www-form-urlencoded</spanx> formatted
           (per <xref target="urlencoded"/>) query component (<xref target='RFC3986' />
-          section 3.4), which MUST be retained when adding additional query parameters. The
+          Section 3.4), which MUST be retained when adding additional query parameters. The
           endpoint URI MUST NOT include a fragment component.
         </t>
         <t>
@@ -991,7 +1007,7 @@
               <t>
                 Enforcing the binding of refresh tokens and authorization codes to the client they
                 were issued to. Client authentication is critical when an authorization code is
-                transmitted to the redirection endpoint over an insecure channel, or when the
+                transmitted to the redirection endpoint over an insecure channel or when the
                 redirection URI has not been registered in full.
               </t>
               <t>
@@ -1008,19 +1024,19 @@
               </t>
             </list>
           </t>
-	  <t>
-	    A client MAY use the
-	    <spanx style='verb'>client_id</spanx> request parameter to identify itself when sending
-	    requests to the token endpoint.
-	    In the <spanx style='verb'>authorization_code</spanx>
-	    <spanx style='verb'>grant_type</spanx> request to the token endpoint,
-	    an unauthenticated client MUST send its
-	    <spanx style='verb'>client_id</spanx> to prevent itself from
-	    inadvertently accepting a code intended for a client with a different
-	    <spanx style='verb'>client_id</spanx>.  This protects the client from substitution of the
-	    authentication code.  (It provides no additional security for the
-	    protected resource.)
-	  </t>
+          <t>
+            A client MAY use the
+            <spanx style='verb'>client_id</spanx> request parameter to identify itself when sending
+            requests to the token endpoint.
+            In the <spanx style='verb'>authorization_code</spanx>
+            <spanx style='verb'>grant_type</spanx> request to the token endpoint,
+            an unauthenticated client MUST send its
+            <spanx style='verb'>client_id</spanx> to prevent itself from
+            inadvertently accepting a code intended for a client with a different
+            <spanx style='verb'>client_id</spanx>.  This protects the client from substitution of the
+            authentication code.  (It provides no additional security for the
+            protected resource.)
+          </t>
         </section>
 
       </section>
@@ -1033,8 +1049,7 @@
           inform the client of the scope of the access token issued.
         </t>
         <t>
-          The value of the scope parameter is expressed as a list of space-delimited, case
-          sensitive strings. The strings are defined by the authorization server. If the value
+          The value of the scope parameter is expressed as a list of space-delimited, case-sensitive strings. The strings are defined by the authorization server. If the value
           contains multiple space-delimited strings, their order does not matter, and each string
           adds an additional access range to the requested scope.
         </t>
@@ -1045,7 +1060,7 @@
 ]]></artwork>
         </figure>
         <t>
-          The authorization server MAY fully or partially ignore the scope requested by the client
+          The authorization server MAY fully or partially ignore the scope requested by the client,
           based on the authorization server policy or the resource owner's instructions. If the
           issued access token scope is different from the one requested by the client, the
           authorization server MUST include the <spanx style='verb'>scope</spanx> response
@@ -1053,7 +1068,7 @@
         </t>
         <t>
           If the client omits the scope parameter when requesting authorization, the authorization
-          server MUST either process the request using a pre-defined default value, or fail the
+          server MUST either process the request using a pre-defined default value or fail the
           request indicating an invalid scope. The authorization server SHOULD document its scope
           requirements and default value (if defined).
         </t>
@@ -1073,13 +1088,13 @@
       <section title='Authorization Code Grant' anchor='grant-code'>
         <t>
           The authorization code grant type is used to obtain both access tokens and refresh
-          tokens and is optimized for confidential clients. As a redirection-based flow, the client
+          tokens and is optimized for confidential clients. Since this is a redirection-based flow, the client
           must be capable of interacting with the resource owner's user-agent (typically a web
           browser) and capable of receiving incoming requests (via redirection) from the
           authorization server.
         </t>
         <figure title='Authorization Code Flow' anchor='Figure-3'>
-	  <artwork><![CDATA[
+          <artwork><![CDATA[
   +----------+
   | Resource |
   |   Owner  |
@@ -1087,7 +1102,7 @@
   +----------+
        ^
        |
-      (B)
+      (B)      
   +----|-----+          Client Identifier      +---------------+
   |         -+----(A)-- & Redirection URI ---->|               |
   |  User-   |                                 | Authorization |
@@ -1107,7 +1122,7 @@
   +---------+       (w/ Optional Refresh Token)
 ]]></artwork>
           <postamble>
-            Note: The lines illustrating steps A, B, and C are broken into two parts as they pass
+            Note: The lines illustrating steps (A), (B), and (C) are broken into two parts as they pass
             through the user-agent.
           </postamble>
         </figure>
@@ -1140,9 +1155,9 @@
             </t>
             <t>
               The authorization server authenticates the client, validates the authorization code,
-              and ensures the redirection URI received matches the URI used to redirect the client
-              in step (C). If valid, the authorization server responds back with an access token
-              and optionally, a refresh token.
+              and ensures that the redirection URI received matches the URI used to redirect the client
+              in step&nbsp;(C). If valid, the authorization server responds back with an access token
+              and, optionally, a refresh token.
             </t>
           </list>
         </t>
@@ -1152,7 +1167,7 @@
             The client constructs the request URI by adding the following parameters to the
             query component of the authorization endpoint URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
-	    per <xref target="urlencoded"/>:
+            per <xref target="urlencoded"/>:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -1184,7 +1199,7 @@
           </t>
           <t>
             The client directs the resource owner to the constructed URI using an HTTP redirection
-            response, or by other means available to it via the user-agent.
+            response, or by other means available to it via the user&nbhy;agent.
           </t>
           <figure>
             <preamble>
@@ -1198,7 +1213,7 @@
 ]]></artwork>
           </figure>
           <t>
-            The authorization server validates the request to ensure all required parameters are
+            The authorization server validates the request to ensure that all required parameters are
             present and valid. If the request is valid, the authorization server authenticates the
             resource owner and obtains an authorization decision (by asking the resource owner or
             by establishing approval via other means).
@@ -1206,7 +1221,7 @@
           <t>
             When a decision is established, the authorization server directs the user-agent to the
             provided client redirection URI using an HTTP redirection response, or by other means
-            available to it via the user-agent.
+            available to it via the user&nbhy;agent.
           </t>
         </section>
 
@@ -1216,7 +1231,7 @@
             authorization code and delivers it to the client by adding the following parameters to
             the query component of the redirection URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
-	    per <xref target="urlencoded"/>:
+            per <xref target="urlencoded"/>:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -1259,7 +1274,7 @@
             <t>
               If the request fails due to a missing, invalid, or mismatching redirection URI, or if
               the client identifier is missing or invalid, the authorization server SHOULD inform
-              the resource owner of the error, and MUST NOT automatically redirect the user-agent
+              the resource owner of the error and MUST NOT automatically redirect the user-agent
               to the invalid redirection URI.
             </t>
             <t>
@@ -1267,7 +1282,7 @@
               other than a missing or invalid redirection URI, the authorization server informs the
               client by adding the following parameters to the query component of the redirection
               URI using the <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
-	      per <xref target="urlencoded"/>:
+              per <xref target="urlencoded"/>:
             </t>
             <t>
               <list style='hanging' hangIndent='6'>
@@ -1304,40 +1319,40 @@
                       <vspace />
                       The authorization server encountered an unexpected condition that prevented
                       it from fulfilling the request.
-		      (This error code is needed because a 500 Internal Server Error
-		      HTTP status code cannot be returned to the client
-		      via a HTTP redirect.)
+                      (This error code is needed because a 500 Internal Server Error
+                      HTTP status code cannot be returned to the client
+                      via an HTTP redirect.)
                     </t>
                     <t hangText='temporarily_unavailable'>
                       <vspace />
                       The authorization server is currently unable to handle the request due to a
                       temporary overloading or maintenance of the server.
-		      (This error code is needed because a 503 Service Unavailable
-		      HTTP status code cannot be returned to the client
-		      via a HTTP redirect.)
+                      (This error code is needed because a 503 Service Unavailable
+                      HTTP status code cannot be returned to the client
+                      via an HTTP redirect.)
                     </t>
                   </list>
 
-		  Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
-		  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+                  Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
+                  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
                 </t>
                 <t hangText='error_description'>
                   <vspace />
-                  OPTIONAL. A human-readable ASCII <xref target="USASCII" /> text providing additional information,
+                  OPTIONAL. Human-readable ASCII <xref target="USASCII" /> text providing additional information,
                   used to assist the client developer in understanding the error that occurred.
-		  <vspace/>
-		  Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
-		  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+                  <vspace/>
+                  Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
+                  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
                 </t>
                 <t hangText='error_uri'>
                   <vspace />
                   OPTIONAL. A URI identifying a human-readable web page with information about the
                   error, used to provide the client developer with additional information about the
                   error.
-		  <vspace/>
-		  Values for the <spanx style='verb'>error_uri</spanx> parameter
-		  MUST conform to the URI-Reference syntax, and thus MUST NOT include
-		  characters outside the set %x21 / %x23-5B / %x5D-7E.
+                  <vspace/>
+                  Values for the <spanx style='verb'>error_uri</spanx> parameter
+                  MUST conform to the URI&nbhy;reference syntax and thus MUST NOT include
+                  characters outside the set %x21 / %x23-5B / %x5D-7E.
                 </t>
                 <t hangText='state'>
                   <vspace />
@@ -1364,8 +1379,8 @@
           <t>
             The client makes a request to the token endpoint by sending the following parameters
             using the <spanx style='verb'>application/x-www-form-urlencoded</spanx> format
-	    per <xref target="urlencoded"/> with a character encoding of UTF-8
-	    in the HTTP request entity-body:
+            per <xref target="urlencoded"/> with a character encoding of UTF-8
+            in the HTTP request entity-body:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -1383,11 +1398,11 @@
                 the authorization request as described in <xref target='code-authz-req' />, and
                 their values MUST be identical.
               </t>
-	      <t hangText="client_id">
-		<vspace/>
-		REQUIRED, if the client is not authenticating with the
-		authorization server as described in <xref target="token-endpoint-auth"/>.
-	      </t>
+              <t hangText="client_id">
+                <vspace/>
+                REQUIRED, if the client is not authenticating with the
+                authorization server as described in <xref target="token-endpoint-auth"/>.
+              </t>
             </list>
           </t>
           <t>
@@ -1398,7 +1413,7 @@
           <figure>
             <preamble>
               For example, the client makes the following HTTP request using TLS
-	      (with extra line breaks for display purposes only):
+              (with extra line breaks for display purposes only):
             </preamble>
             <artwork><![CDATA[
   POST /token HTTP/1.1
@@ -1419,14 +1434,14 @@
                 require client authentication for confidential clients or for any client that was
                 issued client credentials (or with other authentication requirements),
               </t>
-	      <t>
-		authenticate the client if client authentication is included,
+              <t>
+                authenticate the client if client authentication is included,
               </t>
-	      <t>
-		ensure the authorization code was issued to the authenticated
-		confidential client, or if the client is public, ensure the code was issued to
-		<spanx style='verb'>client_id</spanx> in the request,
-	      </t>
+              <t>
+                ensure that the authorization code was issued to the authenticated
+                confidential client, or if the client is public, ensure that the code was issued to
+                <spanx style='verb'>client_id</spanx> in the request,
+              </t>
               <t>
                 verify that the authorization code is valid, and
               </t>
@@ -1434,7 +1449,7 @@
                 ensure that the <spanx style='verb'>redirect_uri</spanx> parameter is present if
                 the <spanx style='verb'>redirect_uri</spanx> parameter was included in the initial
                 authorization request as described in <xref target='code-authz-req' />, and if
-                included ensure their values are identical.
+                included ensure that their values are identical.
               </t>
             </list>
           </t>
@@ -1478,13 +1493,13 @@
           language such as JavaScript.
         </t>
         <t>
-          As a redirection-based flow, the client must be capable of interacting with the
+          Since this is a redirection-based flow, the client must be capable of interacting with the
           resource owner's user-agent (typically a web browser) and capable of receiving incoming
           requests (via redirection) from the authorization server.
         </t>
         <t>
-          Unlike the authorization code grant type in which the client makes separate requests for
-          authorization and access token, the client receives the access token as the result of the
+          Unlike the authorization code grant type, in which the client makes separate requests for
+          authorization and for an access token, the client receives the access token as the result of the
           authorization request.
         </t>
         <t>
@@ -1502,7 +1517,7 @@
   +----------+
        ^
        |
-      (B)
+      (B)      
   +----|-----+          Client Identifier     +---------------+
   |         -+----(A)-- & Redirection URI --->|               |
   |  User-   |                                | Authorization |
@@ -1518,7 +1533,7 @@
   |     (F)  |<---(E)------- Script ---------<|               |
   |          |                                +---------------+
   +-|--------+
-    |    |
+    |    |    
    (A)  (G) Access Token
     |    |
     ^    v
@@ -1529,7 +1544,7 @@
   +---------+
 ]]></artwork>
           <postamble>
-            Note: The lines illustrating steps A and B are broken into two parts as they pass
+            Note: The lines illustrating steps (A) and (B) are broken into two parts as they pass
             through the user-agent.
           </postamble>
         </figure>
@@ -1566,23 +1581,27 @@
             </t>
             <t>
               The user-agent executes the script provided by the web-hosted client resource
-              locally, which extracts the access token and passes it to the client.
+              locally, which extracts the access token.</t>
+            <t>The user-agent passes the access token to the client.
             </t>
           </list>
         </t>
-	<t>
-	  See <xref target="ImplicitIntro"/> and <xref target="NativeApps"/>
-	  for background on using the implicit grant.
-	  See <xref target="AccessTokenSecurity"/> and <xref target="ImplicitImpersonation"/>
-	  for important security considerations when using the implicit grant.
-	</t>
+
+        <t>
+          See Sections <xref target="ImplicitIntro" format="counter"/> and
+<xref target="NativeApps" format="counter"/>
+          for background on using the implicit grant.
+          See Sections <xref target="AccessTokenSecurity" format="counter"/>
+and <xref target="ImplicitImpersonation" format="counter"/>
+          for important security considerations when using the implicit grant.
+        </t>
 
         <section title='Authorization Request' anchor='implicit-authz-req'>
           <t>
             The client constructs the request URI by adding the following parameters to the
             query component of the authorization endpoint URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
-	    per <xref target="urlencoded"/>:
+            per <xref target="urlencoded"/>:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -1628,7 +1647,7 @@
 ]]></artwork>
           </figure>
           <t>
-            The authorization server validates the request to ensure all required parameters are
+            The authorization server validates the request to ensure that all required parameters are
             present and valid. The authorization server MUST verify that the redirection URI to which
             it will redirect the access token matches a redirection URI registered by the client as
             described in <xref target='redirect-uri' />.
@@ -1641,7 +1660,7 @@
           <t>
             When a decision is established, the authorization server directs the user-agent to the
             provided client redirection URI using an HTTP redirection response, or by other means
-            available to it via the user-agent.
+            available to it via the user&nbhy;agent.
           </t>
         </section>
 
@@ -1651,7 +1670,7 @@
             access token and delivers it to the client by adding the following parameters to
             the fragment component of the redirection URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
-	    per <xref target="urlencoded"/>:
+            per <xref target="urlencoded"/>:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -1673,7 +1692,7 @@
               </t>
               <t hangText='scope'>
                 <vspace />
-                OPTIONAL, if identical to the scope requested by the client, otherwise REQUIRED. The
+                OPTIONAL, if identical to the scope requested by the client; otherwise, REQUIRED. The
                 scope of the access token as described by <xref target='scope' />.
               </t>
               <t hangText='state'>
@@ -1700,7 +1719,7 @@
               Developers should note that some user-agents do not support the inclusion of a
               fragment component in the HTTP <spanx style='verb'>Location</spanx> response header
               field. Such clients will require using other methods for redirecting the client than
-              a 3xx redirection response. For example, returning an HTML page that includes a
+              a 3xx redirection response -- for example, returning an HTML page that includes a
               'continue' button with an action linked to the redirection URI.
             </postamble>
           </figure>
@@ -1715,7 +1734,7 @@
             <t>
               If the request fails due to a missing, invalid, or mismatching redirection URI, or if
               the client identifier is missing or invalid, the authorization server SHOULD inform
-              the resource owner of the error, and MUST NOT automatically redirect the user-agent
+              the resource owner of the error and MUST NOT automatically redirect the user-agent
               to the invalid redirection URI.
             </t>
             <t>
@@ -1724,7 +1743,7 @@
               client by adding the following parameters to the fragment component of the
               redirection URI using the
               <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
-	      per <xref target="urlencoded"/>:
+              per <xref target="urlencoded"/>:
             </t>
             <t>
               <list style='hanging' hangIndent='6'>
@@ -1759,40 +1778,40 @@
                       <vspace />
                       The authorization server encountered an unexpected condition that prevented
                       it from fulfilling the request.
-		      (This error code is needed because a 500 Internal Server Error
-		      HTTP status code cannot be returned to the client
-		      via a HTTP redirect.)
+                      (This error code is needed because a 500 Internal Server Error
+                      HTTP status code cannot be returned to the client
+                      via an HTTP redirect.)
                     </t>
                     <t hangText='temporarily_unavailable'>
                       <vspace />
                       The authorization server is currently unable to handle the request due to a
                       temporary overloading or maintenance of the server.
-		      (This error code is needed because a 503 Service Unavailable
-		      HTTP status code cannot be returned to the client
-		      via a HTTP redirect.)
+                      (This error code is needed because a 503 Service Unavailable
+                      HTTP status code cannot be returned to the client
+                      via an HTTP redirect.)
                     </t>
                   </list>
 
-		  Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
-		  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+                  Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
+                  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
                 </t>
                 <t hangText='error_description'>
                   <vspace />
-                  OPTIONAL. A human-readable ASCII <xref target="USASCII" /> text providing additional information,
+                  OPTIONAL. Human-readable ASCII <xref target="USASCII" /> text providing additional information,
                   used to assist the client developer in understanding the error that occurred.
-		  <vspace/>
-		  Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
-		  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+                  <vspace/>
+                  Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
+                  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
                 </t>
                 <t hangText='error_uri'>
                   <vspace />
                   OPTIONAL. A URI identifying a human-readable web page with information about the
                   error, used to provide the client developer with additional information about the
                   error.
-		  <vspace/>
-		  Values for the <spanx style='verb'>error_uri</spanx> parameter
-		  MUST conform to the URI-Reference syntax, and thus MUST NOT include
-		  characters outside the set %x21 / %x23-5B / %x5D-7E.
+                  <vspace/>
+                  Values for the <spanx style='verb'>error_uri</spanx> parameter
+                  MUST conform to the URI&nbhy;reference syntax and thus MUST NOT include
+                  characters outside the set %x21 / %x23-5B / %x5D-7E.
                 </t>
                 <t hangText='state'>
                   <vspace />
@@ -1822,10 +1841,10 @@
           The resource owner password credentials grant type is suitable in cases where the
           resource owner has a trust relationship with the client, such as the device operating
           system or a highly privileged application. The authorization server should take special
-          care when enabling this grant type, and only allow it when other flows are not viable.
+          care when enabling this grant type and only allow it when other flows are not viable.
         </t>
         <t>
-          The grant type is suitable for clients capable of obtaining the resource owner's
+          This grant type is suitable for clients capable of obtaining the resource owner's
           credentials (username and password, typically using an interactive form). It is also used
           to migrate existing clients using direct authentication schemes such as HTTP Basic or
           Digest authentication to OAuth by converting the stored credentials to an access token.
@@ -1866,7 +1885,7 @@
             </t>
             <t>
               The authorization server authenticates the client and validates the resource owner
-              credentials, and if valid issues an access token.
+              credentials, and if valid, issues an access token.
             </t>
           </list>
         </t>
@@ -1883,8 +1902,8 @@
           <t>
             The client makes a request to the token endpoint by adding the following parameters
             using the <spanx style='verb'>application/x-www-form-urlencoded</spanx> format
-	    per <xref target="urlencoded"/> with a character encoding of UTF-8
-	    in the HTTP request entity-body:
+            per <xref target="urlencoded"/> with a character encoding of UTF-8
+            in the HTTP request entity-body:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -1945,7 +1964,7 @@
           </t>
           <t>
             Since this access token request utilizes the resource owner's password, the
-            authorization server MUST protect the endpoint against brute force attacks (e.g. using
+            authorization server MUST protect the endpoint against brute force attacks (e.g., using
             rate-limitation or generating alerts).
           </t>
         </section>
@@ -2012,7 +2031,7 @@
               from the token endpoint.
             </t>
             <t>
-              The authorization server authenticates the client, and if valid issues an access
+              The authorization server authenticates the client, and if valid, issues an access
               token.
             </t>
           </list>
@@ -2029,8 +2048,8 @@
           <t>
             The client makes a request to the token endpoint by adding the following parameters
             using the <spanx style='verb'>application/x-www-form-urlencoded</spanx> format
-	    per <xref target="urlencoded"/> with a character encoding of UTF-8
-	    in the HTTP request entity-body:
+            per <xref target="urlencoded"/> with a character encoding of UTF-8
+            in the HTTP request entity-body:
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
@@ -2106,8 +2125,9 @@
         </t>
         <figure>
           <preamble>
-            For example, to request an access token using a SAML 2.0 assertion grant type as
-            defined by <xref target='I-D.ietf-oauth-saml2-bearer' />, the client could make the
+            For example, to request an access token using a Security Assertion
+Markup Language (SAML) 2.0 assertion grant type as
+            defined by <xref target='OAuth-SAML2' />, the client could make the
             following HTTP request using TLS (with extra line breaks for display purposes only):
           </preamble>
           <artwork><![CDATA[
@@ -2141,7 +2161,7 @@
       <section title='Successful Response' anchor='token-response'>
         <t>
           The authorization server issues an access token and optional refresh token, and
-          constructs the response by adding the following parameters to the entity body of the HTTP
+          constructs the response by adding the following parameters to the entity-body of the HTTP
           response with a 200 (OK) status code:
         </t>
         <t>
@@ -2169,15 +2189,16 @@
             </t>
             <t hangText='scope'>
               <vspace />
-              OPTIONAL, if identical to the scope requested by the client, otherwise REQUIRED. The
+              OPTIONAL, if identical to the scope requested by the client; otherwise, REQUIRED. The
               scope of the access token as described by <xref target='scope' />.
             </t>
           </list>
         </t>
         <t>
-          The parameters are included in the entity body of the HTTP response using the
+          The parameters are included in the entity-body of the HTTP response using the
           <spanx style='verb'>application/json</spanx> media type as defined by
-          <xref target='RFC4627' />. The parameters are serialized into a JSON structure by
+          <xref target='RFC4627' />. The parameters are serialized into a
+JavaScript Object Notation (JSON) structure by
           adding each parameter at the highest structure level. Parameter names and string values
           are included as JSON strings. Numerical values are included as JSON numbers. The order of
           parameters does not matter and can vary.
@@ -2238,18 +2259,18 @@
                 </t>
                 <t hangText='invalid_client'>
                   <vspace />
-                  Client authentication failed (e.g. unknown client, no client authentication
+                  Client authentication failed (e.g., unknown client, no client authentication
                   included, or unsupported authentication method). The authorization server MAY
                   return an HTTP 401 (Unauthorized) status code to indicate which HTTP
                   authentication schemes are supported. If the client attempted to authenticate via
                   the <spanx style='verb'>Authorization</spanx> request header field,
                   the authorization server MUST respond with an HTTP 401 (Unauthorized) status
-                  code, and include the <spanx style='verb'>WWW-Authenticate</spanx> response
+                  code and include the <spanx style='verb'>WWW-Authenticate</spanx> response
                   header field matching the authentication scheme used by the client.
                 </t>
                 <t hangText='invalid_grant'>
                   <vspace />
-                  The provided authorization grant (e.g. authorization code, resource owner
+                  The provided authorization grant (e.g., authorization code, resource owner
                   credentials) or refresh token is invalid, expired, revoked, does not match the
                   redirection URI used in the authorization request, or was issued to another
                   client.
@@ -2269,31 +2290,31 @@
                 </t>
               </list>
 
-	      Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
-	      characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+              Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
+              characters outside the set %x20-21 / %x23-5B / %x5D-7E.
             </t>
             <t hangText='error_description'>
               <vspace />
-              OPTIONAL. A human-readable ASCII <xref target="USASCII" /> text providing additional information,
+              OPTIONAL.  Human-readable ASCII <xref target="USASCII" /> text providing additional information,
               used to assist the client developer in understanding the error that occurred.
-	      <vspace/>
-	      Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
-	      characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+              <vspace/>
+              Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
+              characters outside the set %x20-21 / %x23-5B / %x5D-7E.
             </t>
             <t hangText='error_uri'>
               <vspace />
               OPTIONAL. A URI identifying a human-readable web page with information about the
               error, used to provide the client developer with additional information about the
               error.
-	      <vspace/>
-	      Values for the <spanx style='verb'>error_uri</spanx> parameter
-	      MUST conform to the URI-Reference syntax, and thus MUST NOT include
-	      characters outside the set %x21 / %x23-5B / %x5D-7E.
+              <vspace/>
+              Values for the <spanx style='verb'>error_uri</spanx> parameter
+              MUST conform to the URI&nbhy;reference syntax and thus MUST NOT include
+              characters outside the set %x21 / %x23-5B / %x5D-7E.
             </t>
           </list>
         </t>
         <t>
-          The parameters are included in the entity body of the HTTP response using the
+          The parameters are included in the entity-body of the HTTP response using the
           <spanx style='verb'>application/json</spanx> media type as defined by
           <xref target='RFC4627' />. The parameters are serialized into a JSON structure by
           adding each parameter at the highest structure level. Parameter names and string values
@@ -2324,8 +2345,8 @@
         If the authorization server issued a refresh token to the client, the client makes a
         refresh request to the token endpoint by adding the following parameters using the
         <spanx style='verb'>application/x-www-form-urlencoded</spanx> format
-	per <xref target="urlencoded"/> with a character encoding of UTF-8
-	in the HTTP request entity-body:
+        per <xref target="urlencoded"/> with a character encoding of UTF-8
+        in the HTTP request entity-body:
       </t>
       <t>
         <list style='hanging' hangIndent='6'>
@@ -2377,7 +2398,7 @@
             issued client credentials (or with other authentication requirements),
           </t>
           <t>
-            authenticate the client if client authentication is included and ensure the
+            authenticate the client if client authentication is included and ensure that the
             refresh token was issued to the authenticated client, and
           </t>
           <t>
@@ -2403,18 +2424,18 @@
     <section title='Accessing Protected Resources' anchor='access-resource'>
       <t>
         The client accesses protected resources by presenting the access token to the resource
-        server. The resource server MUST validate the access token and ensure it has not expired
+        server. The resource server MUST validate the access token and ensure that it has not expired
         and that its scope covers the requested resource. The methods used by the resource server
         to validate the access token (as well as any error responses) are beyond the scope of this
-        specification, but generally involve an interaction or coordination between the resource
+        specification but generally involve an interaction or coordination between the resource
         server and the authorization server.
       </t>
       <t>
         The method in which the client utilizes the access token to authenticate with the resource
         server depends on the type of access token issued by the authorization server. Typically,
         it involves using the HTTP <spanx style='verb'>Authorization</spanx> request header field
-        <xref target='RFC2617' /> with an authentication scheme defined by the access token type
-        specification.
+        <xref target='RFC2617' /> with an authentication scheme defined by the
+      specification of the access token type used, such as <xref target="RFC6750"/>.
       </t>
 
       <section title='Access Token Types' anchor='token-types'>
@@ -2427,7 +2448,7 @@
         <figure>
           <preamble>
             For example, the <spanx style='verb'>bearer</spanx> token type defined in
-            <xref target='I-D.ietf-oauth-v2-bearer' /> is utilized by simply including the access
+            <xref target='RFC6750' /> is utilized by simply including the access
             token string in the request:
           </preamble>
           <artwork><![CDATA[
@@ -2439,7 +2460,8 @@
         <figure>
           <preamble>
             while the <spanx style='verb'>mac</spanx> token type defined in
-            <xref target='I-D.ietf-oauth-v2-http-mac' /> is utilized by issuing a MAC key
+            <xref target='OAuth-HTTP-MAC' /> is utilized by issuing a 
+            Message Authentication Code (MAC) key
             together with the access token that is used to sign certain components of the HTTP
             requests:
           </preamble>
@@ -2453,8 +2475,8 @@
         </figure>
         <t>
           The above examples are provided for illustration purposes only. Developers are advised to
-          consult the <xref target='I-D.ietf-oauth-v2-bearer' /> and
-          <xref target='I-D.ietf-oauth-v2-http-mac' /> specifications before use.
+          consult the <xref target='RFC6750' /> and
+          <xref target='OAuth-HTTP-MAC' /> specifications before use.
         </t>
         <t>
           Each access token type definition specifies the additional attributes (if any) sent to
@@ -2465,34 +2487,34 @@
       </section>
 
       <section title='Error Response' anchor='resource-errors'>
-	<t>
-	  If a resource access request fails, the resource server SHOULD inform
-	  the client of the error.  While the specifics of such error responses
-	  are beyond the scope of this specification, this documents establishes
-	  a common registry in <xref target='error-registry' /> for error values
-	  to be shared among OAuth token authentication schemes.
-	</t>
-	<t>
-	  New authentication schemes designed primarily for OAuth token
-	  authentication SHOULD define a mechanism for providing an
-	  error status code to the client, in which the error values allowed are
-	  registered in the error registry established by this specification. Such
-	  schemes MAY limit the set of valid error codes to a subset of the
-	  registered values. If the error code is returned using a named parameter,
-	  the parameter name SHOULD be <spanx style='verb'>error</spanx>.
-	</t>
-	<t>
-	  Other schemes capable of being used for OAuth token authentication, but
-	  not primarily designed for that purpose, MAY bind their error values to the
-	  registry in the same manner.
-	</t>
-	<t>
-	  New authentication schemes MAY choose to also specify the use of the
-	  <spanx style='verb'>error_description</spanx> and
-	  <spanx style='verb'>error_uri</spanx>
-	  parameters to return error information in a manner parallel
-	  to their usage in this specification.
-	</t>
+        <t>
+          If a resource access request fails, the resource server SHOULD inform
+          the client of the error.  While the specifics of such error responses
+          are beyond the scope of this specification, this document establishes
+          a common registry in <xref target='error-registry' /> for error values
+          to be shared among OAuth token authentication schemes. 
+        </t>
+        <t>
+          New authentication schemes designed primarily for OAuth token
+          authentication SHOULD define a mechanism for providing an
+          error status code to the client, in which the error values allowed are
+          registered in the error registry established by this specification. Such
+          schemes MAY limit the set of valid error codes to a subset of the
+          registered values. If the error code is returned using a named parameter,
+          the parameter name SHOULD be <spanx style='verb'>error</spanx>.
+        </t>
+        <t>
+          Other schemes capable of being used for OAuth token authentication, but
+          not primarily designed for that purpose, MAY bind their error values to the
+          registry in the same manner.
+        </t>
+        <t>
+          New authentication schemes MAY choose to also specify the use of the
+          <spanx style='verb'>error_description</spanx> and 
+          <spanx style='verb'>error_uri</spanx>
+          parameters to return error information in a manner parallel
+          to their usage in this specification.
+        </t>
       </section>
 
     </section>
@@ -2501,7 +2523,7 @@
 
       <section title='Defining Access Token Types' anchor='new-types'>
         <t>
-          Access token types can be defined in one of two ways: registered in the access token type
+          Access token types can be defined in one of two ways: registered in the Access Token Types
           registry (following the procedures in <xref target='type-registry' />), or by using a
           unique absolute URI as its name.
         </t>
@@ -2527,11 +2549,11 @@
       <section title='Defining New Endpoint Parameters' anchor="endpoint-params">
         <t>
           New request or response parameters for use with the authorization endpoint or the token
-          endpoint are defined and registered in the parameters registry following the procedure in
+          endpoint are defined and registered in the OAuth Parameters registry following the procedure in
           <xref target='parameters-registry' />.
         </t>
         <t>
-          Parameter names MUST conform to the param-name ABNF and parameter values syntax MUST be
+          Parameter names MUST conform to the param-name ABNF, and parameter values syntax MUST be
           well-defined (e.g., using ABNF, or a reference to the syntax of an existing parameter).
         </t>
         <figure>
@@ -2541,10 +2563,11 @@
 ]]></artwork>
         </figure>
         <t>
-          Unregistered vendor-specific parameter extensions that are not commonly applicable, and
+          Unregistered vendor-specific parameter extensions that are not
+commonly applicable and that
           are specific to the implementation details of the authorization server where they are
           used SHOULD utilize a vendor-specific prefix that is not likely to conflict with other
-          registered values (e.g. begin with 'companyname_').
+          registered values (e.g., begin with 'companyname_').
         </t>
       </section>
 
@@ -2553,14 +2576,14 @@
           New authorization grant types can be defined by assigning them a unique absolute URI for
           use with the <spanx style='verb'>grant_type</spanx> parameter. If the extension grant
           type requires additional token endpoint parameters, they MUST be registered in the OAuth
-          parameters registry as described by <xref target='parameters-registry' />.
+          Parameters registry as described by <xref target='parameters-registry' />.
         </t>
       </section>
 
       <section title='Defining New Authorization Endpoint Response Types' anchor='response-type-ext'>
         <t>
           New response types for use with the authorization endpoint are defined and registered in
-          the authorization endpoint response type registry following the procedure in
+          the Authorization Endpoint Response Types registry following the procedure in
           <xref target='response-type-registry' />. Response type names MUST conform to the
           response-type ABNF.
         </t>
@@ -2588,13 +2611,13 @@
 
       <section title='Defining Additional Error Codes' anchor='new-errors'>
         <t>
-          In cases where protocol extensions (i.e. access token types, extension parameters, or
+          In cases where protocol extensions (i.e., access token types, extension parameters, or
           extension grant types) require additional error codes to be used with the authorization
           code grant error response (<xref target='code-authz-error' />), the implicit grant error
           response (<xref target='implicit-authz-error' />), the token error response
           (<xref target='token-errors' />),
-	  or the resource access error response (<xref target='resource-errors' />),
-	  such error codes MAY be defined.
+          or the resource access error response (<xref target='resource-errors' />),
+          such error codes MAY be defined.
         </t>
         <t>
           Extension error codes MUST be registered (following the procedures in
@@ -2603,7 +2626,7 @@
           type. Error codes used with unregistered extensions MAY be registered.
         </t>
         <t>
-          Error codes MUST conform to the error ABNF, and SHOULD be prefixed by an identifying
+          Error codes MUST conform to the error ABNF and SHOULD be prefixed by an identifying
           name when possible. For example, an error identifying an invalid value set to the
           extension parameter <spanx style='verb'>example</spanx> SHOULD be named
           <spanx style='verb'>example_invalid</spanx>.
@@ -2621,7 +2644,7 @@
     <section title='Native Applications' anchor="NativeApps">
       <t>
         Native applications are clients installed and executed on the device used by the resource
-        owner (i.e. desktop application, native mobile application). Native applications require
+        owner (i.e., desktop application, native mobile application). Native applications require
         special consideration related to security, platform capabilities, and overall end-user
         experience.
       </t>
@@ -2648,15 +2671,16 @@
         </list>
       </t>
       <t>
-        When choosing between an external or embedded user-agent, developers should consider:
+        When choosing between an external or embedded user-agent, developers
+should consider the following:
       </t>
       <t>
         <list style='symbols'>
           <t>
-            An External user-agent may improve completion rate as the resource owner may already have
-            an active session with the authorization server removing the need to re-authenticate. It
+            An external user-agent may improve completion rate, as the resource owner may already have
+            an active session with the authorization server, removing the need to re-authenticate. It
             provides a familiar end-user experience and functionality. The resource owner may also
-            rely on user-agent features or extensions to assist with authentication (e.g. password
+            rely on user-agent features or extensions to assist with authentication (e.g., password
             manager, 2-factor device reader).
           </t>
           <t>
@@ -2695,11 +2719,11 @@
         As a flexible and extensible framework, OAuth's security considerations depend on many
         factors. The following sections provide implementers with security guidelines focused on
         the three client profiles described in <xref target='client-types' />: web application,
-        user-agent-based application, and native application.
+        user&nbhy;agent&nbhy;based application, and native application.
       </t>
       <t>
         A comprehensive OAuth security model and analysis, as well as background for the protocol
-        design, is provided by <xref target='I-D.ietf-oauth-v2-threatmodel' />.
+        design, is provided by <xref target='OAuth-THREATMODEL' />.
       </t>
 
       <section title='Client Authentication'>
@@ -2717,30 +2741,30 @@
         </t>
         <t>
           When client authentication is not possible, the authorization server SHOULD employ other
-          means to validate the client's identity. For example, by requiring the registration of
+          means to validate the client's identity -- for example, by requiring the registration of
           the client redirection URI or enlisting the resource owner to confirm identity. A valid
           redirection URI is not sufficient to verify the client's identity when asking for
-          resource owner authorization, but can be used to prevent delivering credentials to a
+          resource owner authorization but can be used to prevent delivering credentials to a
           counterfeit client after obtaining resource owner authorization.
         </t>
         <t>
           The authorization server must consider the security implications of interacting with
           unauthenticated clients and take measures to limit the potential exposure of other
-          credentials (e.g. refresh tokens) issued to such clients.
+          credentials (e.g., refresh tokens) issued to such clients.
         </t>
       </section>
 
       <section title='Client Impersonation'>
         <t>
           A malicious client can impersonate another client and obtain access to protected
-          resources, if the impersonated client fails to, or is unable to, keep its client
+          resources if the impersonated client fails to, or is unable to, keep its client
           credentials confidential.
         </t>
         <t>
           The authorization server MUST authenticate the client whenever possible. If the
           authorization server cannot authenticate the client due to the client's nature, the
           authorization server MUST require the registration of any redirection URI used for
-          receiving authorization responses, and SHOULD utilize other means to protect resource
+          receiving authorization responses and SHOULD utilize other means to protect resource
           owners from such potentially malicious clients. For example, the authorization server
           can engage the resource owner to assist in identifying the client and its origin.
         </t>
@@ -2748,12 +2772,12 @@
           The authorization server SHOULD enforce explicit resource owner authentication and
           provide the resource owner with information about the client and the requested
           authorization scope and lifetime. It is up to the resource owner to review the
-          information in the context of the current client, and authorize or deny the request.
+          information in the context of the current client and to authorize or deny the request.
         </t>
         <t>
           The authorization server SHOULD NOT process repeated authorization requests
           automatically (without active resource owner interaction) without authenticating the
-          client or relying on other measures to ensure the repeated request comes from the
+          client or relying on other measures to ensure that the repeated request comes from the
           original client and not an impersonator.
         </t>
       </section>
@@ -2778,7 +2802,7 @@
         <t>
           The client SHOULD request access tokens with the minimal scope necessary. The
           authorization server SHOULD take the client identity into account when choosing how
-          to honor the requested scope, and MAY issue an access token with a less rights than
+          to honor the requested scope and MAY issue an access token with less rights than
           requested.
         </t>
         <t>
@@ -2835,7 +2859,7 @@
           redirection endpoint MUST require the use of TLS.
         </t>
         <t>
-          Authorization codes MUST be short lived and single use. If the authorization server
+          Authorization codes MUST be short lived and single-use. If the authorization server
           observes multiple attempts to exchange an authorization code for an access token, the
           authorization server SHOULD attempt to revoke all access tokens already granted based on
           the compromised authorization code.
@@ -2857,7 +2881,7 @@
         <t>
           An attacker can create an account at a legitimate client and initiate the authorization
           flow. When the attacker's user-agent is sent to the authorization server to grant access,
-          the attacker grabs the authorization URI provided by the legitimate client, and replaces
+          the attacker grabs the authorization URI provided by the legitimate client and replaces
           the client's redirection URI with a URI under the control of the attacker. The attacker
           then tricks the victim into following the manipulated link to authorize access to the
           legitimate client.
@@ -2885,18 +2909,18 @@
       <section title='Resource Owner Password Credentials'>
         <t>
           The resource owner password credentials grant type is often used for legacy or migration
-          reasons. It reduces the overall risk of storing username and password by the client, but
+          reasons. It reduces the overall risk of storing usernames and passwords by the client but
           does not eliminate the need to expose highly privileged credentials to the client.
         </t>
         <t>
           This grant type carries a higher risk than other grant types because it maintains the
-          password anti-pattern this protocol seeks to avoid. The client could abuse the password
-          or the password could unintentionally be disclosed to an attacker (e.g. via log files or
+          password anti-pattern this protocol seeks to avoid. The client could abuse the password,
+          or the password could unintentionally be disclosed to an attacker (e.g., via log files or
           other records kept by the client).
         </t>
         <t>
           Additionally, because the resource owner does not have control over the authorization
-          process (the resource owner involvement ends when it hands over its credentials to the
+          process (the resource owner's involvement ends when it hands over its credentials to the
           client), the client can obtain access tokens with a broader scope than desired by the
           resource owner. The authorization server should consider the scope and lifetime of
           access tokens issued via this grant type.
@@ -2914,22 +2938,23 @@
         </t>
         <t>
           The <spanx style='verb'>state</spanx> and <spanx style='verb'>scope</spanx> parameters
-          SHOULD NOT include sensitive client or resource owner information in plain text as they
+          SHOULD NOT include sensitive client or resource owner information in plain text, as they
           can be transmitted over insecure channels or stored insecurely.
         </t>
       </section>
 
-      <section title='Endpoints Authenticity'>
+      <section title='Ensuring Endpoint Authenticity'>
+
         <t>
           In order to prevent man-in-the-middle attacks, the authorization server MUST require the
           use of TLS with server authentication as defined by <xref target='RFC2818' /> for
           any request sent to the authorization and token endpoints. The client MUST validate the
-          authorization server's TLS certificate as defined by <xref target='RFC6125' />, and in
+          authorization server's TLS certificate as defined by <xref target='RFC6125' /> and in
           accordance with its requirements for server identity authentication.
         </t>
       </section>
 
-      <section title='Credentials Guessing Attacks' anchor='anthropy'>
+      <section title='Credentials-Guessing Attacks' anchor='anthropy'>
         <t>
           The authorization server MUST prevent attackers from guessing access tokens,
           authorization codes, refresh tokens, resource owner passwords, and client credentials.
@@ -2955,7 +2980,7 @@
         </t>
         <t>
           Service providers should attempt to educate end-users about the risks phishing attacks
-          pose, and should provide mechanisms that make it easy for end-users to confirm the
+          pose and should provide mechanisms that make it easy for end-users to confirm the
           authenticity of their sites. Client developers should consider the security implications
           of how they interact with the user-agent (e.g., external, embedded), and the ability of
           the end-user to verify the authenticity of the authorization server.
@@ -2969,21 +2994,21 @@
       <section title='Cross-Site Request Forgery' anchor='CSRF'>
         <t>
           Cross-site request forgery (CSRF) is an exploit in which an attacker causes the
-          user-agent of a victim end-user to follow a malicious URI (e.g. provided to the
+          user-agent of a victim end-user to follow a malicious URI (e.g., provided to the
           user-agent as a misleading link, image, or redirection) to a trusting server (usually
           established via the presence of a valid session cookie).
         </t>
         <t>
-          A CSRF attack against the client's redirection URI allows an attacker to inject their own
+          A CSRF attack against the client's redirection URI allows an attacker to inject its own
           authorization code or access token, which can result in the client using an access token
-          associated with the attacker's protected resources rather than the victim's (e.g. save
+          associated with the attacker's protected resources rather than the victim's (e.g., save
           the victim's bank account information to a protected resource controlled by the
           attacker).
         </t>
         <t>
           The client MUST implement CSRF protection for its redirection URI. This is typically
           accomplished by requiring any request sent to the redirection URI endpoint to include a
-          value that binds the request to the user-agent's authenticated state (e.g. a hash of the
+          value that binds the request to the user-agent's authenticated state (e.g., a hash of the
           session cookie used to authenticate the user-agent). The client SHOULD utilize the
           <spanx style='verb'>state</spanx> request parameter to deliver this value to the
           authorization server when making an authorization request.
@@ -2993,9 +3018,9 @@
           redirects the end-user's user-agent back to the client with the required binding value
           contained in the <spanx style='verb'>state</spanx> parameter. The binding value enables
           the client to verify the validity of the request by matching the binding value to the
-          user-agent's authenticated state. The binding value used for CSRF protection MUST contain
+          user&nbhy;agent's authenticated state. The binding value used for CSRF protection MUST contain
           a non-guessable value (as described in <xref target='anthropy' />), and the user-agent's
-          authenticated state (e.g. session cookie, HTML5 local storage) MUST be kept in a location
+          authenticated state (e.g., session cookie, HTML5 local storage) MUST be kept in a location
           accessible only to the client and the user-agent (i.e., protected by same-origin policy).
         </t>
         <t>
@@ -3004,7 +3029,7 @@
           alerting the end-user.
         </t>
         <t>
-          The authorization server MUST implement CSRF protection for its authorization endpoint,
+          The authorization server MUST implement CSRF protection for its authorization endpoint
           and ensure that a malicious client cannot obtain authorization without the awareness and
           explicit consent of the resource owner.
         </t>
@@ -3019,7 +3044,7 @@
           page. When an end-user clicks a misleading visible button, the end-user is actually
           clicking an invisible button on the authorization page (such as an "Authorize" button).
           This allows an attacker to trick a resource owner into granting its client access without
-          their knowledge.
+          the end-user's knowledge.
         </t>
         <t>
           To prevent this form of attack, native applications SHOULD use external browsers instead
@@ -3028,7 +3053,7 @@
           using the (non-standard) <spanx style='verb'>x-frame-options</spanx> header. This header
           can have two values, <spanx style='verb'>deny</spanx> and
           <spanx style='verb'>sameorigin</spanx>, which will block any framing, or framing by sites
-          with a different origin, respectively. For older browsers, JavaScript framebusting
+          with a different origin, respectively. For older browsers, JavaScript frame-busting
           techniques can be used but may not be effective in all browsers.
         </t>
       </section>
@@ -3038,26 +3063,27 @@
           A code injection attack occurs when an input or otherwise external variable is used by an
           application unsanitized and causes modification to the application logic. This may allow
           an attacker to gain access to the application device or its data, cause denial of
-          service, or a wide range of malicious side-effects.
+          service, or introduce a wide range of malicious side-effects.
         </t>
         <t>
-          The Authorization server and client MUST sanitize (and validate when possible) any value
-          received, in particular, the value of the <spanx style='verb'>state</spanx> and
+          The authorization server and client MUST sanitize (and validate when possible) any value
+          received -- in particular, the value of the <spanx style='verb'>state</spanx> and
           <spanx style='verb'>redirect_uri</spanx> parameters.
         </t>
       </section>
 
       <section title='Open Redirectors' anchor='open-redirect'>
         <t>
-          The authorization server authorization endpoint and the client redirection endpoint can
+          The authorization server, authorization endpoint, and client redirection endpoint can
           be improperly configured and operate as open redirectors. An open redirector is an
           endpoint using a parameter to automatically redirect a user-agent to the location
           specified by the parameter value without any validation.
         </t>
         <t>
           Open redirectors can be used in phishing attacks, or by an attacker to get end-users to
-          visit malicious sites by making the URI's authority look like a familiar and trusted
-          destination. In addition, if the authorization server allows the client to register only
+          visit malicious sites by using the URI authority component of a
+          familiar and trusted destination.
+ In addition, if the authorization server allows the client to register only
           part of the redirection URI, an attacker can use an open redirector operated by the
           client to construct a redirection URI that will pass the authorization server validation
           but will send the authorization code or access token to an endpoint under the control of
@@ -3066,71 +3092,71 @@
       </section>
 
       <section title='Misuse of Access Token to Impersonate Resource Owner in Implicit Flow'
-	       anchor="ImplicitImpersonation">
-	<t>
-	  For public clients using implicit flows, this specification does not provide any
-	  method for the client to determine what client an access token was issued to.
-	</t>
-	<t>
-	  A Resource Owner may willingly delegate access to a resource by granting an access token
-          to an attacker's malicious client.  This may be due to Phishing or some other pretext.
-	  An attacker may also steal a token via some other mechanism.
-	  An attacker may then attempt to impersonate the resource owner by providing the
-	  access token to a legitimate public client.
-	</t>
-	<t>
-	  In the implicit flow (response_type=token), the attacker can easily switch the token
-	  in the response from the authorization server,
-	  replacing the real access_token with the one previously issued to the attacker.
-	</t>
-	<t>
-	  Servers communicating with native applications that rely on being passed
-	  an access token in the back channel to identify the user of the client may
-	  be similarly compromised by an attacker creating a compromised application
-	  that can inject arbitrary stolen access tokens.
-	</t>
+               anchor="ImplicitImpersonation">
         <t>
-	  Any public client that makes the assumption that only the resource owner
-	  can present them with a valid access token for the resource
-	  is vulnerable to this attack.
+          For public clients using implicit flows, this specification does not provide any
+          method for the client to determine what client an access token was issued to.
         </t>
-	<t>
-	  This attack may expose information about the resource owner
-	  at the legitimate client to the attacker (malicious client).
-	  This will also allow the attacker to perform operations
-	  at the legitimate client with the same permissions as the resource owner
-	  who originally granted the access token or authorization code.
-	</t>
-	<t>
-	  Authenticating Resource Owners to clients is out of scope for this specification.
-	  Any specification that uses the authorization process as a form of
-	  delegated end-user authentication to the client (e.g. third-party sign-in service)
-	  MUST NOT use the implicit flow without additional security mechanisms
-	  such as audience restricting the access token
-	  that enable the client to determine if the access token was issued for its use.
-	</t>
+        <t>
+          A resource owner may willingly delegate access to a resource by granting an access token
+          to an attacker's malicious client.  This may be due to phishing or some other pretext.
+          An attacker may also steal a token via some other mechanism.   
+          An attacker may then attempt to impersonate the resource owner by providing the 
+          access token to a legitimate public client.
+        </t>
+        <t>
+          In the implicit flow (response_type=token), the attacker can easily switch the token
+          in the response from the authorization server,
+          replacing the real access token with the one previously issued to the attacker.
+        </t>
+        <t>
+          Servers communicating with native applications that rely on being passed
+          an access token in the back channel to identify the user of the client may 
+          be similarly compromised by an attacker creating a compromised application
+          that can inject arbitrary stolen access tokens.
+        </t>
+        <t>
+          Any public client that makes the assumption that only the resource owner
+          can present it with a valid access token for the resource
+          is vulnerable to this type of attack.
+        </t>
+        <t>
+          This type of attack may expose information about the resource owner
+          at the legitimate client to the attacker (malicious client).
+          This will also allow the attacker to perform operations
+          at the legitimate client with the same permissions as the resource owner
+          who originally granted the access token or authorization code.
+        </t>
+        <t>
+          Authenticating resource owners to clients is out of scope for this
+          specification. Any specification that uses the authorization process
+          as a form of delegated end-user authentication to the client (e.g.,
+          third-party sign-in service) MUST NOT use the implicit flow without
+          additional security mechanisms that would enable the client to
+          determine if the access token was issued for its use (e.g.,
+          audience-restricting the access token).
+        </t>
       </section>
 
     </section>
 
     <section title='IANA Considerations'>
 
-      <section title='OAuth Access Token Type Registry' anchor='type-registry'>
+      <section title='OAuth Access Token Types Registry' anchor='type-registry'>
         <t>
-          This specification establishes the OAuth access token type registry.
+          This specification establishes the OAuth Access Token Types registry.
         </t>
+
         <t>
           Access token types are registered with a Specification Required
-          (<xref target='RFC5226' />) after a two week review period on the [TBD]@ietf.org mailing
+          (<xref target='RFC5226' />) after a two-week review period on the oauth-ext-review@ietf.org mailing
           list, on the advice of one or more Designated Experts. However, to allow for the
           allocation of values prior to publication, the Designated Expert(s) may approve
           registration once they are satisfied that such a specification will be published.
         </t>
         <t>
-          Registration requests must be sent to the [TBD]@ietf.org mailing list for review and
+          Registration requests must be sent to the oauth-ext-review@ietf.org mailing list for review and
           comment, with an appropriate subject (e.g., "Request for access token type: example").
-          [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-          with the IESG and IANA. Suggested name: oauth-ext-review. ]]
         </t>
         <t>
           Within the review period, the Designated Expert(s) will either approve or
@@ -3139,7 +3165,7 @@
           the request successful.
         </t>
         <t>
-          IANA must only accept registry updates from the Designated Expert(s), and should direct
+          IANA must only accept registry updates from the Designated Expert(s) and should direct
           all requests for registration to the review mailing list.
         </t>
 
@@ -3154,25 +3180,25 @@
                 <vspace />
                 Additional response parameters returned together with the
                 <spanx style='verb'>access_token</spanx> parameter. New parameters MUST be
-                separately registered in the OAuth parameters registry as described by
+                separately registered in the OAuth Parameters registry as described by
                 <xref target='parameters-registry' />.
               </t>
               <t hangText='HTTP Authentication Scheme(s):'>
                 <vspace />
                 The HTTP authentication scheme name(s), if any, used to authenticate protected
-                resources requests using access tokens of this type.
+                resource requests using access tokens of this type.
               </t>
               <t hangText='Change controller:'>
                 <vspace />
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
+                For Standards Track RFCs, state "IETF". For others, give the name of the
+                responsible party. Other details (e.g., postal address, email address, home page
                 URI) may also be included.
               </t>
               <t hangText='Specification document(s):'>
                 <vspace />
-                Reference to the document that specifies the parameter, preferably including a URI that
-                can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                Reference to the document(s) that specify the parameter, preferably including a URI that
+                can be used to retrieve a copy of the document(s). An indication of the relevant
+                sections may also be included but is not required.
               </t>
             </list>
           </t>
@@ -3182,22 +3208,20 @@
 
       <section title='OAuth Parameters Registry' anchor='parameters-registry'>
         <t>
-          This specification establishes the OAuth parameters registry.
+          This specification establishes the OAuth Parameters registry.
         </t>
         <t>
           Additional parameters for inclusion in the authorization endpoint request, the
           authorization endpoint response, the token endpoint request, or the token endpoint
           response are registered with a Specification Required
-          (<xref target='RFC5226' />) after a two week review period on the [TBD]@ietf.org mailing
+          (<xref target='RFC5226' />) after a two-week review period on the oauth-ext-review@ietf.org mailing
           list, on the advice of one or more Designated Experts. However, to allow for the
           allocation of values prior to publication, the Designated Expert(s) may approve
           registration once they are satisfied that such a specification will be published.
         </t>
         <t>
-          Registration requests must be sent to the [TBD]@ietf.org mailing list for review and
-          comment, with an appropriate subject (e.g., "Request for parameter: example").
-          [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-          with the IESG and IANA. Suggested name: oauth-ext-review. ]]
+          Registration requests must be sent to the oauth-ext-review@ietf.org mailing list for review and
+          comment, with an appropriate subject (e.g., "Request for parameter: example").          
         </t>
         <t>
           Within the review period, the Designated Expert(s) will either approve or
@@ -3206,7 +3230,7 @@
           the request successful.
         </t>
         <t>
-          IANA must only accept registry updates from the Designated Expert(s), and should direct
+          IANA must only accept registry updates from the Designated Expert(s) and should direct
           all requests for registration to the review mailing list.
         </t>
 
@@ -3219,20 +3243,20 @@
               </t>
               <t hangText='Parameter usage location:'>
                 <vspace />
-                The location(s) where parameter can be used. The possible locations are:
+                The location(s) where parameter can be used. The possible locations are
                 authorization request, authorization response, token request, or token response.
               </t>
               <t hangText='Change controller:'>
                 <vspace />
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
+                For Standards Track RFCs, state "IETF". For others, give the name of the
+                responsible party. Other details (e.g., postal address, email address, home page
                 URI) may also be included.
               </t>
               <t hangText='Specification document(s):'>
                 <vspace />
-                Reference to the document that specifies the parameter, preferably including a URI that
-                can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                Reference to the document(s) that specify the parameter, preferably including a URI that
+                can be used to retrieve a copy of the document(s). An indication of the relevant
+                sections may also be included but is not required.
               </t>
             </list>
           </t>
@@ -3240,9 +3264,9 @@
 
         <section title='Initial Registry Contents'>
           <t>
-            The OAuth Parameters Registry's initial contents are:
+            The OAuth Parameters registry's initial contents are:
           </t>
-          <t>
+          <t>  <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
                 Parameter name: client_id
@@ -3254,7 +3278,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3270,7 +3294,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3286,7 +3310,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3302,7 +3326,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3319,7 +3343,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3335,7 +3359,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3351,7 +3375,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3367,7 +3391,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3383,7 +3407,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3399,7 +3423,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3415,7 +3439,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3431,7 +3455,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3447,7 +3471,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3463,7 +3487,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3479,7 +3503,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3495,31 +3519,30 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
         </section>
+       <?rfc subcompact="no"?>
 
       </section>
 
-      <section title='OAuth Authorization Endpoint Response Type Registry' anchor='response-type-registry'>
+      <section title='OAuth Authorization Endpoint Response Types Registry' anchor='response-type-registry'>
         <t>
-          This specification establishes the OAuth authorization endpoint response type registry.
+          This specification establishes the OAuth Authorization Endpoint Response Types registry.
         </t>
         <t>
-            Additional response type for use with the authorization endpoint are registered with a
-            Specification Required (<xref target='RFC5226' />) after a two week review period on
-            the [TBD]@ietf.org mailing list, on the advice of one or more Designated Experts.
+            Additional response types for use with the authorization endpoint are registered with a
+            Specification Required (<xref target='RFC5226' />) after a two-week review period on
+            the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.
             However, to allow for the allocation of values prior to publication, the Designated
             Expert(s) may approve registration once they are satisfied that such a specification
             will be published.
           </t>
           <t>
-            Registration requests must be sent to the [TBD]@ietf.org mailing list for review and
+            Registration requests must be sent to the oauth-ext-review@ietf.org mailing list for review and
             comment, with an appropriate subject (e.g., "Request for response type: example").
-            [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-            with the IESG and IANA. Suggested name: oauth-ext-review. ]]
           </t>
           <t>
             Within the review period, the Designated Expert(s) will either approve or
@@ -3528,7 +3551,7 @@
             the request successful.
           </t>
           <t>
-            IANA must only accept registry updates from the Designated Expert(s), and should direct
+            IANA must only accept registry updates from the Designated Expert(s) and should direct
             all requests for registration to the review mailing list.
           </t>
 
@@ -3542,15 +3565,15 @@
               </t>
               <t hangText='Change controller:'>
                 <vspace />
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
+                For Standards Track RFCs, state "IETF". For others, give the name of the
+                responsible party. Other details (e.g., postal address, email address, home page
                 URI) may also be included.
               </t>
               <t hangText='Specification document(s):'>
                 <vspace />
-                Reference to the document that specifies the type, preferably including a URI that
-                can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                Reference to the document(s) that specify the type, preferably including a URI that
+                can be used to retrieve a copy of the document(s). An indication of the relevant
+                sections may also be included but is not required.
               </t>
             </list>
           </t>
@@ -3558,9 +3581,9 @@
 
         <section title='Initial Registry Contents'>
           <t>
-            The OAuth Authorization Endpoint Response Type Registry's initial contents are:
+            The OAuth Authorization Endpoint Response Types registry's initial contents are:
           </t>
-          <t>
+          <t>  <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
                 Response type name: code
@@ -3569,7 +3592,7 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
@@ -3582,31 +3605,30 @@
                 Change controller: IETF
               </t>
               <t>
-                Specification document(s): [[ this document ]]
+                Specification document(s): RFC 6749
               </t>
             </list>
           </t>
         </section>
+       <?rfc subcompact="no"?>
 
       </section>
 
       <section title='OAuth Extensions Error Registry' anchor='error-registry'>
         <t>
-          This specification establishes the OAuth extensions error registry.
+          This specification establishes the OAuth Extensions Error registry.
         </t>
         <t>
-          Additional error codes used together with other protocol extensions (i.e. extension grant
+          Additional error codes used together with other protocol extensions (i.e., extension grant
           types, access token types, or extension parameters) are registered with a Specification
-          Required (<xref target='RFC5226' />) after a two week review period on the
-          [TBD]@ietf.org mailing list, on the advice of one or more Designated Experts. However, to
+          Required (<xref target='RFC5226' />) after a two-week review period on the
+          oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts. However, to
           allow for the allocation of values prior to publication, the Designated Expert(s) may
           approve registration once they are satisfied that such a specification will be published.
         </t>
         <t>
-          Registration requests must be sent to the [TBD]@ietf.org mailing list for review and
+          Registration requests must be sent to the oauth-ext-review@ietf.org mailing list for review and
           comment, with an appropriate subject (e.g., "Request for error code: example").
-          [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
-          with the IESG and IANA. Suggested name: oauth-ext-review. ]]
         </t>
         <t>
           Within the review period, the Designated Expert(s) will either approve or
@@ -3615,7 +3637,7 @@
           the request successful.
         </t>
         <t>
-          IANA must only accept registry updates from the Designated Expert(s), and should direct
+          IANA must only accept registry updates from the Designated Expert(s) and should direct
           all requests for registration to the review mailing list.
         </t>
 
@@ -3625,33 +3647,34 @@
               <t hangText='Error name:'>
                 <vspace />
                 The name requested (e.g., "example").
-		Values for the error name MUST NOT include
-		characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+                Values for the error name MUST NOT include
+                characters outside the set %x20-21 / %x23-5B / %x5D-7E.
               </t>
               <t hangText='Error usage location:'>
                 <vspace />
-                The location(s) where the error can be used. The possible locations are:
+                The location(s) where the error can be used. The possible locations are
                 authorization code grant error response (<xref target='code-authz-error' />),
                 implicit grant error response (<xref target='implicit-authz-error' />),
-		token error response (<xref target='token-errors' />), or
-		resource access error response (<xref target='resource-errors' />).
+                token error response (<xref target='token-errors' />), or
+                resource access error response (<xref target='resource-errors' />).
               </t>
               <t hangText='Related protocol extension:'>
                 <vspace />
-                The name of the extension grant type, access token type, or extension parameter,
+                The name of the extension grant type, access token type, or
+extension parameter that
                 the error code is used in conjunction with.
               </t>
               <t hangText='Change controller:'>
                 <vspace />
-                For standards-track RFCs, state "IETF". For others, give the name of the
-                responsible party. Other details (e.g., postal address, e-mail address, home page
+                For Standards Track RFCs, state "IETF". For others, give the name of the
+                responsible party. Other details (e.g., postal address, email address, home page
                 URI) may also be included.
               </t>
               <t hangText='Specification document(s):'>
                 <vspace />
-                Reference to the document that specifies the error code, preferably including a URI
-                that can be used to retrieve a copy of the document. An indication of the relevant
-                sections may also be included, but is not required.
+                Reference to the document(s) that specify the error code, preferably including a URI
+                that can be used to retrieve a copy of the document(s). An indication of the relevant
+                sections may also be included but is not required.
               </t>
             </list>
           </t>
@@ -3665,6 +3688,7 @@
 
   <back>
 
+  <?rfc rfcedstyle="no"?>
     <references title='Normative References'>
 
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml' ?>
@@ -3680,18 +3704,61 @@
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml' ?>
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5246.xml' ?>
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6125.xml' ?>
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml4/reference.W3C.REC-html401-19991224.xml' ?>
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml4/reference.W3C.REC-xml-20081126.xml' ?>
+
+<reference anchor='W3C.REC-html401-19991224'
+           target='http://www.w3.org/TR/1999/REC-html401-19991224'>
+<front>
+<title>HTML 4.01 Specification</title>
+<author initials='D.' surname='Raggett' fullname='David Raggett'>
+    <organization />
+</author>
+<author initials='A.' surname='Le Hors' fullname='Arnaud Le Hors'>
+    <organization />
+</author>
+<author initials='I.' surname='Jacobs' fullname='Ian Jacobs'>
+    <organization />
+</author>
+<date month='December' year='1999' />
+</front>
+<seriesInfo name='World Wide Web Consortium Recommendation'
+value='REC-html401-19991224' />
+</reference>
+
+<reference anchor='W3C.REC-xml-20081126'
+           target='http://www.w3.org/TR/2008/REC-xml-20081126'>
+<front>
+<title>Extensible Markup Language (XML) 1.0 (Fifth Edition)</title>
+<author initials='T.' surname='Bray' fullname='Tim Bray'>
+    <organization />
+</author>
+<author initials='J.' surname='Paoli' fullname='Jean Paoli'>
+    <organization />
+</author>
+<author initials='C.' surname='Sperberg-McQueen'
+fullname='C. M. Sperberg-McQueen'>
+    <organization />
+</author>
+<author initials='E.' surname='Maler' fullname='Eve Maler'>
+    <organization />
+</author>
+<author initials='F.' surname='Yergeau' fullname='Francois Yergeau'>
+    <organization />
+</author>
+<date month='November' year='2008' />
+</front>
+<seriesInfo name='World Wide Web Consortium Recommendation'
+value='REC-xml-20081126' />
+</reference>
 
       <reference anchor="USASCII">
-	<front>
-	  <title>Coded Character Set -- 7-bit American Standard Code for Information Interchange</title>
-	  <author>
-	    <organization>American National Standards Institute</organization>
-	  </author>
-	  <date year="1986"/>
-	</front>
-	<seriesInfo name="ANSI" value="X3.4"/>
+        <front>
+          <title>Coded Character Set -- 7-bit American Standard Code for Information Interchange</title>
+          <author>
+            <organization>American National Standards Institute</organization>
+          </author>
+          <date year="1986"/>
+        </front>
+        <seriesInfo name="ANSI" value="X3.4"/>
       </reference>
 
     </references>
@@ -3699,46 +3766,103 @@
     <references title='Informative References'>
 
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5849.xml' ?>
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-v2-bearer-22.xml' ?>
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-saml2-bearer-13.xml' ?>
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-v2-http-mac-01.xml' ?>
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-v2-threatmodel-06.xml' ?>
 
-      <reference anchor="I-D.draft-hardt-oauth-01">
+<reference anchor='RFC6750'>
+<front>
+<title>The OAuth 2.0 Authorization Framework: Bearer Token Usage</title>
+<author initials='M' surname='Jones' fullname='Michael Jones'>
+    <organization />
+</author>
+<author initials='D' surname='Hardt' fullname='Dick Hardt'>
+    <organization />
+</author>
+<date month='October' year='2012' />
+</front>
+<seriesInfo name='RFC' value='6750' />
+</reference>
+
+<!-- draft-ietf-oauth-saml2-bearer ("I-D Exists") -->
+<reference anchor='OAuth-SAML2'>
+<front>
+<title>SAML 2.0 Bearer Assertion Profiles for OAuth 2.0</title>
+<author initials='B' surname='Campbell' fullname='Brian Campbell'>
+    <organization />
+</author>
+<author initials='C' surname='Mortimore' fullname='Chuck Mortimore'>
+    <organization />
+</author>
+<date month='July' year='2012' />
+</front>
+<seriesInfo name='Work in' value='Progress' />
+</reference>
+
+<!-- draft-ietf-oauth-v2-http-mac (Expired) -->
+<reference anchor='OAuth-HTTP-MAC'>
+<front>
+<title>HTTP Authentication: MAC Access Authentication</title>
+<author initials='E' surname='Hammer-Lahav' fullname='Eran Hammer-Lahav' role="editor">
+    <organization />
+</author>
+<date month='February' year='2012' />
+</front>
+<seriesInfo name='Work in' value='Progress' />
+</reference>
+
+<!-- draft-ietf-oauth-v2-threatmodel ("IESG Evaluation") -->
+<reference anchor='OAuth-THREATMODEL'>
+<front>
+<title>OAuth 2.0 Threat Model and Security Considerations</title>
+<author initials='T' surname='Lodderstedt' fullname='Torsten Lodderstedt' role="editor">
+    <organization />
+</author>
+<author initials='M' surname='McGloin' fullname='Mark McGloin'>
+    <organization />
+</author>
+<author initials='P' surname='Hunt' fullname='Phil Hunt'>
+    <organization />
+</author>
+<date month='August' year='2012' />
+</front>
+<seriesInfo name='Work in' value='Progress' />
+</reference>
+
+<!-- draft-hardt-oauth (Expired) -->
+      <reference anchor="OAuth-WRAP">
         <front>
           <title>OAuth Web Resource Authorization Profiles</title>
           <author initials="D" surname="Hardt" fullname="Dick Hardt" role="editor" />
           <author initials="A" surname="Tom" fullname="Allen Tom" />
           <author initials="B" surname="Eaton" fullname="Brian Eaton" />
           <author initials="Y" surname="Goland" fullname="Yaron Goland" />
-          <date month="January" day="15" year="2010" />
+          <date month="January" year="2010" />
         </front>
-        <format target="http://tools.ietf.org/html/draft-hardt-oauth-01" type="HTML" />
+       <seriesInfo name='Work in' value='Progress' />
       </reference>
 
     </references>
+  <?rfc rfcedstyle="yes"?>
 
     <section title="Augmented Backus-Naur Form (ABNF) Syntax">
       <t>
-	This section provides Augmented Backus-Naur Form (ABNF) syntax
-	descriptions for the elements defined in this specification
-	using the notation of <xref target='RFC5234' />.
-	The ABNF below is defined in terms of
-	Unicode code points <xref target="W3C.REC-xml-20081126"/>;
-	these characters are typically encoded in UTF-8.
-	Elements are presented in the order first defined.
+        This section provides Augmented Backus-Naur Form (ABNF) syntax
+        descriptions for the elements defined in this specification
+        using the notation of <xref target='RFC5234' />.
+        The ABNF below is defined in terms of
+        Unicode code points <xref target="W3C.REC-xml-20081126"/>;
+        these characters are typically encoded in UTF-8.
+        Elements are presented in the order first defined.
       </t>
       <t>
-	Some of the definitions that follow use the
-	<spanx style='verb'>URI-reference</spanx>
-	definition from <xref target="RFC3986"/>.
+        Some of the definitions that follow use the
+        <spanx style='verb'>URI-reference</spanx>
+        definition from <xref target="RFC3986"/>.
       </t>
 
       <figure>
-	<preamble>
-	  Some of the definitions that follow use these common definitions:
-	</preamble>
-	<artwork><![CDATA[
+        <preamble>
+          Some of the definitions that follow use these common definitions:
+        </preamble>
+        <artwork><![CDATA[
   VSCHAR     = %x20-7E
   NQCHAR     = %x21 / %x23-5B / %x5D-7E
   NQSCHAR    = %x20-21 / %x23-5B / %x5D-7E
@@ -3747,318 +3871,322 @@
 ]]></artwork>
       </figure>
       <t>
-	(The UNICODECHARNOCRLF definition is based upon the Char definition in
-	Section 2.2 of <xref target="W3C.REC-xml-20081126"/>, but omitting the
-	Carriage Return and Linefeed characters.)
+        (The UNICODECHARNOCRLF definition is based upon the Char definition in
+        Section 2.2 of <xref target="W3C.REC-xml-20081126"/>, but omitting the
+        Carriage Return and Linefeed characters.)
       </t>
 
       <section title='"client_id" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>client_id</spanx> element is defined in
-	    <xref target="client-password"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>client_id</spanx> element is defined in
+            <xref target="client-password"/>:
+          </preamble>
+          <artwork><![CDATA[
   client-id     = *VSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"client_secret" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>client_secret</spanx> element is defined in
-	    <xref target="client-password"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>client_secret</spanx> element is defined in
+            <xref target="client-password"/>:
+          </preamble>
+          <artwork><![CDATA[
   client-secret = *VSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"response_type" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>response_type</spanx> element is defined in
-	    <xref target="response-type"/> and
-	    <xref target="response-type-ext"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>response_type</spanx> element is defined in
+            Sections <xref target="response-type" format="counter"/> and
+            <xref target="response-type-ext" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   response-type = response-name *( SP response-name )
   response-name = 1*response-char
   response-char = "_" / DIGIT / ALPHA
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"scope" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>scope</spanx> element is defined in
-	    <xref target="scope"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>scope</spanx> element is defined in
+            <xref target="scope"/>:
+          </preamble>
+          <artwork><![CDATA[
   scope       = scope-token *( SP scope-token )
   scope-token = 1*NQCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"state" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>state</spanx> element is defined in
-	    <xref target="code-authz-req"/>,
-	    <xref target="code-authz-resp"/>,
-	    <xref target="code-authz-error"/>,
-	    <xref target="implicit-authz-req"/>,
-	    <xref target="implicit-authz-resp"/>, and
-	    <xref target="implicit-authz-error"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>state</spanx> element is defined in
+            Sections <xref target="code-authz-req" format="counter"/>,
+            <xref target="code-authz-resp" format="counter"/>,
+            <xref target="code-authz-error" format="counter"/>,
+            <xref target="implicit-authz-req" format="counter"/>,
+            <xref target="implicit-authz-resp" format="counter"/>, and
+            <xref target="implicit-authz-error" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   state      = 1*VSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"redirect_uri" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>redirect_uri</spanx> element is defined in
-	    <xref target="code-authz-req"/>,
-	    <xref target="token-req"/>, and
-	    <xref target="implicit-authz-req"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>redirect_uri</spanx> element is defined in
+            Sections <xref target="code-authz-req" format="counter"/>,
+            <xref target="token-req" format="counter"/>,
+            and&nbsp;<xref target="implicit-authz-req" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   redirect-uri      = URI-reference
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"error" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>error</spanx> element is defined in
-	    <xref target="code-authz-error"/>,
-	    <xref target='implicit-authz-error'/>,
-	    <xref target='token-errors'/>,
-	    <xref target='resource-errors'/>, and
-	    <xref target="new-errors"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>error</spanx> element is defined in
+            Sections <xref target="code-authz-error" format="counter"/>,
+            <xref target='implicit-authz-error' format="counter"/>,
+            <xref target='token-errors' format="counter"/>,
+            <xref target='resource-errors' format="counter"/>, and
+            <xref target="new-errors" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   error             = 1*NQSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"error_description" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>error_description</spanx> element is defined in
-	    <xref target="code-authz-error"/>,
-	    <xref target='implicit-authz-error'/>,
-	    <xref target='token-errors'/>, and
-	    <xref target='resource-errors'/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>error_description</spanx> element is
+            defined in Sections
+            <xref target="code-authz-error" format="counter"/>,
+            <xref target='implicit-authz-error' format="counter"/>,
+            <xref target='token-errors' format="counter"/>, and
+            <xref target='resource-errors' format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   error-description = 1*NQSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"error_uri" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>error_uri</spanx> element is defined in
-	    <xref target="code-authz-error"/>,
-	    <xref target='implicit-authz-error'/>,
-	    <xref target='token-errors'/>, and
-	    <xref target='resource-errors'/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>error_uri</spanx> element is defined in
+            Sections <xref target="code-authz-error" format="counter"/>,
+            <xref target='implicit-authz-error' format="counter"/>,
+            <xref target='token-errors' format="counter"/>,
+            and&nbsp;<xref target='resource-errors' format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   error-uri         = URI-reference
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"grant_type" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>grant_type</spanx> element is defined in
-	    <xref target="token-req"/>,
-	    <xref target='password-tok-req'/>,
-	    <xref target='client-req'/>,
-	    <xref target="token-refresh"/>, and
-	    <xref target='ext-grant'/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>grant_type</spanx> element is defined in
+            Sections <xref target="token-req" format="counter"/>,
+            <xref target='password-tok-req' format="counter"/>,
+            <xref target='client-req' format="counter"/>,
+            <xref target='ext-grant' format="counter"/>, and
+            <xref target="token-refresh" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   grant-type = grant-name / URI-reference
   grant-name = 1*name-char
   name-char  = "-" / "." / "_" / DIGIT / ALPHA
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"code" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>code</spanx> element is defined in
-	    <xref target="token-req"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>code</spanx> element is defined in
+            <xref target="token-req"/>:
+          </preamble>
+          <artwork><![CDATA[
   code       = 1*VSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"access_token" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>access_token</spanx> element is defined in
-	    <xref target="implicit-authz-resp"/> and
-	    <xref target="token-response"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>access_token</spanx> element is defined in
+            Sections <xref target="implicit-authz-resp" format="counter"/> and
+            <xref target="token-response" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   access-token = 1*VSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"token_type" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>token_type</spanx> element is defined in
-	    <xref target="implicit-authz-resp"/>,
-	    <xref target="token-response"/>, and
-	    <xref target="new-types"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>token_type</spanx> element is defined in
+            Sections <xref target="implicit-authz-resp" format="counter"/>,
+            <xref target="token-response" format="counter"/>, and
+            <xref target="new-types" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   token-type = type-name / URI-reference
   type-name  = 1*name-char
   name-char  = "-" / "." / "_" / DIGIT / ALPHA
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"expires_in" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>expires_in</spanx> element is defined in
-	    <xref target="implicit-authz-resp"/> and
-	    <xref target="token-response"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>expires_in</spanx> element is defined in
+            Sections <xref target="implicit-authz-resp" format="counter"/> and
+            <xref target="token-response" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   expires-in = 1*DIGIT
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"username" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>username</spanx> element is defined in
-	    <xref target="password-tok-req"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>username</spanx> element is defined in
+            <xref target="password-tok-req"/>:
+          </preamble>
+          <artwork><![CDATA[
   username = *UNICODECHARNOCRLF
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"password" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>password</spanx> element is defined in
-	    <xref target="password-tok-req"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>password</spanx> element is defined in
+            <xref target="password-tok-req"/>:
+          </preamble>
+          <artwork><![CDATA[
   password = *UNICODECHARNOCRLF
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='"refresh_token" Syntax'>
 
-	<figure>
-	  <preamble>
-	    The <spanx style='verb'>refresh_token</spanx> element is defined in
-	    <xref target="token-response"/> and
-	    <xref target="token-refresh"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The <spanx style='verb'>refresh_token</spanx> element is defined in
+            Sections <xref target="token-response" format="counter"/> and
+            <xref target="token-refresh" format="counter"/>:
+          </preamble>
+          <artwork><![CDATA[
   refresh-token = 1*VSCHAR
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
       <section title='Endpoint Parameter Syntax'>
 
-	<figure>
-	  <preamble>
-	    The syntax for new endpoint parameters is defined in
-	    <xref target="endpoint-params"/>:
-	  </preamble>
-	  <artwork><![CDATA[
+        <figure>
+          <preamble>
+            The syntax for new endpoint parameters is defined in
+            <xref target="endpoint-params"/>:
+          </preamble>
+          <artwork><![CDATA[
   param-name = 1*name-char
   name-char  = "-" / "." / "_" / DIGIT / ALPHA
 ]]></artwork>
-	</figure>
+        </figure>
       </section>
 
     </section>
 
     <section title="Use of application/x-www-form-urlencoded Media Type" anchor="urlencoded">
+
+
       <t>
-	At the time of publication of this specification, the
-	<spanx style='verb'>application/x-www-form-urlencoded</spanx>
-	media type was defined in Section 17.13.4 of
-	<xref target='W3C.REC-html401-19991224'/>, but not
-	registered in the IANA media types registry
-	(&lt;http://www.iana.org/assignments/media-types/index.html&gt;).
-	Furthermore, that definition is incomplete, as it does not
-	consider non-US-ASCII characters.
+        At the time of publication of this specification, the
+        <spanx style='verb'>application/x-www-form-urlencoded</spanx>
+        media type was defined in Section&nbsp;17.13.4 of
+        <xref target='W3C.REC-html401-19991224'/> but not
+        registered in the IANA MIME Media Types registry
+        (&lt;http://www.iana.org/assignments/media-types&gt;).
+        Furthermore, that definition is incomplete, as it does not
+        consider non-US-ASCII characters.
       </t>
       <t>
-	To address this shortcoming when generating payloads using
-	this media type, names and values MUST be encoded using the
-	UTF-8 character encoding scheme <xref target="RFC3629"/> first;
-	the resulting octet sequence then needs to be further encoded using
-	the escaping rules defined in <xref target='W3C.REC-html401-19991224'/>.
+        To address this shortcoming when generating payloads using
+        this media type, names and values MUST be encoded using the
+        UTF-8 character encoding scheme <xref target="RFC3629"/> first;
+        the resulting octet sequence then needs to be further encoded using
+        the escaping rules defined in <xref target='W3C.REC-html401-19991224'/>.
       </t>
       <t>
-	When parsing data from a payload using this media type, the
-	names and values resulting from reversing the name/value
-	encoding consequently need to be treated as octet sequences,
-	to be decoded using the UTF-8 character encoding scheme.
+        When parsing data from a payload using this media type, the
+        names and values resulting from reversing the name/value
+        encoding consequently need to be treated as octet sequences,
+        to be decoded using the UTF-8 character encoding scheme.
       </t>
       <t>
-	For example, the value consisting of the six Unicode code points
-	(1) U+0020 (SPACE), (2) U+0025 (PERCENT SIGN), (3) U+0026
-	(AMPERSAND), (4) U+002B (PLUS SIGN), (5) U+00A3 (POUND SIGN),
-	and (6) U+20AC (EURO SIGN) would be encoded into the octet
-	sequence below (using hexadecimal notation):
+        For example, the value consisting of the six Unicode code points
+        (1)&nbsp;U+0020 (SPACE), (2) U+0025 (PERCENT SIGN),
+        (3)&nbsp;U+&wj;0026&nbsp;(AMPERSAND), (4) U+002B (PLUS SIGN),
+        (5)&nbsp;U+&wj;00A3&nbsp;(POUND&nbsp;SIGN),
+        and (6) U+20AC (EURO SIGN) would be encoded into the octet
+        sequence below (using hexadecimal notation):
       </t>
       <figure><artwork><![CDATA[
   20 25 26 2B C2 A3 E2 82 AC
 ]]></artwork></figure>
       <t>
-	and then represented in the payload as:
+        and then represented in the payload as:
       </t>
       <figure><artwork><![CDATA[
   +%25%26%2B%C2%A3%E2%82%AC
@@ -4070,13 +4198,13 @@
         The initial OAuth 2.0 protocol specification was edited by David Recordon, based on two
         previous publications: the OAuth 1.0 community specification <xref target='RFC5849' />, and
         OAuth WRAP (OAuth Web Resource Authorization Profiles)
-        <xref target='I-D.draft-hardt-oauth-01' />.
-	Eran Hammer then edited the drafts through draft -26.
-	The Security Considerations section was drafted
+        <xref target='OAuth-WRAP' />. Eran Hammer then
+   edited many of the intermediate drafts that evolved into this RFC.
+        The Security Considerations section was drafted
         by Torsten Lodderstedt, Mark McGloin, Phil Hunt, Anthony Nadalin, and John Bradley.
-	The section on use of the application/x-www-form-urlencoded media type
-	was drafted by Julian Reschke.
-	The ABNF section was drafted by Michael B. Jones.
+        The section on use of the "application/x-www-form-urlencoded" media type
+        was drafted by Julian Reschke.
+        The ABNF section was drafted by Michael B. Jones.
       </t>
       <t>
         The OAuth 1.0 community specification was edited by Eran Hammer and authored by
@@ -4095,11 +4223,12 @@
         feedback, and wording that shaped and formed the final specification:
       </t>
       <t>
-        Michael Adams, Amanda Anganes, Andrew Arnott, Dirk Balfanz, Aiden Bell, John Bradley, Brian Campbell,
-        Scott Cantor, Marcos Caceres, Blaine Cook, Roger Crew, Brian Eaton, Wesley Eddy, Leah Culver,
-        Bill de hOra, Andre DeMarre, Brian Eaton, Wolter Eldering, Brian Ellin, Igor Faynberg,
+        Michael Adams, Amanda Anganes, Andrew Arnott, Dirk Balfanz, Aiden Bell,
+John Bradley, Marcos Caceres, Brian Campbell,
+        Scott Cantor, Blaine Cook, Roger Crew, Leah Culver,
+        Bill de hOra, Andre DeMarre, Brian Eaton, Wesley Eddy, Wolter Eldering, Brian Ellin, Igor Faynberg,
         George Fletcher, Tim Freeman, Luca Frosini, Evan Gilbert, Yaron Y. Goland, Brent Goldman,
-        Kristoffer Gronowski, Eran Hammer, Justin Hart, Dick Hardt, Craig Heath, Phil Hunt, Michael B. Jones,
+        Kristoffer Gronowski, Eran Hammer, Dick Hardt, Justin Hart, Craig Heath, Phil Hunt, Michael B. Jones,
         Terry Jones, John Kemp, Mark Kent, Raffi Krikorian, Chasen Le Hara, Rasmus Lerdorf,
         Torsten Lodderstedt, Hui-Lan Lu, Casey Lucas, Paul Madsen, Alastair Mair, Eve Maler,
         James Manger, Mark McGloin, Laurence Miao, William Mills, Chuck Mortimore, Anthony Nadalin,
@@ -4114,133 +4243,6 @@
         Peter Saint-Andre, and Stephen Farrell.
       </t>
     </section>
-
-    <section title='Document History'>
-      <t>
-        [[ to be removed by the RFC editor before publication as an RFC ]]
-      </t>
-      <t>
-        -31
-        <list style='symbols'>
-	  <t>
-	    Clarify that any client can send <spanx style='verb'>client_id</spanx>
-	    but that sending it is only required when using the code flow
-	    if the client is not otherwise authenticated.
-	  </t>
-	  <t>
-	    Removed David Recordon's name from the author list, at his request.
-	  </t>
-	</list>
-      </t>
-      <t>
-        -30
-        <list style='symbols'>
-	  <t>
-	    Added text explaining why the <spanx style='verb'>server_error</spanx>
-	    and <spanx style='verb'>temporarily_unavailable</spanx> error codes
-	    are needed.
-	  </t>
-	</list>
-      </t>
-      <t>
-        -29
-        <list style='symbols'>
-	  <t>
-	    Added "MUST" to "A public client that was not issued a client password
-	    MUST use the <spanx style='verb'>client_id</spanx> request parameter to
-	    identify itself when sending requests to the token endpoint"
-	    and added text explaining why this must be so.
-	  </t>
-	  <t>
-	    Added that the authorization server MUST
-	    "ensure the authorization code was issued to the authenticated
-	    confidential client or to the public client identified by the
-	    <spanx style='verb'>client_id</spanx> in the request".
-	  </t>
-	  <t>
-	    Added Security Considerations section
-	    "Misuse of Access Token to Impersonate Resource Owner in Implicit Flow".
-	  </t>
-	  <t>
-	    Added references in the "Implicit" and "Implicit Grant"
-	    sections to particularly pertinent security
-	    considerations.
-	  </t>
-	  <t>
-	    Added appendix "Use of application/x-www-form-urlencoded Media Type"
-	    and referenced it in places that this encoding is used.
-	  </t>
-	  <t>
-	    Deleted ";charset=UTF-8" from examples formerly using
-	    "Content-Type: application/x-www-form-urlencoded;charset=UTF-8".
-	  </t>
-	  <t>
-	    Added the phrase "with a character encoding of UTF-8" when
-	    describing how to send requests using the HTTP request entity-body.
-	  </t>
-	  <t>
-	    For symmetry when using HTTP Basic authentication, also apply
-	    the <spanx style='verb'>application/x-www-form-urlencoded</spanx>
-	    encoding to the client password, just as was already done for
-	    the client identifier.
-	  </t>
-	  <t>
-	    Added "The ABNF below is defined in terms of Unicode code
-	    points <xref target="W3C.REC-xml-20081126"/>;
-	    these characters are typically encoded in UTF-8".
-	  </t>
-	  <t>
-	    Replaced UNICODENOCTRLCHAR in ABNF with
-	    UNICODECHARNOCRLF = %x09 / %x20-7E / %x80-D7FF / %xE000-FFFD / %x10000-10FFFF.
-	  </t>
-	  <t>
-	    Corrected incorrect uses of "which".
-	  </t>
-	  <t>
-	    Reduced multiple blank lines around artwork elements to single blank lines.
-	  </t>
-	  <t>
-	    Removed Eran Hammer's name from the author list, at his request.
-	    Dick Hardt is now listed as the editor.
-	  </t>
-        </list>
-      </t>
-      <t>
-        -28
-        <list style='symbols'>
-	  <t>
-	    Updated the ABNF in the manner discussed by the working
-	    group, allowing <spanx style='verb'>username</spanx> and
-	    <spanx style='verb'>password</spanx> to be Unicode and
-	    restricting <spanx style='verb'>client_id</spanx> and
-	    <spanx style='verb'>client_secret</spanx> to ASCII.
-	  </t>
-	  <t>
-	    Specified the use of the application/x-www-form-urlencoded content-type
-	    encoding method to encode the <spanx style='verb'>client_id</spanx>
-	    when used as the password for HTTP Basic.
-	  </t>
-        </list>
-      </t>
-      <t>
-        -27
-        <list style='symbols'>
-	  <t>
-	    Added character set restrictions for error, error_description, and error_uri parameters consistent with the OAuth Bearer spec.
-	  </t>
-	  <t>
-	    Added "resource access error response" as an error usage location in the OAuth Extensions Error Registry.
-	  </t>
-	  <t>
-	    Added an ABNF for all message elements.
-	  </t>
-	  <t>
-	    Corrected editorial issues identified during review.
-	  </t>
-        </list>
-      </t>
-    </section>
-
   </back>
 
 </rfc>
