@@ -108,41 +108,69 @@ without revoking
         </list>
       </t>
       <t>
+        OAuthは, 認可レイヤーをもうけてクライアントとリソースオーナーの役割を分けることで, これらの問題の解決に取り組む.
+        OAuthでは, クライアントは, リソースオーナーのコントロール下にありリソースサーバーによってホストされているリソースへのアクセス権を要求する.
+        そしてリソースオーナーのクレデンシャルそのものとは別のクレデンシャルを取得する.
+        <!--
         OAuth addresses these issues by introducing an authorization layer and separating the role
         of the client from that of the resource owner. In OAuth, the client requests access to
         resources controlled by the resource owner and hosted by the resource server, and is issued
         a different set of credentials than those of the resource owner.
+        -->
       </t>
       <t>
+        保護されたリソースにアクセスする為にリソースオーナーのクレデンシャルを使う代わりに, クライアントはアクセストークンを取得する.
+        アクセストークンとは, ある特定のスコープ, 期間およびその他のアクセス権に関する情報を示す文字列である.
+        アクセストークンはリソースオーナーの同意をもって認可サーバーからサードパーティークライアントへ発行される.
+        クライアントはアクセストークンを用いてリソースサーバーがホストしている保護されたリソースにアクセスする.
+        <!--
         Instead of using the resource owner's credentials to access protected resources, the client
         obtains an access token -- a string denoting a specific scope, lifetime, and other access
         attributes. Access tokens are issued to third-party clients by an authorization server with
         the approval of the resource owner. The client uses the access token to access the
         protected resources hosted by the resource server.
+        -->
       </t>
       <t>
+        例えば, あるユーザー (リソースオーナー) が, 印刷サービス (クライアント) に対して, 写真共有サービス上 (リソースサーバー) に保管されている彼女の保護された写真へのアクセス権を与えることを考える.
+        OAuthでは, その際彼女のユーザー名とパスワードを印刷サービスに与える必要はない.
+        そのかわり, 彼女は写真共有サービスの信任を得たサービス (認可サーバー) に対して認証を行い, 印刷サービスへのアクセス権限委譲用クレデンシャル (アクセストークン) を発行させる.
+        <!--
         For example, an end-user (resource owner) can grant a printing service (client) access
         to her protected photos stored at a photo-sharing service (resource server), without
         sharing her username and password with the printing service. Instead, she authenticates
         directly with a server trusted by the photo-sharing service (authorization server), which
         issues the printing service delegation-specific credentials (access token).
+        -->
       </t>
       <t>
+        本仕様書はHTTP <xref target='RFC2616' /> での利用を想定して設計されている.
+        HTTP以外の通信プロトコルでのOAuth利用については対象としない.
+        <!--
         This specification is designed for use with HTTP (<xref target='RFC2616' />). The use of
         OAuth over any protocol other than HTTP is out of scope.
+        -->
       </t>
       <t>
+        Informationalドキュメントとして発行されたOAuth 1.0 (<xref target='RFC5849' />) は, 小規模のアドホックなコミュニティにより作られた.
+        Standard Trackである本仕様は, OAuth 1.0で得られた経験を元に, IETFコミュニティから発生したさらなるユースケースや拡張性を加味して策定されている.
+        OAuth 2.0はOAuth 1.0との互換性はない.
+        2つのバージョンは共存可能であり, 実装者は両方をサポートすることも可能である.
+        しかしながら本仕様は, 新規実装されるサービスではOAuth 2.0をサポートし, OAuth 1.0は既存サービスのサポートのためにのみ用いることを想定している.
+        OAuth 2.0プロトコルには, OAuth 1.0と共通の実装詳細はごく少ない.
+        OAuth 1.0に詳しい実装者は, OAuth 1.0の知識に基づく憶測を持たずに本仕様を理解すること.
+        <!--
         The OAuth 1.0 protocol (<xref target='RFC5849' />), published as an informational document,
         was the result of a small ad hoc community effort. This Standards Track specification builds
         on the OAuth 1.0 deployment experience, as well as additional use cases and extensibility
         requirements gathered from the wider IETF community. The OAuth 2.0 protocol is not backward
-        compatible with OAuth 1.0. The two versions may co-exist on the
- network, and implementations
+        compatible with OAuth 1.0. The two versions may co-exist on the network, and implementations
         may choose to support both. However, it is the intention of this specification that new
         implementations support OAuth 2.0 as specified in this document and that OAuth 1.0 is used
         only to support existing deployments. The OAuth 2.0 protocol shares very few implementation
         details with the OAuth 1.0 protocol. Implementers familiar with OAuth 1.0 should approach
         this document without any assumptions as to its structure and details.
+        -->
       </t>
 
       <section title='Roles'>
