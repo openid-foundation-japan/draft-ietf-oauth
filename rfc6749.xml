@@ -175,39 +175,62 @@ without revoking
 
       <section title='Roles'>
         <t>
+          OAuthは以下の4つのロールを定義する.
+          <!--
           OAuth defines four roles:
+          -->
         </t>
         <t>
           <list style='hanging'>
-            <t hangText='resource owner'>
+            <t hangText='リソースオーナー (resource owner)'>
               <vspace />
+              保護されたリソースへのアクセスを許可するエンティティー.
+              リソースオーナーが人間の場合, エンドユーザーと呼ばれる.
+              <!--
               An entity capable of granting access to a protected resource. When the resource owner
               is a person, it is referred to as an end&nbhy;user.
+              -->
             </t>
-            <t hangText='resource server'>
+            <t hangText='リソースサーバー (resource server)'>
               <vspace />
+              保護されたリソースをホストし, アクセストークンを用いた保護されたリソースへのリクエストを受理してレスポンスを返すことのできるサーバー.
+              <!--
               The server hosting the protected resources, capable of accepting and responding to
               protected resource requests using access tokens.
+              -->
             </t>
-            <t hangText='client'>
+            <t hangText='クライアント (client)'>
               <vspace />
+              リソースオーナーの認可を得て, リソースオーナーの代理として保護されたリソースに対するリクエストを行うアプリケーション.
+              「クライアント」という表現は, 該当アプリケーションの実装上の特徴には関係がない.
+              (OAuthクライアントは, サーバー上で動くアプリケーションであることもあれば, デスクトップアプリケーションやその他のデバイス上で動くアプリケーションであることもある)
+              <!--
               An application making protected resource requests on behalf of the resource owner and
               with its authorization. The term "client" does not imply any particular implementation
               characteristics (e.g., whether the application executes on a server, a desktop, or
               other devices).
+              -->
             </t>
-            <t hangText='authorization server'>
+            <t hangText='認可サーバー (authorization server)'>
               <vspace />
+              リソースオーナーの認証とリソースオーナーからの認可取得が成功した後, アクセストークンをクライアントに発行するサーバー.
+              <!--
               The server issuing access tokens to the client after successfully authenticating the
               resource owner and obtaining authorization.
+              -->
             </t>
           </list>
         </t>
         <t>
+          認可サーバーとリソースサーバー間のやりとりについては本仕様書の範囲外である.
+          認可サーバーはリソースサーバーと同一のサーバーでも異なるサーバーでもよい.
+          単一の認可サーバーが複数のリソースサーバーにアクセス可能なアクセストークンを発行してもよい.
+          <!--
           The interaction between the authorization server and resource server is beyond the scope
           of this specification. The authorization server may be the same server as the resource
           server or a separate entity. A single authorization server may issue access tokens
           accepted by multiple resource servers.
+          -->
         </t>
       </section>
 
