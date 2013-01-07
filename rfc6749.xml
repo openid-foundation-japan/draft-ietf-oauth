@@ -31,11 +31,17 @@ submissionType="IETF" consensus="yes">
 
     <abstract>
       <t>
+        OAuth 2.0 は, サードパーティーアプリケーションによるHTTPサービスへの限定的なアクセスを可能にする認可フレームワークである.
+        サードパーティーアプリケーションによるアクセス権の取得には, リソースオーナーとHTTPサービスの間で同意のためのインタラクションを伴う場合もあるが,
+        サードパーティーアプリケーション自身が自らのアクセスを許可する場合もある.
+        本仕様書はRFC 5849に記載されているOAuth 1.0 プロトコルを廃止し, その代替となるものである.
+        <!--
         The OAuth 2.0 authorization framework enables a third-party application to obtain limited
         access to an HTTP service, either on behalf of a resource owner by orchestrating an approval
         interaction between the resource owner and the HTTP service, or by allowing the third-party
         application to obtain access on its own behalf. This specification replaces and obsoletes
         the OAuth 1.0 protocol described in RFC 5849.
+        -->
       </t>
     </abstract>
   </front>
@@ -44,38 +50,60 @@ submissionType="IETF" consensus="yes">
 
     <section title='Introduction'>
       <t>
-        In the traditional client-server authentication model, the client
-requests an access-restricted resource (protected resource) on the server by
-authenticating with the server
-        using the resource owner's credentials. In order to provide third-party applications access
-        to restricted resources, the resource owner shares its credentials with
-the third party.
+        従来のクライアントサーバー型の認証モデルでは, クライアントはリソースオーナーのクレデンシャルを使ってサーバーに対して認証を行い, サーバー上の保護されたリソースにアクセスする.
+        つまり, サードパーティーアプリケーションに保護されたリソースへのアクセス権を与えるには, リソースオーナーは自身のクレデンシャルをサードパーティーと共有する必要がある.
+        これはいくつかの問題と制限をもたらす.
+        <!--
+        In the traditional client-server authentication model, the client requests an access-restricted
+        resource (protected resource) on the server by authenticating with the server  using the resource
+        owner's credentials. In order to provide third-party applications access to restricted resources,
+        the resource owner shares its credentials with the third party.
         This creates several problems and limitations:
+        -->
       </t>
       <t>
         <list style='symbols'>
           <t>
+            サードパーティーアプリケーションは, 後の利用のためにリソースオーナーのクレデンシャルを保存しておかなければならない.
+            特にパスワードは平文 (訳注: または複合可能な形) で保存されることになる.
+            <!--
             Third-party applications are required to store the resource owner's credentials
             for future use, typically a password in clear-text.
+            -->
           </t>
           <t>
+            パスワードを利用することでセキュリティが低下したとしても, サーバーはパスワードベースの認証方式をサポートしなければならない.
+            <!--
             Servers are required to support password authentication, despite the security
             weaknesses inherent in passwords.
+            -->
           </t>
           <t>
+            サードパーティーアプリケーションは, リソースオーナーの保護されたリソースに対して過度に広範囲のアクセス権を得ることになる一方で,
+            リソースオーナーは, アクセスをリソースのサブセットに限定したりアクセス可能期間を制限したりできない.
+            <!--
             Third-party applications gain overly broad access to the resource owner's protected
             resources, leaving resource owners without any ability to restrict duration or access
             to a limited subset of resources.
+            -->
           </t>
           <t>
+            リソースオーナーは各サードパーティーごとにアクセス権を無効化することはできず, アクセス権を無効化する際にはすべてのサードパーティーが持つアクセス権を無効化しなければならない.
+            つまりそれはパスワード変更を意味する.
+            <!-- NOTE: 3rd-partyのパスワードを変更するってどゆこと？ -->
+            <!--
             Resource owners cannot revoke access to an individual third party
 without revoking
             access to all third parties, and must do so by changing the
             third party's password.
+            -->
           </t>
           <t>
+            サードパーティーアプリケーションの情報漏えいはエンドユーザーのパスワードおよびパスワードによって保護されているすべての情報の漏洩につながる.
+            <!--
             Compromise of any third-party application results in compromise of the end-user's
             password and all of the data protected by that password.
+            -->
           </t>
         </list>
       </t>
