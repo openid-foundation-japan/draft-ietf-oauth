@@ -468,37 +468,58 @@
 
       <section title='Access Token'>
         <t>
+          アクセストークンは保護されたリソースにアクセスするために使用されるクレデンシャルである.
+          アクセストークンはクライアントに対して発行される認可を表す文字列である.
+          この文字列は通常クライアントからみるとランダムな文字列になっている.
+          トークンはアクセス範囲とアクセス期間を表し, それらはリソースのオーナーによって許可され, リソースサーバーと認可サーバーによって適用される.
+          <!--
           Access tokens are credentials used to access protected resources. An access token is a
           string representing an authorization issued to the client. The string is usually opaque
           to the client. Tokens represent specific scopes and durations of access, granted by the
           resource owner, and enforced by the resource server and authorization server.
+          -->
         </t>
         <t>
-          The token may denote an identifier used to retrieve the authorization
-information or may
+          トークンは認可情報を取り出すための識別子を表したり, 検証可能な方法でそれ自身に認可情報を含んでもよい (データと署名を含むトークン文字列など).
+          クライアントがトークンを使用するために, 本仕様で定めていない追加の認証クレデンシャルを要求することもできる.
+          <!--
+          The token may denote an identifier used to retrieve the authorization information or may
           self-contain the authorization information in a verifiable manner (i.e., a token string
           consisting of some data and a signature). Additional authentication credentials, which
           are beyond the scope of this specification, may be required in order for the client to
           use a token.
+          -->
         </t>
         <t>
+          アクセストークンによって, 様々な認可要素 (例えばユーザー名やパスワード) をリソースサーバーが解釈できる単体のトークンに置き換えるような抽象化レイヤーが提供される.
+          この抽象化は, これらの認可要素を取得するための認可グラントよりも制限の強いアクセストークンの発行を可能とするだけではなく, 広範囲の認証方式をリソースサーバーが解釈する必要性がなくなる.
+          <!--
           The access token provides an abstraction layer, replacing different authorization
           constructs (e.g., username and password) with a single token understood by the resource
           server. This abstraction enables issuing access tokens more restrictive than the
           authorization grant used to obtain them, as well as removing the resource server's need to
           understand a wide range of authentication methods.
+          -->
         </t>
         <t>
+          アクセストークンはリソースサーバーのセキュリティ要件に基づいて異なるフォーマット, 構成, および利用方法を持つことができる (暗号の特性).
+          アクセストークンの属性と保護されたリソースにアクセスするための方法は本仕様に定めるところではなく, <xref target="RFC6750"/>のように本仕様と対になる仕様によって定義される.
+          <!--
           Access tokens can have different formats, structures, and methods of utilization (e.g.,
           cryptographic properties) based on the resource server security requirements. Access token
           attributes and the methods used to access protected resources are beyond the scope of this
-          specification and are defined by companion specifications such as
-<xref target="RFC6750"/>.
+          specification and are defined by companion specifications such as <xref target="RFC6750"/>.
+          -->
         </t>
       </section>
 
       <section title='Refresh Token'>
         <t>
+          リフレッシュトークンはアクセストークンを取得するために使用されるクレデンシャルである.
+          リフレッシュトークンは認可サーバーによってクライアントに対して発行され, 現在のアクセストークンが無効化されたあるいは期限切れの際に新しいアクセストークンを取得するため, または同一あるいは狭い範囲で追加のアクセストークンを取得するために利用される (アクセストークンはリソースオーナーによって認可されるよりも有効期限は短く, 権限が少なくてもよい).
+          リフレッシュトークンの発行はオプションであり, 認可サーバーの判断に委ねられる.
+          認可サーバーがリフレッシュトークンを発行する場合, アクセストークン発行 (<xref target='Figure-1' />中のDに該当) の際にリフレッシュトークンも含まれる.
+          <!--
           Refresh tokens are credentials used to obtain access tokens. Refresh tokens are issued to
           the client by the authorization server and are used to obtain a new access token when the
           current access token becomes invalid or expires, or to obtain additional access tokens
@@ -507,13 +528,20 @@ information or may
           at the discretion of the authorization server. If the authorization server issues a
           refresh token, it is included when issuing an access token (i.e., step (D) in
           <xref target='Figure-1' />).
+          -->
         </t>
         <t>
+          リフレッシュトークンはリソースオーナーによってクライアントに付与される認可を表す文字列である.
+          この文字列は通常クライアントからみるとランダムな文字列になっている.
+          そのトークンは認可情報を取り出すための識別子を意味してもよい.
+          アクセストークンとは異なり, リフレッシュトークンは認可サーバーでのみ使用されるものであり, リソースサーバーに送信されることはない.
+          <!--
           A refresh token is a string representing the authorization granted to the client by the
           resource owner. The string is usually opaque to the client. The token denotes an
           identifier used to retrieve the authorization information. Unlike access tokens, refresh
           tokens are intended for use only with authorization servers and are never sent to
           resource servers.
+          -->
         </t>
         <figure title='Refreshing an Expired Access Token' anchor='Figure-2'>
           <artwork><![CDATA[
@@ -540,48 +568,80 @@ information or may
 ]]></artwork>
         </figure>
         <t>
+          <xref target='Figure-2' /> のフローは, 以下の各ステップからなる.
+          <!--
           The flow illustrated in <xref target='Figure-2' /> includes the following steps:
+          -->
         </t>
         <t>
           <list style='format (%C)'>
             <t>
+              クライアントは, 認可サーバーに対して自身を認証して認可グラントを提示することによって, アクセストークンを要求する.
+              <!--
               The client requests an access token by authenticating with the authorization server
               and presenting an authorization grant.
+              -->
             </t>
             <t>
+              認可サーバーはクライアントを認証して認可グラントを確認し, 有効である場合はアクセストークンとリフレッシュトークンを発行する.
+              <!--
               The authorization server authenticates the client and validates the authorization
               grant, and if valid, issues an access token and a refresh token.
+              -->
             </t>
             <t>
+              クライアントはアクセストークンを提示してリソースサーバー上の保護されたリソースに対してリクエストを行う.
+              <!--
               The client makes a protected resource request to the resource server by presenting
               the access token.
+              -->
             </t>
             <t>
+              リソースサーバーはアクセストークンの正当性を確認し, 有効な場合はリクエストを処理する.
+              <!--
               The resource server validates the access token, and if valid, serves the request.
+              -->
             </t>
             <t>
+              ステップ (C) と (D) はアクセストークンの有効期限が切れるまで繰り返される.
+              クライアントがアクセストークンの期限切れを検知した場合, ステップ (G) にスキップし, そうでなければ保護されたリソースへのリクエストを続ける.
+              <!--
               Steps (C) and (D) repeat until the access token expires. If the client knows the
               access token expired, it skips to step (G); otherwise, it makes another protected
               resource request.
+              -->
             </t>
             <t>
+              アクセストークンが有効でないとき, リソースサーバーはエラーを返し, トークンが無効なことを伝える.
+              <!--
               Since the access token is invalid, the resource server returns an invalid token
               error.
+              -->
             </t>
             <t>
+              クライアントは, 認可サーバーに対して自身を認証してリフレッシュトークンを提示することによって, 新しいアクセストークンを要求する.
+              クライアント認証の必要条件はクライアントタイプと認可サーバーのポリシーによって異なる.
+              <!--
               The client requests a new access token by authenticating with the authorization
               server and presenting the refresh token. The client authentication requirements are
               based on the client type and on the authorization server policies.
+              -->
             </t>
             <t>
+              認可サーバーはクライアントを認証しリフレッシュトークンの正当性を確認し, 正当であれば新たなアクセストークン (およびオプションで新たなリフレッシュトークン) を発行する.
+              <!--
               The authorization server authenticates the client and validates the refresh token,
               and if valid, issues a new access token (and, optionally, a new refresh token).
+              -->
             </t>
           </list>
         </t>
         <t>
+          <xref target='access-resource' />に述べる通り, (C), (D), (E) および (F) は本仕様の定めるところではない.
+          <!--
           Steps (C), (D), (E), and (F) are outside the scope of this specification, as described in
           <xref target='access-resource' />.
+          -->
         </t>
       </section>
 
