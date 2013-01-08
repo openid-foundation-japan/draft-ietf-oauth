@@ -1,9 +1,8 @@
-<?xml version='1.0' encoding='US-ASCII' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category="std" ipr="trust200902" obsoletes="5849" number="6749"
-submissionType="IETF" consensus="yes">
+<rfc category="std" ipr="trust200902" obsoletes="5849" number="6749" submissionType="IETF" consensus="yes">
 
   <?rfc toc='yes' ?>
   <?rfc tocdepth='3' ?>
@@ -33,7 +32,7 @@ submissionType="IETF" consensus="yes">
       <t>
         OAuth 2.0 は, サードパーティーアプリケーションによるHTTPサービスへの限定的なアクセスを可能にする認可フレームワークである.
         サードパーティーアプリケーションによるアクセス権の取得には, リソースオーナーとHTTPサービスの間で同意のためのインタラクションを伴う場合もあるが,
-        サードパーティーアプリケーション自身が自らのアクセスを許可する場合もある.
+        サードパーティーアプリケーション自身が自らの権限においてアクセスを許可する場合もある.
         本仕様書はRFC 5849に記載されているOAuth 1.0 プロトコルを廃止し, その代替となるものである.
         <!--
         The OAuth 2.0 authorization framework enables a third-party application to obtain limited
@@ -92,10 +91,8 @@ submissionType="IETF" consensus="yes">
             つまりそれはパスワード変更を意味する.
             <!-- NOTE: 3rd-partyのパスワードを変更するってどゆこと？ -->
             <!--
-            Resource owners cannot revoke access to an individual third party
-without revoking
-            access to all third parties, and must do so by changing the
-            third party's password.
+            Resource owners cannot revoke access to an individual third party without revoking
+            access to all third parties, and must do so by changing the third party's password.
             -->
           </t>
           <t>
@@ -321,8 +318,7 @@ without revoking
           この方式は<xref target="grant-code"/>の<xref target='Figure-3'/>に示されている.
           <!--
           The preferred method for the client to obtain an authorization grant from the resource
-          owner (depicted in steps (A) and (B)) is to use the authorization
-server as an intermediary,
+          owner (depicted in steps (A) and (B)) is to use the authorizatio server as an intermediary,
           which is illustrated in <xref target='Figure-3'/>
           in <xref target="grant-code"/>.
           -->
@@ -380,53 +376,83 @@ server as an intermediary,
 
         <section title='Implicit' anchor="ImplicitIntro">
           <t>
-            The implicit grant is a simplified authorization code flow
-optimized for clients
+            インプリシットグラントは, 認可コードフローを単純化したものであり, JavaScriptの様なスクリプト言語を使用してブラウザ上で実行されるクライアントに最適化されている.
+            インプリシットフローでは, クライアントは (リソースオーナー認可の結果) 認可コードの代わりに直接アクセストークンを受け取る.
+            このグラントタイプは (認可コードのように後にアクセストークンを取得する際に用いられる) 仲介のクレデンシャルを利用しないため, インプリシット (訳注: implicit = 暗黙の) と呼ばれる.
+            <!--
+            The implicit grant is a simplified authorization code flow optimized for clients
             implemented in a browser using a scripting language such as JavaScript. In the implicit
             flow, instead of issuing the client an authorization code, the client is issued an
             access token directly (as the result of the resource owner authorization). The grant
             type is implicit, as no intermediate credentials (such as an authorization code) are
             issued (and later used to obtain an access token).
+            -->
           </t>
           <t>
+            インプリシットグラントフローでアクセストークンを発行する場合, 認可サーバーはクライアントを認証しない.
+            ただし, クライアントにアクセストークンを渡す際に使用されるリダイレクトURIをもとに, クライアントの身元が検証可能なこともある.
+            アクセストークンはリソースオーナー, もしくはリソースオーナーのユーザーエージェントにアクセスすることで他のアプリケーションに晒される可能性がある.
+            <!--
             When issuing an access token during the implicit grant flow, the authorization server
             does not authenticate the client. In some cases, the client identity can be verified
             via the redirection URI used to deliver the access token to the client. The access
             token may be exposed to the resource owner or other applications with access to the
             resource owner's user-agent.
+            -->
           </t>
           <t>
+            アクセストークンを得るのに必要な往復の回数を減らせるため, インプリシットグラントは (ブラウザにおけるアプリケーションとして実行されたクライアントなど) いくつかのクライアントで応答性と効率性を高める.
+            しかしながら, 特に認可コードグラントタイプが利用可能である場合, インプリシットグラントを用いた場合の利便性はセキュリティー面の影響とトレードオフの関係にあることを考慮すべきである.
+            セキュリティー面の影響についての詳細は, <xref target="AccessTokenSecurity" format="counter"/>および<xref target="ImplicitImpersonation" format="counter"/>を参照のこと.
+            <!--
+            Implicit grants improve the responsiveness and efficiency of some clients (such as a
+            client implemented as an in-browser application) since it reduces the number of round
+            trips required to obtain an access token. However, this convenience should be weighed
+            against the security implications of using implicit grants, especially when the
+            authorization code grant type is available.
+
             Implicit grants improve the responsiveness and efficiency of some clients (such as a
             client implemented as an in-browser application), since it reduces the number of round
             trips required to obtain an access token. However, this convenience should be weighed
             against the security implications of using implicit grants,
-            such as those described in Sections <xref
-target="AccessTokenSecurity" format="counter"/> and
+            such as those described in Sections <xref target="AccessTokenSecurity" format="counter"/> and
             <xref target="ImplicitImpersonation" format="counter"/>,
             especially when the authorization code grant type is available.
+            -->
           </t>
         </section>
 
         <section title="Resource Owner Password Credentials">
           <t>
+            リソースオーナーパスワードクレデンシャル (例えばユーザー名とパスワード) を直接アクセストークンを得るための認可グラントとして使用することも出来る.
+            このクレデンシャルは, (例えばクライアントがデバイスOSの一部となっていたり, 非常に特権のあるアプリケーションである場合のように) リソースオーナーとクライアントの間で高い信頼があり, (認可コードのような) 他の認可グラントタイプが利用できない場合のみ使用されるべきである.
+            <!--
             The resource owner password credentials (i.e., username and password) can be used
             directly as an authorization grant to obtain an access token. The credentials should
             only be used when there is a high degree of trust between the resource owner and the
             client (e.g., the client is part of the device operating system or a highly privileged
             application), and when other authorization grant types are not available (such as an
             authorization code).
+            -->
           </t>
           <t>
+            このグラントタイプでは, クライアントがリソースオーナークレデンシャルへ直接アクセスすることになるが, リソースオーナークレデンシャルは一度きりのリクエストにのみ使用され, アクセストークンに交換される.
+            このグラントタイプでは, クレデンシャルを寿命の長いアクセストークンやリフレッシュトークンと交換することにより, クライアントがリソースオーナークレデンシャルを後の利用のために保存しておく必要がなくなる.
+            <!--
             Even though this grant type requires direct client access to the resource owner
             credentials, the resource owner credentials are used for a single request and are
             exchanged for an access token. This grant type can eliminate the need for the client
             to store the resource owner credentials for future use, by exchanging the credentials
             with a long-lived access token or refresh token.
+            -->
           </t>
         </section>
 
         <section title='Client Credentials'>
           <t>
+            認可範囲がクライアントの管理下にある保護されたリソース, もしくはあらかじめ認可サーバーとの間で調整済の保護されたリソースに制限されている場合は, 認可グラントとしてクライアントクレデンシャル (もしくは他のクライアント認証形式) が使用できる.
+            クライアントがクライアント自身の権限においてに行動している (つまりクライアントがリソースオーナーである) か, クライアントがあらかじめ認可サーバーとの間で調整済の保護されたリソースアクセスを求めている場合, クライアントクレデンシャルが認可グラントとして使用される.
+            <!--
             The client credentials (or other forms of client authentication) can be used as an
             authorization grant when the authorization scope is limited to the protected resources
             under the control of the client, or to protected resources previously arranged with the
@@ -434,6 +460,7 @@ target="AccessTokenSecurity" format="counter"/> and
             when the client is acting on its own behalf (the client is also the resource owner) or
             is requesting access to protected resources based on an authorization previously
             arranged with the authorization server.
+            -->
           </t>
         </section>
 
