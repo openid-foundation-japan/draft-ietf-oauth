@@ -1947,7 +1947,7 @@
   +---------+
 ]]></artwork>
           <postamble>
-            注記: ユーザーエージェントを通過するため、Step (A) と (B) を示す線は2つに分かれる。
+            注記: ユーザーエージェントを通過するため, Step (A) と (B) を示す線は2つに分かれる.
           </postamble>
           <!--
           <postamble>
@@ -3526,7 +3526,7 @@ should consider the following:
           -->
         </t>
         <t>
-          <spanx style='verb'>state</spanx>, <spanx style='verb'>scope</spanx> パラメータは安全ではないチャンネル上で伝送される、もしくは安全ではない方法でに保存されることがあるため、クライアントやリソースオーナーのセンシティブな情報をプレインテキスト内に含むべきではない (SHOULD NOT).
+          <spanx style='verb'>state</spanx>, <spanx style='verb'>scope</spanx> パラメータは安全ではないチャンネル上で伝送される, もしくは安全ではない方法でに保存されることがあるため, クライアントやリソースオーナーのセンシティブな情報をプレインテキスト内に含むべきではない (SHOULD NOT).
           <!--
           The <spanx style='verb'>state</spanx> and <spanx style='verb'>scope</spanx> parameters
           SHOULD NOT include sensitive client or resource owner information in plain text, as they
