@@ -332,33 +332,49 @@ server as an intermediary,
 
       <section title='Authorization Grant'>
         <t>
+          認可グラントは, リソースオーナーによる (保護されたリソースへのアクセスを行うことに対する) 認可を示し, クライアントがアクセストークンを取得する際に用いられる.
+          本仕様では認可コード, インプリシット, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルの4つのグラントタイプを定義しており, 拡張仕様によってタイプを追加することもできる.
+          <!--
           An authorization grant is a credential representing the resource owner's authorization
           (to access its protected resources) used by the client to obtain an access token. This
           specification defines four grant types -- authorization code, implicit, resource owner
           password credentials, and client credentials -- as well as an extensibility mechanism for
           defining additional types.
+          -->
         </t>
 
         <section title='Authorization Code'>
           <t>
+            認可コードは, 認可サーバーがクライアントとリソースオーナーの仲介となって発行する.
+            リソースオーナーへ直接認可を要求する代わりに, クライアントは (<xref target='RFC2616' /> に定義されたユーザーエージェントを経由して) リソースオーナーを認可サーバーへリダイレクトさせ, リソースオーナーがリダイレクトして戻ってきた際に認可コードを取得する.
+            <!--
             The authorization code is obtained by using an authorization server as an intermediary
             between the client and resource owner. Instead of requesting authorization directly
             from the resource owner, the client directs the resource owner to an authorization
             server (via its user&nbhy;agent as defined in <xref target='RFC2616' />), which in turn
             directs the resource owner back to the client with the authorization code.
+            -->
           </t>
           <t>
+            リソースオーナーを認可コードとともにリダイレクト経由でクライアントに戻す前に, 認可サーバーはリソースオーナーを認証し認可を得る.
+            これによりリソースオーナーは認可サーバーによってのみ認証され, リソースオーナーのクレデンシャルはクライアントへ共有されない.
+            <!--
             Before directing the resource owner back to the client with the authorization code, the
             authorization server authenticates the resource owner and obtains authorization.
             Because the resource owner only authenticates with the authorization server, the
             resource owner's credentials are never shared with the client.
+            -->
           </t>
           <t>
-          The authorization code provides a few important security benefits,
-          such as the ability to authenticate the client, as well as the
-          transmission of the access token directly to the client without
-          passing it through the resource owner's user-agent and potentially
-          exposing it to others, including the resource owner.
+            認可コードは, クライアントを認証する機会を提供したり, リソースオーナーのユーザーエージェントを経由せずアクセストークンをクライアントに直接送信できるなど, いくつかの点で重要なセキュリティ的なメリットを提供する.
+            リソースオーナーのユーザーエージェントを経由してデータを送信した場合, そのデータはリソースオーナーを含む第三者に露出する可能性がある.
+            <!--
+            The authorization code provides a few important security benefits,
+            such as the ability to authenticate the client, as well as the
+            transmission of the access token directly to the client without
+            passing it through the resource owner's user-agent and potentially
+            exposing it to others, including the resource owner.
+            -->
           </t>
         </section>
 
