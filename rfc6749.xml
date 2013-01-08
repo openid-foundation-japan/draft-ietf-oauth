@@ -1864,30 +1864,54 @@
 
       </section>
 
-      <section title='Implicit Grant' anchor='grant-implicit'>
+      <section title='インプリシットグラント' anchor='grant-implicit'>
+      <!-- <section title='Implicit Grant' anchor='grant-implicit'> -->
+        <t>
+          インプリシットグラントタイプは, アクセストークンを取得するために用いられ (リフレッシュトークンの発行はサポートされない), 特定のリダイレクトURIを利用することが既知であるパブリッククライアントに最適化されている.
+          これらのクライアントは, 通常JavaScriptなどのスクリプト言語を使用してブラウザ上に実装される.
+        </t>
+        <!--
         <t>
           The implicit grant type is used to obtain access tokens (it does not support the issuance
           of refresh tokens) and is optimized for public clients known to operate a particular
           redirection URI. These clients are typically implemented in a browser using a scripting
           language such as JavaScript.
         </t>
+        -->
+        <t>
+          このグラントタイプではリダイレクトベースのフローが利用されるため, クライアントはリソースオーナーのユーザーエージェント (通常はWebブラウザ) と対話し, 認可サーバーによる (リダイレクトを通した) リクエストを受け付けることが出来なくてはいけない.
+        </t>
+        <!--
         <t>
           Since this is a redirection-based flow, the client must be capable of interacting with the
           resource owner's user-agent (typically a web browser) and capable of receiving incoming
           requests (via redirection) from the authorization server.
         </t>
+        -->
+        <t>
+          認可リクエストとアクセストークン取得のリクエストが分離されている認可コードグラントタイプと異なり, クライアントは認可リクエストの結果としてアクセストークンを受け取る.
+        </t>
+        <!--
         <t>
           Unlike the authorization code grant type, in which the client makes separate requests for
           authorization and for an access token, the client receives the access token as the result of the
           authorization request.
         </t>
+        -->
+        <t>
+          インプリシットグラントタイプではクライアント認証は行わず, リソースオーナーの介在とリダイレクトURIの事前登録に頼っている.
+          アクセストークンはリダイレクトURI中にエンコードされるため, リソースオーナーと同一デバイス上のその他のアプリケーションに漏えいするかもしれない.
+        </t>
+        <!--
         <t>
           The implicit grant type does not include client authentication, and relies on the
           presence of the resource owner and the registration of the redirection URI. Because the
           access token is encoded into the redirection URI, it may be exposed to the resource owner
           and other applications residing on the same device.
         </t>
-        <figure title='Implicit Grant Flow' anchor='Figure-4'>
+        -->
+        <figure title='インプリシットグラントフロー' anchor='Figure-4'>
+        <!-- <figure title='Implicit Grant Flow' anchor='Figure-4'> -->
           <artwork><![CDATA[
   +----------+
   | Resource |
@@ -1923,49 +1947,101 @@
   +---------+
 ]]></artwork>
           <postamble>
+            注記: ユーザーエージェントを通過するため、Step (A) と (B) を示す線は2つに分かれる。
+          </postamble>
+          <!--
+          <postamble>
             Note: The lines illustrating steps (A) and (B) are broken into two parts as they pass
             through the user-agent.
           </postamble>
+          -->
         </figure>
+        <t>
+          <xref target='Figure-4' /> のフローは以下の通りである.
+        </t>
+        <!--
         <t>
           The flow illustrated in <xref target='Figure-4' /> includes the following steps:
         </t>
+        -->
         <t>
           <list style='format (%C)'>
+            <t>
+              クライアントがリソースオーナーのユーザーエージェントを認可エンドポイントに送ることで, フローが開始する.
+              このときクライアントは, クライアント識別子, リクエストスコープ, ローカルステート, および認可サーバーがアクセス許可取得後にユーザーエージェントを戻すリダイレクトURIをリクエストに含める.
+            </t>
+            <!--
             <t>
               The client initiates the flow by directing the resource owner's user-agent to the
               authorization endpoint. The client includes its client identifier, requested
               scope, local state, and a redirection URI to which the authorization server will send
               the user-agent back once access is granted (or denied).
             </t>
+            -->
+            <t>
+              認可サーバーは (ユーザーエージェントを通して) リソースオーナーを認証し, リソースオーナーにアクセス要求の許可/拒否をたずねる.
+            </t>
+            <!--
             <t>
               The authorization server authenticates the resource owner (via the user-agent) and
               establishes whether the resource owner grants or denies the client's access request.
             </t>
+            -->
+            <t>
+              リソースオーナーがアクセスを許可した場合, 認可サーバーは予め与えられていたリダイレクトURIを用いて, ユーザーエージェントをリダイレクトさせてクライアントに戻す.
+              リダイレクトURIには, アクセストークンが含まれる.
+            </t>
+            <!--
             <t>
               Assuming the resource owner grants access, the authorization server redirects the
               user-agent back to the client using the redirection URI provided earlier. The
               redirection URI includes the access token in the URI fragment.
             </t>
+            -->
+            <t>
+              ユーザーエージェントは, リダイレクトの指示に従い, Web上にホストされたクライアントリソースにリクエストを送信する (このときフラグメントは送信されない.<xref target='RFC2616' />を参照).
+              ユーザーエージェントはフラグメントの情報をローカルに保持する.
+            </t>
+            <!--
             <t>
               The user-agent follows the redirection instructions by making a request to the
               web-hosted client resource (which does not include the fragment per
               <xref target='RFC2616' />). The user-agent retains the fragment information locally.
             </t>
+            -->
+            <t>
+              Webでホストされたクライアントリソースにアクセスすると, Webページ (通常, 埋め込みのスクリプトが含まれるHTMLドキュメント) が返される.
+              そのWebページでは, ユーザーエージェントによって保持されているフラグメントを含む完全なリダイレクトURLにアクセスし, フラグメントに含まれているアクセストークン (とその他のパラメーター) を取り出すことができる.
+            </t>
+            <!--
             <t>
               The web-hosted client resource returns a web page (typically an HTML document with an
               embedded script) capable of accessing the full redirection URI including the fragment
               retained by the user-agent, and extracting the access token (and other parameters)
               contained in the fragment.
             </t>
+            -->
+            <t>
+              ユーザーエージェントは上記Webページに含まれるスクリプトをローカルに実行し, アクセストークンを取り出す.</t>
+            <t>ユーザーエージェントはアクセストークンをクライアントに渡す.
+            </t>
+            <!--
             <t>
               The user-agent executes the script provided by the web-hosted client resource
               locally, which extracts the access token.</t>
             <t>The user-agent passes the access token to the client.
             </t>
+            -->
           </list>
         </t>
 
+        <t>
+          インプリシットグラントを利用する背景については<xref target="ImplicitIntro" format="counter"/>と
+<xref target="NativeApps" format="counter"/>セクションを参照のこと.
+          インプリシットグラントを利用するときの重要なセキュリティ面での考慮点については<xref target="AccessTokenSecurity" format="counter"/>
+と<xref target="ImplicitImpersonation" format="counter"/>セクションを参照のこと.
+        </t>
+        <!--
         <t>
           See Sections <xref target="ImplicitIntro" format="counter"/> and
 <xref target="NativeApps" format="counter"/>
@@ -1974,6 +2050,7 @@
 and <xref target="ImplicitImpersonation" format="counter"/>
           for important security considerations when using the implicit grant.
         </t>
+        -->
 
         <section title='Authorization Request' anchor='implicit-authz-req'>
           <t>
