@@ -924,41 +924,71 @@
 
       <section title='Client Identifier' anchor='client-identifier'>
         <t>
+          認可サーバーは登録済みのクライアントにクライアント識別子 (クライアントが提供した登録情報を表すユニーク文字列) を発行する.
+          クライアント識別子はシークレットと異なりリソースオーナーに露出されるため, その情報のみでクライアント認証を行ってはならない (MUST NOT).
+          クライアント識別子は認可サーバーごとにユニークである.
+          <!--
           The authorization server issues the registered client a client identifier -- a unique
           string representing the registration information provided by the client. The client
           identifier is not a secret; it is exposed to the resource owner and MUST NOT be used
           alone for client authentication. The client identifier is unique to the authorization
           server.
+          -->
         </t>
         <t>
+          クライアント識別子の文字列長は本仕様の定めるところではない.
+          クライアントは識別子のサイズに関して憶測を持つべきではない.
+          認可サーバーは, 発行するいかなる識別子に関しても, そのサイズに関する情報を提供すべきである (SHOULD).
+          <!--
           The client identifier string size is left undefined by this specification. The client
           should avoid making assumptions about the identifier size.  The authorization server
           SHOULD document the size of any identifier it issues.
+          -->
         </t>
       </section>
 
       <section title='Client Authentication' anchor='client-authentication'>
         <t>
+          クライアントタイプがコンフィデンシャルである場合, クライアントと認可サーバーは, 認可サーバーのセキュリティ要求を満たすクライアント認証方式を確立する.
+          認可サーバーは自身のセキュリティ要求さえ満たせば, どのような方式のクライアント認証に対応してもよい (MAY).
+          <!--
           If the client type is confidential, the client and authorization server establish a client
           authentication method suitable for the security requirements of the authorization server.
           The authorization server MAY accept any form of client authentication meeting its
           security requirements.
+          -->
         </t>
         <t>
+          コンフィデンシャルクライアントには, 通常は認可サーバーでの認証に使われるクライアントクレデンシャルのセットが発行 (もしくは確立) される.
+          例) パスワード, 公開鍵／秘密鍵のペア
+          <!--
           Confidential clients are typically issued (or establish) a set of client credentials used for
           authenticating with the authorization server (e.g., password, public/private key pair).
+          -->
         </t>
         <t>
+          認可サーバーはパブリッククライアントとクライアント認証によって信頼確立してもよい (MAY).
+          しかし, 認可サーバーはクライアントを識別する目的で, パブリッククライアントを信頼してはならない (MUST NOT).
+          <!--
           The authorization server MAY establish a client authentication method with public clients.
           However, the authorization server MUST NOT rely on public client authentication for the
           purpose of identifying the client.
+          -->
         </t>
         <t>
+          クライアントは1回のリクエストにおいて二つ以上の認証方式を利用してはならない (MUST NOT).
+          <!--
           The client MUST NOT use more than one authentication method in each request.
+          -->
         </t>
 
         <section title='Client Password' anchor="client-password">
           <t>
+            クライアントパスワードを保持しているクライアントは, 認可サーバー上での認証に<xref target='RFC2617' />で定義されているHTTP Basic認証スキームを使用してもよい (MAY).
+            この場合, クライアント識別子は<xref target="urlencoded"/>の定める<spanx style='verb'>application/x-www-form-urlencoded</spanx>形式にエンコードされ, エンコードされた値がユーザーネームとして用いられる.
+            クライアントパスワードも同様にエンコードされ, パスワードとして利用される.
+            認可サーバーは, クライアントパスワードを発行されたクライアントの認証の為にHTTP Basic認証スキームをサポートしなければならない (MUST).
+            <!--
             Clients in possession of a client password MAY use the HTTP Basic authentication scheme
             as defined in <xref target='RFC2617' /> to authenticate with the authorization server.
             The client identifier is encoded using the
@@ -968,44 +998,68 @@
             the same algorithm and used as the
             password. The authorization server MUST support the HTTP Basic authentication scheme
             for authenticating clients that were issued a client password.
+            -->
           </t>
           <figure>
             <preamble>
+              例 (改行は表示上の都合による):
+              <!--
               For example (with extra line breaks for display purposes only):
+              -->
             </preamble>
             <artwork><![CDATA[
   Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
 ]]></artwork>
           </figure>
           <t>
+            HTTP Basic認証スキームの代わりに, 認可サーバーは以下のパラメーターを用いてリクエストボディーにクライアントクレデンシャルを含めてもよい (MAY).
+            <!--
             Alternatively, the authorization server MAY support including the client credentials in
             the request-body using the following parameters:
+            -->
           </t>
           <t>
             <list style='hanging' hangIndent='6'>
               <t hangText='client_id'>
                 <vspace />
+                必須 (REQUIRED).
+                <xref target='client-identifier' /> に示されるクライアント登録時に発行されたクライアント識別子.
+                <!--
                 REQUIRED. The client identifier issued to the client during the registration process
                 described by <xref target='client-identifier' />.
+                -->
               </t>
               <t hangText='client_secret'>
                 <vspace />
+                必須 (REQUIRED).
+                クライアントのシークレット.
+                空の場合は省略してもよい (MAY).
+                <!--
                 REQUIRED. The client secret. The client MAY omit the parameter if the client secret
                 is an empty string.
+                -->
               </t>
             </list>
           </t>
           <t>
+            2つのパラメーターを使ってクライアントクレデンシャルをリクエストボディーに含めることは推奨されていない (NOT RECOMMENDED).
+            この方法はHTTP Basic認証スキーム (もしくは他のパスワードベースのHTTP認証スキーム) が直接利用できないクライアントに限定すべきある (SHOULD).
+            これらのパラメーターはリクエストボディー経由でのみ送信可能であり, リクエストURI経由で送信してはならない (MUST NOT).
+            <!--
             Including the client credentials in the request-body using the two parameters is NOT
             RECOMMENDED and SHOULD be limited to clients unable to directly utilize the HTTP Basic
             authentication scheme (or other password-based HTTP authentication schemes). The
             parameters can only be transmitted in the request-body and MUST NOT be included in the
             request URI.
+            -->
           </t>
           <figure>
             <preamble>
+              例：ボディパラメーターを使ってアクセストークンを更新 (<xref target='token-refresh' />) する場合 (改行は表示上の都合による)
+              <!--
               For example, a request to refresh an access token (<xref target='token-refresh' />)
               using the body parameters (with extra line breaks for display purposes only):
+              -->
             </preamble>
             <artwork><![CDATA[
   POST /token HTTP/1.1
@@ -1017,21 +1071,31 @@
 ]]></artwork>
           </figure>
           <t>
+            パスワード認証を行う場合, 認可サーバーは<xref target='tls' />にある通りTLSの利用を必須としなければならない (MUST).
+            <!--
             The authorization server MUST require the use of TLS as described in
             <xref target='tls' /> when sending requests using password authentication.
+            -->
           </t>
           <t>
+            クライアント認証方式にパスワードが含まれるので, 認可サーバーはクライアント認証を行うすべてのエンドポイントでブルートフォースアタック対策を行わなくてはならない (MUST).
+            <!--
             Since this client authentication method involves a password, the authorization server
             MUST protect any endpoint utilizing it against brute force attacks.
+            -->
           </t>
         </section>
 
         <section title='Other Authentication Methods'>
           <t>
+            認可サーバーは, 自身のセキュリティ要件に適合するいかなるHTTP認証スキームをサポートしてよい (MAY).
+            他の認証方式を利用する際には, 認可サーバーはクライアント識別子 (つまり登録されたクライアント) と認証スキームのマッピングを明確にしなければならない (MUST).
+            <!--
             The authorization server MAY support any suitable HTTP authentication scheme matching
             its security requirements. When using other authentication methods, the authorization
             server MUST define a mapping between the client identifier (registration record) and
             authentication scheme.
+            -->
           </t>
         </section>
 
@@ -1039,9 +1103,13 @@
 
       <section title='Unregistered Clients'>
         <t>
+          本仕様は, 未登録のクライアントの利用を排除するものではない.
+          しなしながら, そのようなクライアントの利用は本仕様のスコープ外であり, さらなるセキュリティー面の分析と相互運用性への影響度評価が必要である.
+          <!--
           This specification does not exclude the use of unregistered clients. However, the use
           of such clients is beyond the scope of this specification and requires additional
           security analysis and review of its interoperability impact.
+          -->
         </t>
       </section>
       
