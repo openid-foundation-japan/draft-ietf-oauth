@@ -257,46 +257,75 @@ without revoking
 ]]></artwork>
         </figure>
         <t>
+          <xref target='Figure-1' />で示されたOAuth 2.0のフロー概要は, 4つのロール間での相互作用と以下のステップについて記載している.
+          <!--
           The abstract OAuth 2.0 flow illustrated in <xref target='Figure-1' /> describes the interaction
           between the four roles and includes the following steps:
+          -->
         </t>
         <t>
           <list style='format (%C)'>
             <t>
+              クライアントはリソースオーナーに対して認可を要求する.
+              その際 (図のように) リソースオーナーに直接認可要求を行うことも出来るが, 認可サーバーを経由して間接的に行うことがのぞましい.
+              <!--
               The client requests authorization from the resource owner. The authorization request
               can be made directly to the resource owner (as shown), or preferably indirectly via
               the authorization server as an intermediary.
+              -->
             </t>
             <t>
+              クライアントは, リソースオーナーの認可を表すクレデンシャルとして認可グラントを受け取る.
+              認可グラントは本仕様で定義される4つのグラントタイプの内の1つ, または拡張されたグラントタイプで発行される.
+              どの認可グラントタイプを用いるかは, クライアントの利用する認可リクエストの方式と認可サーバーがサポートするグラントタイプに依存する.
+              <!--
               The client receives an authorization grant, which is a credential representing
               the resource owner's authorization, expressed using one of four grant types defined
               in this specification or using an extension grant type. The authorization grant type
               depends on the method used by the client to request authorization and the types
               supported by the authorization server.
+              -->
             </t>
             <t>
+              クライアントは認可サーバーに対して自身を認証し, 認可グラントを提示することで, アクセストークンを要求する.
+              <!--
               The client requests an access token by authenticating with the authorization server
               and presenting the authorization grant.
+              -->
             </t>
             <t>
+              認可サーバーはクライアントを認証し, 認可グラントの正当性を確認する.
+              そして認可グラントが正当であれば, アクセストークンを発行する.
+              <!--
               The authorization server authenticates the client and validates the authorization
               grant, and if valid, issues an access token.
+              -->
             </t>
             <t>
+              クライアントはリソースサーバーの保護されたリソースへリクエストを行い, 発行されたアクセストークンにより認証を行う.
+              <!--
               The client requests the protected resource from the resource server and authenticates
               by presenting the access token.
+              -->
             </t>
             <t>
+              リソースサーバーはアクセストークンの正当性を確認し, 正当であればリクエストを受け入れる.
+              <!--
               The resource server validates the access token, and if valid, serves the request.
+              -->
             </t>
           </list>
         </t>
         <t>
+          クライアントがリソースオーナーから認可グラントを取得する (図中AおよびB) 際には, 認可サーバーが仲介を行う方式が望ましい.
+          この方式は<xref target="grant-code"/>の<xref target='Figure-3'/>に示されている.
+          <!--
           The preferred method for the client to obtain an authorization grant from the resource
           owner (depicted in steps (A) and (B)) is to use the authorization
 server as an intermediary,
           which is illustrated in <xref target='Figure-3'/>
           in <xref target="grant-code"/>.
+          -->
         </t>
 
       </section>
