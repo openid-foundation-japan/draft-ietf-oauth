@@ -647,70 +647,110 @@
 
       <section title='TLS Version' anchor='tls'>
         <t>
+          本仕様でTransport Layer Security (TLS) を用いる場合, 将来的に実運用やセキュリティ上の脆弱性が発見されたりすることで, 適切なTLSのバージョンは変化しうる.
+          本仕様執筆時点では, TLSバージョン1.2 <xref target='RFC5246' /> が最新バージョンであるが, 現実にはその実装は限られており, すぐに利用可能な状態ではない可能性もある.
+          TLSバージョン1.0 <xref target='RFC2246' /> は最も広く実装されており, 最も広い相互運用性をもたらすであろう.
+          <!--
           Whenever Transport Layer Security (TLS) is used by this specification, the appropriate version (or versions) of
           TLS will vary over time, based on the widespread deployment and known security
           vulnerabilities. At the time of this writing, TLS version 1.2 <xref target='RFC5246' />
           is the most recent version, but has a very limited deployment base and might not be
           readily available for implementation. TLS version 1.0 <xref target='RFC2246' /> is the
           most widely deployed version and will provide the broadest interoperability.
+          -->
         </t>
         <t>
+          実装者は, 自身のセキュリティ用件に合わせて, TLSの他にさらにトランスポートレイヤーのセキュリティメカニズムをサポートすることも可能である.
+          <!--
           Implementations MAY also support additional transport-layer security mechanisms
           that meet their security requirements.
+          -->
         </t>
       </section>
 
       <section title='HTTP Redirections'>
         <t>
+          本仕様では, クライアントもしくは認可サーバーがリソースオーナーのユーザーエージェントを別の場所にリダイレクトさせる際に, HTTPリダイレクトを用いる.
+          本仕様の例では302 HTTPステータスを用いるが, それ以外にもユーザーエージェントを通じてリダイレクトを行うことができる方法であれば, どのような手段を用いても良い.
+          どのような手段を用いるかは実装者に委ねる.
+          <!--
           This specification makes extensive use of HTTP redirections, in which the client or the
           authorization server directs the resource owner's user-agent to another destination. While
           the examples in this specification show the use of the HTTP 302 status code, any other
           method available via the user-agent to accomplish this redirection is allowed and is
           considered to be an implementation detail.
+          -->
         </t>
       </section>
 
       <section title='Interoperability'>
         <t>
+          OAuth 2.0は明確に定義されたセキュリティ特性を持つリッチな認可フレームワークである.
+          しかしながら, リッチで多くのオプション要素を持つ高度に拡張可能なフレームワークであることから, 様々な要因によって相互運用性を損なう実装をもたらす可能性もある.
+          <!--
           OAuth 2.0 provides a rich authorization framework with well-defined security properties.
           However, as a rich and highly extensible framework with many optional components, on its
           own, this specification is likely to produce a wide range of non-interoperable
           implementations.
+          -->
         </t>
         <t>
+          加えて, 本仕様はいくつかの必須要素を部分的または完全に未定義な状態で残す.
+          (例: クライアント登録, 認可サーバーに求められる機能, エンドポイントのディスカバリーなど)
+          これらの要素が欠けているため, 相互運用性を確保するには, クライアントは各認可サーバーおよびリソースサーバーに対して個別に手動で設定される必要がある.
+          <!--
           In addition, this specification leaves a few required components partially or fully
           undefined (e.g., client registration, authorization server capabilities, endpoint
           discovery). Without these components, clients must be manually and specifically
           configured against a specific authorization server and resource server in order to
           interoperate.
+          -->
         </t>
         <t>
+          将来的には, Web全体に渡る相互運用性獲得のために必要な規範的プロフィールや拡張が定義されることを期待する.
+          <!--
           This framework was designed with the clear expectation that future work will define
           prescriptive profiles and extensions necessary to achieve full web-scale
           interoperability.
+          -->
         </t>
       </section>
 
       <section title='Notational Conventions'>
         <t>
+          本仕様書で用いられる各キーワード「MUST (しなければならない)」, 「MUST NOT (してはならない)」, 「REQUIRED (必須である)」, 「SHALL (するものとする)」, 「SHALL NOT (しないものとする)」, 「SHOULD (すべきである)」, 「SHOULD NOT (すべきではない)」, 「RECOMMENDED (推奨される)」, 「MAY (してもよい)」, 「OPTIONAL (任意である)」は <xref target='RFC2119' /> で述べられている通りに解釈されるべきものである.
+          <!--
           The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
           NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this specification are to be interpreted as
           described in <xref target='RFC2119' />.
+          -->
         </t>
         <t>
+          本仕様書は <xref target='RFC5234' /> における Augmented Backus-Naur Form (ABNF) 表記法を使用している.
+          加えてURI-referenceの規則には "Uniform Resource Identifier (URI): Generic Syntax" <xref target='RFC3986' /> を用いる.
+          <xref target='RFC5234' />.
+          <!--
           This specification uses the Augmented Backus-Naur Form (ABNF) notation of
           <xref target='RFC5234' />.
           Additionally, the rule URI-reference is included from
           "Uniform Resource Identifier (URI): Generic Syntax" <xref target='RFC3986' />.
+          -->
         </t>
         <t>
+          特定のセキュリティ関連の用語は <xref target='RFC4949' /> で定義された意味で理解されるべきである.
+          これらの用語には, 「攻撃 (attack)」, 「認証 (authentication)」, 「認可 (authorization)」, 「証明書 (certificate)」, 「機密性 (confidentiality)」, 「クレデンシャル (credential)」, 「暗号化 (encryption)」, 「アイデンティティ (identity)」, 「記号 (sign)」, 「署名 (signature)」, 「信頼 (trust)」, 「正当性の確認 (validate)」, 「検証 (verify)」などがあるが, これらだけに限定はされない.
+          <!--
           Certain security-related terms are to be understood in the sense defined in
           <xref target='RFC4949' />. These terms include, but are not limited to, "attack",
           "authentication", "authorization", "certificate", "confidentiality", "credential",
           "encryption", "identity", "sign", "signature", "trust", "validate", and "verify".
+          -->
         </t>
         <t>
+          特に記載が無い限り, すべてのプロトコルパラメーター名と値は, 大文字・小文字を区別する.
+          <!--
           Unless otherwise noted, all the protocol parameter names and values are case sensitive.
+          -->
         </t>
       </section>
 
