@@ -3172,177 +3172,284 @@ should consider the following:
 
     <section title='Security Considerations'>
       <t>
+        柔軟で拡張可能なフレームワークであるため, OAuthのセキュリティに関して配慮すべき点は多くの因子によって決まる.
+        以下のセクションでは実装者に <xref target='client-types' /> にある, Webアプリケーション, ユーザーエージェントベースのアプリケーション, ネイティブアプリケーションの3つのクライアントプロファイルにフォーカスを当てたセキュリティーガイドラインを提供する.
+        <!--
         As a flexible and extensible framework, OAuth's security considerations depend on many
         factors. The following sections provide implementers with security guidelines focused on
         the three client profiles described in <xref target='client-types' />: web application,
         user&nbhy;agent&nbhy;based application, and native application.
+        -->
       </t>
       <t>
+        より包括的なOAuthのセキュリティーモデルとその分析は, プロトコルデザインの背景と共に <xref target='OAuth-THREATMODEL' /> で提供される.
+        <!--
         A comprehensive OAuth security model and analysis, as well as background for the protocol
         design, is provided by <xref target='OAuth-THREATMODEL' />.
+        -->
       </t>
 
-      <section title='Client Authentication'>
+      <section title='クライアント認証<!--Client Authentication-->'>
         <t>
+          認可サーバーはクライアント認証の目的でWebアプリケーションとの間でクレデンシャルを確立する.
+          認可サーバーはクライアントパスワードより強度の高い認証手段を検討することが推奨される.
+          Webアプリケーションはクライアントパスワードやその他のクレデンシャルの機密性を保持しなければならない (MUST).
+          <!--
           The authorization server establishes client credentials with web application clients for
           the purpose of client authentication. The authorization server is encouraged to consider
           stronger client authentication means than a client password. Web application clients MUST
           ensure confidentiality of client passwords and other client credentials.
+          -->
         </t>
         <t>
+          認可サーバーはクライアント認証の目的でネイティブアプリケーションやユーザーエージェントベースのアプリケーションにパスワードやその他のクレデンシャルを発行してはいけない (MUST NOT).
+          認可サーバーは特定デバイス上に特定の方法でインストールされたネイティブアプリケーションに対しては, クライアントパスワード, もしくはその他のクレデンシャルを発行してもよい (MAY).
+          <!--
           The authorization server MUST NOT issue client passwords or other client credentials to
           native application or user-agent-based application clients for the purpose of client
           authentication. The authorization server MAY issue a client password or other credentials
           for a specific installation of a native application client on a specific device.
+          -->
         </t>
         <t>
+          クライアント認証が不可能な時には, 認可サーバーはクライアントのアイデンティティ検証のために他の手段を採用すべきである (SHOULD).
+          例えば, クライアントのリダイレクトURIの登録要求やリソースオーナーによるアイデンティティ確認が考えられる.
+          有効なリダイレクトURIは, それ単体でリソース所有者の認可時にクライアントのアイデンティティを証明するには至らないが, リソースオーナーの認可取得後に偽のクライアントにクレデンシャルを配布するのを回避するのに利用することができる.
+          <!--
           When client authentication is not possible, the authorization server SHOULD employ other
           means to validate the client's identity -- for example, by requiring the registration of
           the client redirection URI or enlisting the resource owner to confirm identity. A valid
           redirection URI is not sufficient to verify the client's identity when asking for
           resource owner authorization but can be used to prevent delivering credentials to a
           counterfeit client after obtaining resource owner authorization.
+          -->
         </t>
         <t>
+          認可サーバーは認証されていないクライアントとの通信によるセキュリティ上の影響を考慮しなけれならない.
+          そして, そのようなクライアントに対するリフレッシュトークンなどの他のクレデンシャルの開示を制限するための措置をとらなければならない.
+          <!--
           The authorization server must consider the security implications of interacting with
           unauthenticated clients and take measures to limit the potential exposure of other
           credentials (e.g., refresh tokens) issued to such clients.
+          -->
         </t>
       </section>
 
-      <section title='Client Impersonation'>
+      <section title='クライアント偽装<!-- Client Impersonation -->'>
         <t>
+          もし正当なクライアントがクライアントクレデンシャルを秘匿に保てない場合, 悪意あるクライアントがそのクライアントになりすまし, 保護されたリソースへのアクセスを取得することができる.
+          <!--
           A malicious client can impersonate another client and obtain access to protected
           resources if the impersonated client fails to, or is unable to, keep its client
           credentials confidential.
+          -->
         </t>
         <t>
+          認可サーバーはクライアントが認証可能である場合は, 常にクライアント認証を実行しなければならない (MUST).
+          クライアントが本質的に認証不可能な場合は, 認可サーバーは認可レスポンス時に用いられる全リダイレクト URI の登録を要求しなければならず (MUST), また上記のような悪意あるクライアントからリソースオーナーを保護する何らかの方策を取るべきである (SHOULD).
+          そのような方策の例としては, リソースオーナー自身がクライアントの身元を確認するように認可サーバーが促すことなどが考えられる.
+          <!--
           The authorization server MUST authenticate the client whenever possible. If the
           authorization server cannot authenticate the client due to the client's nature, the
           authorization server MUST require the registration of any redirection URI used for
           receiving authorization responses and SHOULD utilize other means to protect resource
           owners from such potentially malicious clients. For example, the authorization server
           can engage the resource owner to assist in identifying the client and its origin.
+          -->
         </t>
         <t>
+          認可サーバーは明示的にリソースオーナーに認証を要求し, クライアントと要求される認可スコープおよび有効期間についての情報を提供するべきである (SHOULD).
+          その時点でのクライアントのコンテキスト内の情報を評価し, リクエストの認可/拒否を行うことは, リソースオーナー自身の判断にゆだねられる.
+          <!--
           The authorization server SHOULD enforce explicit resource owner authentication and
           provide the resource owner with information about the client and the requested
           authorization scope and lifetime. It is up to the resource owner to review the
           information in the context of the current client and to authorize or deny the request.
+          -->
         </t>
         <t>
+          認可サーバーは, クライアント認証やその他の判断基準によって, リクエストが同一のクライアントから送られておりクライアント偽装が行われていないことを確認できない限り, 二度目以降の認可リクエストを (リソースオーナーの能動的なインタラクション無しに) 自動的に処理すべきではない (SHOULD NOT).
+          <!--
           The authorization server SHOULD NOT process repeated authorization requests
           automatically (without active resource owner interaction) without authenticating the
           client or relying on other measures to ensure that the repeated request comes from the
           original client and not an impersonator.
+          -->
         </t>
       </section>
 
-      <section title='Access Tokens' anchor="AccessTokenSecurity">
+      <section title='アクセストークン<!-- Access Tokens -->' anchor="AccessTokenSecurity">
         <t>
+          アクセストークンクレデンシャル (およびあらゆる秘匿アクセストークン属性) は, 通信経路・ストレージ上ともに機密に保たれなければならない (MUST).
+          またそれらの情報は, 認可サーバー, アクセストークンが通用するリソースサーバー, およびアクセストークンを発行されたクライアントの間でのみ共有される (MUST).
+          アクセストークンクレデンシャルは <xref target='tls' /> にあるTLSを用いて <xref target='RFC2818' /> で定義されているサーバー認証をした上で送信されなければならない (MUST).
+          <!--
           Access token credentials (as well as any confidential access token attributes) MUST be
           kept confidential in transit and storage, and only shared among the authorization server,
           the resource servers the access token is valid for, and the client to whom the access
           token is issued. Access token credentials MUST only be transmitted using TLS as described
           in <xref target='tls' /> with server authentication as defined by
           <xref target='RFC2818' />.
+          -->
         </t>
         <t>
+          インプリシットグラントを利用する場合, アクセストークンは URI フラグメント経由で送信されるため, 認可されていない何者かに漏洩する可能性がある.
+          <!--
           When using the implicit grant type, the access token is transmitted in the URI fragment,
           which can expose it to unauthorized parties.
+          -->
         </t>
         <t>
+          認可サーバーは, 認可されていない何者かがトークンの有効性を保持したままアクセストークンを生成・変更したり, トークンの生成方法を推測したりできないことを保証しなければならない (MUST).
+          <!--
           The authorization server MUST ensure that access tokens cannot be generated, modified, or
           guessed to produce valid access tokens by unauthorized parties.
+          -->
         </t>
         <t>
+          クライアントは, 必要最小限のスコープのアクセストークンを要求すべきである (SHOULD).
+          認可サーバーは, 要求されたスコープをどのように受け入れるかを判断する際, クライアントのアイデンティティを考慮すべきであり (SHOULD), 場合によっては要求よりも狭い権限しか持たないアクセストークンを発行することもある (MAY).
+          <!--
           The client SHOULD request access tokens with the minimal scope necessary. The
           authorization server SHOULD take the client identity into account when choosing how
           to honor the requested scope and MAY issue an access token with less rights than
           requested.
+          -->
         </t>
         <t>
+          この仕様は, 提示されたアクセストークンが認可サーバーから提示元のクライアントに発行されたことを確認するいかなる方法もリソースサーバーに提供しない.
+          <!--
           This specification does not provide any methods for the resource server to ensure that an
           access token presented to it by a given client was issued to that client by the
           authorization server.
+          -->
         </t>
       </section>
 
-      <section title='Refresh Tokens'>
+      <section title='リフレッシュトークン<!-- Refresh Tokens -->'>
         <t>
+          認可サーバーはWebアプリケーションクライアントおよびネイティブアプリケーションクライアントに対してリフレッシュトークンを発行してもよい (MAY).
+          <!--
           Authorization servers MAY issue refresh tokens to web application clients and native
           application clients.
+          -->
         </t>
         <t>
+          リフレッシュトークンは通信経路・ストレージ上ともに機密に保たれ, 認可サーバーとリフレッシュトークン発行先クライアントの間のみで共有されなければならない (MUST).
+          認可サーバーは, どのリフレッシュトークンがどのクライアントに発行されたかを記録しておかなくてはならない (MUST).
+          リフレッシュトークンは <xref target='tls' /> にあるTLSを用いて <xref target='RFC2818' /> で定義されているサーバー認証をした上で送信されなければならない (MUST).
+          <!--
           Refresh tokens MUST be kept confidential in transit and storage, and shared only among
           the authorization server and the client to whom the refresh tokens were issued. The
           authorization server MUST maintain the binding between a refresh token and the client to
           whom it was issued. Refresh tokens MUST only be transmitted using TLS as described in
           <xref target='tls' /> with server authentication as defined by <xref target='RFC2818' />.
+          -->
         </t>
         <t>
+          認可サーバーはクライアントのアイデンティティを認証出来る場合は常に, リフレッシュトークンとクライアントのアイデンティティとの間の紐付けを検証しなければならない (MUST).
+          クライアント認証が不可能な場合は, 認可サーバーはリフレッシュトークンの悪用を防ぐための他の手段を展開すべきである (SHOULD).
+          <!--
           The authorization server MUST verify the binding between the refresh token and client
           identity whenever the client identity can be authenticated. When client authentication is
           not possible, the authorization server SHOULD deploy other means to detect refresh token
           abuse.
+          -->
         </t>
         <t>
+          例えば, 認可サーバーはアクセストークンリフレッシュレスポンスの都度新しいリフレッシュトークンを発行するリフレッシュトークンローテーションを採用することができる.
+          前回のリフレッシュトークンは無効にされるが, 認可サーバーには残される.
+          もしリフレッシュトークンが漏洩しアタッカーと正当なクライアントの両方によって引き続き利用された場合, それらの内の一つは無効なリフレッシュトークンを提示し, 認可サーバーへ違反の発生を知らせることとなる.
+          <!--
           For example, the authorization server could employ refresh token rotation in which a new
           refresh token is issued with every access token refresh response. The previous refresh
           token is invalidated but retained by the authorization server. If a refresh token is
           compromised and subsequently used by both the attacker and the legitimate client, one of
           them will present an invalidated refresh token, which will inform the authorization server
           of the breach.
+          -->
         </t>
         <t>
+          認可サーバーは, 認可対象外の何者かがトークンの有効性を保持したままリフレッシュトークンを生成・変更したり, トークンの生成方法を推測したりできないことを保証しなければならない (MUST).
+          <!--
           The authorization server MUST ensure that refresh tokens cannot be generated, modified,
           or guessed to produce valid refresh tokens by unauthorized parties.
+          -->
         </t>
       </section>
 
-      <section title='Authorization Codes'>
+      <section title='認可コード<!-- Authorization Codes -->'>
         <t>
+          認可コードの伝送経路はセキュアなチャネル上で実施されるべき (SHOULD) であり, クライアントはリダイレクトURIがネットワーク上のリソースを指している場合, そのURIを利用するためにTLSを導入すべきである (SHOULD).
+          なぜなら認可コードはユーザーエージェントリダイレクトによって伝送されるため, ユーザーエージェントの履歴とHTTPリファラーヘッダーを通して公開されてしまう可能性があるためである.
+          <!--
           The transmission of authorization codes SHOULD be made over a secure channel, and the
           client SHOULD require the use of TLS with its redirection URI if the URI identifies a
           network resource. Since authorization codes are transmitted via user-agent redirections,
           they could potentially be disclosed through user-agent history and HTTP referrer headers.
+          -->
         </t>
         <t>
+          認可コードはプロセスを完了するために, 認可サーバーで権限を付与したリソースオーナーがクライアントへ返却されるリソースオーナーと同じであることを確認するために利用されるプレーンテキストの可搬クレデンシャルとして動作する.
+          したがって, もしクライアントが自身のリソースオーナー認証を認可コードに依存する場合は, クライアントのリダイレクトエンドポイントはTLSの利用を必須としなければならない (MUST).
+          <!--
           Authorization codes operate as plaintext bearer credentials, used to verify that the
           resource owner who granted authorization at the authorization server is the same
           resource owner returning to the client to complete the process. Therefore, if the client
           relies on the authorization code for its own resource owner authentication, the client
           redirection endpoint MUST require the use of TLS.
+          -->
         </t>
         <t>
+          認可コードの有効期間は短く, かつ一度限りしか利用されてはならない (MUST).
+          もし認可サーバーが単一の認可コードをアクセストークンへ交換しようとする複数の試行を検出したならば, 認可サーバーはその認可コードに基づき既に付与されたすべてのアクセストークンを無効化することを試みるべきである (SHOULD).
+          <!--
           Authorization codes MUST be short lived and single-use. If the authorization server
           observes multiple attempts to exchange an authorization code for an access token, the
           authorization server SHOULD attempt to revoke all access tokens already granted based on
           the compromised authorization code.
+          -->
         </t>
         <t>
+          もしクライアントが認証可能であれば, 認可サーバーはその認可コードが同じクライアントに対して発行されたことを確認するためにそのクライアントを認証しなければならない (MUST).
+          <!--
           If the client can be authenticated, the authorization servers MUST authenticate the
           client and ensure that the authorization code was issued to the same client.
+          -->
         </t>
       </section>
 
-      <section title='Authorization Code Redirection URI Manipulation'>
+      <section title='認可コードリダイレクトURIの操作<!--Authorization Code Redirection URI Manipulation-->'>
         <t>
+          認可要求に認可コードグラントタイプを用いるとき, クライアントは <spanx style='verb'>redirect_uri</spanx> パラメーターによりリダイレクトURIを指定できる.
+          攻撃者がリダイレクトURIの値を操作可能であるとき, 認可サーバーによってリソースオーナーのユーザーエージェントを攻撃者の管理下にあるURIに認可コードを含んだ状態でリダイレクトさせることができる.
+          <!--
           When requesting authorization using the authorization code grant type, the client can
           specify a redirection URI via the <spanx style='verb'>redirect_uri</spanx> parameter.
           If an attacker can manipulate the value of the redirection URI, it can cause the
           authorization server to redirect the resource owner user-agent to a URI under the control
           of the attacker with the authorization code.
+          -->
         </t>
         <t>
+          攻撃者は, 正しいクライアントにおいてアカウントを作成し, 認可フローを開始することができる.
+          攻撃者のユーザーエージェントがアクセス許可のために認可サーバーに送られたとき, 攻撃者は正当なクライアントにより提供された認可URIを取得し, クライアントのリダイレクトURIを攻撃者の管理下にあるURIに交換する.
+          攻撃者はその後, 正当なクライアントに向けた操作された認可アクセスリンクをたどるよう被害者を騙す.
+          <!--
           An attacker can create an account at a legitimate client and initiate the authorization
           flow. When the attacker's user-agent is sent to the authorization server to grant access,
           the attacker grabs the authorization URI provided by the legitimate client and replaces
           the client's redirection URI with a URI under the control of the attacker. The attacker
           then tricks the victim into following the manipulated link to authorize access to the
           legitimate client.
+          -->
         </t>
         <t>
+          認可サーバーにおいて, 被害者は正当で信頼できるクライアントによる正常で有効なリクエストを促され, そのリクエストを認可する.
+          被害者はその後, 認可コードとともに攻撃者の管理下にあるエンドポイントにリダイレクトされる.
+          攻撃者は, クライアントにより提供されたオリジナルのリダイレクトURIを用いて,　認可コードを送ることにより認可フローを完了する.
+          クライアントは認可コードとアクセストークンを交換し, それを攻撃者のクライアントのアカウントと紐づけることで, 被害者により (クライアント経由で) 認可された保護されたリソースへのアクセス権を獲得できる.
+          <!--
           Once at the authorization server, the victim is prompted with a normal, valid request on
           behalf of a legitimate and trusted client, and authorizes the request. The victim is
           then redirected to an endpoint under the control of the attacker with the authorization
@@ -3351,51 +3458,80 @@ should consider the following:
           exchanges the authorization code with an access token and links it to the attacker's
           client account, which can now gain access to the protected resources authorized by the
           victim (via the client).
+          -->
         </t>
         <t>
+          このような攻撃を防ぐため, 認可サーバーは認可コードの取得に用いたリダイレクトURIと, 認可コードとアクセストークンの交換時に提供されたリダイレクトURIが同一であることを確認しなければならない (MUST).
+          認可サーバーはパブリッククライアントに対してリダイレクトURIの登録を要求しなければならず (MUST), コンフィデンシャルクライアントに対してもリダイレクトURIの登録を要求すべきである (SHOULD).
+          リダイレクトURIがリクエストにより提供されたとき, 認可サーバーは登録された値を用いてそれを検証しければならない (MUST).
+          <!--
           In order to prevent such an attack, the authorization server MUST ensure that the
           redirection URI used to obtain the authorization code is identical to the redirection URI
           provided when exchanging the authorization code for an access token. The authorization
           server MUST require public clients and SHOULD require confidential clients to register
           their redirection URIs. If a redirection URI is provided in the request, the
           authorization server MUST validate it against the registered value.
+          -->
         </t>
       </section>
 
-      <section title='Resource Owner Password Credentials'>
+      <section title='リソースオーナーパスワードクレデンシャル<!--Resource Owner Password Credentials-->'>
         <t>
+          リソースオーナーパスワードクレデンシャルグラントタイプはレガシーシステム, もしくは移行のために利用される.
+          これはクライアントがユーザー名とパスワードを保管するリスク全般を軽減する.
+          しかし特権のあるクレデンシャルをクライアントにさらす必要性を取り除くことはできない.
+          <!--
           The resource owner password credentials grant type is often used for legacy or migration
           reasons. It reduces the overall risk of storing usernames and passwords by the client but
           does not eliminate the need to expose highly privileged credentials to the client.
+          -->
         </t>
         <t>
+          このグラントタイプは, 本プロトコルで回避するよう努力してきたパスワードアンチパターンを維持しているので, 他のグラントタイプより高いリスクを含んでいる.
+          クライアントがパスワードを濫用することや, (例えば, ログファイルやクライアントが保持している他のリソースから) パスワードが意図せず攻撃者に公開されることがありえる.
+          <!--
           This grant type carries a higher risk than other grant types because it maintains the
           password anti-pattern this protocol seeks to avoid. The client could abuse the password,
           or the password could unintentionally be disclosed to an attacker (e.g., via log files or
           other records kept by the client).
+          -->
         </t>
         <t>
+          加えてリソースオーナーは認可プロセスをコントロールできない (クレデンシャルをクライアントに提示した時点でリソースオーナーの関与は終了する) ので, クライアントはリソースオーナーの要求より有効範囲が広いアクセストークンを取得することができる.
+          認可サーバーはこのグラントタイプで発行されたアクセストークンについての有効範囲と有効期間をよく検討すべきである.
+          <!--
           Additionally, because the resource owner does not have control over the authorization
           process (the resource owner's involvement ends when it hands over its credentials to the
           client), the client can obtain access tokens with a broader scope than desired by the
           resource owner. The authorization server should consider the scope and lifetime of
           access tokens issued via this grant type.
+          -->
         </t>
         <t>
+          認可サーバーとクライアントはこのグラントタイプの利用を最小限に抑え, 可能であれば極力他のグラントタイプを利用すべきである (SHOULD).
+          <!--
           The authorization server and client SHOULD minimize use of this grant type and utilize
           other grant types whenever possible.
+          -->
         </t>
       </section>
 
-      <section title='Request Confidentiality'>
+      <section title='リクエストの機密性<!--Request Confidentiality-->'>
         <t>
+          アクセストークン, リフレッシュトークン, リソースオーナーのパスワード, そしてクライアントのクレデンシャルは平文で伝送してはならない (MUST NOT).
+          認可コードは平文で伝送するべきではない (SHOULD NOT).
+          <!--
           Access tokens, refresh tokens, resource owner passwords, and client credentials MUST NOT
           be transmitted in the clear. Authorization codes SHOULD NOT be transmitted in the clear.
+          -->
         </t>
         <t>
+          <spanx style='verb'>state</spanx>, <spanx style='verb'>scope</spanx> パラメータは安全ではないチャンネル上で伝送される、もしくは安全ではない方法でに保存されることがあるため、クライアントやリソースオーナーのセンシティブな情報をプレインテキスト内に含むべきではない (SHOULD NOT).
+          <!--
           The <spanx style='verb'>state</spanx> and <spanx style='verb'>scope</spanx> parameters
           SHOULD NOT include sensitive client or resource owner information in plain text, as they
           can be transmitted over insecure channels or stored insecurely.
+          -->
         </t>
       </section>
 
