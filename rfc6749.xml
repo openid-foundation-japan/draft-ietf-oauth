@@ -2055,7 +2055,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
         <section title='認可リクエスト' anchor='implicit-authz-req'>
         <!-- <section title='Authorization Request' anchor='implicit-authz-req'> -->
           <t>
-            クライアントは, <xref target="urlencoded"/> 毎に <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメーターを付与する.
+            クライアントは, <xref target="urlencoded"/> に従い <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメーターを付与する.
           </t>
           <!--
           <t>
@@ -2181,7 +2181,12 @@ and <xref target="ImplicitImpersonation" format="counter"/>
           -->
         </section>
 
-        <section title='Access Token Response' anchor="implicit-authz-resp">
+        <section title='アクセストークンレスポンス'>
+        <!-- <section title='Access Token Response' anchor="implicit-authz-resp"> -->
+          <t>
+            リソースオーナーがアクセスリクエストを許可した場合, 認可サーバーはアクセストークンを発行し, <xref target="urlencoded"/> に従い <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットを用いてリダイレクトURIのフラグメントコンポーネントに次のパラメーターを付与してクライアントに送る.
+          </t>
+          <!--
           <t>
             If the resource owner grants the access request, the authorization server issues an
             access token and delivers it to the client by adding the following parameters to
@@ -2189,8 +2194,38 @@ and <xref target="ImplicitImpersonation" format="counter"/>
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
             per <xref target="urlencoded"/>:
           </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
+              <t hangText='access_token'>
+                <vspace />
+                必須 (REQUIRED).
+                認可サーバーによって発行されたアクセストークン.
+              </t>
+              <t hangText='token_type'>
+                <vspace />
+                必須 (REQUIRED).
+                詳細は <xref target='token-types' /> を参照のこと.
+                大文字・小文字は区別しない.
+              </t>
+              <t hangText='expires_in'>
+                <vspace />
+                推奨 (RECOMMENDED).
+                アクセストークンの有効期間を秒で表したもの.
+                例えばこの値が <spanx style='verb'>3600</spanx> であれば, そのアクセストークンは発行から1時間後に期限切れとなる.
+                省略された場合, 認可サーバは他の手段を用いて終了時間を提供するか初期値を明記すべきである (SHOULD).
+              </t>
+              <t hangText='scope'>
+                <vspace />
+                クライアントによって要求された範囲と同一の場合は任意 (OPTIONAL). その他の場合は必須 (REQUIRED).
+                詳細は <xref target='scope' /> を参照のこと.
+              </t>
+              <t hangText='state'>
+                <vspace />
+                クライアントの認可リクエストに <spanx style='verb'>state</spanx> が含まれていた場合は必須 (REQUIRED).
+                クライアントから受け取った値をそのまま返す.
+              </t>
+              <!--
               <t hangText='access_token'>
                 <vspace />
                 REQUIRED. The access token issued by the authorization server.
@@ -2217,21 +2252,38 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                 REQUIRED if the <spanx style='verb'>state</spanx> parameter was present in the
                 client authorization request. The exact value received from the client.
               </t>
+              -->
             </list>
           </t>
           <t>
+            認可サーバーはリフレッシュトークンを発行してはならない (MUST NOT).
+          </t>
+          <!--
+          <t>
             The authorization server MUST NOT issue a refresh token.
           </t>
+          -->
           <figure>
+            <preamble>
+              例えば, 認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返し, ユーザーエージェントをリダイレクトさせる (改行は掲載上の都合による).
+            </preamble>
+            <!--
             <preamble>
               For example, the authorization server redirects the user-agent by sending the
               following HTTP response (with extra line breaks for display purposes only):
             </preamble>
+            -->
             <artwork><![CDATA[
   HTTP/1.1 302 Found
   Location: http://example.com/cb#access_token=2YotnFZFEjr1zCsicMWpAA
             &state=xyz&token_type=example&expires_in=3600
 ]]></artwork>
+            <postamble>
+              開発者は, いくつかのユーザーエージェントが, HTTP <spanx style='verb'>Location</spanx> レスポンスヘッダーフィールドをサポートしないことに注意するべきである.
+              このようなクライアントは3xxリダイレクトレスポンス以外でクライアントを向け直すための方法が必要になるだろう.
+              例えば, リダイレクトURI先にリンクするような"続行"ボタンを含むHTMLページを返却するなどである.
+            </postamble>
+            <!--
             <postamble>
               Developers should note that some user-agents do not support the inclusion of a
               fragment component in the HTTP <spanx style='verb'>Location</spanx> response header
@@ -2241,11 +2293,19 @@ and <xref target="ImplicitImpersonation" format="counter"/>
             </postamble>
           </figure>
           <t>
+            クライアントは認識できないレスポンスパラメーターを無視しなくてはならない (MUST).
+            アクセストークンの文字列長は本仕様では定義しない.
+            クライアントは値のサイズについてなんらかの仮定をすべきではない.
+            認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである (SHOULD).
+          </t>
+          <!--
+          <t>
             The client MUST ignore unrecognized response parameters. The access token string size
             is left undefined by this specification. The client should avoid making assumptions
             about value sizes. The authorization server SHOULD document the size of any value it
             issues.
           </t>
+          -->
 
           <section title='Error Response' anchor='implicit-authz-error'>
             <t>
