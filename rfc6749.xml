@@ -2217,7 +2217,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
               </t>
               <t hangText='scope'>
                 <vspace />
-                クライアントによって要求された範囲と同一の場合は任意 (OPTIONAL). その他の場合は必須 (REQUIRED).
+                クライアントによって要求された scope と同一の場合は任意 (OPTIONAL). その他の場合は必須 (REQUIRED).
                 詳細は <xref target='scope' /> を参照のこと.
               </t>
               <t hangText='state'>
@@ -2308,13 +2308,24 @@ and <xref target="ImplicitImpersonation" format="counter"/>
           </t>
           -->
 
-          <section title='Error Response' anchor='implicit-authz-error'>
+          <section title='エラーレスポンス' anchor='implicit-authz-error'>
+          <!-- <section title='Error Response' anchor='implicit-authz-error'> -->
+            <t>
+              リクエストが, リダイレクトURIの欠落 / 不正 / ミスマッチによって失敗した場合, もしくはクライアント識別子が不正な場合は, 認可サーバーはリソースオーナーにエラーを通知すべきである (SHOULD).
+              不正なリダイレクトURIに対してユーザーエージェントを自動的にリダイレクトさせてはならない (MUST NOT).
+            </t>
+            <!--
             <t>
               If the request fails due to a missing, invalid, or mismatching redirection URI, or if
               the client identifier is missing or invalid, the authorization server SHOULD inform
               the resource owner of the error and MUST NOT automatically redirect the user-agent
               to the invalid redirection URI.
             </t>
+            -->
+            <t>
+              リソースオーナーがアクセス要求を拒否した場合, もしくはリダイレクトURIの欠落 / 不正以外でリクエストが失敗した場合は, 認可サーバーは <xref target="urlencoded"/> に従い <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットを用いてリダイレクトURIのフラグメントコンポーネントに次のようなパラメーターを付与してクライアントに返却する.
+            </t>
+            <!--
             <t>
               If the resource owner denies the access request or if the request fails for reasons
               other than a missing or invalid redirection URI, the authorization server informs the
@@ -2323,35 +2334,75 @@ and <xref target="ImplicitImpersonation" format="counter"/>
               <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
               per <xref target="urlencoded"/>:
             </t>
+            -->
             <t>
               <list style='hanging' hangIndent='6'>
                 <t hangText='error'>
                   <vspace />
-                  REQUIRED. A single ASCII <xref target="USASCII" /> error code from the following:
+                  必須 (REQUIRED).
+                  次の中の1つのアスキー <xref target="USASCII" /> エラーコード:
+                  <!-- REQUIRED. A single ASCII <xref target="USASCII" /> error code from the following: -->
 
                   <list style='hanging' hangIndent='6'>
+                    <t hangText='invalid_request'>
+                      <vspace />
+                      リクエストに必要なパラメーターが含まれていない.
+                      不正なパラメーターが付与されていた場合や, パラメータが複数回指定されていた場合, その他不正な形式であった場合もこれに含まれる. 
+                    </t>
+                    <!--
                     <t hangText='invalid_request'>
                       <vspace />
                       The request is missing a required parameter, includes an invalid
                       parameter value, includes a parameter more than once, or is otherwise malformed.
                     </t>
+                    -->
+                    <t hangText='unauthorized_client'>
+                      <vspace />
+                      クライアントは現在の方法でアクセストークンを取得することを認可されていない. 
+                    </t>
+                    <!--
                     <t hangText='unauthorized_client'>
                       <vspace />
                       The client is not authorized to request an access token using this method.
                     </t>
+                    -->
+                    <t hangText='access_denied'>
+                      <vspace />
+                      リソースオーナーまたは認可サーバーがリクエストを拒否した. 
+                    </t>
+                    <!--
                     <t hangText='access_denied'>
                       <vspace />
                       The resource owner or authorization server denied the request.
                     </t>
+                    -->
+                    <t hangText='unsupported_response_type'>
+                      <vspace />
+                      認可サーバーは現在の方法によるアクセストークン取得をサポートしていない.
+                    </t>
+                    <!--
                     <t hangText='unsupported_response_type'>
                       <vspace />
                       The authorization server does not support obtaining an access token using
                       this method.
                     </t>
+                    -->
+                    <t hangText='invalid_scope'>
+                      <vspace />
+                      リクエストスコープが不正, 未知, もしくはその他の不当な形式である. 
+                    </t>
+                    <!--
                     <t hangText='invalid_scope'>
                       <vspace />
                       The requested scope is invalid, unknown, or malformed.
                     </t>
+                    -->
+                    <t hangText='server_error'>
+                      <vspace />
+                      認可サーバーがリクエストの処理ができないような予期しない状況に遭遇した. 
+                      (このエラーコードはHTTPステータスコード500 Internal Server ErrorがHTTPリダイレクトではクライアントへ返されないため必要である)
+                    </t>
+                    <!--
                     <t hangText='server_error'>
                       <vspace />
                       The authorization server encountered an unexpected condition that prevented
@@ -2360,6 +2411,13 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                       HTTP status code cannot be returned to the client
                       via an HTTP redirect.)
                     </t>
+                    -->
+                    <t hangText='temporarily_unavailable'>
+                      <vspace />
+                      認可サーバーが一時的な過負荷やメンテナンスによってリクエストを扱うことが出来ない. 
+                      (このエラーコードはHTTPステータスコード503 Service UnavailabeがHTTPリダイレクトではクライアントへ返されないため必要である)
+                    </t>
+                    <!--
                     <t hangText='temporarily_unavailable'>
                       <vspace />
                       The authorization server is currently unable to handle the request due to a
@@ -2368,11 +2426,21 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                       HTTP status code cannot be returned to the client
                       via an HTTP redirect.)
                     </t>
+                    -->
                   </list>
 
-                  Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
-                  characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+                  <spanx style='verb'>error</spanx> パラメータの値は %x20-21 / %x23-5B / %x5D-7E 以外の文字を含んではならない (MUST NOT).
+                  <!-- Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
+                  characters outside the set %x20-21 / %x23-5B / %x5D-7E. -->
                 </t>
+                <t hangText='error_description'>
+                  <vspace />
+                  任意 (OPTIONAL).
+                  クライアント開発者が発生したエラーを理解する際の手助けとなる, ASCII <xref target="USASCII" /> の可読性のある追加情報.
+                  <vspace/>
+                  <spanx style='verb'>error_description</spanx> パラメータの値は %x20-21 / %x23-5B / %x5D-7E 以外の文字を含んではならない (MUST NOT).
+                </t>
+                <!--
                 <t hangText='error_description'>
                   <vspace />
                   OPTIONAL. Human-readable ASCII <xref target="USASCII" /> text providing additional information,
@@ -2381,6 +2449,15 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                   Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
                   characters outside the set %x20-21 / %x23-5B / %x5D-7E.
                 </t>
+                -->
+                <t hangText='error_uri'>
+                  <vspace />
+                  任意 (OPTIONAL).
+                  クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
+                  <vspace/>
+                  <spanx style='verb'>error_uri</spanx> パラメータの値は%x21 / %x23-5B / %x5D-7E 以外の文字を含んではならない (MUST NOT).
+                </t>
+                <!--
                 <t hangText='error_uri'>
                   <vspace />
                   OPTIONAL. A URI identifying a human-readable web page with information about the
@@ -2391,18 +2468,31 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                   MUST conform to the URI&nbhy;reference syntax and thus MUST NOT include
                   characters outside the set %x21 / %x23-5B / %x5D-7E.
                 </t>
+                -->
+                <t hangText='state'>
+                  <vspace />
+                  もし <spanx style='verb'>state</spanx> パラメーターがクライアントからの認可リクエストに含めれている場合は必須 (REQUIRED).
+                  クライアントから受け取った値をそのまま返す.
+                </t>
+                <!--
                 <t hangText='state'>
                   <vspace />
                   REQUIRED if a <spanx style='verb'>state</spanx> parameter was present in the
                   client authorization request. The exact value received from the client.
                 </t>
+                -->
               </list>
             </t>
             <figure>
               <preamble>
+                例えば, 認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する. 
+              </preamble>
+              <!--
+              <preamble>
                 For example, the authorization server redirects the user-agent by sending the
                 following HTTP response:
               </preamble>
+              -->
               <artwork><![CDATA[
   HTTP/1.1 302 Found
   Location: https://client.example.com/cb#error=access_denied&state=xyz
