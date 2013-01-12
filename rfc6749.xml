@@ -2052,15 +2052,49 @@ and <xref target="ImplicitImpersonation" format="counter"/>
         </t>
         -->
 
-        <section title='Authorization Request' anchor='implicit-authz-req'>
+        <section title='認可リクエスト' anchor='implicit-authz-req'>
+        <!-- <section title='Authorization Request' anchor='implicit-authz-req'> -->
+          <t>
+            クライアントは, <xref target="urlencoded"/> 毎に <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットを用いて認可エンドポイントURIへのクエリーとして, 次のパラメーターを付与する.
+          </t>
+          <!--
           <t>
             The client constructs the request URI by adding the following parameters to the
             query component of the authorization endpoint URI using the
             <spanx style='verb'>application/x-www-form-urlencoded</spanx> format,
             per <xref target="urlencoded"/>:
           </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
+              <t hangText='response_type'>
+                <vspace />
+                必須 (REQUIRED).
+                値は必ず <spanx style='verb'>token</spanx> にしなければならない (MUST).
+              </t>
+              <t hangText='client_id'>
+                <vspace />
+                必須 (REQUIRED).
+                詳細は <xref target='client-identifier' /> を参照のこと.
+              </t>
+              <t hangText='redirect_uri'>
+                <vspace />
+                任意 (OPTIONAL).
+                詳細は <xref target='redirect-uri' /> を参照のこと.
+              </t>
+              <t hangText='scope'>
+                <vspace />
+                任意 (OPTIONAL).
+                詳細は <xref target='scope' /> を参照のこと.
+              </t>
+              <t hangText='state'>
+                <vspace />
+                推奨 (RECOMMENDED).
+                リクエストとコールバックの間で状態を維持するために使用するランダムな値.
+                認可サーバーはリダイレクトによってクライアントに処理を戻す際にこの値を付与する.
+                このパラメーターは <xref target='CSRF' /> に記載されているクロスサイトリクエストフォージェリを防ぐために用いられるべきである (SHOULD). 
+              </t>
+              <!--
               <t hangText='response_type'>
                 <vspace />
                 REQUIRED. Value MUST be set to <spanx style='verb'>token</spanx>.
@@ -2085,17 +2119,28 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                 user-agent back to the client. The parameter SHOULD be used for preventing
                 cross-site request forgery as described in <xref target='CSRF' />.
               </t>
+              -->
             </list>
           </t>
+          <t>
+            クライアントは, HTTPリダイレクトまたはユーザーエージェントを介したその他の利用可能な手段によって, リソースオーナーを構築されたURIに送る.
+          </t>
+          <!--
           <t>
             The client directs the resource owner to the constructed URI using an HTTP redirection
             response, or by other means available to it via the user-agent.
           </t>
+          -->
           <figure>
+            <preamble>
+              例えば, クライアントはユーザーエージェントに次のHTTPリクエストをTLSを用いて実行させる (改行は掲載上の都合による).
+            </preamble>
+            <!--
             <preamble>
               For example, the client directs the user-agent to make the following HTTP request
               using TLS (with extra line breaks for display purposes only):
             </preamble>
+            -->
             <artwork><![CDATA[
   GET /authorize?response_type=token&client_id=s6BhdRkqt3&state=xyz
       &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
@@ -2103,21 +2148,37 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 ]]></artwork>
           </figure>
           <t>
+            認可サーバーは, 必要なリクエストパラメーターがすべて揃っていて, かつ正当であることを検証する.
+            認可サーバーは, アクセストークンを返すリダイレクトURIが <xref target='redirect-uri' /> に述べるように事前登録されたリダイレクトURIと一致することを検証しなければならない (MUST).
+          </t>
+          <!--
+          <t>
             The authorization server validates the request to ensure that all required parameters are
             present and valid. The authorization server MUST verify that the redirection URI to which
             it will redirect the access token matches a redirection URI registered by the client as
             described in <xref target='redirect-uri' />.
           </t>
+          -->
+          <t>
+            リクエストが正当なものであれば, 認可サーバーはリソースオーナーを認証し, (リソースオーナーに確認することによって, または他の手段によって承認を確立することによって) 認可の判定を得る.
+          </t>
+          <!--
           <t>
             If the request is valid, the authorization server authenticates the resource owner and
             obtains an authorization decision (by asking the resource owner or by establishing
             approval via other means).
           </t>
+          -->
+          <t>
+            判定が成立すると, 認可サーバーはHTTPリダイレクトレスポンスまたはユーザーエージェントを介したその他の利用可能な手段を用いて, 与えられたリダイレクトURIにユーザーエージェントを送る. 
+          </t>
+          <!--
           <t>
             When a decision is established, the authorization server directs the user-agent to the
             provided client redirection URI using an HTTP redirection response, or by other means
             available to it via the user&nbhy;agent.
           </t>
+          -->
         </section>
 
         <section title='Access Token Response' anchor="implicit-authz-resp">
