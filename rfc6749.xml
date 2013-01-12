@@ -2181,7 +2181,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
           -->
         </section>
 
-        <section title='アクセストークンレスポンス'>
+        <section title='アクセストークンレスポンス' anchor="implicit-authz-resp">
         <!-- <section title='Access Token Response' anchor="implicit-authz-resp"> -->
           <t>
             リソースオーナーがアクセスリクエストを許可した場合, 認可サーバーはアクセストークンを発行し, <xref target="urlencoded"/> に従い <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットを用いてリダイレクトURIのフラグメントコンポーネントに次のパラメーターを付与してクライアントに送る.
@@ -2291,6 +2291,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
               a 3xx redirection response -- for example, returning an HTML page that includes a
               'continue' button with an action linked to the redirection URI.
             </postamble>
+            -->
           </figure>
           <t>
             クライアントは認識できないレスポンスパラメーターを無視しなくてはならない (MUST).
