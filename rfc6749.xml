@@ -3747,77 +3747,116 @@ should consider the following:
         </t>
       </section>
 
-      <section title='Ensuring Endpoint Authenticity'>
+      <section title='エンドポイントの真正性確保<!-- Ensuring Endpoint Authenticity -->'>
 
         <t>
+          man-in-the-middle アタックを防ぐため, 認可サーバーは TLS を導入し, <xref target='RFC2818' /> に従って認可エンドポイントおよびトークンエンドポイントへのすべてのリクエストで TLS を利用したサーバー認証を必須としなければならない (MUST).
+          クライアントはサーバー身元認証の要件に従い, <xref target='RFC6125' /> で定義されている認可サーバーのTLS 証明書の検証を行わなければならない (MUST).
+          <!--
           In order to prevent man-in-the-middle attacks, the authorization server MUST require the
           use of TLS with server authentication as defined by <xref target='RFC2818' /> for
           any request sent to the authorization and token endpoints. The client MUST validate the
           authorization server's TLS certificate as defined by <xref target='RFC6125' /> and in
           accordance with its requirements for server identity authentication.
+          -->
         </t>
       </section>
 
-      <section title='Credentials-Guessing Attacks' anchor='anthropy'>
+      <section title='クレデンシャルゲッシングアタック<!-- Credentials Guessing Attacks -->' anchor='anthropy'>
         <t>
+          認可サーバーは, 攻撃者にアクセストークン, 認可コード, リフレッシュトークン, リソースオーナーパスワードおよびクライアントクレデンシャルを推測されないようにしなければならない (MUST).
+          <!--
           The authorization server MUST prevent attackers from guessing access tokens,
           authorization codes, refresh tokens, resource owner passwords, and client credentials.
+          -->
         </t>
         <t>
+          攻撃者が生成されたトークン (とエンドユーザーにより扱われないその他のクレデンシャル) を推測する可能性は 2^(-128) 以下にしなければならず (MUST), 2^(-160) 以下にすべきである (SHOULD).
+          <!--
           The probability of an attacker guessing generated tokens (and other credentials not
           intended for handling by end-users) MUST be less than or equal to 2^(-128) and SHOULD be
           less than or equal to 2^(-160).
+          -->
         </t>
         <t>
+          エンドユーザーが扱うクレデンシャルについては, 認可サーバーはその他の保護対策を行わなければならない (MUST).
+          <!--
           The authorization server MUST utilize other means to protect credentials intended for
           end-user usage.
+          -->
         </t>
       </section>
 
-      <section title='Phishing Attacks'>
+      <section title='フィッシングアタック<!-- Phishing Attacks -->'>
         <t>
+          本仕様や類似プロトコルを実際に広く運用するにつれ, エンドユーザーはパスワード入力を求める Web サイトにリダイレクトされるという慣習になじんでゆくであろう.
+          もしエンドユーザーがそういった Web サイトでパスワードを入力する際にそのサイトの真正性検証を怠った場合, この慣習がアタッカーに悪用され, リソースオーナーのパスワードを盗まれる可能性もある.
+          <!--
           Wide deployment of this and similar protocols may cause end-users to become inured
           to the practice of being redirected to websites where they are asked to enter their
           passwords. If end-users are not careful to verify the authenticity of these websites
           before entering their credentials, it will be possible for attackers to exploit this
           practice to steal resource owners' passwords.
+          -->
         </t>
         <t>
+          サービスプロバイダーはエンドユーザーに対してフィッシングアタックにより引き起こされるリスクに関して教育し, エンドユーザーが簡単にサイトの真正性を確認できるメカニズムを提供するべきである.
+          クライアントデベロッパーは, ユーザーエージェントとのインタラクション方式 (外部エージェント / 埋め込みエージェントのどちらを利用するかなど) とセキュリティーとの関係に加え, エンドユーザーによる認可サーバーの真正性検証能力についても熟考すべきである.
+          <!--
           Service providers should attempt to educate end-users about the risks phishing attacks
           pose and should provide mechanisms that make it easy for end-users to confirm the
           authenticity of their sites. Client developers should consider the security implications
           of how they interact with the user-agent (e.g., external, embedded), and the ability of
           the end-user to verify the authenticity of the authorization server.
+          -->
         </t>
         <t>
+          フィッシングアタックのリスクを低減するため, 認可サーバーはエンドユーザーとのインタラクションを行うすべてのエンドポイントで TLS を利用しなければならない (MUST).
+          <!--
           To reduce the risk of phishing attacks, the authorization servers MUST require the use of
           TLS on every endpoint used for end-user interaction.
+          -->
         </t>
       </section>
 
-      <section title='Cross-Site Request Forgery' anchor='CSRF'>
+      <section title='クロスサイトリクエストフォージェリ<!-- Cross-Site Request Forgery -->' anchor='CSRF'>
         <t>
+          クロスサイトリクエストフォージェリ (CSRF) は, 攻撃者が犠牲となるエンドユーザーのユーザーエージェントに (例えば, ユーザーエージェントに誤解を招きやすいリンクやイメージ, 転送によって) 悪意のあるURIを閲覧させることにより (通常, 有効なセッションクッキーの存在によって) 信頼が確立されたサーバーへ接続させる手法である.
+          <!--
           Cross-site request forgery (CSRF) is an exploit in which an attacker causes the
           user-agent of a victim end-user to follow a malicious URI (e.g., provided to the
           user-agent as a misleading link, image, or redirection) to a trusting server (usually
           established via the presence of a valid session cookie).
+          -->
         </t>
         <t>
+          クライアントのリダイレクトURIに対するCSRF攻撃は, 攻撃者が自身の認可コードやアクセストークンを紛れ込ませることを可能とし, クライアントに犠牲者の保護されたリソースではなく, 攻撃者のリソースに紐付いたアクセストークンを使わせることが出来てしまう (例えば, 犠牲者の銀行口座情報を攻撃者の管理しているリソースへ保存してしまう, といったことも可能となる).
+          <!--
           A CSRF attack against the client's redirection URI allows an attacker to inject its own
           authorization code or access token, which can result in the client using an access token
           associated with the attacker's protected resources rather than the victim's (e.g., save
           the victim's bank account information to a protected resource controlled by the
           attacker).
+          -->
         </t>
         <t>
+          クライアントは自身のリダイレクトURIに対してCSRF保護対策を導入しなければならない (MUST).
+          一般的に保護対策は, リダイレクトURIのエンドポイントへ送られたすべての要求に対して, 要求とユーザーエージェントの認証状態を紐付けるための値を含めることにより実現する (例えば, ユーザーエージェントを認証するために使うセッションクッキーのハッシュなど).
+          クライアントは認可要求の発行時, この値を認可サーバーへ伝搬するために <spanx style='verb'>state</spanx> リクエストパラメーターを利用すべきである (SHOULD).
+          <!--
           The client MUST implement CSRF protection for its redirection URI. This is typically
           accomplished by requiring any request sent to the redirection URI endpoint to include a
           value that binds the request to the user-agent's authenticated state (e.g., a hash of the
           session cookie used to authenticate the user-agent). The client SHOULD utilize the
           <spanx style='verb'>state</spanx> request parameter to deliver this value to the
           authorization server when making an authorization request.
+          -->
         </t>
         <t>
+          一旦エンドユーザーの認可が得られると, 認可サーバーはエンドユーザーのユーザーエージェントを <spanx style='verb'>state</spanx> パラメーターに含まれる要求されたバインド値と共にクライアントへリダイレクトする.
+          クライアントはバインド値とユーザーエージェントの認証状態を突合することによりリクエストの正当性を確認することが出来る.
+          CSRFを防ぐために使用されるバインド値は ( <xref target='anthropy' /> にて説明されている) 推測不能な値を含まねばならず (MUST), ユーザーエージェントの認証状態 (例えば, セッションクッキーやHTML5のローカルストレージ) はクライアントおよびユーザーエージェントのみがアクセスできる状態に保たれなければならない (つまり, 同一起源ポリシーによる保護) (MUST).
+          <!--
           Once authorization has been obtained from the end-user, the authorization server
           redirects the end-user's user-agent back to the client with the required binding value
           contained in the <spanx style='verb'>state</spanx> parameter. The binding value enables
@@ -3826,21 +3865,34 @@ should consider the following:
           a non-guessable value (as described in <xref target='anthropy' />), and the user-agent's
           authenticated state (e.g., session cookie, HTML5 local storage) MUST be kept in a location
           accessible only to the client and the user-agent (i.e., protected by same-origin policy).
+          -->
         </t>
         <t>
+          認可サーバーの認可エンドポイントへのCSRF攻撃はエンドユーザーに知られることなく, 攻撃者が悪意のあるクライアントへのエンドユーザー認可を取得可能にしてしまう.
+          <!--
           A CSRF attack against the authorization server's authorization endpoint can result in an
           attacker obtaining end-user authorization for a malicious client without involving or
           alerting the end-user.
+          -->
         </t>
         <t>
+          認可サーバーは認可エンドポイントにCSRF保護を実装せねばならず, 悪意あるクライアントがリソースオーナーへの通知と明確な同意なく認可を取得出来ないことを保証せねばならない (MUST).
+          <!--
           The authorization server MUST implement CSRF protection for its authorization endpoint
           and ensure that a malicious client cannot obtain authorization without the awareness and
           explicit consent of the resource owner.
+          -->
         </t>
       </section>
 
-      <section title='Clickjacking'>
+      <section title='クリックジャッキング<!--Clickjacking-->'>
         <t>
+          クリックジャッキング攻撃において, 攻撃者は正当なクライアントを登録し,その後悪意のあるサイトを構築する.
+          そのサイトは, 透明なiframe内に認可サーバーの認可エンドポイントのWebページをロードし, その認可ページの重要なボタンの直下に置かれるように
+丁寧に配置されたダミーボタンの上に重ねられる.
+          エンドユーザーが誤解し目に見えるボタンをクリックするとき, 実際は認可ページ内の (認可ボタンのような) 目に見えないボタンをクリックしている.
+          これは, 攻撃者にリソースオーナーを騙し, 知らないうちにそのクライアントアクセスを許可することを許す.
+          <!--
           In a clickjacking attack, an attacker registers a legitimate client and then constructs a
           malicious site in which it loads the authorization server's authorization endpoint web
           page in a transparent iframe overlaid on top of a set of dummy buttons, which are
@@ -3849,8 +3901,14 @@ should consider the following:
           clicking an invisible button on the authorization page (such as an "Authorize" button).
           This allows an attacker to trick a resource owner into granting its client access without
           the end-user's knowledge.
+          -->
         </t>
         <t>
+          この攻撃形式を防ぐため, ネイティブアプリケーションはエンドユーザーの認可を要求するとき, 埋め込みのブラウザの代わりに外部ブラウザを使用すべきである (SHOULD).
+          ほとんどの最新ブラウザは, 認可サーバーが非標準の <spanx style='verb'>x-frame-options</spanx> ヘッダーを利用することにより強制的にiframeを回避することができる.
+          このヘッダーは <spanx style='verb'>deny</spanx> と <spanx style='verb'>sameorigin</spanx> の2つの値を持つことができ, それぞれすべてのフレーミング, originが異なるサイトからのフレーミングを防ぐ.
+          古いブラウザはJavaScriptのフレームバースティング技術を利用できるが, すべてのブラウザに有効ではないかもしれない.
+          <!--
           To prevent this form of attack, native applications SHOULD use external browsers instead
           of embedding browsers within the application when requesting end-user authorization. For
           most newer browsers, avoidance of iframes can be enforced by the authorization server
@@ -3859,31 +3917,46 @@ should consider the following:
           <spanx style='verb'>sameorigin</spanx>, which will block any framing, or framing by sites
           with a different origin, respectively. For older browsers, JavaScript frame-busting
           techniques can be used but may not be effective in all browsers.
+          -->
         </t>
       </section>
 
-      <section title='Code Injection and Input Validation'>
+      <section title='コードインジェクションとインプットバリデーション<!--Code Injection and Input Validation-->'>
         <t>
+          入力値もしくはそれ以外の外部変数がアプリケーションによってサニタイズされずに使用されるとき, コードインジェクション攻撃が発生し, アプリケーションロジックの改ざんを引き起こす.
+          これは攻撃者にアプリケーションデバイスもしくはそのデータへのアクセスを許可し, サービス不能もしくは広範囲な悪意のある副作用の導入を引き起こすかもしれない.
+          <!--
           A code injection attack occurs when an input or otherwise external variable is used by an
           application unsanitized and causes modification to the application logic. This may allow
           an attacker to gain access to the application device or its data, cause denial of
           service, or introduce a wide range of malicious side-effects.
+          -->
         </t>
         <t>
+          認可サーバーとクライアントは受け取ったどの値も, 特に <spanx style='verb'>state</spanx>, <spanx style='verb'>redirect_uri</spanx> パラメーターはサニタイズ (と可能であれば検証) をしなければならない (MUST).
+          <!--
           The authorization server and client MUST sanitize (and validate when possible) any value
           received -- in particular, the value of the <spanx style='verb'>state</spanx> and
           <spanx style='verb'>redirect_uri</spanx> parameters.
+          -->
         </t>
       </section>
 
-      <section title='Open Redirectors' anchor='open-redirect'>
+      <section title='オープンリダイレクタ<!--Open Redirectors-->' anchor='open-redirect'>
         <t>
+          認可サーバーの認可エンドポイントとクライアントのリダイレクトエンドポイントは不適切な設定によりオープンリダイレクタとして動作しうる.
+          オープンリダイレクタとは正当性の確認をせずにパラメーターで指定されたURLにユーザーエージェントを自動でリダイレクトするエンドポイントである.
+          <!--
           The authorization server, authorization endpoint, and client redirection endpoint can
           be improperly configured and operate as open redirectors. An open redirector is an
           endpoint using a parameter to automatically redirect a user-agent to the location
           specified by the parameter value without any validation.
+          -->
         </t>
         <t>
+          オープンリダイレクタは, フィッシング攻撃, もしくはURIのオーソリティ部を見慣れた信頼できる通信先とする事で攻撃者がエンドユーザーを悪意のあるサイトに誘導するのに利用される.
+          加えて認可サーバーがクライアントにリダイレクトURIの一部のみでの登録を許可した場合, 攻撃者は, 認可サーバーの正当性確認を通過し, 認可コード, アクセストークンを攻撃者が管理するエンドポイントに送信するリダイレクトURIの作成にクライアントの運営しているオープンリダイレクタを利用できる.
+          <!--
           Open redirectors can be used in phishing attacks, or by an attacker to get end-users to
           visit malicious sites by using the URI authority component of a
           familiar and trusted destination.
@@ -3892,46 +3965,72 @@ should consider the following:
           client to construct a redirection URI that will pass the authorization server validation
           but will send the authorization code or access token to an endpoint under the control of
           the attacker.
+          -->
         </t>
       </section>
 
-      <section title='Misuse of Access Token to Impersonate Resource Owner in Implicit Flow'
+      <section title='インプリシットフローにおけるリソースオーナーなりすましのためのアクセストークン不正利用<!--Misuse of Access Token to Impersonate Resource Owner in Implicit Flow-->'
                anchor="ImplicitImpersonation">
         <t>
+          インプリシットフローを利用するパブリッククライアントについて, この仕様はアクセストークンがどのクライアントに発行されたかを特定する方法をクライアントに提供しない.
+          <!--
           For public clients using implicit flows, this specification does not provide any
           method for the client to determine what client an access token was issued to.
+          -->
         </t>
         <t>
+          リソースオーナーは攻撃者の悪意のあるクライアントにアクセストークンを許可することにより、進んでリソースへのアクセスを委任するかもしれない.
+          これはフィッシングまたは何か他の詐欺が原因となるかもしれない.
+          攻撃者はまた, なんらかのメカニズムでトークンを盗むかもしれない.
+          それから, 攻撃者は正当なパブリッククライアントへのアクセストークンを提供することでリソースオーナーへのなりすましを試みるかもしれない.
+          <!--
           A resource owner may willingly delegate access to a resource by granting an access token
           to an attacker's malicious client.  This may be due to phishing or some other pretext.
           An attacker may also steal a token via some other mechanism.   
           An attacker may then attempt to impersonate the resource owner by providing the 
           access token to a legitimate public client.
+          -->
         </t>
         <t>
+          インプリシットフロー (response_type=token) では, 攻撃者は認可サーバーからのレスポンスに含まれるトークンを簡単に変更し, 以前攻撃者自身に発行された実際のアクセストークンに置き換えることができる.
+          <!--
           In the implicit flow (response_type=token), the attacker can easily switch the token
           in the response from the authorization server,
           replacing the real access token with the one previously issued to the attacker.
+          -->
         </t>
         <t>
+          アクセストークンを差し込める信用できないアプリケーションを作成する攻撃者により, クライアントのユーザーを特定するためにネイティブアプリケーションと通信しバックチャネルでアクセストークンを受け取っているサーバーは同様の危険性を持つ.
+          <!--
           Servers communicating with native applications that rely on being passed
           an access token in the back channel to identify the user of the client may 
           be similarly compromised by an attacker creating a compromised application
           that can inject arbitrary stolen access tokens.
+          -->
         </t>
         <t>
+          リソースオーナーだけがそのリソースに対する有効なアクセストークンを提示できると仮定されるいかなるパブリッククライアントも, このタイプの攻撃に対して脆弱である.
+          <!--
           Any public client that makes the assumption that only the resource owner
           can present it with a valid access token for the resource
           is vulnerable to this type of attack.
+          -->
         </t>
         <t>
+          このタイプの攻撃は正当なクライアントでリソースオーナーの情報を攻撃者 (悪意のあるクライアント) に公開するかもしれない.
+          これはまた, 合法なクライアントにて攻撃者にもともとアクセストークンもしくは認可コードを与えられたリソースオーナーと同等の資格で活動することを許可する.
+          <!--
           This type of attack may expose information about the resource owner
           at the legitimate client to the attacker (malicious client).
           This will also allow the attacker to perform operations
           at the legitimate client with the same permissions as the resource owner
           who originally granted the access token or authorization code.
+          -->
         </t>
         <t>
+          クライアントへのリソースオーナー認証方法はこの仕様の範囲外である.
+          ユーザー認証をクライアント (3rdパーティーサインインサービスなど) に委任する認可プロセスを使用するどんな仕様でも, アクセストークンがその使用のために発行されたかどうか特定するためのセキュリティメカニズム (オーディエンス制限のあるアクセストークン) の追加なしにインプリシットフローを利用してはならない (MUST NOT).
+          <!--
           Authenticating resource owners to clients is out of scope for this
           specification. Any specification that uses the authorization process
           as a form of delegated end-user authentication to the client (e.g.,
@@ -3939,6 +4038,7 @@ should consider the following:
           additional security mechanisms that would enable the client to
           determine if the access token was issued for its use (e.g.,
           audience-restricting the access token).
+          -->
         </t>
       </section>
 
