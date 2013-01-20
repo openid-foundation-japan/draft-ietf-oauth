@@ -2504,20 +2504,35 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 
       </section>
 
-      <section title='Resource Owner Password Credentials Grant' anchor='grant-password'>
+      <section title='リソースオーナーパスワードクレデンシャルグラント' anchor='grant-password'>
+      <!-- <section title='Resource Owner Password Credentials Grant' anchor='grant-password'> -->
+        <t>
+          リソースオーナーパスワードクレデンシャルグラントタイプは, リソースオーナーがクライアントと信頼関係にある場合, 例えばリソースオーナーの所有するデバイスOSや特別許可されたアプリケーションなどに適している.
+          認可サーバーはこのグラントタイプを有効にする際は特に注意するべきである.
+          また他のフローが利用できない場合にのみ許可するべきである.
+        </t>
+        <!--
         <t>
           The resource owner password credentials grant type is suitable in cases where the
           resource owner has a trust relationship with the client, such as the device operating
           system or a highly privileged application. The authorization server should take special
           care when enabling this grant type and only allow it when other flows are not viable.
         </t>
+        -->
+        <t>
+          このグラントタイプは, リソースオーナーのクレデンシャル (通常は対話型入力フォームにて取得するユーザー名とパスワード) を取得できるクライアントに適している.
+          また, 保存済みのクレデンシャルをアクセストークンへ変換できるため, Basic認証やDigest認証のような直接的な認証スキームを利用している既存のクライアントをOAuthへ移行する際にも利用できる.
+        </t>
+        <!--
         <t>
           This grant type is suitable for clients capable of obtaining the resource owner's
           credentials (username and password, typically using an interactive form). It is also used
           to migrate existing clients using direct authentication schemes such as HTTP Basic or
           Digest authentication to OAuth by converting the stored credentials to an access token.
         </t>
-        <figure title='Resource Owner Password Credentials Flow' anchor='Figure-5'>
+        -->
+        <figure title='リソースオーナーパスワードクレデンシャルフロー' anchor='Figure-5'>
+        <!-- <figure title='Resource Owner Password Credentials Flow' anchor='Figure-5'> -->
           <artwork><![CDATA[
   +----------+
   | Resource |
@@ -2539,70 +2554,123 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 ]]></artwork>
         </figure>
         <t>
+          <xref target='Figure-5' /> のフローは以下の通りである.
+        </t>
+        <!--
+        <t>
           The flow illustrated in <xref target='Figure-5' /> includes the following steps:
         </t>
+        -->
         <t>
           <list style='format (%C)'>
             <t>
+              リソースオーナーはクライアントにユーザー名とパスワードを提供する.
+            </t>
+            <!--
+            <t>
               The resource owner provides the client with its username and password.
             </t>
+            -->
+            <t>
+              クライアントは認可サーバーのトークンエンドポイントにリソースオーナーから取得したクレデンシャルを含めることでアクセストークンを要求する.
+              リクエストを生成する際に, クライアントは認可サーバーによって認証される.
+            </t>
+            <!--
             <t>
               The client requests an access token from the authorization server's token endpoint by
               including the credentials received from the resource owner. When making the request,
               the client authenticates with the authorization server.
             </t>
+            -->
+            <t>
+              認可サーバーはクライアントを認証し, リソースオーナーのクレデンシャルを検証する.
+              もし有効であればアクセストークンを発行する.
+            </t>
+            <!--
             <t>
               The authorization server authenticates the client and validates the resource owner
               credentials, and if valid, issues an access token.
             </t>
+            -->
           </list>
         </t>
 
-        <section title='Authorization Request and Response'>
+        <section title='認可リクエストとレスポンス'>
+        <!-- <section title='Authorization Request and Response'> -->
+          <t>
+            クライアントがリソースオーナーのクレデンシャルを取得する方法は, 本仕様の範囲外である.
+            クライアントはアクセストークン取得直後にクレデンシャルを破棄しなければならない (MUST).
+          </t>
+          <!--
           <t>
             The method through which the client obtains the resource owner credentials is beyond
             the scope of this specification. The client MUST discard the credentials once an access
             token has been obtained.
           </t>
+          -->
         </section>
 
-        <section title='Access Token Request' anchor="password-tok-req">
+        <section title='アクセストークンリクエスト' anchor="password-tok-req">
+        <!-- <section title='Access Token Request' anchor="password-tok-req"> -->
+          <t>
+            クライアントは, 下記のパラメーターを <xref target="urlencoded"/> に従い <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットでHTTPリクエストボディーに含め, UTF-8でエンコードして, リクエストを構築する.
+          </t>
+          <!--
           <t>
             The client makes a request to the token endpoint by adding the following parameters
             using the <spanx style='verb'>application/x-www-form-urlencoded</spanx> format
             per <xref target="urlencoded"/> with a character encoding of UTF-8
             in the HTTP request entity-body:
           </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
               <t hangText='grant_type'>
                 <vspace />
-                REQUIRED. Value MUST be set to <spanx style='verb'>password</spanx>.
+                必須 (REQUIRED).
+                値には <spanx style='verb'>password</spanx> を指定しなければならない (MUST).
+                <!-- REQUIRED. Value MUST be set to <spanx style='verb'>password</spanx>. -->
               </t>
               <t hangText='username'>
                 <vspace />
-                REQUIRED. The resource owner username.
+                必須 (REQUIRED).
+                リソースオーナーのユーザーネーム.
+                <!-- REQUIRED. The resource owner username. -->
               </t>
               <t hangText='password'>
                 <vspace />
-                REQUIRED. The resource owner password.
+                必須 (REQUIRED).
+                リソースオーナーのパスワード.
+                <!-- REQUIRED. The resource owner password. -->
               </t>
               <t hangText='scope'>
                 <vspace />
-                OPTIONAL. The scope of the access request as described by <xref target='scope' />.
+                任意 (OPTIONAL).
+                詳細は <xref target='scope' /> を参照のこと.
+                <!-- OPTIONAL. The scope of the access request as described by <xref target='scope' />. -->
               </t>
             </list>
           </t>
+          <t>
+            クライアントタイプがコンフィデンシャルである場合, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントは, <xref target='token-endpoint-auth' /> に示すとおり認可サーバーにより認証されなければならない (MUST).
+          </t>
+          <!--
           <t>
             If the client type is confidential or the client was issued client credentials (or
             assigned other authentication requirements), the client MUST authenticate with the
             authorization server as described in <xref target='token-endpoint-auth' />.
           </t>
+          -->
           <figure>
+            <preamble>
+              例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
+            </preamble>
+            <!--
             <preamble>
               For example, the client makes the following HTTP request using transport-layer
               security (with extra line breaks for display purposes only):
             </preamble>
+            -->
             <artwork><![CDATA[
   POST /token HTTP/1.1
   Host: server.example.com
@@ -2613,41 +2681,78 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 ]]></artwork>
           </figure>
           <t>
+            認可サーバーは次のことを実施しなければならない (MUST):
+          </t>
+          <!--
+          <t>
             The authorization server MUST:
           </t>
+          -->
           <t>
             <list style='symbols'>
+              <t>
+                コンフィデンシャルクライアント, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントにクライアント認証を要求し,
+              </t>
+              <!--
               <t>
                 require client authentication for confidential clients or for any client that was
                 issued client credentials (or with other authentication requirements),
               </t>
+              -->
+              <t>
+                クライアントの認証情報が含まれていた場合はクライアントを認証し,
+              </t>
+              <!--
               <t>
                 authenticate the client if client authentication is included, and
               </t>
+              -->
+              <t>
+                既存のパスワード確認のアルゴリズムを用いてリソースオーナーパスワードクレデンシャルの妥当性を確認する
+              </t>
+              <!--
               <t>
                 validate the resource owner password credentials using its existing password
                 validation algorithm.
               </t>
+              -->
             </list>
           </t>
+          <t>
+            このアクセストークンリクエストにはリソースオーナーのパスワードが含まれるため, 認可サーバーはブルートフォース攻撃からこのエンドポイントを保護しなければならない (MUST). (例えば, 閾値による制限やアラートの生成を行う)
+          </t>
+          <!--
           <t>
             Since this access token request utilizes the resource owner's password, the
             authorization server MUST protect the endpoint against brute force attacks (e.g., using
             rate-limitation or generating alerts).
           </t>
+          -->
         </section>
 
-        <section title='Access Token Response'>
+        <section title='アクセストークンレスポンス'>
+        <!-- <section title='Access Token Response'> -->
+          <t>
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは <xref target='token-response' /> に示すとおりアクセストークンと任意でリフレッシュトークンを発行する.
+            クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <xref target='token-errors' /> に示すとおりエラーレスポンスを返却する.
+          </t>
+          <!--
           <t>
             If the access token request is valid and authorized, the authorization server issues an
             access token and optional refresh token as described in <xref target='token-response' />.
             If the request failed client authentication or is invalid, the authorization server returns
             an error response as described in <xref target='token-errors' />.
           </t>
+          -->
           <figure>
+            <preamble>
+              成功レスポンス例を以下に示す.
+            </preamble>
+            <!--
             <preamble>
               An example successful response:
             </preamble>
+            -->
             <artwork><![CDATA[
   HTTP/1.1 200 OK
   Content-Type: application/json;charset=UTF-8
@@ -2667,7 +2772,12 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 
       </section>
 
-      <section title='Client Credentials Grant' anchor='grant-client'>
+      <section title='クライアントクレデンシャルグラント' anchor='grant-client'>
+      <!-- <section title='Client Credentials Grant' anchor='grant-client'> -->
+        <t>
+          クライアント自身のコントロール下にある保護リソースまたは認可サーバーとの間で調整済みの保護リソースにアクセスする場合, クライアントはクライアントクレデンシャル (あるいはサポートされているその他の認証方式) のみでアクセストークンをリクエストすることができる.
+        </t>
+        <!--
         <t>
           The client can request an access token using only its client credentials (or other
           supported means of authentication) when the client is requesting access to the
@@ -2675,10 +2785,17 @@ and <xref target="ImplicitImpersonation" format="counter"/>
           previously arranged with the authorization server (the method of which is beyond the
           scope of this specification).
         </t>
+        -->
+        <t>
+          コンフィデンシャルクライアントのみが, クライアントクレデンシャルグラントタイプを利用できる (MUST).
+        </t>
+        <!--
         <t>
           The client credentials grant type MUST only be used by confidential clients.
         </t>
-        <figure title='Client Credentials Flow' anchor='Figure-6'>
+        -->
+        <figure title='クライアントクレデンシャルフロー' anchor='Figure-6'>
+        <!-- <figure title='Client Credentials Flow' anchor='Figure-6'> -->
           <artwork><![CDATA[
   +---------+                                  +---------------+
   |         |                                  |               |
@@ -2690,56 +2807,98 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 ]]></artwork>
         </figure>
         <t>
+          <xref target='Figure-6' /> のフローは以下の通りである.
+        </t>
+        <!--
+        <t>
           The flow illustrated in <xref target='Figure-6' /> includes the following steps:
         </t>
+        -->
         <t>
           <list style='format (%C)'>
+            <t>
+              クライアントは自身の認証情報を含めてトークンエンドポイントにアクセストークンリクエストを送る.
+            </t>
+            <!--
             <t>
               The client authenticates with the authorization server and requests an access token
               from the token endpoint.
             </t>
+            -->
+            <t>
+              認可サーバーはクライアントを認証し, 認証に成功すればアクセストークンを発行する.
+            </t>
+            <!--
             <t>
               The authorization server authenticates the client, and if valid, issues an access
               token.
             </t>
+            -->
           </list>
         </t>
 
-        <section title='Authorization Request and Response'>
+        <section title='認可リクエストとレスポンス'>
+        <!-- <section title='Authorization Request and Response'> -->
+          <t>
+            クライアント認証が認可グラントとして利用されるため, 追加の認可リクエストは必要ない.
+          </t>
+          <!--
           <t>
             Since the client authentication is used as the authorization grant, no additional
             authorization request is needed.
           </t>
+          -->
         </section>
 
-        <section title='Access Token Request' anchor="client-req">
+        <section title='アクセストークンリクエスト' anchor="client-req">
+        <!-- <section title='Access Token Request' anchor="client-req"> -->
+          <t>
+            クライアントは, HTTPリクエストボディーに <xref target="urlencoded"/> に従い <spanx style='verb'>application/x-www-form-urlencoded</spanx> フォーマットで下記のパラメーターを追加し, UTF-8でエンコードして, トークンエンドポイントにリクエストを送る.
+          </t>
+          <!--
           <t>
             The client makes a request to the token endpoint by adding the following parameters
             using the <spanx style='verb'>application/x-www-form-urlencoded</spanx> format
             per <xref target="urlencoded"/> with a character encoding of UTF-8
             in the HTTP request entity-body:
           </t>
+          -->
           <t>
             <list style='hanging' hangIndent='6'>
               <t hangText='grant_type'>
                 <vspace />
-                REQUIRED. Value MUST be set to <spanx style='verb'>client_credentials</spanx>.
+                必須 (REQUIRED).
+                <spanx style='verb'>client_credentials</spanx> を指定しなければならない (MUST).
+                <!-- REQUIRED. Value MUST be set to <spanx style='verb'>client_credentials</spanx>. -->
               </t>
               <t hangText='scope'>
                 <vspace />
-                OPTIONAL. The scope of the access request as described by <xref target='scope' />.
+                任意 (OPTIONAL).
+                詳細は <xref target='scope' /> を参照のこと.
+                <!-- OPTIONAL. The scope of the access request as described by <xref target='scope' />. -->
               </t>
             </list>
           </t>
           <t>
+            クライアントは認可サーバーに対して認証を行わなければならない (MUST).
+            詳細は <xref target='token-endpoint-auth' /> を参照のこと.
+          </t>
+          <!--
+          <t>
             The client MUST authenticate with the authorization server as described in
             <xref target='token-endpoint-auth' />.
           </t>
+          -->
           <figure>
+            <preamble>
+              例えば, クライアントは以下のHTTPリクエストをセキュリティ保護されたトランスポート層から送信する (改行は掲載上の都合による).
+            </preamble>
+            <!--
             <preamble>
               For example, the client makes the following HTTP request using transport-layer
               security (with extra line breaks for display purposes only):
             </preamble>
+            -->
           <artwork><![CDATA[
   POST /token HTTP/1.1
   Host: server.example.com
@@ -2750,11 +2909,23 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 ]]></artwork>
           </figure>
           <t>
+            認可サーバーはクライアントを認証しなければならない (MUST).
+          </t>
+          <!--
+          <t>
             The authorization server MUST authenticate the client.
           </t>
+          -->
         </section>
 
-        <section title='Access Token Response'>
+        <section title='アクセストークンレスポンス'>
+        <!-- <section title='Access Token Response'> -->
+          <t>
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは <xref target='token-response' /> に示すとおりアクセストークンを発行する.
+            リフレッシュトークンは含むべきでない (SHOULD NOT).
+            クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <xref target='token-errors' /> に示すとおりエラーレスポンスを返す.
+          </t>
+          <!--
           <t>
             If the access token request is valid and authorized, the authorization server issues an
             access token as described in <xref target='token-response' />. A refresh token SHOULD
@@ -2762,10 +2933,16 @@ and <xref target="ImplicitImpersonation" format="counter"/>
             authorization server returns an error response as described in
             <xref target='token-errors' />.
           </t>
+          -->
           <figure>
+            <preamble>
+              成功レスポンス例を以下に示す.
+            </preamble>
+            <!--
             <preamble>
               An example successful response:
             </preamble>
+            -->
             <artwork><![CDATA[
   HTTP/1.1 200 OK
   Content-Type: application/json;charset=UTF-8
@@ -2784,20 +2961,31 @@ and <xref target="ImplicitImpersonation" format="counter"/>
 
       </section>
 
-      <section title='Extension Grants' anchor="ext-grant">
+      <section title='拡張グラント' anchor="ext-grant">
+      <!-- <section title='Extension Grants' anchor="ext-grant"> -->
+        <t>
+          クライアントはトークンエンドポイントの <spanx style='verb'>grant_type</spanx> パラメーターの値に (認可サーバーによって定義された) 絶対URIを指定し, 追加の必須パラメーターを付与することによって, 拡張グラントタイプを利用できる.
+        </t>
+        <!--
         <t>
           The client uses an extension grant type by specifying the grant type using an
           absolute URI (defined by the authorization server) as the value of the
           <spanx style='verb'>grant_type</spanx> parameter of the token endpoint, and by
           adding any additional parameters necessary.
         </t>
+        -->
         <figure>
+          <preamble>
+            例えば, <xref target='OAuth-SAML2' /> で定義されている Security Assertion Markup Language (SAML) 2.0アサーショングラントタイプを利用してアクセストークンを要求するために, クライアントはTLSを用いて次のようなHTTPリクエストを行う. (改行は掲載上の都合による)
+          </preamble>
+          <!--
           <preamble>
             For example, to request an access token using a Security Assertion
 Markup Language (SAML) 2.0 assertion grant type as
             defined by <xref target='OAuth-SAML2' />, the client could make the
             following HTTP request using TLS (with extra line breaks for display purposes only):
           </preamble>
+          -->
           <artwork><![CDATA[
   POST /token HTTP/1.1
   Host: server.example.com
@@ -2809,11 +2997,17 @@ Markup Language (SAML) 2.0 assertion grant type as
 ]]></artwork>
         </figure>
         <t>
+          アクセストークンリクエストが正当かつ認可されている場合, 認可サーバーは <xref target='token-response' /> に示すとおりアクセストークンとオプションでリフレッシュトークンを発行する.
+          クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <xref target='token-errors' /> に示すとおりエラーレスポンスを返す.
+        </t>
+        <!--
+        <t>
           If the access token request is valid and authorized, the authorization server issues an
           access token and optional refresh token as described in <xref target='token-response' />.
           If the request failed client authentication or is invalid, the authorization server returns
           an error response as described in <xref target='token-errors' />.
         </t>
+        -->
       </section>
 
     </section>
@@ -3269,6 +3463,7 @@ JavaScript Object Notation (JSON) structure by
         it involves using the HTTP <spanx style='verb'>Authorization</spanx> request header field
         <xref target='RFC2617' /> with an authentication scheme defined by the
       specification of the access token type used, such as <xref target="RFC6750"/>.
+        -->
       </t>
 
       <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
@@ -3642,6 +3837,7 @@ should consider the following:
         <!--
         When choosing between the implicit grant type and the authorization code grant type, the
         following should be considered:
+        -->
       </t>
       <t>
         <list style='symbols'>
