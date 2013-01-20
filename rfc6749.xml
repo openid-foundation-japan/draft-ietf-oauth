@@ -2818,51 +2818,91 @@ Markup Language (SAML) 2.0 assertion grant type as
 
     </section>
 
-    <section title='Issuing an Access Token' anchor='token-issue'>
+    <section title='アクセストークンの発行<!-- Issuing an Access Token -->' anchor='token-issue'>
       <t>
+        アクセストークンリクエストが正当であり認可済であれば, 認可サーバーは <xref target='token-response' /> に述べる形式でアクセストークン (および任意でリフレッシュトークン) を発行する.
+        クライアント認証に失敗, もしくはリクエストが不正であった場合, 認可サーバーは <xref target='token-errors' /> に述べる形式でエラーレスポンスを返す.
+        <!--
         If the access token request is valid and authorized, the authorization server issues an
         access token and optional refresh token as described in <xref target='token-response' />.
         If the request failed client authentication or is invalid, the authorization server returns
         an error response as described in <xref target='token-errors' />.
+        -->
       </t>
 
-      <section title='Successful Response' anchor='token-response'>
+      <section title='成功レスポンス<!-- Successful Response -->' anchor='token-response'>
         <t>
+          認可サーバーはアクセストークン (および任意でリフレッシュトークン) を発行する.
+          このレスポンスはエンティティーボディーに以下のパラメーターを含み, HTTP ステータスコード 200 (OK) で返される.
+          <!--
           The authorization server issues an access token and optional refresh token, and
-          constructs the response by adding the following parameters to the entity-body of the HTTP
+          constructs the response by adding the following parameters to the entity body of the HTTP
           response with a 200 (OK) status code:
+          -->
         </t>
         <t>
           <list style='hanging' hangIndent='6'>
             <t hangText='access_token'>
               <vspace />
+              必須 (REQUIRED).
+              認可サーバーが発行するアクセストークン.
+              <!--
               REQUIRED. The access token issued by the authorization server.
+              -->
             </t>
             <t hangText='token_type'>
               <vspace />
+              必須 (REQUIRED).
+              トークンのタイプ.
+              値は大文字・小文字を区別しない.
+              詳細は <xref target='token-types' /> を参照のこと.
+              <!--
               REQUIRED. The type of the token issued as described in <xref target='token-types' />.
               Value is case insensitive.
+              -->
             </t>
             <t hangText='expires_in'>
               <vspace />
+              推奨 (RECOMMENDED).
+              アクセストークンの有効期間を表す秒数.
+              例えばこの値が <spanx style='verb'>3600</spanx> であれば, そのアクセストークンは発行から1時間後に期限切れとなる.
+              省略された場合, 認可サーバはドキュメントまたは他の手段によってデフォルトの有効期間を提示しなければならない(SHOULD).
+              <!--
               RECOMMENDED. The lifetime in seconds of the access token. For example, the value
               <spanx style='verb'>3600</spanx> denotes that the access token will expire in one
               hour from the time the response was generated. If omitted, the authorization server
               SHOULD provide the expiration time via other means or document the default value.
+              -->
             </t>
             <t hangText='refresh_token'>
               <vspace />
-              OPTIONAL. The refresh token, which can be used to obtain new access tokens using the
+              任意 (OPTIONAL).
+              リフレッシュトークン.
+              同じ認可グラントを用いて新しいアクセストークンを取得するのに利用される.
+              詳細は <xref target='token-refresh' /> を参照のこと.
+              <!--
+              OPTIONAL. The refresh token which can be used to obtain new access tokens using the
               same authorization grant as described in <xref target='token-refresh' />.
+              -->
             </t>
             <t hangText='scope'>
               <vspace />
+              クライアントから全く同一のスコープが要求された場合は任意 (OPTIONAL).その他は必須(REQUIRED).
+              アクセストークンのスコープ.
+              詳細は <xref target='scope' /> を参照のこと.
+              <!--
               OPTIONAL, if identical to the scope requested by the client; otherwise, REQUIRED. The
               scope of the access token as described by <xref target='scope' />.
+              -->
             </t>
           </list>
         </t>
         <t>
+          これらのパラメーターは, <xref target='RFC4627' /> で定義されているメディアタイプ <spanx style='verb'>application/json</spanx> 形式で, HTTPレスポンスボディーに含まれる.
+          JavaScript Object Notation (JSON) へのシリアライゼーションは, 各パラメーターをJSONオブジェクトの最上位要素とする形式で行う.
+          パラメーター名と文字列値はJSON文字列, 数値はJSON数値となる.
+          パラメーターの順序は問わず, 多様であり得る.
+          <!--
           The parameters are included in the entity-body of the HTTP response using the
           <spanx style='verb'>application/json</spanx> media type as defined by
           <xref target='RFC4627' />. The parameters are serialized into a
@@ -2870,19 +2910,25 @@ JavaScript Object Notation (JSON) structure by
           adding each parameter at the highest structure level. Parameter names and string values
           are included as JSON strings. Numerical values are included as JSON numbers. The order of
           parameters does not matter and can vary.
+          -->
         </t>
         <t>
+          認可サーバーは, トークン, クレデンシャル, その他センシティブな情報を含むいかなる HTTP レスポンスにおいても, <spanx style='verb'>Cache-Control</spanx> (<xref target='RFC2616' />) ヘッダーに <spanx style='verb'>no-store</spanx> を, <spanx style='verb'>Pragma</spanx> (<xref target='RFC2616' />) ヘッダーに <spanx style='verb'>no-cache</spanx> を指定しなければならない (MUST).
+          <!--
           The authorization server MUST include the HTTP
           <spanx style='verb'>Cache-Control</spanx> response header field <xref target='RFC2616' />
           with a value of <spanx style='verb'>no-store</spanx> in any response containing tokens,
           credentials, or other sensitive information, as well as the
           <spanx style='verb'>Pragma</spanx> response header field <xref target='RFC2616' /> with a
           value of <spanx style='verb'>no-cache</spanx>.
+          -->
         </t>
         <figure>
           <preamble>
+            例:
+            <!--
             For example:
-          </preamble>
+            -->          </preamble>
           <artwork><![CDATA[
   HTTP/1.1 200 OK
   Content-Type: application/json;charset=UTF-8
@@ -2899,34 +2945,55 @@ JavaScript Object Notation (JSON) structure by
 ]]></artwork>
         </figure>
         <t>
+          クライアントはレスポンスに含まれる認識できない名前の値を無視しなければならない (MUST).
+          トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
+          クライアントは値のサイズについてなんらかの仮定をすべきではない.
+          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+          <!--
           The client MUST ignore unrecognized value names in the response. The sizes of tokens and
           other values received from the authorization server are left undefined. The client should
           avoid making assumptions about value sizes. The authorization server SHOULD document the
           size of any value it issues.
+          -->
         </t>
       </section>
 
-      <section title='Error Response' anchor='token-errors'>
+      <section title='エラーレスポンス<!-- Error Response -->' anchor='token-errors'>
         <t>
+          認可サーバーは(特に指定が無い限りは)HTTP ステータスコード 400 (Bad Request) を返す.
+          このレスポンスには以下のパラメーターが含まれる.
+          <!--
           The authorization server responds with an HTTP 400 (Bad Request) status code (unless
           specified otherwise) and includes the following parameters with the response:
+          -->
         </t>
         <t>
           <list style='hanging' hangIndent='6'>
             <t hangText='error'>
               <vspace />
+              必須 (REQUIRED).
+              以下のASCII <xref target="USASCII" /> エラーコードより1つを設定する.
+              <!--
               REQUIRED. A single ASCII <xref target="USASCII" /> error code from the following:
+              -->
 
               <list style='hanging' hangIndent='6'>
                 <t hangText='invalid_request'>
                   <vspace />
+                  リクエストに必要なパラメーターが含まれていない, サポートされない(グラントタイプ以外の)パラメーター値が含まれている, パラメーターが重複している, 複数のクレデンシャルが含まれている, クライアント認証のための複数のメカニズムが利用されている, もしくは異常値が設定されている.
+                  <!--
                   The request is missing a required parameter, includes an unsupported
                   parameter value (other than grant type), repeats a parameter, includes multiple
                   credentials, utilizes more than one mechanism for authenticating the client,
                   or is otherwise malformed.
+                  -->
                 </t>
                 <t hangText='invalid_client'>
                   <vspace />
+                  クライアント認証に失敗した (例: 未知のクライアントである, クライアント認証情報が含まれていない, サポートされない認証方式が利用されている).
+                  認可サーバーはHTTP認証スキームがサポートされていないことを示すためにHTTP ステータスコード 401 (Unauthorized) を返してもよい (MAY).
+                  もしクライアントが <spanx style='verb'>Authorization</spanx> リクエストヘッダー経由で認証を試みた場合, 認可サーバーはHTTP ステータスコード 401 (Unauthorized) と共に, <spanx style='verb'>WWW-Authenticate</spanx> レスポンスヘッダーにクライアントが利用すべき認証スキームを含めなければならない (MUST).
+                  <!--
                   Client authentication failed (e.g., unknown client, no client authentication
                   included, or unsupported authentication method). The authorization server MAY
                   return an HTTP 401 (Unauthorized) status code to indicate which HTTP
@@ -2935,63 +3002,103 @@ JavaScript Object Notation (JSON) structure by
                   the authorization server MUST respond with an HTTP 401 (Unauthorized) status
                   code and include the <spanx style='verb'>WWW-Authenticate</spanx> response
                   header field matching the authentication scheme used by the client.
+                  -->
                 </t>
                 <t hangText='invalid_grant'>
                   <vspace />
+                  提供された認可グラント (例えば認可コード, リソースオーナークレデンシャル)またはリフレッシュトークン が不正, 有効期限切れ, 失効している, 認可リクエストで用いられたリダイレクト先URIとマッチしていない, 他のクライアントに対して発行されたものである.
+                  <!--
                   The provided authorization grant (e.g., authorization code, resource owner
                   credentials) or refresh token is invalid, expired, revoked, does not match the
                   redirection URI used in the authorization request, or was issued to another
                   client.
+                  -->
                 </t>
                 <t hangText='unauthorized_client'>
                   <vspace />
+                  認証されたクライアントが当該のグラントタイプを利用する様に認可されていない.
+                  <!--
                   The authenticated client is not authorized to use this authorization grant type.
+                  -->
                 </t>
                 <t hangText='unsupported_grant_type'>
                   <vspace />
+                  グラントタイプが認可サーバーによってサポートされていない.
+                  <!--
                   The authorization grant type is not supported by the authorization server.
+                  -->
                 </t>
                 <t hangText='invalid_scope'>
                   <vspace />
+                  要求されたスコープが不正, 未知, 異常, リソースオーナーによって与えられた範囲を超えている.
+                  <!--
                   The requested scope is invalid, unknown, malformed, or exceeds the scope granted
                   by the resource owner.
+                  -->
                 </t>
               </list>
 
+              <spanx style='verb'>error</spanx> パラメータの値は %x20-21 / %x23-5B / %x5D-7E 以外の文字を含んではならない (MUST NOT).
+              <!--
               Values for the <spanx style='verb'>error</spanx> parameter MUST NOT include
               characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+              -->
             </t>
             <t hangText='error_description'>
               <vspace />
+              任意 (OPTIONAL).
+              クライアント開発者が発生したエラーを理解する際の手助けとなる, 可読性のあるASCII <xref target="USASCII" />テキストの追加情報.
+              <!--
               OPTIONAL.  Human-readable ASCII <xref target="USASCII" /> text providing additional information,
               used to assist the client developer in understanding the error that occurred.
+              -->
               <vspace/>
+              <spanx style='verb'>error_description</spanx> パラメータの値は %x20-21 / %x23-5B / %x5D-7E 以外の文字を含んではならない (MUST NOT).
+              <!--
               Values for the <spanx style='verb'>error_description</spanx> parameter MUST NOT include
               characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+              -->
             </t>
             <t hangText='error_uri'>
               <vspace />
+              任意 (OPTIONAL).
+              クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
+              <!--
               OPTIONAL. A URI identifying a human-readable web page with information about the
               error, used to provide the client developer with additional information about the
               error.
+              -->
               <vspace/>
+              <spanx style='verb'>error_uri</spanx> パラメータの値はURI参照でなければならない(MUST).
+              また、それ故に%x21 / %x23-5B / %x5D-7E 以外の文字を含んではならない (MUST NOT).
+              <!--
               Values for the <spanx style='verb'>error_uri</spanx> parameter
               MUST conform to the URI&nbhy;reference syntax and thus MUST NOT include
               characters outside the set %x21 / %x23-5B / %x5D-7E.
+              -->
             </t>
           </list>
         </t>
         <t>
+          これらのパラメーターは, <xref target='RFC4627' /> で定義されているメディアタイプ <spanx style='verb'>application/json</spanx> 形式で, HTTPレスポンスボディーに含まれる.
+          JSONへのシリアライゼーションは, 各パラメーターをJSONオブジェクトの最上位要素とする形式で行う.
+          パラメーター名と文字列値はJSON文字列, 数値はJSON数値となる.
+          パラメーターの順序は問わず, 多様であり得る.
+          <!--
           The parameters are included in the entity-body of the HTTP response using the
           <spanx style='verb'>application/json</spanx> media type as defined by
           <xref target='RFC4627' />. The parameters are serialized into a JSON structure by
           adding each parameter at the highest structure level. Parameter names and string values
           are included as JSON strings. Numerical values are included as JSON numbers. The order of
           parameters does not matter and can vary.
+          -->
         </t>
         <figure>
           <preamble>
+            例:
+            <!--
             For example:
+            -->
           </preamble>
           <artwork><![CDATA[
   HTTP/1.1 400 Bad Request
@@ -3008,44 +3115,70 @@ JavaScript Object Notation (JSON) structure by
 
     </section>
 
-    <section title='Refreshing an Access Token' anchor='token-refresh'>
+    <section title='アクセストークンの更新<!--Refreshing an Access Token-->' anchor='token-refresh'>
       <t>
+        認可サーバーがクライアントにリフレッシュトークンを発行していれば, クライアントはトークンエンドポイントに更新リクエストを送ることができる.
+        以下のパラメーターが <xref target="urlencoded"/>による<spanx style='verb'>application/x-www-form-urlencoded</spanx> 形式で, UTF-8エンコードされてHTTPリクエストエンティティーボディーに加えられる.
+        <!--
         If the authorization server issued a refresh token to the client, the client makes a
         refresh request to the token endpoint by adding the following parameters using the
         <spanx style='verb'>application/x-www-form-urlencoded</spanx> format
         per <xref target="urlencoded"/> with a character encoding of UTF-8
         in the HTTP request entity-body:
+        -->
       </t>
       <t>
         <list style='hanging' hangIndent='6'>
           <t hangText='grant_type'>
             <vspace />
+            必須 (REQUIRED).
+            値には <spanx style='verb'>refresh_token</spanx> がセットされなければならない (MUST).
+            <!--
             REQUIRED. Value MUST be set to <spanx style='verb'>refresh_token</spanx>.
+            -->
           </t>
           <t hangText='refresh_token'>
             <vspace />
+            必須 (REQUIRED).
+            クライアントに発行されたリフレッシュトークン.
+            <!--
             REQUIRED. The refresh token issued to the client.
+            -->
           </t>
           <t hangText='scope'>
             <vspace />
+            任意 (OPTIONAL).
+            アクセス要求のスコープ.
+            詳細は <xref target='scope' /> を参照のこと.
+            要求されたスコープはリソースオーナーがもともと許可していない値を含んではならない (MUST NOT).
+            もし指定されなかった場合は, もともと許可された値が用いられる.
+            <!--
             OPTIONAL. The scope of the access request as described by <xref target='scope' />.
             The requested scope MUST NOT include any scope not originally granted by the resource
             owner, and if omitted is treated as equal to the scope originally granted by the
             resource owner.
+            -->
           </t>
         </list>
       </t>
       <t>
+        リフレッシュトークンは, 一般的に有効期間の長い追加のアクセストークンを要求するためのクレデンシャルであるため, 発行されたクライアントと紐づく.
+        クライアントタイプがコンフィデンシャルである場合, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントは, <xref target='token-endpoint-auth' /> に示すとおり認可サーバーにより認証されなければならない (MUST).
+        <!--
         Because refresh tokens are typically long-lasting credentials used to request additional
         access tokens, the refresh token is bound to the client to which it was issued. If the client type
         is confidential or the client was issued client credentials (or assigned other
         authentication requirements), the client MUST authenticate with the authorization server as
         described in <xref target='token-endpoint-auth' />.
+        -->
       </t>
       <figure>
         <preamble>
+          例えば, クライアントはTLSを用いて次のようなHTTPリクエストを送信する (改行は掲載上の都合による).
+          <!--
           For example, the client makes the following HTTP request using transport-layer
           security (with extra line breaks for display purposes only):
+          -->
         </preamble>
         <artwork><![CDATA[
   POST /token HTTP/1.1
@@ -3057,48 +3190,80 @@ JavaScript Object Notation (JSON) structure by
 ]]></artwork>
       </figure>
       <t>
+        認可サーバーは次のことを実施しなければならない (MUST):
+        <!--
         The authorization server MUST:
+        -->
       </t>
       <t>
         <list style='symbols'>
           <t>
+            コンフィデンシャルクライアント, あるいはクライアントクレデンシャルが発行された (もしくはその他の認証が要求された) クライアントにクライアント認証を要求し,
+            <!--
             require client authentication for confidential clients or for any client that was
             issued client credentials (or with other authentication requirements),
+            -->
           </t>
           <t>
+            クライアントの認証情報が含まれていた場合はクライアントを認証し, リフレッシュトークンが確かにそのクライアントに対して発行されたものであることを確認し,
+            <!--
             authenticate the client if client authentication is included and ensure that the
             refresh token was issued to the authenticated client, and
+            -->
           </t>
           <t>
+            リフレッシュトークンを検証する.
+            <!--
             validate the refresh token.
+            -->
           </t>
         </list>
       </t>
       <t>
+        リクエストが有効で認可されている場合, 認可サーバーはアクセストークンを発行する.
+        レスポンスの詳細は <xref target='token-response' /> を参照のこと.
+        リクエストの検証に失敗もしくはリクエストが無効な場合, 認可サーバーはエラーレスポンスを返す.
+        エラーレスポンスの詳細は <xref target='token-errors' /> を参照のこと.
+        <!--
         If valid and authorized, the authorization server issues an access token as described in
         <xref target='token-response' />. If the request failed verification or is invalid, the
         authorization server returns an error response as described in
         <xref target='token-errors' />.
+        -->
       </t>
       <t>
+        認可サーバーは新しいリフレッシュトークンを返してもよい (MAY).
+        その場合, クライアントは古いリフレッシュトークンを破棄し, 新しいリフレッシュトークンに取り替えなければならない (MUST).
+        認可サーバーは新しいリフレッシュトークンを発行した後, 古いリフレッシュトークンを無効化してもよい (MAY).
+        新しいリフレッシュトークンが発行された時, リフレッシュトークンのスコープはクライアントによってリクエストに含まれたリフレッシュトークンのスコープと同一でなければならない (MUST).
+        <!--
         The authorization server MAY issue a new refresh token, in which case the client MUST
         discard the old refresh token and replace it with the new refresh token. The authorization
         server MAY revoke the old refresh token after issuing a new refresh token to the client. If
         a new refresh token is issued, the refresh token scope MUST be identical to that of the
         refresh token included by the client in the request.
+        -->
       </t>
     </section>
 
-    <section title='Accessing Protected Resources' anchor='access-resource'>
+    <section title='保護されたリソースへのアクセス<!-- Accessing Protected Resources -->' anchor='access-resource'>
       <t>
+        クライアントはリソースサーバー上の保護されたリソースにアクセストークンを用いてアクセスする.
+        リソースサーバーはアクセストークンの検証を行い, 有効期間が切れていないこと, 要求されているリソースがスコープ範囲内であることを確認しなければならない (MUST).
+        アクセストークンを検証する具体的な方法 (およびエラーレスポンス) は本仕様の対象外だが, 一般的に検証はリソースサーバーと認可サーバーで協調して実行される.
+        <!--
         The client accesses protected resources by presenting the access token to the resource
         server. The resource server MUST validate the access token and ensure that it has not expired
         and that its scope covers the requested resource. The methods used by the resource server
         to validate the access token (as well as any error responses) are beyond the scope of this
         specification but generally involve an interaction or coordination between the resource
         server and the authorization server.
+        -->
       </t>
       <t>
+        クライアントがリソースサーバーの認証を受けるためにどのようにアクセストークンを用いるかは, リソースサーバーから払い出されたアクセストークンのタイプに依存する.
+        一般的には, <xref target="RFC6750"/>のようなアクセストークンタイプの仕様に定義される認証スキームに従ってHTTPの <spanx style='verb'>Authorization</spanx> ヘッダフィールド <xref target='RFC2617' /> が利用される.
+        <!--
         The method in which the client utilizes the access token to authenticate with the resource
         server depends on the type of access token issued by the authorization server. Typically,
         it involves using the HTTP <spanx style='verb'>Authorization</spanx> request header field
@@ -3106,18 +3271,25 @@ JavaScript Object Notation (JSON) structure by
       specification of the access token type used, such as <xref target="RFC6750"/>.
       </t>
 
-      <section title='Access Token Types' anchor='token-types'>
+      <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
         <t>
+          アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する.
+          クライアントはトークンタイプが想定外のものであるとき, そのアクセストークンを利用するべきではない (MUST NOT).
+          <!--
           The access token type provides the client with the information required to successfully
           utilize the access token to make a protected resource request (along with type-specific
           attributes). The client MUST NOT use an access token if it does not understand the token
           type.
+          -->
         </t>
         <figure>
           <preamble>
+            例えば, <xref target='RFC6750' /> に定義される <spanx style='verb'>bearer</spanx> トークンタイプでは, 単にリクエストにアクセストークンを含めるだけでよい.
+            <!--
             For example, the <spanx style='verb'>bearer</spanx> token type defined in
             <xref target='RFC6750' /> is utilized by simply including the access
             token string in the request:
+            -->
           </preamble>
           <artwork><![CDATA[
   GET /resource/1 HTTP/1.1
@@ -3127,11 +3299,15 @@ JavaScript Object Notation (JSON) structure by
         </figure>
         <figure>
           <preamble>
+            一方, <xref target='OAuth-HTTP-MAC' /> に定義される <spanx style='verb'>mac</spanx> トークンタイプでは, アクセストークンと共にMessage Authentication Code (MAC)キーを発行する.
+            このMACキーはHTTPリクエストの一部分を署名するのに利用される.
+            <!--
             while the <spanx style='verb'>mac</spanx> token type defined in
             <xref target='OAuth-HTTP-MAC' /> is utilized by issuing a 
             Message Authentication Code (MAC) key
             together with the access token that is used to sign certain components of the HTTP
             requests:
+            -->
           </preamble>
           <artwork><![CDATA[
   GET /resource/1 HTTP/1.1
@@ -3142,27 +3318,40 @@ JavaScript Object Notation (JSON) structure by
 ]]></artwork>
         </figure>
         <t>
+          尚, 上記はあくまで参考例であり, 開発者は利用前に <xref target='RFC6750' /> や <xref target='OAuth-HTTP-MAC' /> を参照することが推奨される.
+          <!--
           The above examples are provided for illustration purposes only. Developers are advised to
           consult the <xref target='RFC6750' /> and
           <xref target='OAuth-HTTP-MAC' /> specifications before use.
+          -->
         </t>
         <t>
+          各アクセストークンタイプ定義は, <spanx style='verb'>access_token</spanx> レスポンスパラメーターとともにクライアントへ送付される追加属性 (もしあれば) を指定する.
+          また, 保護されたリソースへのリクエストにアクセストークンを含めるために利用されるHTTP認証方式も定義する.
+          <!--
           Each access token type definition specifies the additional attributes (if any) sent to
           the client together with the <spanx style='verb'>access_token</spanx> response parameter.
           It also defines the HTTP authentication method used to include the access token when
           making a protected resource request.
+          -->
         </t>
       </section>
-
-      <section title='Error Response' anchor='resource-errors'>
+      
+      <section title='エラーレスポンス<!-- Error Response -->' anchor='resource-errors'>
         <t>
+          リソースアクセスに失敗した場合, リソースサーバーはクライアントにエラーを通知すべきである(SHOULD).
+          このようなエラーに関する詳細については本仕様の範疇外であるが, エラーの値はOAuthトークン認証スキームで共有されるため，　本ドキュメンtでは<xref target='error-registry' />で共有レジストリを設置している．
+          <!--
           If a resource access request fails, the resource server SHOULD inform
           the client of the error.  While the specifics of such error responses
           are beyond the scope of this specification, this document establishes
           a common registry in <xref target='error-registry' /> for error values
           to be shared among OAuth token authentication schemes. 
+          -->
         </t>
         <t>
+        　　主にOAuthトークン認証のために設計された新しい認証スキームでは，　エラーの値を本仕様によって設置されているエラーレジストリに登録することを考慮した上で，　エラーステータスコードをクライアントに提示するためのメカニズムを定義すべきである（SHOULD）．　　そのようなスキームは有効なエラーコードのセットを登録されている値のサブセットに制限してもより(MAY).　エラーコードが名前付きパラメータで返却された場合，　そのパラメータ名は<spanx style='verb'>error</spanx>にすべきである(SHOULD).
+          <!--
           New authentication schemes designed primarily for OAuth token
           authentication SHOULD define a mechanism for providing an
           error status code to the client, in which the error values allowed are
@@ -3170,41 +3359,60 @@ JavaScript Object Notation (JSON) structure by
           schemes MAY limit the set of valid error codes to a subset of the
           registered values. If the error code is returned using a named parameter,
           the parameter name SHOULD be <spanx style='verb'>error</spanx>.
+          -->
         </t>
         <t>
+        　　OAuthトークン認証にも使えるが，　主とする目的のためには設計されていない他のスキームについては，　同様の方法でエラーの値を登録してもよい(MAY).
+          <!--
           Other schemes capable of being used for OAuth token authentication, but
           not primarily designed for that purpose, MAY bind their error values to the
           registry in the same manner.
+          -->
         </t>
         <t>
+        　　新しい認証スキームは，　本仕様と同様の方法によって，　エラー情報を返却するために<spanx style='verb'>error_description</spanx>と<spanx style='verb'>error_uri</spanx>パラメータを選択してもよい(MAY).
+          <!--
           New authentication schemes MAY choose to also specify the use of the
           <spanx style='verb'>error_description</spanx> and 
           <spanx style='verb'>error_uri</spanx>
           parameters to return error information in a manner parallel
           to their usage in this specification.
+          -->
         </t>
       </section>
-
     </section>
 
-    <section title='Extensibility' anchor='extensions'>
+    <section title='仕様の拡張性<!-- Extensibility -->' anchor='extensions'>
 
-      <section title='Defining Access Token Types' anchor='new-types'>
+      <section title='アクセストークンタイプの定義<!-- Defining Access Token Types -->' anchor='new-types'>
         <t>
+          アクセストークンタイプを定義する方法は, <xref target='type-registry' /> に示す手順でアクセストークンタイプレジストリーへの登録を行う方法と, 重複しない絶対 URI をタイプ名として用いる方法の2通りが存在する.
+          <!--
           Access token types can be defined in one of two ways: registered in the Access Token Types
           registry (following the procedures in <xref target='type-registry' />), or by using a
           unique absolute URI as its name.
+          -->
         </t>
         <t>
+          URI をタイプ名として用いるトークンタイプは, ベンダー固有の実装に限定されるべきであり (SHOULD), 広く一般に適用されるものではない.
+          またこれらのトークンタイプは, それが用いられるリソースサーバーの実装詳細に固有のものである.
+          <!--
           Types utilizing a URI name SHOULD be limited to vendor-specific implementations that are
           not commonly applicable, and are specific to the implementation details of the resource
           server where they are used.
+          -->
         </t>
         <t>
+          上記以外のすべてのトークンタイプは, レジストリーへの登録が必須である (MUST).
+          タイプ名は type-name ABNF に従わなければならない (MUST).
+          またトークンタイプが新しい HTTP 認証スキームを定義する場合, そのタイプ名には (<xref target='RFC2617' /> に定義されるように) HTTP 認証スキームと同一のものを用いるべきである (SHOULD).
+          なおトークンタイプ <spanx style='verb'>example</spanx> は, 例示のために予約済である.
+          <!--
           All other types MUST be registered. Type names MUST conform to the type-name ABNF. If the
           type definition includes a new HTTP authentication scheme, the type name SHOULD be
           identical to the HTTP authentication scheme name (as defined by <xref target='RFC2617' />).
           The token type <spanx style='verb'>example</spanx> is reserved for use in examples.
+          -->
         </t>
         <figure>
           <artwork><![CDATA[
@@ -3214,15 +3422,21 @@ JavaScript Object Notation (JSON) structure by
         </figure>
       </section>
 
-      <section title='Defining New Endpoint Parameters' anchor="endpoint-params">
+      <section title='新たなエンドポイントパラメーターの定義<!-- Defining New Endpoint Parameters -->' anchor="endpoint-params">
         <t>
+          認可エンドポイントおよびトークンエンドポイントで用いられる新たなリクエストないしレスポンスパラメーターは, <xref target='parameters-registry' /> に示す手順に従って定義され, OAuthパラメーターレジストリーに登録される.
+          <!--
           New request or response parameters for use with the authorization endpoint or the token
           endpoint are defined and registered in the OAuth Parameters registry following the procedure in
           <xref target='parameters-registry' />.
+          -->
         </t>
         <t>
+          パラメーター名は param-name ABNF に従わなければならず (MUST), パラメーター値は (ABNF や既存パラメーターのシンタックスを参照するなどの方法で) 明確に定義する必要がある (MUST).
+          <!--
           Parameter names MUST conform to the param-name ABNF, and parameter values syntax MUST be
           well-defined (e.g., using ABNF, or a reference to the syntax of an existing parameter).
+          -->
         </t>
         <figure>
           <artwork><![CDATA[
@@ -3231,29 +3445,41 @@ JavaScript Object Notation (JSON) structure by
 ]]></artwork>
         </figure>
         <t>
+          ベンダー固有の未登録拡張パラメーターは, 広く一般には適用されず, それが用いられる認可サーバーの実装詳細に固有のものである.
+          これらの拡張パラメーターには, その他の登録済みの値と衝突しないようなベンダー固有のプレフィックスを用いるべきである (SHOULD). (例: パラメーター名を 'companyname_' で始める)
+          <!--
           Unregistered vendor-specific parameter extensions that are not
 commonly applicable and that
           are specific to the implementation details of the authorization server where they are
           used SHOULD utilize a vendor-specific prefix that is not likely to conflict with other
           registered values (e.g., begin with 'companyname_').
+          -->
         </t>
       </section>
 
-      <section title='Defining New Authorization Grant Types'>
+      <section title='新たな認可グラントタイプの定義<!-- Defining New Authorization Grant Types -->'>
         <t>
+          新たな認可グラントタイプは <spanx style='verb'>grant_type</spanx> パラメーター値として用いる重複の無い絶対 URI を用いることで定義される.
+          拡張グラントタイプを用いるために新たなトークンエンドポイントパラメーターが必要な場合は, それらのパラメーターを <xref target='parameters-registry' /> に述べるように OAuth パラメーターレジストリーに登録する必要がある (MUST).
+          <!--
           New authorization grant types can be defined by assigning them a unique absolute URI for
           use with the <spanx style='verb'>grant_type</spanx> parameter. If the extension grant
           type requires additional token endpoint parameters, they MUST be registered in the OAuth
           Parameters registry as described by <xref target='parameters-registry' />.
+          -->
         </t>
       </section>
 
-      <section title='Defining New Authorization Endpoint Response Types' anchor='response-type-ext'>
+      <section title='新たな認可エンドポイントレスポンスタイプの定義<!-- Defining New Authorization Endpoint Response Types -->' anchor='response-type-ext'>
         <t>
+          認可エンドポイントで利用される新しいレスポンスタイプは認可エンドポイントレスポンスタイプレジストリーに <xref target='response-type-registry' /> の手順で定義され登録される.
+          レスポンスタイプ名は response-type ABNF に従って定義する必要がある (MUST).
+          <!--
           New response types for use with the authorization endpoint are defined and registered in
           the Authorization Endpoint Response Types registry following the procedure in
           <xref target='response-type-registry' />. Response type names MUST conform to the
           response-type ABNF.
+          -->
         </t>
         <figure>
           <artwork><![CDATA[
@@ -3263,22 +3489,32 @@ commonly applicable and that
 ]]></artwork>
         </figure>
         <t>
+          レスポンスタイプが一つ以上の空白文字 (%x20) を含む場合, それは空白で区切られた順不同の値のリストとして扱われる.
+          値の順番は一通りだけ登録でき, 同じ値の組の順番を変えた他のすべての組み合わせを網羅する.
+          <!--
           If a response type contains one or more space characters (%x20), it is compared as a
           space-delimited list of values in which the order of values does not matter. Only one
           order of values can be registered, which covers all other arrangements of the same set of
           values.
+          -->
         </t>
         <t>
+          例えば, 本仕様ではレスポンスタイプ <spanx style='verb'>token code</spanx> を定義しないが, 拡張仕様として <spanx style='verb'>token code</spanx> レスポンスタイプを定義し登録することは可能である.
+          一旦登録されると同じ組み合わせは <spanx style='verb'>code token</spanx> としては登録することはできないが, 両方の値は同じレスポンスタイプを示すために使うことが出来る.
+          <!--
           For example, the response type <spanx style='verb'>token code</spanx> is left undefined
           by this specification. However, an extension can define and register the
           <spanx style='verb'>token code</spanx> response type. Once registered, the same
           combination cannot be registered as <spanx style='verb'>code token</spanx>, but both
           values can be used to denote the same response type.
+          -->
         </t>
       </section>
 
-      <section title='Defining Additional Error Codes' anchor='new-errors'>
+      <section title='追加のエラーコードの定義<!-- Defining Additional Error Codes -->' anchor='new-errors'>
         <t>
+          プロトコルの拡張 (例えば, アクセストークンタイプ, 拡張パラメーター, 拡張グラントタイプ) が認可コードグラントエラーレスポンス (<xref target='code-authz-error' />), インプリシットグラントエラーレスポンス (<xref target='implicit-authz-error' />), トークンエラーレスポンス (<xref target='token-errors' />), リソースアクセスエラーレスポンス(<xref target='resource-errors' />) と一緒に使われる追加のエラーコードを必要とする場合, そのようなエラーコードを定義してもよい (MAY).
+          <!--
           In cases where protocol extensions (i.e., access token types, extension parameters, or
           extension grant types) require additional error codes to be used with the authorization
           code grant error response (<xref target='code-authz-error' />), the implicit grant error
@@ -3286,18 +3522,27 @@ commonly applicable and that
           (<xref target='token-errors' />),
           or the resource access error response (<xref target='resource-errors' />),
           such error codes MAY be defined.
+          -->
         </t>
         <t>
+          拡張エラーコードは登録されたアクセストークンタイプ, エンドポイントパラメーター, 拡張グラントタイプと共に利用する場合は (<xref target='error-registry' /> の手順に従って) 登録されなければならない (MUST).
+          登録されていない拡張と共に利用するエラーコードは登録してもよい (MAY).
+          <!--
           Extension error codes MUST be registered (following the procedures in
           <xref target='error-registry' />) if the extension they are used in conjunction with is
           a registered access token type, a registered endpoint parameter, or an extension grant
           type. Error codes used with unregistered extensions MAY be registered.
+          -->
         </t>
         <t>
+          エラーコードは error-code ABNF に従う必要があり (MUST), 可能な場合は識別名をプレフィックスとして付与するべきである (SHOULD).
+          例えば, 不正な値が拡張パラメーター  <spanx style='verb'>example</spanx> に設定されたことを示すエラーは <spanx style='verb'>example_invalid</spanx> と命名されるべきである.
+          <!--
           Error codes MUST conform to the error ABNF and SHOULD be prefixed by an identifying
           name when possible. For example, an error identifying an invalid value set to the
           extension parameter <spanx style='verb'>example</spanx> SHOULD be named
           <spanx style='verb'>example_invalid</spanx>.
+          -->
         </t>
         <figure>
           <artwork><![CDATA[
@@ -3309,79 +3554,115 @@ commonly applicable and that
 
     </section>
 
-    <section title='Native Applications' anchor="NativeApps">
+    <section title='ネイティブアプリケーション<!--Native Applications-->' anchor="NativeApps">
       <t>
+        ネイティブアプリケーションはリソースオーナーが利用する端末にインストールされ, 実行されるクライアントである (例えば, デスクトップアプリケーション, ネイティブモバイルアプリケーション).
+        ネイティブアプリケーションではセキュリティ, プラットフォーム性能と全体的なエンドユーザー体験に関する特別な考慮を必要とするかもしれない (MAY).
+        <!--
         Native applications are clients installed and executed on the device used by the resource
         owner (i.e., desktop application, native mobile application). Native applications require
         special consideration related to security, platform capabilities, and overall end-user
         experience.
+        -->
       </t>
       <t>
+        認可エンドポイントはクライアントとリソースオーナーのユーザーエージェントによるインタラクションを要求する.
+        ネイティブアプリケーションは外部のユーザーエージェントを起動もしくはアプリケーション内にユーザーエージェントを埋め込むことができる.
+        <!--
         The authorization endpoint requires interaction between the client and the resource
         owner's user-agent. Native applications can invoke an external user-agent or embed a
         user-agent within the application. For example:
+        -->
       </t>
       <t>
         <list style='symbols'>
           <t>
+            外部のユーザーエージェント - ネイティブアプリケーションは, クライアントを起動するためのハンドラとしてオペレーションシステムに登録したスキームをリダイレクトURIにして利用する, クレデンシャルをコピーアンドペーストする, ローカルのWebサーバーを利用する, ユーザーエクステンションをインストールする, クライアントの管理下にあるサーバー上のリソースをリダイレクトURIとして利用するなど, ネイティブアプリケーションがレスポンスにアクセスすることを可能にする手段を用いて, 認可サーバーからのレスポンスを取得することができる.
+            <!--
             External user-agent - the native application can capture the response from the
             authorization server using a redirection URI with a scheme registered with the
             operating system to invoke the client as the handler, manual copy-and-paste of the
             credentials, running a local web server, installing a user-agent extension, or by
             providing a redirection URI identifying a server-hosted resource under the client's
             control, which in turn makes the response available to the native application.
+            -->
           </t>
           <t>
+            埋め込まれたユーザーエージェント - ネイティブアプリケーションは, リソースを読み込んでいる間に発生した状態変更の監視やユーザーエージェントのクッキーストレージへのアクセスなど, 埋め込まれたユーザーエージェントとの直接通信によりレスポンスを受け取ることができる.
+            <!--
             Embedded user-agent - the native application obtains the response by directly
             communicating with the embedded user-agent by monitoring state changes emitted during
             the resource load, or accessing the user-agent's cookies storage.
+            -->
           </t>
         </list>
       </t>
       <t>
+        外部のユーザーエージェントか埋め込みのユーザーエージェントかを選択するとき, 開発者は次のことを考慮すべきである.
+        <!--
         When choosing between an external or embedded user-agent, developers
 should consider the following:
+        -->
       </t>
       <t>
         <list style='symbols'>
           <t>
+            認可サーバーが再認証を要求しない仕様になっており, かつリソースオーナーがアクティブセッションを保有している場合, 外部のユーザーエージェントは完了率をあげるかもしれない.
+            それは慣れ親しんだエンドユーザー体験と機能性を提供する.
+            リソースオーナーはまた認証を手助けするユーザーエージェントの機能や拡張 (パスワードマネージャ, 2要素のリーダー装置) に頼ることができる.
+            <!--
             An external user-agent may improve completion rate, as the resource owner may already have
             an active session with the authorization server, removing the need to re-authenticate. It
             provides a familiar end-user experience and functionality. The resource owner may also
             rely on user-agent features or extensions to assist with authentication (e.g., password
             manager, 2-factor device reader).
+            -->
           </t>
           <t>
+            埋め込みのユーザーエージェントはコンテキストの切り替えと新しいウィンドウオープンを取り除くことで, ユーザービリティを向上させることができるかもしれない.
+            <!--
             An embedded user-agent may offer improved usability, as it removes the need to switch
             context and open new windows.
+            -->
           </t>
           <t>
+            リソースオーナーはほとんどの外部ユーザーエージェントで見られる視覚的な保護機能にアクセスすることなく未確認のウィンドウ内で認証するため, 埋め込みのユーザーエージェントはセキュリティ問題を引き起こす.
+            埋め込みのユーザーエージェントは (フィッシング攻撃が簡単に実行できる) 未確認の認証要求を信用するようエンドユーザーに刷り込んでしまう.
+            <!--
             An embedded user-agent poses a security challenge because resource owners are
             authenticating in an unidentified window without access to the visual protections found
             in most external user-agents. An embedded user-agent educates end-users to trust
             unidentified requests for authentication (making phishing attacks easier to execute).
+            -->
           </t>
         </list>
       </t>
       <t>
+        インプリシットグラントタイプと認可コードグラントタイプを選択するとき, 以下について考慮すべきである.
+        <!--
         When choosing between the implicit grant type and the authorization code grant type, the
         following should be considered:
       </t>
       <t>
         <list style='symbols'>
           <t>
+            ネイティブアプリケーションはその性質上クライアントクレデンシャルを秘匿に保てないため, 認可コードグラントタイプを利用するネイティブアプリケーションはクライアントクレデンシャルを使うべきではない (SHOULD).
+            <!--
             Native applications that use the authorization code grant type SHOULD do so without
             using client credentials, due to the native application's inability to keep client
             credentials confidential.
+            -->
           </t>
           <t>
+            インプリシットグラントタイプのフローを利用すると, リフレッシュトークンは返されないため, アクセストークンの期限が切れるたびに認可プロセスを繰り返す必要がある.
+            <!--
             When using the implicit grant type flow, a refresh token is not returned, which requires
             repeating the authorization process once the access token expires.
+            -->
           </t>
         </list>
       </t>
     </section>
-
     <section title='Security Considerations'>
       <t>
         柔軟で拡張可能なフレームワークであるため, OAuthのセキュリティに関して配慮すべき点は多くの因子によって決まる.
