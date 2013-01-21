@@ -11,7 +11,7 @@
   <?rfc compact='yes' ?>
   <?rfc subcompact='no' ?>
   <?rfc rfcedstyle="yes"?>
-  
+
   <front>
     <title abbrev='OAuth 2.0'>The OAuth 2.0 Authorization Framework</title>
 
@@ -1112,7 +1112,7 @@
           -->
         </t>
       </section>
-      
+
     </section>
 
     <section title='Protocol Endpoints'>
@@ -1337,7 +1337,7 @@
               (used to extract and remove the credentials from the URI) will execute first.
             </t>
           </section>
-          
+
         </section>
 
       </section>
@@ -1481,7 +1481,7 @@
   +----------+
        ^
        |
-      (B)      
+      (B)
   +----|-----+          Client Identifier      +---------------+
   |         -+----(A)-- & Redirection URI ---->|               |
   |  User-   |                                 | Authorization |
@@ -1920,7 +1920,7 @@
   +----------+
        ^
        |
-      (B)      
+      (B)
   +----|-----+          Client Identifier     +---------------+
   |         -+----(A)-- & Redirection URI --->|               |
   |  User-   |                                | Authorization |
@@ -1936,7 +1936,7 @@
   |     (F)  |<---(E)------- Script ---------<|               |
   |          |                                +---------------+
   +-|--------+
-    |    |    
+    |    |
    (A)  (G) Access Token
     |    |
     ^    v
@@ -2092,7 +2092,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                 推奨 (RECOMMENDED).
                 リクエストとコールバックの間で状態を維持するために使用するランダムな値.
                 認可サーバーはリダイレクトによってクライアントに処理を戻す際にこの値を付与する.
-                このパラメーターは <xref target='CSRF' /> に記載されているクロスサイトリクエストフォージェリを防ぐために用いられるべきである (SHOULD). 
+                このパラメーターは <xref target='CSRF' /> に記載されているクロスサイトリクエストフォージェリを防ぐために用いられるべきである (SHOULD).
               </t>
               <!--
               <t hangText='response_type'>
@@ -2170,7 +2170,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
           </t>
           -->
           <t>
-            判定が成立すると, 認可サーバーはHTTPリダイレクトレスポンスまたはユーザーエージェントを介したその他の利用可能な手段を用いて, 与えられたリダイレクトURIにユーザーエージェントを送る. 
+            判定が成立すると, 認可サーバーはHTTPリダイレクトレスポンスまたはユーザーエージェントを介したその他の利用可能な手段を用いて, 与えられたリダイレクトURIにユーザーエージェントを送る.
           </t>
           <!--
           <t>
@@ -2347,7 +2347,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                     <t hangText='invalid_request'>
                       <vspace />
                       リクエストに必要なパラメーターが含まれていない.
-                      不正なパラメーターが付与されていた場合や, パラメータが複数回指定されていた場合, その他不正な形式であった場合もこれに含まれる. 
+                      不正なパラメーターが付与されていた場合や, パラメータが複数回指定されていた場合, その他不正な形式であった場合もこれに含まれる.
                     </t>
                     <!--
                     <t hangText='invalid_request'>
@@ -2358,7 +2358,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                     -->
                     <t hangText='unauthorized_client'>
                       <vspace />
-                      クライアントは現在の方法でアクセストークンを取得することを認可されていない. 
+                      クライアントは現在の方法でアクセストークンを取得することを認可されていない.
                     </t>
                     <!--
                     <t hangText='unauthorized_client'>
@@ -2368,7 +2368,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                     -->
                     <t hangText='access_denied'>
                       <vspace />
-                      リソースオーナーまたは認可サーバーがリクエストを拒否した. 
+                      リソースオーナーまたは認可サーバーがリクエストを拒否した.
                     </t>
                     <!--
                     <t hangText='access_denied'>
@@ -2389,7 +2389,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                     -->
                     <t hangText='invalid_scope'>
                       <vspace />
-                      リクエストスコープが不正, 未知, もしくはその他の不当な形式である. 
+                      リクエストスコープが不正, 未知, もしくはその他の不当な形式である.
                     </t>
                     <!--
                     <t hangText='invalid_scope'>
@@ -2399,7 +2399,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                     -->
                     <t hangText='server_error'>
                       <vspace />
-                      認可サーバーがリクエストの処理ができないような予期しない状況に遭遇した. 
+                      認可サーバーがリクエストの処理ができないような予期しない状況に遭遇した.
                       (このエラーコードはHTTPステータスコード500 Internal Server ErrorがHTTPリダイレクトではクライアントへ返されないため必要である)
                     </t>
                     <!--
@@ -2414,7 +2414,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
                     -->
                     <t hangText='temporarily_unavailable'>
                       <vspace />
-                      認可サーバーが一時的な過負荷やメンテナンスによってリクエストを扱うことが出来ない. 
+                      認可サーバーが一時的な過負荷やメンテナンスによってリクエストを扱うことが出来ない.
                       (このエラーコードはHTTPステータスコード503 Service UnavailabeがHTTPリダイレクトではクライアントへ返されないため必要である)
                     </t>
                     <!--
@@ -2485,7 +2485,7 @@ and <xref target="ImplicitImpersonation" format="counter"/>
             </t>
             <figure>
               <preamble>
-                例えば, 認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する. 
+                例えば, 認可サーバーは次のようなHTTPレスポンスをユーザーエージェントに返却する.
               </preamble>
               <!--
               <preamble>
@@ -3060,7 +3060,7 @@ Markup Language (SAML) 2.0 assertion grant type as
               推奨 (RECOMMENDED).
               アクセストークンの有効期間を表す秒数.
               例えばこの値が <spanx style='verb'>3600</spanx> であれば, そのアクセストークンは発行から1時間後に期限切れとなる.
-              省略された場合, 認可サーバはドキュメントまたは他の手段によってデフォルトの有効期間を提示しなければならない(SHOULD).
+              省略された場合, 認可サーバはドキュメントまたは他の手段によってデフォルトの有効期間を提示すべきである (SHOULD).
               <!--
               RECOMMENDED. The lifetime in seconds of the access token. For example, the value
               <spanx style='verb'>3600</spanx> denotes that the access token will expire in one
@@ -3081,7 +3081,8 @@ Markup Language (SAML) 2.0 assertion grant type as
             </t>
             <t hangText='scope'>
               <vspace />
-              クライアントから全く同一のスコープが要求された場合は任意 (OPTIONAL).その他は必須(REQUIRED).
+              クライアントから全く同一のスコープが要求された場合は任意 (OPTIONAL).
+              その他は必須 (REQUIRED).
               アクセストークンのスコープ.
               詳細は <xref target='scope' /> を参照のこと.
               <!--
@@ -3099,8 +3100,7 @@ Markup Language (SAML) 2.0 assertion grant type as
           <!--
           The parameters are included in the entity-body of the HTTP response using the
           <spanx style='verb'>application/json</spanx> media type as defined by
-          <xref target='RFC4627' />. The parameters are serialized into a
-JavaScript Object Notation (JSON) structure by
+          <xref target='RFC4627' />. The parameters are serialized into a JavaScript Object Notation (JSON) structure by
           adding each parameter at the highest structure level. Parameter names and string values
           are included as JSON strings. Numerical values are included as JSON numbers. The order of
           parameters does not matter and can vary.
@@ -3142,7 +3142,7 @@ JavaScript Object Notation (JSON) structure by
           クライアントはレスポンスに含まれる認識できない名前の値を無視しなければならない (MUST).
           トークンや認可サーバーから受けとるその他の値のサイズは定義しない.
           クライアントは値のサイズについてなんらかの仮定をすべきではない.
-          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである.
+          認可サーバーは自身が発行するあらゆる値のサイズについてドキュメントに明記すべきである (SHOULD).
           <!--
           The client MUST ignore unrecognized value names in the response. The sizes of tokens and
           other values received from the authorization server are left undefined. The client should
@@ -3185,7 +3185,7 @@ JavaScript Object Notation (JSON) structure by
                 <t hangText='invalid_client'>
                   <vspace />
                   クライアント認証に失敗した (例: 未知のクライアントである, クライアント認証情報が含まれていない, サポートされない認証方式が利用されている).
-                  認可サーバーはHTTP認証スキームがサポートされていないことを示すためにHTTP ステータスコード 401 (Unauthorized) を返してもよい (MAY).
+                  認可サーバーはどのHTTP認証スキームがサポートされているかを示すためにHTTP ステータスコード 401 (Unauthorized) を返してもよい (MAY).
                   もしクライアントが <spanx style='verb'>Authorization</spanx> リクエストヘッダー経由で認証を試みた場合, 認可サーバーはHTTP ステータスコード 401 (Unauthorized) と共に, <spanx style='verb'>WWW-Authenticate</spanx> レスポンスヘッダーにクライアントが利用すべき認証スキームを含めなければならない (MUST).
                   <!--
                   Client authentication failed (e.g., unknown client, no client authentication
@@ -3200,7 +3200,7 @@ JavaScript Object Notation (JSON) structure by
                 </t>
                 <t hangText='invalid_grant'>
                   <vspace />
-                  提供された認可グラント (例えば認可コード, リソースオーナークレデンシャル)またはリフレッシュトークン が不正, 有効期限切れ, 失効している, 認可リクエストで用いられたリダイレクト先URIとマッチしていない, 他のクライアントに対して発行されたものである.
+                  提供された認可グラント (例えば認可コード, リソースオーナークレデンシャル)またはリフレッシュトークン が不正, 有効期限切れ, 失効している, 認可リクエストで用いられたリダイレクトURIとマッチしていない, 他のクライアントに対して発行されたものである.
                   <!--
                   The provided authorization grant (e.g., authorization code, resource owner
                   credentials) or refresh token is invalid, expired, revoked, does not match the
@@ -3469,7 +3469,7 @@ JavaScript Object Notation (JSON) structure by
       <section title='アクセストークンタイプ<!-- Access Token Types -->' anchor='token-types'>
         <t>
           アクセストークンタイプは, タイプ特有の属性とともに, クライアントが保護されたリソースにリクエストする際アクセストークンを適切に用いるために必要な情報を提供する.
-          クライアントはトークンタイプが想定外のものであるとき, そのアクセストークンを利用するべきではない (MUST NOT).
+          クライアントはトークンタイプが想定外のものであるとき, そのアクセストークンを利用してはならない (MUST NOT).
           <!--
           The access token type provides the client with the information required to successfully
           utilize the access token to make a protected resource request (along with type-specific
@@ -3498,7 +3498,7 @@ JavaScript Object Notation (JSON) structure by
             このMACキーはHTTPリクエストの一部分を署名するのに利用される.
             <!--
             while the <spanx style='verb'>mac</spanx> token type defined in
-            <xref target='OAuth-HTTP-MAC' /> is utilized by issuing a 
+            <xref target='OAuth-HTTP-MAC' /> is utilized by issuing a
             Message Authentication Code (MAC) key
             together with the access token that is used to sign certain components of the HTTP
             requests:
@@ -3531,21 +3531,23 @@ JavaScript Object Notation (JSON) structure by
           -->
         </t>
       </section>
-      
+
       <section title='エラーレスポンス<!-- Error Response -->' anchor='resource-errors'>
         <t>
-          リソースアクセスに失敗した場合, リソースサーバーはクライアントにエラーを通知すべきである(SHOULD).
-          このようなエラーに関する詳細については本仕様の範疇外であるが, エラーの値はOAuthトークン認証スキームで共有されるため，　本ドキュメンtでは<xref target='error-registry' />で共有レジストリを設置している．
+          リソースアクセスに失敗した場合, リソースサーバーはクライアントにエラーを通知すべきである (SHOULD).
+          このようなエラーに関する詳細については本仕様の範疇外であるが, エラーの値はOAuthトークン認証スキームで共有されるため, 本ドキュメントでは<xref target='error-registry' />で共有レジストリを設置している.
           <!--
           If a resource access request fails, the resource server SHOULD inform
           the client of the error.  While the specifics of such error responses
           are beyond the scope of this specification, this document establishes
           a common registry in <xref target='error-registry' /> for error values
-          to be shared among OAuth token authentication schemes. 
+          to be shared among OAuth token authentication schemes.
           -->
         </t>
         <t>
-        　　主にOAuthトークン認証のために設計された新しい認証スキームでは，　エラーの値を本仕様によって設置されているエラーレジストリに登録することを考慮した上で，　エラーステータスコードをクライアントに提示するためのメカニズムを定義すべきである（SHOULD）．　　そのようなスキームは有効なエラーコードのセットを登録されている値のサブセットに制限してもより(MAY).　エラーコードが名前付きパラメータで返却された場合，　そのパラメータ名は<spanx style='verb'>error</spanx>にすべきである(SHOULD).
+          主にOAuthトークン認証のために設計された新しい認証スキームでは, エラーの値を本仕様によって設置されているエラーレジストリに登録することを考慮した上で, エラーステータスコードをクライアントに提示するためのメカニズムを定義すべきである (SHOULD).
+          そのようなスキームは有効なエラーコードのセットを登録されている値のサブセットに制限してもよい (MAY).
+          エラーコードが名前付きパラメータで返却された場合, そのパラメータ名は<spanx style='verb'>error</spanx>にすべきである(SHOULD).
           <!--
           New authentication schemes designed primarily for OAuth token
           authentication SHOULD define a mechanism for providing an
@@ -3557,7 +3559,7 @@ JavaScript Object Notation (JSON) structure by
           -->
         </t>
         <t>
-        　　OAuthトークン認証にも使えるが，　主とする目的のためには設計されていない他のスキームについては，　同様の方法でエラーの値を登録してもよい(MAY).
+          OAuthトークン認証にも使えるが, 主とする目的のためには設計されていない他のスキームについては, 同様の方法でエラーの値を登録してもよい(MAY).
           <!--
           Other schemes capable of being used for OAuth token authentication, but
           not primarily designed for that purpose, MAY bind their error values to the
@@ -3565,10 +3567,10 @@ JavaScript Object Notation (JSON) structure by
           -->
         </t>
         <t>
-        　　新しい認証スキームは，　本仕様と同様の方法によって，　エラー情報を返却するために<spanx style='verb'>error_description</spanx>と<spanx style='verb'>error_uri</spanx>パラメータを選択してもよい(MAY).
+          新しい認証スキームは, 本仕様と同様の方法によって, エラー情報を返却するために<spanx style='verb'>error_description</spanx>と<spanx style='verb'>error_uri</spanx>パラメータを選択してもよい(MAY).
           <!--
           New authentication schemes MAY choose to also specify the use of the
-          <spanx style='verb'>error_description</spanx> and 
+          <spanx style='verb'>error_description</spanx> and
           <spanx style='verb'>error_uri</spanx>
           parameters to return error information in a manner parallel
           to their usage in this specification.
@@ -4463,8 +4465,8 @@ should consider the following:
           <!--
           A resource owner may willingly delegate access to a resource by granting an access token
           to an attacker's malicious client.  This may be due to phishing or some other pretext.
-          An attacker may also steal a token via some other mechanism.   
-          An attacker may then attempt to impersonate the resource owner by providing the 
+          An attacker may also steal a token via some other mechanism.
+          An attacker may then attempt to impersonate the resource owner by providing the
           access token to a legitimate public client.
           -->
         </t>
@@ -4480,7 +4482,7 @@ should consider the following:
           アクセストークンを差し込める信用できないアプリケーションを作成する攻撃者により, クライアントのユーザーを特定するためにネイティブアプリケーションと通信しバックチャネルでアクセストークンを受け取っているサーバーは同様の危険性を持つ.
           <!--
           Servers communicating with native applications that rely on being passed
-          an access token in the back channel to identify the user of the client may 
+          an access token in the back channel to identify the user of the client may
           be similarly compromised by an attacker creating a compromised application
           that can inject arbitrary stolen access tokens.
           -->
@@ -4648,7 +4650,7 @@ should consider the following:
           登録要請は, 適切な件名 (例: "Request for parameter: example") で oauth-ext-review@ietf.org のメーリングリストに通知すべきであり, そこでレビューとコメントが行われる.
           <!--
           Registration requests must be sent to the oauth-ext-review@ietf.org mailing list for review and
-          comment, with an appropriate subject (e.g., "Request for parameter: example").    
+          comment, with an appropriate subject (e.g., "Request for parameter: example").
           -->
         </t>
         <t>
@@ -4992,7 +4994,7 @@ should consider the following:
         </t>
         <t>
             認可エンドポイントで利用される追加のレスポンスタイプは,
-            1名以上の Designated Experts の勧告に従い, oauth-ext-review@ietf.org のメーリングリストで14日間の審査期間を経て, Specification Required <xref target='RFC5226' /> な状態で登録される. 
+            1名以上の Designated Experts の勧告に従い, oauth-ext-review@ietf.org のメーリングリストで14日間の審査期間を経て, Specification Required <xref target='RFC5226' /> な状態で登録される.
             しかしながら, 発行に先立ってそれらの値を割り当てることができるように, Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
             <!--
             Additional response types for use with the authorization endpoint are registered with a
