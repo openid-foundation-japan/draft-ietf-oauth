@@ -47,7 +47,8 @@
 
   <middle>
 
-    <section title='Introduction'>
+    <section title='はじめに'>
+    <!-- <section title='Introduction'> -->
       <t>
         従来のクライアントサーバー型の認証モデルでは, クライアントはリソースオーナーのクレデンシャルを使ってサーバーに対して認証を行い, サーバー上の保護されたリソースにアクセスする.
         つまり, サードパーティーアプリケーションに保護されたリソースへのアクセス権を与えるには, リソースオーナーは自身のクレデンシャルをサードパーティーと共有する必要がある.
@@ -170,7 +171,8 @@
         -->
       </t>
 
-      <section title='Roles'>
+      <section title='登場人物'>
+      <!-- <section title='Roles'> -->
         <t>
           OAuthは以下の4つのロールを定義する.
           <!--
@@ -231,7 +233,8 @@
         </t>
       </section>
 
-      <section title='Protocol Flow'>
+      <section title='プロトコルフロー'>
+      <!-- <section title='Protocol Flow'> -->
         <figure title='Abstract Protocol Flow' anchor='Figure-1'>
           <artwork><![CDATA[
   +--------+                               +---------------+
@@ -326,7 +329,8 @@
 
       </section>
 
-      <section title='Authorization Grant'>
+      <section title='認可グラント'>
+      <!-- <section title='Authorization Grant'> -->
         <t>
           認可グラントは, リソースオーナーによる (保護されたリソースへのアクセスを行うことに対する) 認可を示し, クライアントがアクセストークンを取得する際に用いられる.
           本仕様では認可コード, インプリシット, リソースオーナーパスワードクレデンシャル, クライアントクレデンシャルの4つのグラントタイプを定義しており, 拡張仕様によってタイプを追加することもできる.
@@ -339,7 +343,8 @@
           -->
         </t>
 
-        <section title='Authorization Code'>
+        <section title='認可コード'>
+        <!-- <section title='Authorization Code'> -->
           <t>
             認可コードは, 認可サーバーがクライアントとリソースオーナーの仲介となって発行する.
             リソースオーナーへ直接認可を要求する代わりに, クライアントは (<xref target='RFC2616' /> に定義されたユーザーエージェントを経由して) リソースオーナーを認可サーバーへリダイレクトさせ, リソースオーナーがリダイレクトして戻ってきた際に認可コードを取得する.
@@ -374,7 +379,8 @@
           </t>
         </section>
 
-        <section title='Implicit' anchor="ImplicitIntro">
+        <section title='インプリシット' anchor="ImplicitIntro">
+        <!-- <section title='Implicit' anchor="ImplicitIntro"> -->
           <t>
             インプリシットグラントは, 認可コードフローを単純化したものであり, JavaScriptの様なスクリプト言語を使用してブラウザ上で実行されるクライアントに最適化されている.
             インプリシットフローでは, クライアントは (リソースオーナー認可の結果) 認可コードの代わりに直接アクセストークンを受け取る.
@@ -422,7 +428,8 @@
           </t>
         </section>
 
-        <section title="Resource Owner Password Credentials">
+        <section title="リソースオーナーパスワードクレデンシャル">
+        <!-- <section title="Resource Owner Password Credentials"> -->
           <t>
             リソースオーナーパスワードクレデンシャル (例えばユーザー名とパスワード) を直接アクセストークンを得るための認可グラントとして使用することも出来る.
             このクレデンシャルは, (例えばクライアントがデバイスOSの一部となっていたり, 非常に特権のあるアプリケーションである場合のように) リソースオーナーとクライアントの間で高い信頼があり, (認可コードのような) 他の認可グラントタイプが利用できない場合のみ使用されるべきである.
@@ -448,7 +455,8 @@
           </t>
         </section>
 
-        <section title='Client Credentials'>
+        <section title='クライアントクレデンシャル'>
+        <!-- <section title='Client Credentials'> -->
           <t>
             認可範囲がクライアントの管理下にある保護されたリソース, もしくはあらかじめ認可サーバーとの間で調整済の保護されたリソースに制限されている場合は, 認可グラントとしてクライアントクレデンシャル (もしくは他のクライアント認証形式) が使用できる.
             クライアントがクライアント自身の権限においてに行動している (つまりクライアントがリソースオーナーである) か, クライアントがあらかじめ認可サーバーとの間で調整済の保護されたリソースアクセスを求めている場合, クライアントクレデンシャルが認可グラントとして使用される.
@@ -466,7 +474,8 @@
 
       </section>
 
-      <section title='Access Token'>
+      <section title='アクセストークン'>
+      <!-- <section title='Access Token'> -->
         <t>
           アクセストークンは保護されたリソースにアクセスするために使用されるクレデンシャルである.
           アクセストークンはクライアントに対して発行される認可を表す文字列である.
@@ -513,7 +522,8 @@
         </t>
       </section>
 
-      <section title='Refresh Token'>
+      <section title='リフレッシュトークン'>
+      <!-- <section title='Refresh Token'> -->
         <t>
           リフレッシュトークンはアクセストークンを取得するために使用されるクレデンシャルである.
           リフレッシュトークンは認可サーバーによってクライアントに対して発行され, 現在のアクセストークンが無効化されたあるいは期限切れの際に新しいアクセストークンを取得するため, または同一あるいは狭い範囲で追加のアクセストークンを取得するために利用される (アクセストークンはリソースオーナーによって認可されるよりも有効期限は短く, 権限が少なくてもよい).
@@ -645,7 +655,8 @@
         </t>
       </section>
 
-      <section title='TLS Version' anchor='tls'>
+      <section title='TLSバージョン' anchor='tls'>
+      <!-- <section title='TLS Version' anchor='tls'> -->
         <t>
           本仕様でTransport Layer Security (TLS) を用いる場合, 将来的に実運用やセキュリティ上の脆弱性が発見されたりすることで, 適切なTLSのバージョンは変化しうる.
           本仕様執筆時点では, TLSバージョン1.2 <xref target='RFC5246' /> が最新バージョンであるが, 現実にはその実装は限られており, すぐに利用可能な状態ではない可能性もある.
@@ -668,7 +679,8 @@
         </t>
       </section>
 
-      <section title='HTTP Redirections'>
+      <section title='HTTPリダイレクト'>
+      <!-- <section title='HTTP Redirections'> -->
         <t>
           本仕様では, クライアントもしくは認可サーバーがリソースオーナーのユーザーエージェントを別の場所にリダイレクトさせる際に, HTTPリダイレクトを用いる.
           本仕様の例では302 HTTPステータスを用いるが, それ以外にもユーザーエージェントを通じてリダイレクトを行うことができる方法であれば, どのような手段を用いても良い.
@@ -683,7 +695,8 @@
         </t>
       </section>
 
-      <section title='Interoperability'>
+      <section title='相互運用性'>
+      <!-- <section title='Interoperability'> -->
         <t>
           OAuth 2.0は明確に定義されたセキュリティ特性を持つリッチな認可フレームワークである.
           しかしながら, リッチで多くのオプション要素を持つ高度に拡張可能なフレームワークであることから, 様々な要因によって相互運用性を損なう実装をもたらす可能性もある.
@@ -716,7 +729,8 @@
         </t>
       </section>
 
-      <section title='Notational Conventions'>
+      <section title='表記規約'>
+      <!-- <section title='Notational Conventions'> -->
         <t>
           本仕様書で用いられる各キーワード「MUST (しなければならない)」, 「MUST NOT (してはならない)」, 「REQUIRED (必須である)」, 「SHALL (するものとする)」, 「SHALL NOT (しないものとする)」, 「SHOULD (すべきである)」, 「SHOULD NOT (すべきではない)」, 「RECOMMENDED (推奨される)」, 「MAY (してもよい)」, 「OPTIONAL (任意である)」は <xref target='RFC2119' /> で述べられている通りに解釈されるべきものである.
           <!--
@@ -756,7 +770,8 @@
 
     </section>
 
-    <section title='Client Registration'>
+    <section title='クライアント登録'>
+    <!-- <section title='Client Registration'> -->
       <t>
         OAuth プロトコルフローを開始する前に, クライアントは認可サーバーに登録する.
         クライアントが認可サーバーに登録する方法は本仕様での範囲外であるが, 通常エンドユーザーとの対話を伴うHTML登録フォームを持つ.
@@ -811,7 +826,8 @@
         </list>
       </t>
 
-      <section title='Client Types' anchor='client-types'>
+      <section title='クライアントタイプ' anchor='client-types'>
+      <!-- <section title='Client Types' anchor='client-types'> -->
         <t>
           認可サーバーと安全に認証する能力 (クライアントクレデンシャルの機密性を維持できる能力など) に基づいて, OAuthは二つのクライアントタイプを定義している.
           <!--
@@ -922,7 +938,8 @@
         </t>
       </section>
 
-      <section title='Client Identifier' anchor='client-identifier'>
+      <section title='クライアント識別子' anchor='client-identifier'>
+      <!-- <section title='Client Identifier' anchor='client-identifier'> -->
         <t>
           認可サーバーは登録済みのクライアントにクライアント識別子 (クライアントが提供した登録情報を表すユニーク文字列) を発行する.
           クライアント識別子はシークレットと異なりリソースオーナーに露出されるため, その情報のみでクライアント認証を行ってはならない (MUST NOT).
@@ -947,7 +964,8 @@
         </t>
       </section>
 
-      <section title='Client Authentication' anchor='client-authentication'>
+      <section title='クライアント認証' anchor='client-authentication'>
+      <!-- <section title='Client Authentication' anchor='client-authentication'> -->
         <t>
           クライアントタイプがコンフィデンシャルである場合, クライアントと認可サーバーは, 認可サーバーのセキュリティ要求を満たすクライアント認証方式を確立する.
           認可サーバーは自身のセキュリティ要求さえ満たせば, どのような方式のクライアント認証に対応してもよい (MAY).
@@ -982,7 +1000,8 @@
           -->
         </t>
 
-        <section title='Client Password' anchor="client-password">
+        <section title='クライアントパスワード' anchor="client-password">
+        <!-- <section title='Client Password' anchor="client-password"> -->
           <t>
             クライアントパスワードを保持しているクライアントは, 認可サーバー上での認証に<xref target='RFC2617' />で定義されているHTTP Basic認証スキームを使用してもよい (MAY).
             この場合, クライアント識別子は<xref target="urlencoded"/>の定める<spanx style='verb'>application/x-www-form-urlencoded</spanx>形式にエンコードされ, エンコードされた値がユーザーネームとして用いられる.
@@ -1086,7 +1105,8 @@
           </t>
         </section>
 
-        <section title='Other Authentication Methods'>
+        <section title='その他の認証方式'>
+        <!-- <section title='Other Authentication Methods'> -->
           <t>
             認可サーバーは, 自身のセキュリティ要件に適合するいかなるHTTP認証スキームをサポートしてよい (MAY).
             他の認証方式を利用する際には, 認可サーバーはクライアント識別子 (つまり登録されたクライアント) と認証スキームのマッピングを明確にしなければならない (MUST).
@@ -1101,7 +1121,8 @@
 
       </section>
 
-      <section title='Unregistered Clients'>
+      <section title='未登録クライアント'>
+      <!-- <section title='Unregistered Clients'> -->
         <t>
           本仕様は, 未登録のクライアントの利用を排除するものではない.
           しなしながら, そのようなクライアントの利用は本仕様のスコープ外であり, さらなるセキュリティー面の分析と相互運用性への影響度評価が必要である.
@@ -1255,7 +1276,7 @@
         </t>
         -->
 
-        <section title='レスポンスタイプ'>
+        <section title='レスポンスタイプ' anchor="response-type">
         <!-- <section title='Response Type' anchor="response-type"> -->
           <t>
             認可エンドポイントは認可コードグラントタイプとインプリシットタイプのフローで使用される.
@@ -1347,7 +1368,7 @@
           <section title='エンドポイントリクエストの機密性'>
           <!-- <section title='Endpoint Request Confidentiality'> -->
             <t>
-              リダイレクトエンドポイントは, リクエストされたレスポンスタイプが <spanx style='verb'>code</spanx> または <spanx style='verb'>token<spanx> である場合, およびリダイレクトリクエストによってオープンネットワーク上にセンシティブなクレデンシャルが転送されることになる場合は, <xref target='tls' /> に記載されているTLSを要求するべきである (SHOULD).
+              リダイレクトエンドポイントは, リクエストされたレスポンスタイプが <spanx style='verb'>code</spanx> または <spanx style='verb'>token</spanx> である場合, およびリダイレクトリクエストによってオープンネットワーク上にセンシティブなクレデンシャルが転送されることになる場合は, <xref target='tls' /> に記載されているTLSを要求するべきである (SHOULD).
               本仕様作成時点においてクライアントがTLS対応するのは多くの開発者にとって大きな障害となることから, 本仕様ではTLSの使用を強制はしない.
               TLSが利用できない場合, 認可サーバーはリダイレクト前にリソースオーナーに対して安全でないエンドポイントであることを警告するべきである (SHOULD).
               (例えば, 認可リクエスト時にメッセージを表示する)
@@ -2018,7 +2039,7 @@
           -->
         </section>
 
-        <section title='認可レスポンス'>
+        <section title='認可レスポンス' anchor="code-authz-resp">
         <!-- <section title='Authorization Response' anchor="code-authz-resp"> -->
           <t>
             リソースオーナーがアクセスリクエストを許可した場合, 認可サーバーは認可コードを発行し, <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target="urlencoded"/>) フォーマットを用いてリダイレクトURIのクエリーコンポーネントに次のパラメーターを付与してクライアントに送る.
