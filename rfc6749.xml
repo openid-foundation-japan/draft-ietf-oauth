@@ -6021,6 +6021,36 @@ value='REC-xml-20081126' />
       </reference>
 
     </references>
+
+    <references title='翻訳プロジェクト'>
+      <reference anchor="oidfj">
+        <front>
+          <title>OpenIDファウンデーションジャパン</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://www.openid.or.jp/' />
+      </reference>
+      <reference anchor="oidfj-trans">
+        <front>
+          <title>翻訳・教育ワーキンググループ</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://openid-foundation-japan.github.com/' />
+      </reference>
+      <reference anchor="oidfj-github">
+        <front>
+          <title>Githubレポジトリー</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='https://github.com/openid-foundation-japan' />
+      </reference>
+    </references>
   <?rfc rfcedstyle="yes"?>
 
     <section title="Augmented Backus-Naur Form (ABNF) Syntax">
@@ -6422,6 +6452,44 @@ John Bradley, Marcos Caceres, Brian Campbell,
         This document was produced under the chairmanship of Blaine Cook, Peter Saint-Andre,
         Hannes Tschofenig, Barry Leiba, and Derek Atkins. The area directors included Lisa Dusseault,
         Peter Saint-Andre, and Stephen Farrell.
+      </t>
+    </section>
+
+    <section title="翻訳者">
+      <t>
+        本仕様の翻訳は, <xref target='oidfj'>OpenIDファウンデーションジャパン</xref> <xref target='oidfj-trans'>翻訳・教育ワーキンググループ</xref>を主体として, 有志のメンバーによって行われました.
+        質問や修正依頼などについては, <xref target='oidfj-github'>Githubレポジトリー</xref> にご連絡ください.
+      </t>
+      <t>
+        <list style='symbols'>
+          <t>
+            Boku Kihara (Lepidum)
+          </t>
+          <t>
+            Kazuki Shimizu (Lepidum)
+          </t>
+          <t>
+            Masaru Kurahayashi (Yahoo! Japan)
+          </t>
+          <t>
+            Naohiro Fujie (Itochu Techno Solutions)
+          </t>
+          <t>
+            Noboru Kurumai (Fujitsu)
+          </t>
+          <t>
+            Nov Matake
+          </t>
+          <t>
+            Ryo Ito (mixi)
+          </t>
+          <t>
+            Tatsuya Katsuhara (NRI)
+          </t>
+          <t>
+            Yusuke Kondo (Yahoo! Japan)
+          </t>
+        </list>
       </t>
     </section>
   </back>
