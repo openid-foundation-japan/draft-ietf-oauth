@@ -1208,7 +1208,7 @@
         </t>
         -->
         <t>
-          エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='urlencoded' />) でフォーマットされたクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
+          エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='urlencoded' />) フォーマットのクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
           クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
           エンドポイントURIはフラグメントコンポーネントを含んではいけない (MUST NOT).
         </t>
@@ -1329,7 +1329,7 @@
           -->
           <t>
             リダイレクトエンドポイントのURIは <xref target='RFC3986' /> のセクション4.3で定義されている絶対URIでなければいけない (MUST).
-            エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='urlencoded' />) でフォーマットされたクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
+            エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='urlencoded' />) フォーマットのクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
             クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
             エンドポイントURIはフラグメントコンポーネントを含んではいけない (MUST NOT).
           </t>
@@ -1461,7 +1461,7 @@
           <section title='動的設定'>
           <!-- <section title='Dynamic Configuration'> -->
             <t>
-              リダイレクトURIが複数登録されていた場合, リダイレクトURIの一部のみ登録されていた場合, もしくはリダイレクトURIが登録されていなかった場合, クライアントは <spanx style='verb'>redirect_uri</spanx> リクエストパラメーターを使用して認可リクエストでリダイレクトURIを含まなければいけない (MUST).
+              リダイレクトURIが複数登録されている場合, リダイレクトURIの一部のみが登録されている場合, もしくはリダイレクトURIが登録されていない場合, クライアントは <spanx style='verb'>redirect_uri</spanx> リクエストパラメーターを使用して認可リクエストにリダイレクトURIを含めなければいけない (MUST).
             </t>
             <!--
             <t>
@@ -1472,7 +1472,7 @@
             </t>
             -->
             <t>
-              リダイレクトURIが認可リクエストに含まれていた時, いくつかのリダイレクトURIが登録されていた場合<xref target='RFC3986' />セクション6に示すとおり登録されているリダイレクトURI (もしくはURIコンポーネント) の内の少なくとも一つに対して受け取った値と比較し一致しなければいけない.
+              認可リクエスト中にリダイレクトURIが含まれており, かつリダイレクトURIが事前登録されている場合, <xref target='RFC3986' /> セクション6に示すとおり, 認可サーバーは認可リクエストに含まれる値を登録済リダイレクトURI (もしくはURIコンポーネント) と比較し, 少なくとも1つと一致することを確認しなければならない (MUST).
               もしクライアントの登録にフルのリダイレクトURIが含まれていた場合, 認可サーバーは <xref target='RFC3986' /> セクション6.2.1.で定義されているように単純な文字列比較を使用し二つのURIを比較しなければいけない (MUST).
             </t>
             <!--
@@ -1491,7 +1491,7 @@
           <section title='無効なエンドポイント'>
           <!-- <section title='Invalid Endpoint'> -->
             <t>
-              認可リクエストがリダイレクトURIの欠落, 無効, もしくは不一致のため検証失敗なら, 認可サーバーはエラーであることをリソースオーナーに知らせるべきである (SHOULD).
+              認可リクエストがリダイレクトURIの欠落, 無効, もしくは不一致のため検証失敗なら, 認可サーバーはエラーをリソースオーナーに知らせるべきである (SHOULD).
               そして無効なリダイレクトURIにユーザーエージェントを自動でリダイレクトしてはいけない (MUST NOT).
             </t>
             <!--
@@ -1507,8 +1507,8 @@
           <section title='エンドポイントコンテント'>
           <!-- <section title='Endpoint Content'> -->
             <t>
-              クライアントのエンドポイントへのリダイレクトリクエストは通常ユーザーエージェントによって処理されたHTMLドキュメントのレスポンスとして返される.
-              リダイレクトのリクエストの結果HTMLレスポンスが直接提供される場合, HTMLドキュメントに含まれるすべてのスクリプトがリダイレクトURIとそれに含まれるクレデンシャルへのフルアクセス権限をもって実行されることになる.
+              クライアントのリダイレクトエンドポイントへリダイレクトすると, 通常はHTMLドキュメントが返され, そのレスポンスがユーザーエージェントに処理される.
+              リダイレクトエンドポイントから直接HTMLレスポンスが返される場合, そのHTMLドキュメントに含まれるすべてのスクリプトはリダイレクトURIとそれに含まれるクレデンシャルにアクセス権限可能となる.
             </t>
             <!--
             <t>
@@ -1520,7 +1520,8 @@
             </t>
             -->
             <t>
-              クライアントはリダイレクトエンドポイントのレスポンスにどのサードパーティーのスクリプトもインクルードするべきではない (SHOULD NOT) (例えばサードパーティーのアクセス解析, ソーシャルプラグイン, アドネットワーク).
+              クライアントはリダイレクトエンドポイントのレスポンスにどのサードパーティーのスクリプトもインクルードするべきではない (SHOULD NOT).
+              (例えばサードパーティーのアクセス解析, ソーシャルプラグイン, アドネットワーク)
               そのかわりに, クライアントはURIからクレデンシャルを抽出し, クレデンシャルを (URIや他のどこかに) 露出することなくユーザーエージェントを再び別のエンドポイントへリダイレクトするべきである (SHOULD).
               サードパーティのスクリプトがインクルードされていた場合, クライアントは自身の (URIからクレデンシャルを取得したり取り除くための) スクリプトが最初に実行されることを保証しなくてはならない (MUST).
             </t>
@@ -1543,8 +1544,8 @@
       <section title='トークンエンドポイント'>
       <!-- <section title='Token Endpoint'> -->
         <t>
-          トークンエンドポイントは認可グラントもしくはリフレッシュトークンを提示することでクライアントがアクセストークンを取得するための利用される
-          トークンエンドポイントはインプリシットグラントタイプを除くすべてのグラントタイプで利用される (アクセストークンは直接発行されるため).
+          トークンエンドポイントは, 認可グラントもしくはリフレッシュトークンをアクセストークンと交換するために, クライアントに利用される.
+          トークンエンドポイントは, インプリシットグラントタイプ (アクセストークンが直接発行される) を除くすべてのグラントタイプで利用される.
         </t>
         <!--
         <t>
@@ -1554,9 +1555,7 @@
         </t>
         -->
         <t>
-          The means through which the client obtains the location of the token endpoint are
-          beyond the scope of this specification, but the location is typically provided in the service
-          documentation.
+          クライアントがトークンエンドポイントURLを取得する方法は本仕様の定めるところではないが, そのURLは一般的にサービスドキュメントで提供される.
         </t>
         <!--
         <t>
@@ -1566,7 +1565,7 @@
         </t>
         -->
         <t>
-          エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='urlencoded' />) でフォーマットされたクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
+          エンドポイントURIは <spanx style='verb'>application/x-www-form-urlencoded</spanx> (<xref target='urlencoded' />) フォーマットのクエリーコンポーネント (<xref target='RFC3986' /> セクション3.4) を含んでもよい (MAY).
           クエリーパラメーターを追加する際, ここで指定されたクエリーコンポーネントは維持すること (MUST).
           エンドポイントURIはフラグメントコンポーネントを含んではいけない (MUST NOT).
         </t>
@@ -1580,7 +1579,7 @@
         </t>
         -->
         <t>
-          トークンエンドポイントへのリクエストが平文で (HTTPリクエストおよびレスポンスにて) 転送することになるため, 認可サーバーはトークンエンドポイントへリクエストを送信する際にTLS (<xref target='tls' />) を利用しなくてはならない (MUST).
+          トークンエンドポイントでは, (HTTPリクエストおよびレスポンスにて) クレデンシャルが平文で転送されることになるため, 認可サーバーはトークンエンドポイントへリクエストにTLS (<xref target='tls' />) を必須としなくてはならない (MUST).
         </t>
         <!--
         <t>
@@ -1600,7 +1599,7 @@
         -->
         <t>
           空の値で送信されたパラメーターは省略されたものとして扱われなければならない (MUST).
-          認可サーバーは未知のリクエストパラメーターは無視するべきである (SHOULD).
+          認可サーバーは未知のリクエストパラメーターは無視しなければならない (MUST).
           リクエストおよびレスポンスパラメーターは重複を許さない (MUST NOT).
         </t>
         <!--
@@ -1665,9 +1664,9 @@
             </list>
           </t>
           <t>
-            クライアントはトークンエンドポイントにリクエスト送信する際に自身を識別するために <spanx style='verb'>client_id</spanx> パラメーターを用いてもよい (MAY).
-            トークンエンドポイントへ <spanx style='verb'>authorization_code</spanx> <spanx style='verb'>grant_type</spanx> をリクエスト時に, 未認証のクライアントは <spanx style='verb'>client_id</spanx> を送信することで, 異なる <spanx style='verb'>client_id</spanx> に対して不用意にコードを渡してしまうことを防止しなくてはならない (MUST).
-            これによりクライアントの認可コード置換対策となる (保護リソースに対してのセキュリティ対策は提供していない).
+            クライアントは, トークンエンドポイントへのリクエスト時に自身を識別するために, <spanx style='verb'>client_id</spanx> パラメーターを用いてもよい (MAY).
+            トークンエンドポイントへのリクエスト時に <spanx style='verb'>authorization_code</spanx> <spanx style='verb'>grant_type</spanx> を指定する場合, 認証を行わないクライアントは, リクエストに <spanx style='verb'>client_id</spanx> を含み, 異なる <spanx style='verb'>client_id</spanx> に対して発行されたコードを不用意に受け入れてしまうことを防がなければならない (MUST).
+            これはクライアントに対する認可コード置換攻撃への対策となる (保護リソースに対してのセキュリティ対策は提供していない).
           </t>
           <!--
           <t>
@@ -1705,7 +1704,7 @@
         <t>
           スコープパラメーターの値は大文字と小文字を区別する文字列で, スペース区切りのリストで示される.
           文字列は認可サーバーによって定義されている.
-          値が複数のスペース区切りの文字列を含んでいる場合, その順序に意味は無く, それぞれのアクセス範囲の全てが要求されるスコープになる.
+          値が複数のスペース区切りの文字列を含んでいる場合, その順序に意味は無く, それぞれのアクセス範囲を足し合わせたものが要求されるスコープになる.
         </t>
         <!--
         <t>
@@ -2233,7 +2232,7 @@
                 <t hangText='error_description'>
                   <vspace />
                   任意 (OPTIONAL).
-                  クライアント開発者が発生したエラーを理解する際の手助けとなる, UTF-8エンコードされた可読性のあるASCII (<xref target="USASCII" />) の文字列で表される追加情報.
+                  クライアント開発者が発生したエラーを理解する際の手助けとなる, 可読性のあるASCII (<xref target="USASCII" />) 文字列で表される追加情報.
                   <vspace/>
                   <spanx style='verb'>error_description</spanx> パラメーター値は %x20-21 / %x23-5B / %x5D-7E 以外の文字セットを含んではならない (MUST NOT).
                 </t>
@@ -2252,7 +2251,7 @@
                   任意 (OPTIONAL).
                   クライアント開発者が発生したエラーに関する追加の情報を得ることができるWebページのURI.
                   <vspace/>
-                  <spanx style='verb'>error_uri</spanx> パラメーター値は URI構文に従い (MUST), %x21 / %x23-5B / %x5D-7E 以外の文字セットを含んではならない (MUST NOT).
+                  <spanx style='verb'>error_uri</spanx> パラメーター値はURI構文に従い (MUST), %x21 / %x23-5B / %x5D-7E 以外の文字セットを含んではならない (MUST NOT).
                 </t>
                 <!--
                 <t hangText='error_uri'>
@@ -2268,7 +2267,7 @@
                 -->
                 <t hangText='state'>
                   <vspace />
-                  もし正当な <spanx style='verb'>state</spanx> パラメーターがクライアントからの認可リクエストに含めれている場合は必須 (REQUIRED).
+                  <spanx style='verb'>state</spanx> パラメーターがクライアントからの認可リクエストに含めれていた場合は必須 (REQUIRED).
                   クライアントから受け取った値をそのまま返す.
                 </t>
                 <!--
@@ -2339,7 +2338,8 @@
               -->
               <t hangText='redirect_uri'>
                 <vspace />
-                <xref target='code-authz-req' /> で示す認可リクエストに, <spanx style='verb'>redirect_uri</spanx> パラメーターが含まれていた場合は必須 (REQUIRED) で, 同じ値でなければならない (MUST).
+                <xref target='code-authz-req' /> で示す認可リクエストに, <spanx style='verb'>redirect_uri</spanx> パラメーターが含まれていた場合は必須 (REQUIRED).
+                認可リクエスト時と同じ値でなければならない (MUST).
               </t>
               <!--
               <t hangText='redirect_uri'>
@@ -2414,17 +2414,22 @@
               <t>
                 クライアントの認証情報が含まれていた場合はクライアントを認証する.
               </t>
+              <!--
               <t>
                 authenticate the client if client authentication is included,
               </t>
+              -->
               <t>
-                  認可コードが確かにコンフィデンシャルクライアントに対して発行されていされていること, もしくはパブリッククライアントであった場合はリクエストに <spanx style='verb'>client_id</spanx> に対してコードが発行されていることを確認する.
+                クライアントがコンフィデンシャルクライアントの場合は, 認可コードが確かに認証されたクライアントに対して発行されたことを確認する.
+                クライアントがパブリッククライアントの場合は, 認可コードが確かに指定された <spanx style='verb'>client_id</spanx> に紐づくクライアントに対して発行されていることを確認する.
               </t>
+              <!--
               <t>
                 ensure that the authorization code was issued to the authenticated
                 confidential client, or if the client is public, ensure that the code was issued to
                 <spanx style='verb'>client_id</spanx> in the request,
               </t>
+              -->
               <t>
                 認可コードが正当であることを検証する.
               </t>
@@ -2434,7 +2439,7 @@
               </t>
               -->
               <t>
-                  <spanx style='verb'>redirect_uri</spanx> パラメータが <xref target='code-authz-req' /> に示されるように初回の認可リクエスト時に含まれていた場合, <spanx style='verb'>redirect_uri</spanx> が存在することを確認し, 同じ値であであることを確認する.
+                <xref target='code-authz-req' /> で述べた認可リクエスト時に <spanx style='verb'>redirect_uri</spanx> パラメータが含まれていた場合, ここでも <spanx style='verb'>redirect_uri</spanx> が存在し認可リクエスト時と同じ値であることを確認する.
               </t>
               <!--
               <t>
@@ -2451,7 +2456,7 @@
         <section title='アクセストークンレスポンス'>
         <!-- <section title='Access Token Response'> -->
           <t>
-            アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは <xref target='token-response' /> に示すとおりアクセストークンと任意でリフレッシュトークンを発行する.
+            アクセストークンリクエストが正当かつ認可された場合, 認可サーバーは <xref target='token-response' /> に示すとおりアクセストークンおよび任意でリフレッシュトークンを発行する.
             もしリクエストが失敗もしくは不正だった場合, 認可サーバーは <xref target='token-errors' /> に示すとおりエラーレスポンスを返却する.
           </t>
           <!--
