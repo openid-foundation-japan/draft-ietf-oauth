@@ -1,0 +1,2016 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
+
+<!-- [rfced] Please note that after you have approved the document,
+post-xml2rfc changes will be made to update the header and
+boilerplate as described in RFC 5741.
+-->
+
+<rfc number="5849" category="info" ipr="trust200902" >
+
+  <?rfc toc="yes" ?>
+  <?rfc tocdepth="3" ?>
+  <?rfc symrefs="yes" ?>
+  <?rfc sortrefs="yes" ?>
+  <?rfc rfcedstyle="yes" ?>
+  <?rfc subcompact="no" ?>
+
+
+  <front>
+    
+    <title abbrev="OAuth 1.0">The OAuth 1.0 Protocol</title>
+
+    <author initials="E" surname="Hammer-Lahav" fullname="Eran Hammer-Lahav" role="editor">
+      <organization />
+      <address>
+        <email>eran@hueniverse.com</email>
+        <uri>http://hueniverse.com</uri>
+      </address>
+    </author>
+
+    <date month="April" year="2010"/>
+
+    <keyword>authorization</keyword>
+    <keyword>delegation</keyword>
+
+    <abstract>
+      <t>
+        OAuth provides a method for clients to access server resources on behalf of a resource
+        owner (such as a different client or an end-user). It also provides a process for end-users
+        to authorize third-party access to their server resources without sharing their credentials
+        (typically, a username and password pair), using user-agent redirections.
+      </t>
+    </abstract>
+
+  </front>
+  <middle>
+
+    <section title="Introduction">
+      <t>
+ The OAuth protocol was originally created by a small community of web
+ developers from a variety of websites and other Internet services
+ who wanted to solve the common problem of enabling delegated access
+ to protected resources.  The resulting OAuth protocol was stabilized
+ at version 1.0 in October 2007, and revised in June 2009 (Revision A)
+ as published at &lt;http://oauth.net/core/1.0a&gt;.
+      </t>
+      <t>
+ This specification provides an informational documentation of OAuth
+ Core 1.0 Revision A, addresses several errata reported since that
+ time, and makes numerous editorial clarifications.  While this
+ specification is not an item of the IETF's OAuth Working Group, which
+ at the time of writing is working on an OAuth version that can be
+ appropriate for publication on the standards track, it has been
+ transferred to the IETF for change control by authors of the original
+ work.
+      </t>
+      <t>
+        In the traditional client-server authentication model, the client uses its credentials to
+        access its resources hosted by the server. With the increasing use of distributed web
+        services and cloud computing, third-party applications require access to these
+        server-hosted resources.
+      </t>
+      <t>
+        OAuth introduces a third role to the traditional client-server authentication model: the
+        resource owner. In the OAuth model, the client (which is not the resource owner, but
+        is acting on its behalf) requests access to resources controlled by the resource owner, but
+        hosted by the server. In addition, OAuth allows the server to verify not only the resource
+        owner authorization, but also the identity of the client making the request.
+      </t>
+      <t>
+        OAuth provides a method for clients to access server resources on behalf of a resource
+        owner (such as a different client or an end-user). It also provides a process for end-users
+        to authorize third-party access to their server resources without sharing their credentials
+        (typically, a username and password pair), using user-agent redirections.
+      </t>
+      <t>
+        For example, a web user (resource owner) can grant a printing service (client) access to
+        her private photos stored at a photo sharing service (server), without sharing her
+        username and password with the printing service. Instead, she authenticates directly with
+        the photo sharing service which issues the printing service delegation-specific credentials.
+      </t>
+      <t>
+        In order for the client to access resources, it first has to obtain permission from the
+        resource owner. This permission is expressed in the form of a token and matching
+        shared-secret. The purpose of the token is to make it unnecessary for the resource owner to
+        share its credentials with the client. Unlike the resource owner credentials, tokens can be
+        issued with a restricted scope and limited lifetime, and revoked independently.
+      </t>
+      <t>
+        This specification consists of two parts. The first part defines a redirection-based
+        user-agent process for end-users to authorize client access to their resources, by
+        authenticating directly with the server and provisioning tokens to the client for use with
+        the authentication method. The second part defines a method for making authenticated HTTP
+        <xref target="RFC2616" /> requests using two sets of credentials, one identifying the
+        client making the request, and a second identifying the resource owner on whose behalf the
+        request is being made.
+      </t>
+      <t>
+        The use of OAuth with any transport protocol other than <xref target="RFC2616" /> is
+        undefined.
+      </t>
+
+      <section title="Terminology">
+        <t>
+          <list style="hanging" hangIndent="6">
+            <t hangText="client">
+              <vspace />
+              An HTTP client (per <xref target="RFC2616" />) capable of making
+              <xref target="requests">OAuth-authenticated requests</xref>.
+            </t>
+            <t hangText="server">
+              <vspace />
+              An HTTP server (per <xref target="RFC2616" />) capable of accepting
+              <xref target="requests">OAuth-authenticated requests</xref>.
+            </t>
+            <t hangText="protected resource">
+              <vspace />
+              An access-restricted resource that can be obtained from the server using an
+              <xref target="requests">OAuth-authenticated request</xref>.
+            </t>
+            <t hangText="resource owner">
+              <vspace />
+              An entity capable of accessing and controlling protected resources by using credentials
+              to authenticate with the server.
+            </t>
+            <t hangText="credentials">
+              <vspace />
+              Credentials are a pair of a unique identifier and a matching shared secret. OAuth
+              defines three classes of credentials: client, temporary, and token, used to identify
+              and authenticate the client making the request, the authorization request, and the
+              access grant, respectively.
+            </t>
+            <t hangText="token">
+              <vspace />
+              A unique identifier issued by the server and used by the client to associate
+              authenticated requests with the resource owner whose authorization is requested or
+              has been obtained by the client. Tokens have a matching shared-secret that is used
+              by the client to establish its ownership of the token, and its authority to represent
+              the resource owner.
+            </t>
+
+          </list>
+        </t>
+        <t>
+          The original community specification used a somewhat different terminology that maps to
+          this specifications as follows (original community terms provided on left):
+          
+          <list style="hanging">
+            <t hangText="Consumer:">client</t>
+            <t hangText="Service Provider:">server</t>
+            <t hangText="User:">resource owner</t>
+            <t hangText="Consumer Key and Secret:">client credentials</t>
+            <t hangText="Request Token and Secret:">temporary credentials</t>
+            <t hangText="Access Token and Secret:">token credentials</t>
+          </list>
+        </t>
+      </section>
+
+      <section title="Example">
+        <t>
+          Jane (resource owner) has recently uploaded some private vacation photos (protected
+          resources) to her photo sharing site 'photos.example.net' (server). She would like to use
+          the 'printer.example.com' website (client) to print one of these photos. Typically, Jane
+          signs into 'photos.example.net' using her username and password.
+        </t>
+        <t>
+          However, Jane does not wish to share her username and password with the 'printer.example.com'
+          website, which needs to access the photo in order to print it. In order to provide its
+          users with better service, 'printer.example.com' has signed up for a set of 'photos.example.net'
+          client credentials ahead of time:
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="Client Identifier">
+              <vspace />
+              dpf43f3p2l4k3l03
+            </t>
+            <t hangText="Client Shared-Secret:">
+              <vspace />
+              kd94hf93k423kf44
+            </t>
+          </list>
+
+          The 'printer.example.com' website has also configured its application to use the protocol
+          endpoints listed in the 'photos.example.net' API documentation, which use the
+          <spanx style="verb">HMAC-SHA1</spanx> signature method:
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="Temporary Credential Request">
+              <vspace />
+              https://photos.example.net/initiate
+            </t>
+            <t hangText="Resource Owner Authorization URI:">
+              <vspace />
+              https://photos.example.net/authorize
+            </t>
+            <t hangText="Token Request URI:">
+              <vspace />
+              https://photos.example.net/token
+            </t>
+          </list>
+        </t>
+        <t>
+          Before 'printer.example.com' can ask Jane to grant it access to the photos, it must
+          first establish a set of temporary credentials with 'photos.example.net' to identify
+          the delegation request. To do so, the client sends the following HTTPS
+          <xref target="RFC2818" /> request to the server:
+        </t>
+        <figure>
+          <artwork xml:space="preserve"><![CDATA[
+  POST /initiate HTTP/1.1
+  Host: photos.example.net
+  Authorization: OAuth realm="Photos",
+     oauth_consumer_key="dpf43f3p2l4k3l03",
+     oauth_signature_method="HMAC-SHA1",
+     oauth_timestamp="137131200",
+     oauth_nonce="wIjqoS",
+     oauth_callback="http%3A%2F%2Fprinter.example.com%2Fready",
+     oauth_signature="74KNZJeDHnMBp0EMJ9ZHt%2FXKycU%3D"
+]]></artwork>
+        </figure>
+        <t>
+          The server validates the request and replies with a set of temporary credentials in the
+          body of the HTTP response (line breaks are for display purposes only):
+        </t>
+        <figure>
+          <artwork xml:space="preserve"><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/x-www-form-urlencoded
+
+  oauth_token=hh5s93j4hdidpola&oauth_token_secret=hdhd0244k9j7ao03&
+  oauth_callback_confirmed=true
+]]></artwork>
+        </figure>
+        <t>
+          The client redirects Jane's user-agent to the server's Resource Owner Authorization
+          endpoint to obtain Jane's approval for accessing her private photos:
+        </t>
+        <figure>
+          <artwork xml:space="preserve"><![CDATA[
+  https://photos.example.net/authorize?oauth_token=hh5s93j4hdidpola
+]]></artwork>
+        </figure>
+        <t>
+          The server requests Jane to sign in using her username and password and if successful,
+          asks her to approve granting 'printer.example.com' access to her private photos. Jane
+          approves the request and her user-agent is redirected to the callback URI provided by
+          the client in the previous request (line breaks are for display purposes only):
+        </t>
+        <figure>
+          <artwork xml:space="preserve"><![CDATA[
+  http://printer.example.com/ready?
+  oauth_token=hh5s93j4hdidpola&oauth_verifier=hfdp7dh39dks9884
+]]></artwork>
+        </figure>
+        <t>
+          The callback request informs the client that Jane completed the authorization process.
+          The client then requests a set of token credentials using its temporary credentials
+          (over a secure Transport Layer Security (TLS) channel):
+        </t>
+        <figure>
+          <artwork xml:space="preserve"><![CDATA[
+  POST /token HTTP/1.1
+  Host: photos.example.net
+  Authorization: OAuth realm="Photos",
+     oauth_consumer_key="dpf43f3p2l4k3l03",
+     oauth_token="hh5s93j4hdidpola",
+     oauth_signature_method="HMAC-SHA1",
+     oauth_timestamp="137131201",
+     oauth_nonce="walatlh",
+     oauth_verifier="hfdp7dh39dks9884",
+     oauth_signature="gKgrFCywp7rO0OXSjdot%2FIHF7IU%3D"
+]]></artwork>
+        </figure>
+        <t>
+          The server validates the request and replies with a set of token credentials in the body
+          of the HTTP response:
+        </t>
+        <figure>
+          <artwork xml:space="preserve"><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/x-www-form-urlencoded
+  
+  oauth_token=nnch734d00sl2jdk&oauth_token_secret=pfkkdhi9sl3r4s00
+]]></artwork>
+        </figure>
+        <t>
+          With a set of token credentials, the client is now ready to request the private photo:
+        </t>
+        <figure>
+          <artwork xml:space="preserve"><![CDATA[
+  GET /photos?file=vacation.jpg&size=original HTTP/1.1
+  Host: photos.example.net
+  Authorization: OAuth realm="Photos",
+     oauth_consumer_key="dpf43f3p2l4k3l03",
+     oauth_token="nnch734d00sl2jdk",
+     oauth_signature_method="HMAC-SHA1",
+     oauth_timestamp="137131202",
+     oauth_nonce="chapoH",
+     oauth_signature="MdpQcU8iPSUjWoN%2FUDMsK2sui9I%3D"
+]]></artwork>
+        </figure>
+        <t>
+          The 'photos.example.net' server validates the request and responds with the requested
+          photo. 'printer.example.com' is able to continue accessing Jane's private photos using
+          the same set of token credentials for the duration of Jane's authorization, or until
+          Jane revokes access.
+        </t>
+      </section>
+
+      <section title="Notational Conventions">
+        <t>
+          The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT",
+          "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in
+          <xref target="RFC2119" />.
+        </t>
+      </section>
+      
+    </section>
+
+    <section title="Redirection-Based Authorization" anchor="redirect_workflow">
+      <t>
+        OAuth uses tokens to represent the authorization granted to the client by the resource
+        owner. Typically, token credentials are issued by the server at the resource owner's
+        request, after authenticating the resource owner's identity (usually using a username and
+        password).
+      </t>
+      <t>
+        There are many ways in which a server can facilitate the provisioning of token credentials.
+        This section defines one such way, using HTTP redirections and the resource owner's
+        user-agent. This redirection-based authorization method includes three steps:
+
+        <list style="numbers">
+          <t>
+            The client obtains a set of temporary credentials from the server (in the form of an
+            identifier and shared-secret). The temporary credentials are used to identify the
+            access request throughout the authorization process.
+          </t>
+          <t>
+            The resource owner authorizes the server to grant the client's access request
+            (identified by the temporary credentials).
+          </t>
+          <t>
+            The client uses the temporary credentials to request a set of token credentials from
+            the server, which will enable it to access the resource owner's protected resources.
+          </t>
+        </list>
+      </t>
+      <t>
+        The server MUST revoke the temporary credentials after being used once to obtain the token
+        credentials. It is RECOMMENDED that the temporary credentials have a limited lifetime.
+        Servers SHOULD enable resource owners to revoke token credentials after they have been
+        issued to clients.
+      </t>
+      <t>
+        In order for the client to perform these steps, the server needs to advertise the URIs of
+        the following three endpoints:
+
+        <list style="hanging" hangIndent="6">
+          <t hangText="Temporary Credential Request">
+            <vspace />
+            The endpoint used by the client to obtain a set of temporary credentials as described
+            in <xref target="auth_step1" />.
+          </t>
+          <t hangText="Resource Owner Authorization">
+            <vspace />
+            The endpoint to which the resource owner is redirected to grant authorization as
+            described in <xref target="auth_step2" />.
+          </t>
+          <t hangText="Token Request">
+            <vspace />
+            The endpoint used by the client to request a set of token credentials using the
+            set of temporary credentials as described in <xref target="auth_step3" />.
+          </t>
+        </list>
+      </t>
+      <t>
+        The three URIs advertised by the server MAY include a query component as defined by
+        <xref target="RFC3986" />, Section 3, but if present, the query MUST NOT contain any
+        parameters beginning with the <spanx style="verb">oauth_</spanx> prefix, to avoid conflicts
+        with the protocol parameters added to the URIs when used.
+      </t>
+      <t>
+        The methods in which the server advertises and documents its three endpoints are beyond the
+        scope of this specification. Clients should avoid making assumptions about the size of
+        tokens and other server-generated values, which are left undefined by this specification.
+        In addition, protocol parameters MAY include values that require encoding when
+        transmitted. Clients and servers should not make assumptions about the possible range of
+        their values.
+      </t>
+      
+      <section title="Temporary Credentials" anchor="auth_step1">
+        <t>
+          The client obtains a set of temporary credentials from the server by making an
+          <xref target="requests">authenticated</xref> HTTP <spanx style="verb">POST</spanx>
+          request to the Temporary Credential Request endpoint (unless the server advertises
+          another HTTP request method for the client to use). The client constructs a request URI
+          by adding the following REQUIRED parameter to the request (in addition to the other
+          protocol parameters, using the same parameter transmission method):
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="oauth_callback:">
+              An absolute URI back to which the server will redirect the resource owner when the
+              Resource Owner Authorization step (<xref target="auth_step2" />) is completed. If the
+              client is unable to receive callbacks or a callback URI has been established via other
+              means, the parameter value MUST be set to <spanx style="verb">oob</spanx> (case sensitive),
+              to indicate an out-of-band configuration.
+            </t>
+            <t hangText="Servers MAY specify additional parameters.">
+            </t>
+          </list>
+        </t>
+        <t>
+          When making the request, the client authenticates using only the client credentials. The
+          client MAY omit the empty <spanx style="verb">oauth_token</spanx> protocol parameter
+          from the request and MUST use the empty string as the token secret value.
+        </t>
+        <t>
+          Since the request results in the transmission of plain text credentials in the HTTP
+          response, the server MUST require the use of a transport-layer mechanisms such as TLS
+          or Secure Socket Layer (SSL) (or a secure channel with equivalent protections).
+        </t>
+        <figure>
+          <preamble>
+            For example, the client makes the following HTTPS request:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  POST /request_temp_credentials HTTP/1.1
+  Host: server.example.com
+  Authorization: OAuth realm="Example",
+     oauth_consumer_key="jd83jd92dhsh93js",
+     oauth_signature_method="PLAINTEXT",
+     oauth_callback="http%3A%2F%2Fclient.example.net%2Fcb%3Fx%3D1",
+     oauth_signature="ja893SD9%26"
+]]></artwork>
+        </figure>
+        <t>
+          The server MUST <xref target="verify_request">verify</xref> the request and if valid,
+          respond back to the client with a set of temporary credentials (in the form of an
+          identifier and shared-secret). The temporary credentials are included in the HTTP
+          response body using the <spanx style="verb">application/x-www-form-urlencoded</spanx>
+          content type as defined by <xref target="W3C.REC-html40-19980424" /> with a 200 status
+          code (OK).
+        </t>
+        <t>
+          The response contains the following REQUIRED parameters:
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="oauth_token">
+              <vspace />
+              The temporary credentials identifier.
+            </t>
+            <t hangText="oauth_token_secret">
+              <vspace />
+              The temporary credentials shared-secret.
+            </t>
+            <t hangText="oauth_callback_confirmed:">
+              MUST be present and set to <spanx style="verb">true</spanx>. The parameter is used
+              to differentiate from previous versions of the protocol.
+            </t>
+          </list>
+        </t>
+        <t>
+          Note that even though the parameter names include the term 'token', these credentials are
+          not token credentials, but are used in the next two steps in a similar manner to token
+          credentials.
+        </t>
+        <figure>
+          <preamble>
+            For example (line breaks are for display purposes only):
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/x-www-form-urlencoded
+
+  oauth_token=hdk48Djdsa&oauth_token_secret=xyz4992k83j47x0b&
+  oauth_callback_confirmed=true
+]]></artwork>
+        </figure>
+      </section>
+
+      <section title="Resource Owner Authorization" anchor="auth_step2">
+        <t>
+          Before the client requests a set of token credentials from the server, it MUST send
+          the user to the server to authorize the request. The client constructs a request URI by
+          adding the following REQUIRED query parameter to the Resource Owner Authorization
+          endpoint URI:
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="oauth_token">
+              <vspace />
+              The temporary credentials identifier obtained in <xref target="auth_step1" />
+              in the <spanx style="verb">oauth_token</spanx> parameter. Servers MAY declare this
+              parameter as OPTIONAL, in which case they MUST provide a way for the resource owner
+              to indicate the identifier through other means.
+            </t>
+            <t hangText="Servers MAY specify additional parameters.">
+            </t>
+          </list>
+        </t>
+        <t>
+          The client directs the resource owner to the constructed URI using an HTTP redirection
+          response, or by other means available to it via the resource owner's user-agent. The
+          request MUST use the HTTP <spanx style="verb">GET</spanx> method.
+        </t>
+        <figure>
+          <preamble>
+            For example, the client redirects the resource owner's user-agent to make the following
+            HTTPS request:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  GET /authorize_access?oauth_token=hdk48Djdsa HTTP/1.1
+  Host: server.example.com
+]]></artwork>
+        </figure>
+        <t>
+          The way in which the server handles the authorization request, including whether it uses
+          a secure channel such as TLS/SSL is beyond the scope of this specification. However, the
+          server MUST first verify the identity of the resource owner.
+        </t>
+        <t>
+          When asking the resource owner to authorize the requested access, the server SHOULD
+          present to the resource owner information about the client requesting access based on the
+          association of the temporary credentials with the client identity. When displaying any
+          such information, the server SHOULD indicate if the information has been verified.
+        </t>
+        <t>
+          After receiving an authorization decision from the resource owner, the server redirects
+          the resource owner to the callback URI if one was provided in the
+          <spanx style="verb">oauth_callback</spanx> parameter or by other means.
+        </t>
+        <t>
+          To make sure that the resource owner granting access is the same resource owner returning
+          back to the client to complete the process, the server MUST generate a verification code:
+          an unguessable value passed to the client via the resource owner and REQUIRED to complete
+          the process. The server constructs the request URI by adding the following REQUIRED
+          parameters to the callback URI query component:
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="oauth_token">
+              <vspace />
+              The temporary credentials identifier received from the client.
+            </t>
+            <t hangText="oauth_verifier">
+              <vspace />
+              The verification code.
+            </t>
+          </list>
+
+          If the callback URI already includes a query component, the server MUST append the
+          OAuth parameters to the end of the existing query.
+        </t>
+        <figure>
+          <preamble>
+            For example, the server redirects the resource owner's user-agent to make the following
+            HTTP request:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  GET /cb?x=1&oauth_token=hdk48Djdsa&oauth_verifier=473f82d3 HTTP/1.1
+  Host: client.example.net
+]]></artwork>
+        </figure>
+        <t>
+          If the client did not provide a callback URI, the server SHOULD display the value of the
+          verification code, and instruct the resource owner to manually inform the client that
+          authorization is completed. If the server knows a client to be running on a limited device,
+          it SHOULD ensure that the verifier value is suitable for manual entry.
+        </t>
+      </section>
+
+      <section title="Token Credentials" anchor="auth_step3">
+        <t>
+          The client obtains a set of token credentials from the server by making an
+          <xref target="requests">authenticated</xref> HTTP <spanx style="verb">POST</spanx>
+          request to the Token Request endpoint (unless the server advertises another HTTP
+          request method for the client to use). The client constructs a request URI by adding the
+          following REQUIRED parameter to the request (in addition to the other protocol
+          parameters, using the same parameter transmission method):
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="oauth_verifier">
+              <vspace />
+              The verification code received from the server in the previous step.
+            </t>
+          </list>
+        </t>
+        <t>
+          When making the request, the client authenticates using the client credentials as well as
+          the temporary credentials. The temporary credentials are used as a substitute for token
+          credentials in the authenticated request and transmitted using the
+          <spanx style="verb">oauth_token</spanx> parameter.
+        </t>
+        <t>
+          Since the request results in the transmission of plain text credentials in the HTTP
+          response, the server MUST require the use of a transport-layer mechanism such as TLS
+          or SSL (or a secure channel with equivalent protections).
+        </t>
+        <figure>
+          <preamble>
+            For example, the client makes the following HTTPS request:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  POST /request_token HTTP/1.1
+  Host: server.example.com
+  Authorization: OAuth realm="Example",
+     oauth_consumer_key="jd83jd92dhsh93js",
+     oauth_token="hdk48Djdsa",
+     oauth_signature_method="PLAINTEXT",
+     oauth_verifier="473f82d3",
+     oauth_signature="ja893SD9%26xyz4992k83j47x0b"
+]]></artwork>
+        </figure>
+        <t>
+          The server MUST <xref target="verify_request">verify</xref> the validity of the request,
+          ensure that the resource owner has authorized the provisioning of token credentials to
+          the client, and ensure that the temporary credentials have not expired or been used
+          before. The server MUST also verify the verification code received from the client. If
+          the request is valid and authorized, the token credentials are included in the HTTP
+          response body using the <spanx style="verb">application/x-www-form-urlencoded</spanx>
+          content type as defined by <xref target="W3C.REC-html40-19980424" /> with a 200 status
+          code (OK).
+        </t>
+        <t>
+          The response contains the following REQUIRED parameters:
+
+          <list style="hanging" hangIndent="6">
+            <t hangText="oauth_token">
+              <vspace />
+              The token identifier.
+            </t>
+            <t hangText="oauth_token_secret">
+              <vspace />
+              The token shared-secret.
+            </t>
+          </list>
+        </t>
+        <figure>
+          <preamble>
+            For example:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/x-www-form-urlencoded
+  
+  oauth_token=j49ddk933skd9dks&oauth_token_secret=ll399dj47dskfjdk
+]]></artwork>
+        </figure>
+        <t>
+          The server must retain the scope, duration, and other attributes approved by the resource
+          owner, and enforce these restrictions when receiving a client request made with the token
+          credentials issued.
+        </t>
+        <t>
+          Once the client receives and stores the token credentials, it can proceed to access
+          protected resources on behalf of the resource owner by making
+          <xref target="requests">authenticated requests</xref> using the client credentials
+          together with the token credentials received.
+        </t>
+      </section>
+
+    </section>
+    
+    <section title="Authenticated Requests" anchor="requests">
+      <t>
+        The HTTP authentication methods defined by <xref target="RFC2617" /> enable clients
+        to make authenticated HTTP requests. Clients using these methods gain access to protected
+        resources by using their credentials (typically, a username and password pair), which
+        allow the server to verify their authenticity. Using these methods for delegation requires
+        the client to assume the role of the resource owner.
+      </t>
+      <t>
+        OAuth provides a method designed to include two sets of credentials with each request, one
+        to identify the client, and another to identify the resource owner. Before a client can
+        make authenticated requests on behalf of the resource owner, it must obtain a token
+        authorized by the resource owner. <xref target="redirect_workflow" /> provides one such
+        method through which the client can obtain a token authorized by the resource owner.
+      </t>
+      <t>
+        The client credentials take the form of a unique identifier and an associated shared-secret
+        or RSA key pair. Prior to making authenticated requests, the client establishes a set of
+        credentials with the server. The process and requirements for provisioning these are
+        outside the scope of this specification. Implementers are urged to consider the security
+        ramifications of using client credentials, some of which are described in
+        <xref target="client_cred_sec" />.
+      </t>
+      <t>
+        Making authenticated requests requires prior knowledge of the server's configuration.
+        OAuth includes multiple methods for transmitting protocol parameters with requests
+				(<xref target="param_include" />), as well as multiple methods for the client to
+        prove its rightful ownership of the credentials used (<xref target="signature" />).
+        The way in which clients discover the required configuration is outside the scope of
+        this specification.
+      </t>
+
+      <section title="Making Requests">
+        <t>
+          An authenticated request includes several protocol parameters. Each parameter name
+          begins with the <spanx style="verb">oauth_</spanx> prefix, and the parameter names and
+          values are case sensitive. Clients make authenticated requests by calculating the values
+          of a set of protocol parameters and adding them to the HTTP request as follows:
+
+          <list style="numbers">
+            <t>
+              The client assigns value to each of these REQUIRED (unless specified otherwise)
+              protocol parameters:
+
+              <list style="hanging" hangIndent="6">
+                <t hangText="oauth_consumer_key">
+                  <vspace />
+                  The identifier portion of the client credentials (equivalent to a username). The
+                  parameter name reflects a deprecated term (Consumer Key) used in previous
+                  revisions of the specification, and has been retained to maintain backward
+                  compatibility.
+                </t>
+                <t hangText="oauth_token">
+                  <vspace />
+                  The token value used to associate the request with the resource owner. If the
+                  request is not associated with a resource owner (no token available), clients
+                  MAY omit the parameter.
+                </t>
+                <t hangText="oauth_signature_method">
+                  <vspace />
+                  The name of the signature method used by the client to sign the request,
+                  as defined in <xref target="signature" />.
+                </t>
+                <t hangText="oauth_timestamp">
+                  <vspace />
+                  The timestamp value as defined in <xref target="nonce" />. The parameter MAY
+                  be omitted when using the <spanx style="verb">PLAINTEXT</spanx> signature method.
+                </t>
+                <t hangText="oauth_nonce">
+                  <vspace />
+                  The nonce value as defined in <xref target="nonce" />. The parameter MAY be
+                  omitted when using the <spanx style="verb">PLAINTEXT</spanx> signature method.
+                </t>
+                <t hangText="oauth_version">
+                  <vspace />
+                  OPTIONAL. If present, MUST be set to <spanx style="verb">1.0</spanx>. Provides
+                  the version of the authentication process as defined in this specification.
+                </t>
+              </list>
+            </t>
+            <t>
+              The protocol parameters are added to the request using one of the transmission
+              methods listed in <xref target="param_include" />. Each parameter MUST NOT appear
+              more than once per request.
+            </t>
+            <t>
+              The client calculates and assigns the value of the <spanx style="verb">oauth_signature</spanx>
+              parameter as described in <xref target="signature" /> and adds the parameter to the
+              request using the same method as in the previous step.
+            </t>
+            <t>
+              The client sends the authenticated HTTP request to the server.
+            </t>
+          </list>
+        </t>
+        <figure>
+          <preamble>
+            For example, to make the following HTTP request authenticated (the
+            <spanx style="verb">c2&amp;a3=2+q</spanx> string in the following examples is used to
+            illustrate the impact of a form-encoded entity-body):
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  POST /request?b5=%3D%253D&a3=a&c%40=&a2=r%20b HTTP/1.1
+  Host: example.com
+  Content-Type: application/x-www-form-urlencoded
+
+  c2&a3=2+q
+  ]]></artwork>
+        </figure>
+        <figure>
+          <preamble>
+            The client assigns values to the following protocol parameters using its client
+            credentials, token credentials, the current timestamp, a uniquely generated nonce, and
+            indicates that it will use the <spanx style="verb">HMAC-SHA1</spanx> signature method:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  oauth_consumer_key:     9djdj82h48djs9d2
+  oauth_token:            kkk9d7dh3k39sjv7
+  oauth_signature_method: HMAC-SHA1
+  oauth_timestamp:        137131201
+  oauth_nonce:            7d8f3e4a
+  ]]></artwork>
+        </figure>
+        <figure>
+          <preamble>
+            The client adds the protocol parameters to the request using the OAuth HTTP
+            <spanx style="verb">Authorization</spanx> header field:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  Authorization: OAuth realm="Example",
+                 oauth_consumer_key="9djdj82h48djs9d2",
+                 oauth_token="kkk9d7dh3k39sjv7",
+                 oauth_signature_method="HMAC-SHA1",
+                 oauth_timestamp="137131201",
+                 oauth_nonce="7d8f3e4a"
+]]></artwork>
+        </figure>
+        <figure>
+          <preamble>
+            Then, it calculates the value of the <spanx style="verb">oauth_signature</spanx> parameter
+            (using client secret <spanx style="verb">j49sk3j29djd</spanx> and token secret
+            <spanx style="verb">dh893hdasih9</spanx>), adds it to the request, and sends the HTTP
+            request to the server:
+          </preamble>
+          <artwork xml:space="preserve"><![CDATA[
+  POST /request?b5=%3D%253D&a3=a&c%40=&a2=r%20b HTTP/1.1
+  Host: example.com
+  Content-Type: application/x-www-form-urlencoded
+  Authorization: OAuth realm="Example",
+                 oauth_consumer_key="9djdj82h48djs9d2",
+                 oauth_token="kkk9d7dh3k39sjv7",
+                 oauth_signature_method="HMAC-SHA1",
+                 oauth_timestamp="137131201",
+                 oauth_nonce="7d8f3e4a",
+                 oauth_signature="bYT5CMsGcbgUdFHObYMEfcx6bsw%3D"
+
+  c2&a3=2+q
+  ]]></artwork>
+        </figure>
+      </section>
+      
+      <section title="Verifying Requests" anchor="verify_request">
+        <t>
+          Servers receiving an authenticated request MUST validate it by:
+
+          <list style="symbols">
+            <t>
+              Recalculating the request signature independently as described in
+              <xref target="signature" /> and comparing it to the value received from the client via
+              the <spanx style="verb">oauth_signature</spanx> parameter.
+            </t>
+            <t>
+              If using the <spanx style="verb">HMAC-SHA1</spanx> or
+              <spanx style="verb">RSA-SHA1</spanx> signature methods, ensuring that the combination
+              of nonce/timestamp/token (if present) received from the client has not been used
+              before in a previous request (the server MAY reject requests with stale timestamps as
+              described in <xref target="nonce" />).
+            </t>
+            <t>
+              If a token is present, verifying the scope and status of the client authorization as
+              represented by the token (the server MAY choose to restrict token usage to the client
+              to which it was issued).
+            </t>
+            <t>
+              If the <spanx style="verb">oauth_version</spanx> parameter is present, ensuring its
+              value is <spanx style="verb">1.0</spanx>.
+            </t>
+          </list>
+        </t>
+        <t>
+          If the request fails verification, the server SHOULD respond with the appropriate HTTP
+          response status code. The server MAY include further details about why the request was
+          rejected in the response body.
+        </t>
+        <t>
+          The server SHOULD return a 400 (Bad Request) status code
+          when receiving a request with unsupported parameters, an unsupported signature method,
+          missing parameters, or duplicated protocol parameters. The server SHOULD return a 401
+          (Unauthorized) status code when receiving a request with invalid client credentials,
+          an invalid or expired token, an invalid signature, or an invalid or used nonce.
+        </t>
+      </section>
+
+      <section title="Nonce and Timestamp" anchor="nonce">
+        <t>
+          The timestamp value MUST be a positive integer. Unless otherwise specified by the
+          server's documentation, the timestamp is expressed in the number of seconds since
+          January 1, 1970 00:00:00 GMT.
+        </t>
+        <t>
+          A nonce is a random string, uniquely generated by the client to allow the server to
+          verify that a request has never been made before and helps prevent replay attacks when
+          requests are made over a non-secure channel. The nonce value MUST be unique across all
+          requests with the same timestamp, client credentials, and token combinations.
+        </t>
+        <t>
+          To avoid the need to retain an infinite number of nonce values for future checks, servers
+          MAY choose to restrict the time period after which a request with an old timestamp is
+          rejected. Note that this restriction implies a level of synchronization between the
+          client's and server's clocks. Servers applying such a restriction MAY provide a way for
+          the client to sync with the server's clock; alternatively, both systems could synchronize
+          with a trusted time service. Details of clock synchronization strategies are beyond the
+          scope of this specification.
+        </t>
+      </section>
+      
+      <section title="Signature" anchor="signature">
+        <t>
+					OAuth-authenticated requests can have two sets of credentials: those passed via the
+					<spanx style="verb">oauth_consumer_key</spanx> parameter and those in the
+					<spanx style="verb">oauth_token</spanx> parameter. In order for the server to
+          verify the authenticity of the request and prevent unauthorized access, the client needs
+          to prove that it is the rightful owner of the credentials. This is accomplished using the
+          shared-secret (or RSA key) part of each set of credentials.
+        </t>
+        <t>
+          OAuth provides three methods for the client to prove its rightful ownership of the
+          credentials: <spanx style="verb">HMAC-SHA1</spanx>, <spanx style="verb">RSA-SHA1</spanx>,
+          and <spanx style="verb">PLAINTEXT</spanx>. These methods are generally referred to as
+          signature methods, even though <spanx style="verb">PLAINTEXT</spanx> does not involve a
+          signature. In addition, <spanx style="verb">RSA-SHA1</spanx> utilizes an RSA key instead
+          of the shared-secrets associated with the client credentials.
+        </t>
+        <t>
+          OAuth does not mandate a particular signature method, as each implementation can have its
+          own unique requirements. Servers are free to implement and document their own custom
+          methods. Recommending any particular method is beyond the scope of this specification.
+          Implementers should review the <xref target="Security">Security Considerations section</xref>
+          before deciding on which method to support.
+        </t>
+        <t>
+          The client declares which signature method is used via the
+          <spanx style="verb">oauth_signature_method</spanx> parameter. It then generates a signature
+          (or a string of an equivalent value) and includes it in the
+          <spanx style="verb">oauth_signature</spanx> parameter. The server verifies the signature
+          as specified for each method.
+        </t>
+        <t>
+          The signature process does not change the request or its parameters, with the exception of
+          the <spanx style="verb">oauth_signature</spanx> parameter.
+        </t>
+
+        <section title="Signature Base String">
+          <t>
+            The signature base string is a consistent, reproducible concatenation of several
+            of the HTTP request elements into a single string. The string is used as an input to
+            the <spanx style="verb">HMAC-SHA1</spanx> and <spanx style="verb">RSA-SHA1</spanx>
+            signature methods.
+          </t>
+          <t>
+            The signature base string includes the following components of the HTTP request:
+            
+            <list style="symbols">
+              <t>
+                The HTTP request method (e.g., <spanx style="verb">GET</spanx>,
+                <spanx style="verb">POST</spanx>, etc.).
+              </t>
+              <t>
+                The authority as declared by the HTTP <spanx style="verb">Host</spanx> request
+                header field.
+              </t>
+              <t>
+                The path and query components of the request resource URI.
+              </t>
+              <t>
+                The protocol parameters excluding the
+                <spanx style="verb">oauth_signature</spanx>.
+              </t>
+              <t>
+                Parameters included in the request entity-body if they comply with the strict
+                restrictions defined in <xref target="collect_param" />.
+              </t>
+            </list>
+          </t>
+          <t>
+            The signature base string does not cover the entire HTTP request. Most notably, it
+            does not include the entity-body in most requests, nor does it include most HTTP
+            entity-headers. It is important to note that the server cannot verify the authenticity
+            of the excluded request components without using additional protections such as SSL/TLS or
+            other methods.
+          </t>
+          
+          <section title="String Construction" anchor="base_string">
+            <t>
+              The signature base string is constructed by concatenating together, in order, the
+              following HTTP request elements:
+
+              <list style="numbers">
+                <t>
+                  The HTTP request method in uppercase. For example: <spanx style="verb">HEAD</spanx>,
+                  <spanx style="verb">GET</spanx>, <spanx style="verb">POST</spanx>, etc. If the
+                  request uses a custom HTTP method, it MUST be <xref target="encoding">encoded</xref>.
+                </t>
+                <t>
+                  An <spanx style="verb">&amp;</spanx> character (ASCII code 38).
+                </t>
+                <t>
+                  The base string URI from <xref target="sig_uri" />, after being
+                  <xref target="encoding">encoded</xref>.
+                </t>
+                <t>
+                  An <spanx style="verb">&amp;</spanx> character (ASCII code 38).
+                </t>
+                <t>
+                  The request parameters as normalized in <xref target="sig_norm_param" />, after
+                  being <xref target="encoding">encoded</xref>.
+                </t>
+              </list>
+            </t>
+            <figure>
+              <preamble>
+                For example, the HTTP request:
+              </preamble>
+              <artwork xml:space="preserve"><![CDATA[
+  POST /request?b5=%3D%253D&a3=a&c%40=&a2=r%20b HTTP/1.1
+  Host: example.com
+  Content-Type: application/x-www-form-urlencoded
+  Authorization: OAuth realm="Example",
+                 oauth_consumer_key="9djdj82h48djs9d2",
+                 oauth_token="kkk9d7dh3k39sjv7",
+                 oauth_signature_method="HMAC-SHA1",
+                 oauth_timestamp="137131201",
+                 oauth_nonce="7d8f3e4a",
+                 oauth_signature="bYT5CMsGcbgUdFHObYMEfcx6bsw%3D"
+
+  c2&a3=2+q
+  ]]></artwork>
+            </figure>
+            <figure>
+              <preamble>
+                is represented by the following signature base string (line breaks are for display
+                purposes only):
+              </preamble>
+              <artwork xml:space="preserve"><![CDATA[
+  POST&http%3A%2F%2Fexample.com%2Frequest&a2%3Dr%2520b%26a3%3D2%2520q
+  %26a3%3Da%26b5%3D%253D%25253D%26c%2540%3D%26c2%3D%26oauth_consumer_
+  key%3D9djdj82h48djs9d2%26oauth_nonce%3D7d8f3e4a%26oauth_signature_m
+  ethod%3DHMAC-SHA1%26oauth_timestamp%3D137131201%26oauth_token%3Dkkk
+  9d7dh3k39sjv7
+  ]]></artwork>
+            </figure>
+          </section>
+
+          <section title="Base String URI" anchor="sig_uri">
+            <t>
+              The scheme, authority, and path of the request resource URI <xref target="RFC3986" />
+              are included by constructing an <spanx style="verb">http</spanx> or
+              <spanx style="verb">https</spanx> URI representing the request resource (without the
+              query or fragment) as follows:
+
+              <list style="numbers">
+                <t>
+                  The scheme and host MUST be in lowercase.
+                </t>
+                <t>
+                  The host and port values MUST match the content of the HTTP request
+                  <spanx style="verb">Host</spanx> header field.
+                </t>
+                <t>
+                  The port MUST be included if it is not the default port for the scheme, and MUST
+                  be excluded if it is the default. Specifically, the port MUST be excluded when
+                  making an HTTP request <xref target="RFC2616" /> to port 80 or when making an
+                  HTTPS request <xref target="RFC2818" /> to port 443. All other non-default port
+                  numbers MUST be included.
+                </t>
+              </list>
+            </t>
+            <figure>
+              <preamble>
+                For example, the HTTP request:
+              </preamble>
+              <artwork xml:space="preserve"><![CDATA[
+  GET /r%20v/X?id=123 HTTP/1.1
+  Host: EXAMPLE.COM:80
+]]></artwork>
+              <postamble>
+                is represented by the base string URI:
+                <spanx style="verb">http://example.com/r%20v/X</spanx>.
+              </postamble>
+            </figure>
+            <figure>
+              <preamble>
+                In another example, the HTTPS request:
+              </preamble>
+              <artwork xml:space="preserve"><![CDATA[
+  GET /?q=1 HTTP/1.1
+  Host: www.example.net:8080
+]]></artwork>
+              <postamble>
+                is represented by the base string URI:
+
+                <spanx style="verb">https://www.example.net:8080/</spanx>.
+              </postamble>
+            </figure>
+          </section>
+            
+          <section title="Request Parameters" anchor="collect_param">
+            <t>
+              In order to guarantee a consistent and reproducible representation of the request
+              parameters, the parameters are collected and decoded to their original decoded form.
+              They are then sorted and encoded in a particular manner that is often different from
+              their original encoding scheme, and concatenated into a single string.
+            </t>
+
+            <section title="Parameter Sources">
+              <t>
+                The parameters from the following sources are collected into a single list of
+                name/value pairs:
+
+                <list style="symbols">
+                  <t>
+                    The query component of the HTTP request URI as defined by <xref target="RFC3986" />,
+                    Section 3.4. The query component is parsed into a list of name/value pairs by
+                    treating it as an <spanx style="verb">application/x-www-form-urlencoded</spanx>
+                    string, separating the names and values and decoding them as defined by
+                    <xref target="W3C.REC-html40-19980424" />, Section 17.13.4.
+                  </t>
+                  <t>
+                    The OAuth HTTP <spanx style="verb">Authorization</spanx> header field (<xref target="auth_header" />) if
+                    present. The header's content is parsed into a list of name/value pairs
+                    excluding the <spanx style="verb">realm</spanx> parameter if present. The
+                    parameter values are decoded as defined by <xref target="auth_header" />.
+                  </t>
+                  <t>
+                    The HTTP request entity-body, but only if all of the following conditions are met:
+
+                    <list style="symbols">
+                      <t>
+                        The entity-body is single-part.
+                      </t>
+                      <t>
+                        The entity-body follows the encoding requirements of the
+                        <spanx style="verb">application/x-www-form-urlencoded</spanx> content-type as
+                        defined by <xref target="W3C.REC-html40-19980424" />.
+                      </t>
+                      <t>
+                        The HTTP request entity-header includes the <spanx style="verb">Content-Type</spanx>
+                        header field set to <spanx style="verb">application/x-www-form-urlencoded</spanx>.
+                      </t>
+                    </list>
+
+                    The entity-body is parsed into a list of decoded name/value pairs as described in
+                    <xref target="W3C.REC-html40-19980424" />, Section 17.13.4.
+                  </t>
+                </list>
+              </t>
+              <t>
+                The <spanx style="verb">oauth_signature</spanx> parameter MUST be excluded from the
+                signature base string if present. Parameters not explicitly included in the request
+                MUST be excluded from the signature base string (e.g., the
+                <spanx style="verb">oauth_version</spanx> parameter when omitted).
+              </t>
+              <figure>
+                <preamble>
+                  For example, the HTTP request:
+                </preamble>
+                <artwork xml:space="preserve"><![CDATA[
+    POST /request?b5=%3D%253D&a3=a&c%40=&a2=r%20b HTTP/1.1
+    Host: example.com
+    Content-Type: application/x-www-form-urlencoded
+    Authorization: OAuth realm="Example",
+                   oauth_consumer_key="9djdj82h48djs9d2",
+                   oauth_token="kkk9d7dh3k39sjv7",
+                   oauth_signature_method="HMAC-SHA1",
+                   oauth_timestamp="137131201",
+                   oauth_nonce="7d8f3e4a",
+                   oauth_signature="djosJKDKJSD8743243%2Fjdk33klY%3D"
+
+    c2&a3=2+q
+  ]]></artwork>
+                <postamble>
+                  contains the following (fully decoded) parameters used in the signature base
+                  sting:
+                </postamble>
+              </figure>
+              <texttable>
+                <ttcol align='center'>Name</ttcol>
+                <ttcol align='center'>Value</ttcol>
+                <c>b5</c><c>=%3D</c>
+                <c>a3</c><c>a</c>
+                <c>c@</c><c></c>
+                <c>a2</c><c>r b</c>
+                <c>oauth_consumer_key</c><c>9djdj82h48djs9d2</c>
+                <c>oauth_token</c><c>kkk9d7dh3k39sjv7</c>
+                <c>oauth_signature_method</c><c>HMAC-SHA1</c>
+                <c>oauth_timestamp</c><c>137131201</c>
+                <c>oauth_nonce</c><c>7d8f3e4a</c>
+                <c>c2</c><c></c>
+                <c>a3</c><c>2 q</c>
+              </texttable>
+              <t>
+                Note that the value of <spanx style="verb">b5</spanx> is <spanx style="verb">=%3D</spanx>
+                and not <spanx style="verb">==</spanx>. Both <spanx style="verb">c@</spanx> and
+                <spanx style="verb">c2</spanx> have empty values. While the encoding rules
+                specified in this specification for the purpose of constructing the signature base
+                string exclude the use of a <spanx style="verb">+</spanx> character (ASCII code 43)
+                to represent an encoded space character (ASCII code 32), this practice is widely
+                used in <spanx style="verb">application/x-www-form-urlencoded</spanx> encoded
+                values, and MUST be properly decoded, as demonstrated by one of the
+                <spanx style="verb">a3</spanx> parameter instances (the <spanx style="verb">a3</spanx>
+                parameter is used twice in this request).
+              </t>
+            </section>
+
+            <section title="Parameters Normalization" anchor="sig_norm_param">
+              <t>
+                The parameters collected in <xref target="collect_param" /> are normalized into a
+                single string as follows:
+
+                <list style="numbers">
+                  <t>
+                    First, the name and value of each parameter are <xref target="encoding">encoded</xref>.
+    							</t>
+                  <t>
+                    The parameters are sorted by name, using ascending byte value ordering. If
+                    two or more parameters share the same name, they are sorted by their value.
+                  </t>
+                  <t>
+                    The name of each parameter is concatenated to its corresponding value using an
+                    <spanx style="verb">=</spanx> character (ASCII code 61) as a separator, even if the
+                    value is empty.
+                  </t>
+                  <t>
+                    The sorted name/value pairs are concatenated together into a single string by
+                    using an <spanx style="verb">&amp;</spanx> character (ASCII code 38) as separator.
+                  </t>
+                </list>
+              </t>
+              <t>
+                For example, the list of parameters from the previous section would be normalized as
+                follows:
+              </t>
+              <texttable>
+                <preamble>
+                  Encoded:
+                </preamble>
+                <ttcol align='center'>Name</ttcol>
+                <ttcol align='center'>Value</ttcol>
+                <c>b5</c><c>%3D%253D</c>
+                <c>a3</c><c>a</c>
+                <c>c%40</c><c></c>
+                <c>a2</c><c>r%20b</c>
+                <c>oauth_consumer_key</c><c>9djdj82h48djs9d2</c>
+                <c>oauth_token</c><c>kkk9d7dh3k39sjv7</c>
+                <c>oauth_signature_method</c><c>HMAC-SHA1</c>
+                <c>oauth_timestamp</c><c>137131201</c>
+                <c>oauth_nonce</c><c>7d8f3e4a</c>
+                <c>c2</c><c></c>
+                <c>a3</c><c>2%20q</c>
+              </texttable>
+              <texttable>
+                <preamble>
+                  Sorted:
+                </preamble>
+                <ttcol align='center'>Name</ttcol>
+                <ttcol align='center'>Value</ttcol>
+                <c>a2</c><c>r%20b</c>
+                <c>a3</c><c>2%20q</c>
+                <c>a3</c><c>a</c>
+                <c>b5</c><c>%3D%253D</c>
+                <c>c%40</c><c></c>
+                <c>c2</c><c></c>
+                <c>oauth_consumer_key</c><c>9djdj82h48djs9d2</c>
+                <c>oauth_nonce</c><c>7d8f3e4a</c>
+                <c>oauth_signature_method</c><c>HMAC-SHA1</c>
+                <c>oauth_timestamp</c><c>137131201</c>
+                <c>oauth_token</c><c>kkk9d7dh3k39sjv7</c>
+              </texttable>
+              <texttable>
+                <preamble>
+                  Concatenated Pairs:
+                </preamble>
+                <ttcol align='center'>Name=Value</ttcol>
+                <c>a2=r%20b</c>
+                <c>a3=2%20q</c>
+                <c>a3=a</c>
+                <c>b5=%3D%253D</c>
+                <c>c%40=</c>
+                <c>c2=</c>
+                <c>oauth_consumer_key=9djdj82h48djs9d2</c>
+                <c>oauth_nonce=7d8f3e4a</c>
+                <c>oauth_signature_method=HMAC-SHA1</c>
+                <c>oauth_timestamp=137131201</c>
+                <c>oauth_token=kkk9d7dh3k39sjv7</c>
+              </texttable>
+              <figure>
+                <preamble>
+                  and concatenated together into a single string (line breaks are for display
+                  purposes only):
+                </preamble>
+                <artwork xml:space="preserve"><![CDATA[
+  a2=r%20b&a3=2%20q&a3=a&b5=%3D%253D&c%40=&c2=&oauth_consumer_key=9dj
+  dj82h48djs9d2&oauth_nonce=7d8f3e4a&oauth_signature_method=HMAC-SHA1
+  &oauth_timestamp=137131201&oauth_token=kkk9d7dh3k39sjv7
+]]></artwork>
+              </figure>
+            </section>
+
+          </section>
+          
+        </section>
+
+        <section title="HMAC-SHA1">
+          <t>
+            The <spanx style="verb">HMAC-SHA1</spanx> signature method uses the HMAC-SHA1 signature
+            algorithm as defined in <xref target="RFC2104" />:
+
+            <figure>
+              <artwork xml:space="preserve"><![CDATA[
+  digest = HMAC-SHA1 (key, text)
+]]></artwork>
+            </figure>
+          </t>
+          <t>
+            The HMAC-SHA1 function variables are used in following way:
+
+            <list style="hanging" hangIndent="8">
+              <t hangText="text">
+                is set to the value of the signature base string from <xref target="base_string" />.
+              </t>
+              <t hangText="key">
+                is set to the concatenated values of:
+
+                <list style="numbers" hangIndent="3">
+                  <t>
+                    The client shared-secret, after being <xref target="encoding">encoded</xref>.
+                  </t>
+                  <t>
+                    An <spanx style="verb">&amp;</spanx> character (ASCII code 38), which MUST be
+                    included even when either secret is empty.
+                  </t>
+                  <t>
+                    The token shared-secret, after being <xref target="encoding">encoded</xref>.
+                  </t>
+                </list>
+              </t>
+              <t hangText="digest">
+                is used to set the value of the <spanx style="verb">oauth_signature</spanx>
+                protocol parameter, after the result octet string is base64-encoded per
+                <xref target="RFC2045" />, Section 6.8.
+              </t>
+            </list>
+          </t>
+        </section>
+
+        <section title="RSA-SHA1">
+          <t>
+            The <spanx style="verb">RSA-SHA1</spanx> signature method uses the RSASSA-PKCS1-v1_5
+            signature algorithm as defined in <xref target="RFC3447" />, Section 8.2 (also known as
+            PKCS#1), using SHA-1 as the hash function for EMSA-PKCS1-v1_5. To use this method, the
+            client MUST have established client credentials with the server that included its RSA
+            public key (in a manner that is beyond the scope of this specification).
+          </t>
+          <t>
+            The signature base string is signed using the client's RSA private key per
+            <xref target="RFC3447" />, Section 8.2.1:
+
+            <figure>
+              <artwork xml:space="preserve"><![CDATA[
+  S = RSASSA-PKCS1-V1_5-SIGN (K, M)
+]]></artwork>
+            </figure>
+
+            Where:
+
+            <list style="hanging" hangIndent="6">
+              <t hangText="K">
+                is set to the client's RSA private key,
+              </t>
+              <t hangText="M">
+                is set to the value of the signature base string from <xref target="base_string" />, and
+              </t>
+              <t hangText="S">
+                is the result signature used to set the value of the <spanx style="verb">oauth_signature</spanx>
+                protocol parameter, after the result octet string is base64-encoded per <xref target="RFC2045" />
+                section 6.8.
+              </t>
+            </list>
+          </t>
+          <t>
+            The server verifies the signature per <xref target="RFC3447" /> section 8.2.2:
+
+            <figure>
+              <artwork xml:space="preserve"><![CDATA[
+  RSASSA-PKCS1-V1_5-VERIFY ((n, e), M, S)
+]]></artwork>
+            </figure>
+
+            Where:
+
+            <list style="hanging" hangIndent="7">
+              <t hangText="(n, e)">
+                is set to the client's RSA public key,
+              </t>
+              <t hangText="M">
+                is set to the value of the signature base string from <xref target="base_string" />, and
+              </t>
+              <t hangText="S">
+                is set to the octet string value of the <spanx style="verb">oauth_signature</spanx>
+                protocol parameter received from the client.
+              </t>
+            </list>
+          </t>
+        </section>
+
+        <section title="PLAINTEXT">
+          <t>
+            The <spanx style="verb">PLAINTEXT</spanx> method does not employ a signature algorithm.
+            It MUST be used with a transport-layer mechanism such as TLS or SSL (or sent over a secure
+            channel with equivalent protections). It does not utilize the signature base string or
+            the <spanx style="verb">oauth_timestamp</spanx> and <spanx style="verb">oauth_nonce</spanx>
+            parameters.
+          </t>
+          <t>
+            The <spanx style="verb">oauth_signature</spanx> protocol parameter is set to the
+            concatenated value of:
+
+            <list style="numbers">
+              <t>
+                The client shared-secret, after being <xref target="encoding">encoded</xref>.
+              </t>
+              <t>
+                An <spanx style="verb">&amp;</spanx> character (ASCII code 38), which MUST be
+                included even when either secret is empty.
+              </t>
+              <t>
+                The token shared-secret, after being <xref target="encoding">encoded</xref>.
+              </t>
+            </list>
+          </t>
+        </section>
+
+      </section>
+        
+      <section title="Parameter Transmission" anchor="param_include">
+        <t>
+          When making an OAuth-authenticated request, protocol parameters as well as any other
+          parameter using the <spanx style="verb">oauth_</spanx> prefix SHALL be included in the
+          request using one and only one of the following locations, listed in order of decreasing
+          preference:
+
+          <list style="numbers">
+            <t>
+              The HTTP <spanx style="verb">Authorization</spanx> header field as described in
+              <xref target="auth_header" />.
+            </t>
+            <t>
+              The HTTP request entity-body as described in <xref target="auth_body" />.
+            </t>
+            <t>
+              The HTTP request URI query as described in <xref target="auth_query" />.
+            </t>
+          </list>
+        </t>
+        <t>
+          In addition to these three methods, future extensions MAY define other methods for
+          including protocol parameters in the request.
+        </t>
+
+        <section title="Authorization Header" anchor="auth_header">
+          <t>
+            Protocol parameters can be transmitted using the HTTP
+            <spanx style="verb">Authorization</spanx> header field as defined by <xref target="RFC2617" />
+            with the auth-scheme name set to <spanx style="verb">OAuth</spanx> (case insensitive).
+          </t>
+          <figure>
+            <preamble>
+              For example:
+            </preamble>
+            <artwork xml:space="preserve"><![CDATA[
+  Authorization: OAuth realm="Example",
+     oauth_consumer_key="0685bd9184jfhq22",
+     oauth_token="ad180jjd733klru7",
+     oauth_signature_method="HMAC-SHA1",
+     oauth_signature="wOJIO9A2W5mFwDgiDvZbTSMK%2FPY%3D",
+     oauth_timestamp="137131200",
+     oauth_nonce="4572616e48616d6d65724c61686176",
+     oauth_version="1.0"
+]]></artwork>
+          </figure>
+          <t>
+            Protocol parameters SHALL be included in the <spanx style="verb">Authorization</spanx>
+            header field as follows:
+
+            <list style="numbers">
+              <t>
+                Parameter names and values are encoded per
+                <xref target="encoding">Parameter Encoding</xref>.
+              </t>
+              <t>
+                Each parameter's name is immediately followed by an <spanx style="verb">=</spanx>
+                character (ASCII code 61), a <spanx style="verb">"</spanx> character (ASCII code 34),
+                the parameter value (MAY be empty), and another <spanx style="verb">"</spanx> character
+                (ASCII code 34).
+              </t>
+              <t>
+                Parameters are separated by a <spanx style="verb">,</spanx> character (ASCII code 44)
+                and OPTIONAL linear whitespace per <xref target="RFC2617" />.
+              </t>
+              <t>
+                The OPTIONAL <spanx style="verb">realm</spanx> parameter MAY be added and
+                interpreted per <xref target="RFC2617" /> section 1.2.
+              </t>
+            </list>
+          </t>
+          <t>
+            Servers MAY indicate their support for the <spanx style="verb">OAuth</spanx>
+            auth-scheme by returning the HTTP <spanx style="verb">WWW-Authenticate</spanx>
+            response header field upon client requests for protected resources. As per
+            <xref target="RFC2617" />, such a response MAY include additional HTTP
+            <spanx style="verb">WWW-Authenticate</spanx> header fields:
+          </t>
+          <figure>
+            <preamble>
+              For example:
+            </preamble>
+            <artwork xml:space="preserve"><![CDATA[
+  WWW-Authenticate: OAuth realm="http://server.example.com/"
+]]></artwork>
+          </figure>
+          <t>
+            The realm parameter defines a protection realm per <xref target="RFC2617" />,
+            Section 1.2.
+          </t>
+        </section>
+
+        <section title="Form-Encoded Body" anchor="auth_body">
+          <t>
+            Protocol parameters can be transmitted in the HTTP request entity-body, but only if the
+            following REQUIRED conditions are met:
+
+            <list style="symbols">
+              <t>
+                The entity-body is single-part.
+              </t>
+              <t>
+                The entity-body follows the encoding requirements of the
+                <spanx style="verb">application/x-www-form-urlencoded</spanx> content-type as
+                defined by <xref target="W3C.REC-html40-19980424" />.
+              </t>
+              <t>
+                The HTTP request entity-header includes the <spanx style="verb">Content-Type</spanx>
+                header field set to <spanx style="verb">application/x-www-form-urlencoded</spanx>.
+              </t>
+            </list>
+
+            <figure>
+              <preamble>
+                For example (line breaks are for display purposes only):
+              </preamble>
+              <artwork xml:space="preserve"><![CDATA[
+  oauth_consumer_key=0685bd9184jfhq22&oauth_token=ad180jjd733klr
+  u7&oauth_signature_method=HMAC-SHA1&oauth_signature=wOJIO9A2W5
+  mFwDgiDvZbTSMK%2FPY%3D&oauth_timestamp=137131200&oauth_nonce=4
+  572616e48616d6d65724c61686176&oauth_version=1.0
+]]></artwork>
+            </figure>
+            
+            The entity-body MAY include other request-specific parameters, in which case, the
+            protocol parameters SHOULD be appended following the request-specific parameters,
+            properly separated by an <spanx style="verb">&amp;</spanx> character (ASCII code 38).
+          </t>
+        </section>
+
+        <section title="Request URI Query" anchor="auth_query">
+          <t>
+            Protocol parameters can be transmitted by being added to the HTTP request URI as a
+            query parameter as defined by <xref target="RFC3986" />, Section 3.
+
+            <figure>
+              <preamble>
+                For example (line breaks are for display purposes only):
+              </preamble>
+              <artwork xml:space="preserve"><![CDATA[
+  GET /example/path?oauth_consumer_key=0685bd9184jfhq22&
+  oauth_token=ad180jjd733klru7&oauth_signature_method=HM
+  AC-SHA1&oauth_signature=wOJIO9A2W5mFwDgiDvZbTSMK%2FPY%
+  3D&oauth_timestamp=137131200&oauth_nonce=4572616e48616
+  d6d65724c61686176&oauth_version=1.0 HTTP/1.1
+]]></artwork>
+            </figure>
+
+            The request URI MAY include other request-specific query parameters, in which case,
+            the protocol parameters SHOULD be appended following the request-specific parameters,
+            properly separated by an <spanx style="verb">&amp;</spanx> character (ASCII code 38).
+          </t>
+        </section>
+
+      </section>
+      
+      <section title="Percent Encoding" anchor="encoding">
+        <t>
+          Existing percent-encoding methods do not guarantee a consistent construction of the
+          signature base string. The following percent-encoding method is not defined to replace
+          the existing encoding methods defined by <xref target="RFC3986" /> and
+          <xref target="W3C.REC-html40-19980424" />. It is used only in the construction of the
+          signature base string and the <spanx style="verb">Authorization</spanx> header field.
+        </t>
+        <t>
+          This specification defines the following method for percent-encoding strings:
+
+          <list style="numbers">
+            <t>
+              Text values are first encoded as UTF-8 octets per <xref target="RFC3629" /> if they are
+              not already. This does not include binary values that are not intended for human
+              consumption.
+            </t>
+            <t>
+              The values are then escaped using the <xref target="RFC3986" /> percent-encoding
+              (%XX) mechanism as follows:
+
+              <list style="symbols">
+                <t>
+                  Characters in the unreserved character set as defined by <xref target="RFC3986" />,
+                  Section 2.3 (ALPHA, DIGIT, "-", ".", "_", "~") MUST NOT be encoded.
+                </t>
+                <t>
+                  All other characters MUST be encoded.
+                </t>
+                <t>
+                  The two hexadecimal characters used to represent encoded characters MUST be
+                  uppercase.
+                </t>
+              </list>
+            </t>
+          </list>
+        </t>
+        <t>
+          This method is different from the encoding scheme used by the
+          <spanx style="verb">application/x-www-form-urlencoded</spanx> content-type (for example,
+          it encodes space characters as <spanx style="verb">%20</spanx> and not using the 
+          <spanx style="verb">+</spanx> character). It MAY be different from the
+          percent-encoding functions provided by web-development frameworks (e.g., encode different
+          characters, use lowercase hexadecimal characters).
+        </t>
+      </section>
+
+    </section>
+
+    <section title="Security Considerations" anchor="Security">
+      <t>
+        As stated in <xref target="RFC2617" />, the greatest sources of risks are usually found not
+        in the core protocol itself but in policies and procedures surrounding its use. Implementers
+        are strongly encouraged to assess how this protocol addresses their security requirements.
+      </t>
+
+      <section title="RSA-SHA1 Signature Method">
+        <t>
+          Authenticated requests made with <spanx style="verb">RSA-SHA1</spanx> signatures do not
+          use the token shared-secret, or any provisioned client shared-secret. This means the request
+          relies completely on the secrecy of the private key used by the client to sign requests.
+        </t>
+      </section>
+
+      <section title="Confidentiality of Requests">
+        <t>
+          While this protocol provides a mechanism for verifying the integrity of requests, it
+          provides no guarantee of request confidentiality. Unless further precautions are taken,
+          eavesdroppers will have full access to request content. Servers should carefully consider
+          the kinds of data likely to be sent as part of such requests, and should employ
+          transport-layer security mechanisms to protect sensitive resources.
+        </t>
+      </section>
+
+      <section title="Spoofing by Counterfeit Servers">
+        <t>
+          This protocol makes no attempt to verify the authenticity of the server. A hostile party
+          could take advantage of this by intercepting the client's requests and returning
+          misleading or otherwise incorrect responses. Service providers should consider such
+          attacks when developing services using this protocol, and should require transport-layer
+          security for any requests where the authenticity of the server or of request responses is
+          an issue.
+        </t>
+      </section>
+
+      <section title="Proxying and Caching of Authenticated Content">
+        <t>
+          The <xref target="auth_header">HTTP Authorization scheme</xref> is optional. However,
+          <xref target="RFC2616" /> relies on the <spanx style="verb">Authorization</spanx> and
+          <spanx style="verb">WWW-Authenticate</spanx> header fields to distinguish authenticated content
+          so that it can be protected. Proxies and caches, in particular, may fail to adequately
+          protect requests not using these header fields.
+        </t>
+        <t>
+          For example, private authenticated content may be stored in (and thus retrievable from)
+          publicly accessible caches. Servers not using the HTTP <spanx style="verb">Authorization</spanx>
+          header field should take care to use other
+          mechanisms, such as the <spanx style="verb">Cache-Control</spanx> header field, to ensure that
+          authenticated content is protected.
+        </t>
+      </section>
+
+      <section title="Plaintext Storage of Credentials">
+        <t>
+          The client shared-secret and token shared-secret function the same way passwords do in
+          traditional authentication systems. In order to compute the signatures used in methods
+          other than <spanx style="verb">RSA-SHA1</spanx>, the server must have access to these
+          secrets in plaintext form. This is in contrast, for example, to modern operating systems,
+          which store only a one-way hash of user credentials.
+        </t>
+        <t>
+          If an attacker were to gain access to these secrets -- or worse, to the server's database
+          of all such secrets -- he or she would be able to perform any action on behalf of any
+          resource owner. Accordingly, it is critical that servers protect these secrets from
+          unauthorized access.
+        </t>
+      </section>
+
+      <section title="Secrecy of the Client Credentials" anchor="client_cred_sec">
+        <t>
+          In many cases, the client application will be under the control of potentially untrusted
+          parties. For example, if the client is a desktop application with freely available
+          source code or an executable binary, an attacker may be able to download a copy for
+          analysis. In such cases, attackers will be able to recover the client credentials.
+        </t>
+        <t>
+          Accordingly, servers should not use the client credentials alone to verify the identity
+          of the client. Where possible, other factors such as IP address should be used as well.
+        </t>
+      </section>
+
+      <section title="Phishing Attacks">
+        <t>
+          Wide deployment of this and similar protocols may cause resource owners to become inured
+          to the practice of being redirected to websites where they are asked to enter their
+          passwords. If resource owners are not careful to verify the authenticity of these
+          websites before entering their credentials, it will be possible for attackers to exploit
+          this practice to steal resource owners' passwords.
+        </t>
+        <t>
+          Servers should attempt to educate resource owners about the risks phishing attacks pose,
+          and should provide mechanisms that make it easy for resource owners to confirm the
+          authenticity of their sites. Client developers should consider the security implications
+          of how they interact with a user-agent (e.g., separate window, embedded), and the ability
+          of the end-user to verify the authenticity of the server website.
+        </t>
+      </section>
+
+      <section title="Scoping of Access Requests">
+        <t>
+          By itself, this protocol does not provide any method for scoping the access rights
+          granted to a client. However, most applications do require greater granularity of access
+          rights. For example, servers may wish to make it possible to grant access to some
+          protected resources but not others, or to grant only limited access (such as read-only
+          access) to those protected resources.
+        </t>
+        <t>
+          When implementing this protocol, servers should consider the types of access resource
+          owners may wish to grant clients, and should provide mechanisms to do so. Servers should
+          also take care to ensure that resource owners understand the access they are granting, as
+          well as any risks that may be involved.
+        </t>
+      </section>
+
+      <section title="Entropy of Secrets">
+        <t>
+          Unless a transport-layer security protocol is used, eavesdroppers will have full access
+          to authenticated requests and signatures, and will thus be able to mount offline brute-force
+          attacks to recover the credentials used. Servers should be careful to assign
+          shared-secrets that are long enough, and random enough, to resist such attacks for at
+          least the length of time that the shared-secrets are valid.
+        </t>
+        <t>
+          For example, if shared-secrets are valid for two weeks, servers should ensure that it is
+          not possible to mount a brute force attack that recovers the shared-secret in less than
+          two weeks. Of course, servers are urged to err on the side of caution, and use the longest
+          secrets reasonable.
+        </t>
+        <t>
+          It is equally important that the pseudo-random number generator (PRNG) used to generate
+          these secrets be of sufficiently high quality. Many PRNG implementations generate number
+          sequences that may appear to be random, but that nevertheless exhibit patterns or other
+          weaknesses that make cryptanalysis or brute force attacks easier. Implementers should be
+          careful to use cryptographically secure PRNGs to avoid these problems.
+        </t>
+      </section>
+
+      <section title="Denial-of-Service / Resource-Exhaustion Attacks">
+        <t>
+          This specification includes a number of features that may make resource exhaustion
+          attacks against servers possible. For example, this protocol requires servers to track
+          used nonces. If an attacker is able to use many nonces quickly, the resources required to
+          track them may exhaust available capacity. And again, this protocol can require servers
+          to perform potentially expensive computations in order to verify the signature on
+          incoming requests. An attacker may exploit this to perform a denial-of-service attack by
+          sending a large number of invalid requests to the server.
+        </t>
+        <t>
+          Resource Exhaustion attacks are by no means specific to this specification. However,
+          implementers should be careful to consider the additional avenues of attack that this
+          protocol exposes, and design their implementations accordingly. For example, entropy
+          starvation typically results in either a complete denial of service while the system
+          waits for new entropy or else in weak (easily guessable) secrets. When implementing this
+          protocol, servers should consider which of these presents a more serious risk for their
+          application and design accordingly.
+        </t>
+      </section>
+
+      <section title="SHA-1 Cryptographic Attacks">
+        <t>
+          SHA-1, the hash algorithm used in <spanx style="verb">HMAC-SHA1</spanx> and
+          <spanx style="verb">RSA-SHA1</spanx> signature methods, has been shown to have a number
+          of cryptographic weaknesses that significantly reduce its resistance to collision
+          attacks. While these weaknesses do not seem to affect the use of SHA-1 with the
+          Hash-based Message Authentication Code (HMAC) and should not affect the
+          <spanx style="verb">HMAC-SHA1</spanx> signature method, it may affect the use of the
+          <spanx style="verb">RSA-SHA1</spanx> signature method. NIST has announced that it will
+          phase out use of SHA-1 in digital signatures by 2010 <xref target="NIST_SHA-1Comments" />.
+
+<!--[rfced] How should the above text be updated in light of the date? -->
+        </t>
+        <t>
+          Practically speaking, these weaknesses are difficult to exploit, and by themselves do not
+          pose a significant risk to users of this protocol. They may, however, make more efficient
+          attacks possible, and  servers should take this into account when considering whether
+          SHA-1 provides an adequate level of security for their applications.
+        </t>
+      </section>
+
+      <section title="Signature Base String Limitations">
+        <t>
+          The signature base string has been designed to support the signature methods defined in
+          this specification. Those designing additional signature methods, should evaluated the
+          compatibility of the signature base string with their security requirements.
+        </t>
+        <t>
+          Since the signature base string does not cover the entire HTTP request, such as most
+          request entity-body, most entity-headers, and the order in which parameters are sent,
+          servers should employ additional mechanisms to protect such elements.
+        </t>
+      </section>
+
+			<section title="Cross-Site Request Forgery (CSRF)">
+				<t>
+					Cross-Site Request Forgery (CSRF) is a web-based attack whereby HTTP requests are
+          transmitted from a user that the website trusts or has authenticated. CSRF attacks on
+          authorization approvals can allow an attacker to obtain authorization to protected
+          resources without the consent of the User. Servers SHOULD strongly consider best
+          practices in CSRF prevention at all the protocol authorization endpoints.
+				</t>
+				<t>
+					CSRF attacks on OAuth callback URIs hosted by clients are also possible. Clients should
+          prevent CSRF attacks on OAuth callback URIs by verifying that the resource owner at the
+          client site intended to complete the OAuth negotiation with the server. The methods for
+          preventing such CSRF attacks are beyond the scope of this specification.
+				</t>
+			</section>
+
+			<section title="User Interface Redress">
+				<t>
+					Servers should protect the
+          authorization process against user interface (UI) redress attacks (also known
+          as "clickjacking"). As of the time of this writing, no complete defenses against UI
+          redress are available. Servers can mitigate the risk of UI redress attacks using the
+          following techniques:
+
+					<list style="symbols">
+						<t>
+              JavaScript frame busting.
+            </t>
+						<t>
+              JavaScript frame busting, and requiring that browsers have JavaScript enabled on the
+              authorization page.
+            </t>
+						<t>
+              Browser-specific anti-framing techniques.
+            </t>
+						<t>
+              Requiring password reentry before issuing OAuth tokens.
+            </t>
+					</list>
+				</t>
+			</section>
+
+			<section title="Automatic Processing of Repeat Authorizations">
+				<t>
+					Servers may wish to automatically process authorization requests
+					(<xref target="auth_step2" />) from clients that have been previously
+					authorized by the resource owner. When the resource owner is redirected to the server
+					to grant access, the server detects that the resource owner has already granted
+					access to that particular client. Instead of prompting the resource owner for approval,
+					the server automatically redirects the resource owner back to the client.
+				</t>
+				<t>
+					If the client credentials are compromised, automatic processing creates additional
+					security risks. An attacker can use the stolen client credentials to redirect
+					the resource owner to the server with an authorization request. The server
+					will then grant access to the resource owner's data without the resource owner's
+					explicit approval, or even awareness of an attack. If no automatic approval is
+					implemented, an attacker must use social engineering to convince the resource owner to
+					approve access.
+				</t>
+				<t>
+					Servers can mitigate the risks associated with automatic processing by
+					limiting the scope of token credentials obtained through automated approvals. Tokens
+					credentials obtained through explicit resource owner consent can remain unaffected. Clients
+					can mitigate the risks associated with automatic processing by protecting their client
+					credentials.
+				</t>
+			</section>
+
+		</section>
+
+
+    <section title="Acknowledgments">
+      <t>
+        This specification is directly based on the OAuth Core 1.0 Revision A community
+        specification, which in turn was modeled after existing proprietary protocols and best
+        practices that have been independently implemented by various companies.
+      </t>
+      <t>
+        The community specification was edited by Eran Hammer-Lahav and authored by: Mark Atwood,
+        Dirk Balfanz, Darren Bounds, Richard M. Conlan, Blaine Cook, Leah Culver,
+        Breno de Medeiros, Brian Eaton, Kellan Elliott-McCrea, Larry Halff, Eran Hammer-Lahav,
+        Ben Laurie, Chris Messina, John Panzer, Sam Quigley, David Recordon, Eran Sandler,
+        Jonathan Sergent, Todd Sieling, Brian Slesinsky, and Andy Smith.
+      </t>
+      <t>
+        The editor would like to thank the following individuals for their invaluable contribution
+        to the publication of this edition of the protocol: Lisa Dusseault, Justin Hart,
+        Avshalom Houri, Chris Messina, Mark Nottingham, Tim Polk, Peter Saint-Andre, Joseph Smarr,
+        and Paul Walker.
+      </t>
+    </section>
+    
+    <appendix title="Differences from the Community Edition">
+			<t>
+				This specification includes the following changes made to the original community document
+				<xref target="OAuthCore1.0_RevisionA" /> in order to correct mistakes and omissions
+        identified since the document has been published on &lt;http://oauth.net&gt;.
+				
+				<list style="symbols">
+          <t>
+            Changed using TLS/SSL when sending or requesting plain text credentials from SHOULD
+            to MUST. This change affects any use of the <spanx style="verb">PLAINTEXT</spanx>
+            signature method, as well as <xref target="auth_step1">requesting temporary credentials</xref>
+            and <xref target="auth_step3">obtaining token credentials</xref>.
+          </t>
+          <t>
+						Adjusted nonce language to indicate it is unique per token/timestamp/client combination.
+					</t>
+          <t>
+            Removed the requirement for timestamps to be equal to or greater than the timestamp
+            used in the previous request.
+          </t>
+          <t>
+            Changed the nonce and timestamp parameters to OPTIONAL when using the
+            <spanx style="verb">PLAINTEXT</spanx> signature method.
+          </t>
+					<t>
+						Extended signature base string coverage that includes <spanx style="verb">application/x-www-form-urlencoded</spanx>
+						entity-body parameters when the HTTP method used is other than <spanx style="verb">POST</spanx> and URI query
+						parameters when the HTTP method used is other than <spanx style="verb">GET</spanx>.
+					</t>
+					<t>
+						Incorporated corrections to the instructions in each signature method to encode the signature
+            value before inserting it into the <spanx style="verb">oauth_signature</spanx> parameter,
+            removing errors that would have caused double-encoded values.
+					</t>
+          <t>
+            Allowed omitting the <spanx style="verb">oauth_token</spanx> parameter when empty.
+          </t>
+          <t>
+            Permitted sending requests for temporary credentials with an empty
+            <spanx style="verb">oauth_token</spanx> parameter.
+          </t>
+          <t>
+            Removed the restrictions from defining additional <spanx style="verb">oauth_</spanx>
+            parameters.
+          </t>
+				</list>
+			</t>
+		</appendix>
+
+ 
+
+  </middle>
+
+  <back>
+
+<?rfc rfcedstyle="no" ?>
+
+    <references title="Normative References">
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2045.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2104.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2617.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2818.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3447.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3986.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml4/reference.W3C.REC-html40-19980424.xml"?>
+      
+    </references>
+
+    <references title="Informative References">
+
+      <reference anchor="OAuthCore1.0_RevisionA" target="http://oauth.net/core/1.0a">
+        <front>
+          <title>OAuth Core 1.0 Revision A</title>
+          <author>
+            <organization>OAuth Community</organization>
+          </author>
+        </front>
+	<date month="June" year="2009"/>
+      </reference>
+
+      <reference anchor="NIST_SHA-1Comments" target="http://csrc.nist.gov/groups/ST/hash/statement.html">
+        <front>
+          <title>NIST Comments on Cryptanalytic Attacks on SHA-1</title>
+          <author initials="W.E.B" surname="Burr" fullname="William E. Burr">
+            <organization>NIST</organization>
+          </author>
+        </front>
+	<date />
+      </reference>
+
+    </references>
+<?rfc rfcedstyle="yes" ?>
+  </back>
+
+</rfc>
